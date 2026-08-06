@@ -10,11 +10,6 @@ Al terminar una tarea se mueve al changelog y se borra de aquí.
 
 ---
 
-## [RM-001] Sistema de componentes UI (shadcn/ui)
-- **Objetivo:** instalar shadcn/ui en `apps/web` para agilizar la construcción del frontend con componentes ya probados, en vez de armar UI a mano.
-- **Hecho cuando:** shadcn/ui inicializado, tema base configurado y al menos un componente en uso.
-- **Fecha:** 2026-08-05 · **Estado:** Abierto
-
 ## [RM-002] Landing page informativa
 - **Objetivo:** página pública que comunica qué es el proyecto y qué servicios se ofrecen.
 - **Hecho cuando:** landing accesible en la ruta raíz, con el contenido informativo básico (qué somos / qué brindamos).
