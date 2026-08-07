@@ -10,11 +10,6 @@ Al terminar una tarea se mueve al changelog y se borra de aquí.
 
 ---
 
-## [RM-002] Landing page informativa
-- **Objetivo:** página pública que comunica qué es el proyecto y qué servicios se ofrecen.
-- **Hecho cuando:** landing accesible en la ruta raíz, con el contenido informativo básico (qué somos / qué brindamos).
-- **Fecha:** 2026-08-05 · **Estado:** Abierto
-
 ## [RM-003] Conectar Supabase
 - **Objetivo:** crear el proyecto Supabase (2º del tier gratuito) y su cliente en `apps/web`, aislado tras una única capa de acceso (`src/data/`) para que un futuro reemplazo por API propia no toque el resto de la app.
 - **Hecho cuando:** cliente Supabase configurado por variables de entorno y la app leyendo/escribiendo algo real a través de la capa `src/data/`.

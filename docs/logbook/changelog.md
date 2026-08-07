@@ -12,6 +12,10 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [RM-002] Landing page informativa (2026-08-06 19:24)
+Landing pública en la raíz con acento naranja de marca: hero, qué es / qué brindamos, cómo funciona, CTA y footer.
+Incluye sección "Ya salieron al aire con Ronda" con 3 clientes (TV Perú) enlazando a sus páginas oficiales.
+
 ## [RM-001] Sistema de componentes UI (shadcn/ui) (2026-08-06 09:38)
 shadcn/ui integrado en `apps/web` (tema base-nova): componentes button, card, badge, input, label.
 Home reemplazado por un demo que los usa; build limpio.
