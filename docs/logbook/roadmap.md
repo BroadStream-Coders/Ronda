@@ -10,11 +10,6 @@ Al terminar una tarea se mueve al changelog y se borra de aquí.
 
 ---
 
-## [RM-003] Conectar Supabase
-- **Objetivo:** crear el proyecto Supabase (2º del tier gratuito) y su cliente en `apps/web`, aislado tras una única capa de acceso (`src/data/`) para que un futuro reemplazo por API propia no toque el resto de la app.
-- **Hecho cuando:** cliente Supabase configurado por variables de entorno y la app leyendo/escribiendo algo real a través de la capa `src/data/`.
-- **Fecha:** 2026-08-05 · **Estado:** Abierto
-
 ## [RM-004] Login con Google
 - **Objetivo:** autenticación con cuenta de Google vía Supabase Auth; al entrar, el usuario ve su espacio de trabajo (su tenant). Depende de RM-003.
 - **Hecho cuando:** flujo de login con Google funcionando y sesión persistida; usuario autenticado redirigido a su workspace.

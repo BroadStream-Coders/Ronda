@@ -12,6 +12,10 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [RM-003] Conectar Supabase (2026-08-06 19:52)
+Cliente `@supabase/ssr` de servidor tras la capa aislada `src/data/`, configurado por variables de entorno.
+Endpoint `GET /api/health` verifica la conexión (`ping()`); round-trip real confirmado.
+
 ## [RM-002] Landing page informativa (2026-08-06 19:24)
 Landing pública en la raíz con acento naranja de marca: hero, qué es / qué brindamos, cómo funciona, CTA y footer.
 Incluye sección "Ya salieron al aire con Ronda" con 3 clientes (TV Perú) enlazando a sus páginas oficiales.
