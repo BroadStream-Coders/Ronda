@@ -1,15 +1,19 @@
 import Image from "next/image";
+import Link from "next/link";
 import {
   ArrowRight,
   Boxes,
   ClipboardList,
   ExternalLink,
+  Mail,
   MonitorPlay,
   Radio,
   Vote,
 } from "lucide-react";
 
 import { AuthButton } from "@/components/auth-button";
+import { InquiryForm } from "@/components/inquiry-form";
+import { ScrollToButton } from "@/components/scroll-to-button";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -19,6 +23,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { createClient } from "@/data/supabase/server";
+import { isPlatformAdmin } from "@/data/admin";
+import { listPrograms } from "@/data/programs";
+import { sendInquiryAction } from "./actions";
 
 const servicios = [
   {
@@ -86,7 +94,22 @@ const pasos = [
   },
 ];
 
-export default function Home() {
+export default async function Home() {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  let panel: string | null = null;
+  if (user) {
+    if (await isPlatformAdmin()) {
+      panel = "/admin";
+    } else if ((await listPrograms()).length > 0) {
+      panel = "/programs";
+    }
+  }
+  const sinPrograma = Boolean(user) && panel === null;
+
   return (
     <div className="flex flex-1 flex-col">
       <header className="sticky top-0 z-10 border-b bg-background/80 backdrop-blur">
@@ -97,7 +120,19 @@ export default function Home() {
             </span>
             Ronda
           </div>
-          <AuthButton />
+          <div className="flex items-center gap-3">
+            {panel && (
+              <Button size="sm" render={<Link href={panel} />}>
+                Ir al panel <ArrowRight />
+              </Button>
+            )}
+            {sinPrograma && (
+              <ScrollToButton targetId="consulta">
+                <Mail /> Consultar
+              </ScrollToButton>
+            )}
+            <AuthButton />
+          </div>
         </div>
       </header>
 
@@ -235,18 +270,46 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="mx-auto w-full max-w-5xl px-6 pb-24">
-          <Card className="border-0 bg-primary text-primary-foreground">
-            <CardContent className="flex flex-col items-center gap-6 py-12 text-center">
-              <h2 className="font-heading max-w-xl text-balance text-3xl font-semibold tracking-tight">
-                ¿Produces un programa en vivo? Dale su espacio.
-              </h2>
-              <Button size="lg" variant="secondary">
-                Empezar <ArrowRight />
-              </Button>
-            </CardContent>
-          </Card>
-        </section>
+        {sinPrograma ? (
+          <section
+            id="consulta"
+            className="mx-auto w-full max-w-5xl scroll-mt-24 px-6 pb-24"
+          >
+            <Card>
+              <CardHeader>
+                <Badge variant="secondary" className="mb-2 w-fit">
+                  <Mail className="text-primary" /> Hablemos
+                </Badge>
+                <CardTitle className="font-heading text-2xl">
+                  Tu cuenta aún no tiene un programa asignado
+                </CardTitle>
+                <CardDescription>
+                  Cuéntanos qué programa produces y qué necesitas. Revisamos tu
+                  consulta y te escribimos para coordinar una reunión.
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <InquiryForm
+                  action={sendInquiryAction}
+                  email={user?.email ?? ""}
+                />
+              </CardContent>
+            </Card>
+          </section>
+        ) : (
+          <section className="mx-auto w-full max-w-5xl px-6 pb-24">
+            <Card className="border-0 bg-primary text-primary-foreground">
+              <CardContent className="flex flex-col items-center gap-6 py-12 text-center">
+                <h2 className="font-heading max-w-xl text-balance text-3xl font-semibold tracking-tight">
+                  ¿Produces un programa en vivo? Dale su espacio.
+                </h2>
+                <Button size="lg" variant="secondary">
+                  Empezar <ArrowRight />
+                </Button>
+              </CardContent>
+            </Card>
+          </section>
+        )}
       </main>
 
       <footer className="border-t">

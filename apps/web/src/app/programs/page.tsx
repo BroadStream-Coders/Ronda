@@ -21,6 +21,7 @@ export default async function ProgramsPage() {
   if (!user) redirect("/");
 
   const programs = await listPrograms();
+  if (programs.length === 0) redirect("/");
 
   return (
     <div className="flex flex-1 flex-col">
@@ -45,39 +46,31 @@ export default async function ProgramsPage() {
             </p>
           </div>
 
-          {programs.length === 0 ? (
-            <Card className="border-dashed">
-              <CardHeader>
-                <CardTitle>Aún no tienes programas asignados</CardTitle>
-                <CardDescription>
-                  Cuando te den acceso a un programa, aparecerá aquí.
-                </CardDescription>
-              </CardHeader>
-            </Card>
-          ) : (
-            <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {programs.map((program) => (
-                <li key={program.id}>
-                  <Link href={`/programs/${program.slug}`} className="group block h-full">
-                    <Card className="h-full transition-all hover:border-primary hover:shadow-sm">
-                      <CardHeader>
-                        <div className="mb-3 flex size-11 items-center justify-center rounded-lg bg-primary/10 font-heading text-lg font-semibold text-primary">
-                          {program.name.charAt(0)}
-                        </div>
-                        <CardTitle className="flex items-center justify-between gap-2 group-hover:text-primary">
-                          {program.name}
-                          <ArrowRight className="size-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:text-primary" />
-                        </CardTitle>
-                        <CardDescription>
-                          Entrar al espacio de trabajo
-                        </CardDescription>
-                      </CardHeader>
-                    </Card>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          )}
+          <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {programs.map((program) => (
+              <li key={program.id}>
+                <Link
+                  href={`/programs/${program.slug}`}
+                  className="group block h-full"
+                >
+                  <Card className="h-full transition-all hover:border-primary hover:shadow-sm">
+                    <CardHeader>
+                      <div className="mb-3 flex size-11 items-center justify-center rounded-lg bg-primary/10 font-heading text-lg font-semibold text-primary">
+                        {program.name.charAt(0)}
+                      </div>
+                      <CardTitle className="flex items-center justify-between gap-2 group-hover:text-primary">
+                        {program.name}
+                        <ArrowRight className="size-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:text-primary" />
+                      </CardTitle>
+                      <CardDescription>
+                        Entrar al espacio de trabajo
+                      </CardDescription>
+                    </CardHeader>
+                  </Card>
+                </Link>
+              </li>
+            ))}
+          </ul>
         </section>
       </main>
     </div>

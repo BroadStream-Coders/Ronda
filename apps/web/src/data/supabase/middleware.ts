@@ -27,7 +27,9 @@ export async function updateSession(request: NextRequest) {
 
   await supabase.auth.getClaims();
 
-  if (request.nextUrl.pathname.startsWith("/admin")) {
+  const { pathname } = request.nextUrl;
+
+  if (pathname.startsWith("/admin")) {
     const {
       data: { user },
     } = await supabase.auth.getUser();
@@ -38,6 +40,25 @@ export async function updateSession(request: NextRequest) {
     const { data: isAdmin } = await supabase.rpc("is_platform_admin");
     if (!isAdmin) {
       return NextResponse.redirect(new URL("/programs", request.url));
+    }
+
+    return response;
+  }
+
+  if (pathname !== "/" && !pathname.startsWith("/auth") && !pathname.startsWith("/api")) {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (user) {
+      const { data: programs } = await supabase
+        .from("programs")
+        .select("id")
+        .limit(1);
+
+      if (!programs?.length) {
+        return NextResponse.redirect(new URL("/", request.url));
+      }
     }
   }
 

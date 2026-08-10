@@ -7,6 +7,7 @@ import { AdminNav } from "@/components/admin-nav";
 import { AuthButton } from "@/components/auth-button";
 import { createClient } from "@/data/supabase/server";
 import { isPlatformAdmin } from "@/data/admin";
+import { countUnreadInquiries } from "@/data/inquiries";
 
 export default async function AdminLayout({
   children,
@@ -19,6 +20,8 @@ export default async function AdminLayout({
   } = await supabase.auth.getUser();
   if (!user) redirect("/");
   if (!(await isPlatformAdmin())) redirect("/programs");
+
+  const unread = await countUnreadInquiries();
 
   return (
     <div className="flex min-h-dvh flex-col md:flex-row">
@@ -38,7 +41,7 @@ export default async function AdminLayout({
           </span>
         </div>
 
-        <AdminNav />
+        <AdminNav unread={unread} />
 
         <div className="mt-auto flex items-center justify-between gap-2 pt-4">
           <Link

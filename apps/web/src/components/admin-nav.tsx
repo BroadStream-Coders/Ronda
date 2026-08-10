@@ -2,7 +2,13 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Boxes, Mail, Users, type LucideIcon } from "lucide-react";
+import {
+  Boxes,
+  Mail,
+  MessageSquare,
+  Users,
+  type LucideIcon,
+} from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
@@ -10,9 +16,10 @@ const items: { href: string; label: string; icon: LucideIcon }[] = [
   { href: "/admin", label: "Programas", icon: Boxes },
   { href: "/admin/users", label: "Usuarios", icon: Users },
   { href: "/admin/invitations", label: "Invitaciones", icon: Mail },
+  { href: "/admin/inquiries", label: "Mensajes", icon: MessageSquare },
 ];
 
-export function AdminNav() {
+export function AdminNav({ unread = 0 }: { unread?: number }) {
   const pathname = usePathname();
 
   return (
@@ -35,6 +42,11 @@ export function AdminNav() {
             )}
           >
             <Icon className="size-4" /> {label}
+            {href === "/admin/inquiries" && unread > 0 && (
+              <span className="ml-auto flex min-w-5 items-center justify-center rounded-full bg-primary px-1.5 text-xs font-semibold text-primary-foreground">
+                {unread}
+              </span>
+            )}
           </Link>
         );
       })}
