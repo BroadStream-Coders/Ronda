@@ -29,8 +29,3 @@ Al terminar una tarea se mueve al changelog y se borra de aquí.
 - **Objetivo:** modelar `games` y `sessions` con `program_id` + RLS, el dominio real de los juegos, heredando el aislamiento por programa. Depende de RM-005.
 - **Hecho cuando:** tablas creadas con RLS que respeta el aislamiento por programa (verificado).
 - **Fecha:** 2026-08-06 · **Estado:** Abierto
-
-## [RM-011] Rol de plataforma (super admin), a nivel de datos
-- **Objetivo:** helper `is_platform_admin()` (marcado vía tabla `platform_admins`) y su bypass en las políticas RLS de `programs`/`memberships` (el admin ve todo, cross-tenant), más la restricción de que solo el admin crea programas. Es la base de datos sobre la que RM-008 monta la UI. Depende de RM-005.
-- **Hecho cuando:** un admin ve todos los programas sin membresía explícita; un no-admin no puede crear programas; verificado.
-- **Fecha:** 2026-08-10 · **Estado:** Abierto
