@@ -1,26 +1,16 @@
-"use client";
-
-import { Button } from "@/components/ui/button";
+import { ConfirmDialog } from "@/components/confirm-dialog";
 import { deleteProgramAction } from "@/app/admin/actions";
 
 export function DeleteProgramButton({ id, name }: { id: string; name: string }) {
   return (
-    <form
+    <ConfirmDialog
       action={deleteProgramAction}
-      onSubmit={(e) => {
-        if (
-          !confirm(
-            `¿Eliminar el programa "${name}"? Esta acción no se puede deshacer.`,
-          )
-        ) {
-          e.preventDefault();
-        }
-      }}
+      triggerLabel="Eliminar"
+      title="Eliminar programa"
+      description={`¿Eliminar el programa "${name}"? Esta acción no se puede deshacer.`}
+      confirmLabel="Eliminar programa"
     >
       <input type="hidden" name="id" value={id} />
-      <Button type="submit" variant="destructive" size="sm">
-        Eliminar
-      </Button>
-    </form>
+    </ConfirmDialog>
   );
 }

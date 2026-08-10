@@ -19,8 +19,3 @@ Al terminar una tarea se mueve al changelog y se borra de aquí.
 - **Objetivo:** modelar `games` y `sessions` con `program_id` + RLS, el dominio real de los juegos, heredando el aislamiento por programa. Depende de RM-005.
 - **Hecho cuando:** tablas creadas con RLS que respeta el aislamiento por programa (verificado).
 - **Fecha:** 2026-08-06 · **Estado:** Abierto
-
-## [RM-014] Eliminar usuarios desde el admin (borrado limpio)
-- **Objetivo:** en `/admin/users`, poder eliminar un usuario por completo; sus accesos se borran de forma limpia. `auth.users` no es borrable desde el cliente, así que una función `SECURITY DEFINER` `admin_delete_user(user_id)` (gated por `is_platform_admin()`) borra el usuario; sus `memberships` y su fila en `platform_admins` se van solas por el `on delete cascade` hacia `auth.users`. Considerar además limpiar sus `invitations` (van por email, no por FK) e **impedir que un admin se borre a sí mismo**. Depende de RM-013.
-- **Hecho cuando:** el admin borra un usuario desde la UI (con confirmación) y desaparece junto con todos sus accesos; no puede borrarse a sí mismo.
-- **Fecha:** 2026-08-10 · **Estado:** Abierto

@@ -2,6 +2,8 @@ import { X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { DeleteUserButton } from "@/components/delete-user-button";
+import { createClient } from "@/data/supabase/server";
 import { listMemberships } from "@/data/memberships";
 import { listPrograms } from "@/data/programs";
 import { listUsers } from "@/data/users";
@@ -21,6 +23,11 @@ export default async function AdminUsersPage() {
     listPrograms(),
     listMemberships(),
   ]);
+
+  const supabase = await createClient();
+  const {
+    data: { user: me },
+  } = await supabase.auth.getUser();
 
   return (
     <div className="mx-auto w-full max-w-4xl px-6 py-12">
@@ -49,13 +56,25 @@ export default async function AdminUsersPage() {
             return (
               <Card key={user.id}>
                 <CardContent className="space-y-3 py-4">
-                  <div>
-                    <div className="font-medium">
-                      {user.email ?? "(sin email)"}
+                  <div className="flex items-start justify-between gap-4">
+                    <div>
+                      <div className="font-medium">
+                        {user.email ?? "(sin email)"}
+                      </div>
+                      <div className="text-xs text-muted-foreground">
+                        Registrado el {formatDate(user.created_at)}
+                      </div>
                     </div>
-                    <div className="text-xs text-muted-foreground">
-                      Registrado el {formatDate(user.created_at)}
-                    </div>
+                    {user.id === me?.id ? (
+                      <span className="rounded-full bg-muted px-2.5 py-1 text-xs text-muted-foreground">
+                        Tú
+                      </span>
+                    ) : (
+                      <DeleteUserButton
+                        userId={user.id}
+                        email={user.email ?? user.id}
+                      />
+                    )}
                   </div>
 
                   <div className="flex flex-wrap items-center gap-2">

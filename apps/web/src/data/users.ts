@@ -13,3 +13,12 @@ export async function listUsers(): Promise<AppUser[]> {
   if (error) throw error;
   return data ?? [];
 }
+
+export async function deleteUser(userId: string): Promise<void> {
+  const supabase = await createClient();
+  const { error } = await supabase.rpc("admin_delete_user", {
+    target_user: userId,
+  });
+
+  if (error) throw error;
+}
