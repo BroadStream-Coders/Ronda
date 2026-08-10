@@ -38,6 +38,7 @@ export function AuthButton() {
   async function signOut() {
     const supabase = createClient();
     await supabase.auth.signOut();
+    window.location.href = "/";
   }
 
   if (!user) {

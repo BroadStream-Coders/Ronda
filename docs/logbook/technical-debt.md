@@ -24,10 +24,3 @@ reutiliza). Al resolverse se mueve al `changelog.md` conservando su código.
 - **A corregir cuando:** se desplieguen las imágenes finales — quitar `unoptimized` y dejar que `next/image` las optimice. La caché rancia solo afecta a dev; cada `pnpm build` regenera desde cero.
 - **Fecha:** 2026-08-06 · **Estado:** Abierto
 
-## [TD-003] Al cerrar sesión no regresa al home
-- **Ubicación:** `apps/web/src/components/auth-button.tsx:38` (`signOut`)
-- **Riesgo:** 5/10
-- **Problema:** `signOut()` limpia la sesión pero no navega, así que te deja en la misma página ya renderizada (incluida `/admin` o el dashboard de un programa) hasta que navegues o refresques. Debería devolver al home (`/`).
-- **Impacto futuro:** El usuario cree que salió pero sigue viendo contenido autenticado; combinado con TD-002, alarga la ventana en que se ve la consola de admin tras cerrar sesión.
-- **A corregir cuando:** pronto. Fix: tras `signOut()`, redirigir a `/` (p. ej. `window.location.href = "/"` o `router.push("/")` + refresh).
-- **Fecha:** 2026-08-10 · **Estado:** Abierto
