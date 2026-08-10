@@ -9,6 +9,7 @@ import {
   Vote,
 } from "lucide-react";
 
+import { AuthButton } from "@/components/auth-button";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -96,9 +97,7 @@ export default function Home() {
             </span>
             Ronda
           </div>
-          <Button variant="ghost" size="sm">
-            Entrar
-          </Button>
+          <AuthButton />
         </div>
       </header>
 
