@@ -34,8 +34,10 @@ Ver [README.md](README.md) para el panorama y `docs/logbook/` para el estado.
 - **Acceso a datos aislado:** todo lo que hable con Supabase vive tras una única
   capa (`src/data/`), para poder reemplazar Supabase por una API propia en el
   futuro sin tocar el resto de la app. (Aún no existe; se crea con RM-003.)
-- **Multi-tenant:** el aislamiento vive en la base con `tenant_id` + políticas RLS,
-  no en infraestructura separada. Modelo: `tenant → membership → juego → sesión`.
+- **Multi-tenant:** el aislamiento vive en la base con `programa_id` + políticas RLS,
+  no en infraestructura separada. Modelo: `programa → membership → juego → sesión`.
+  (El *tenant* es el programa; en código y tablas usamos siempre `programa`, nunca
+  `tenant` ni `project`. Tablas en plural: `programas`, `memberships`, etc.)
 - **Sin comentarios en el código** salvo que se pidan; la deuda técnica se registra
   en `docs/logbook/technical-debt.md`, nunca como comentario.
 - **UI en español.**

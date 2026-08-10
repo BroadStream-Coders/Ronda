@@ -11,7 +11,7 @@ Al terminar una tarea se mueve al changelog y se borra de aquí.
 ---
 
 ## [RM-005] Modelo de acceso: tenant + membership + RLS
-- **Objetivo:** tablas `tenant` y `membership(user_id, tenant_id, role)` con RLS *default-deny*: un usuario solo ve los programas donde tiene membresía; solo el admin de plataforma crea programas. Incluye el helper `is_platform_admin()` y su bypass en las políticas (se escriben una sola vez, por eso va aquí). Depende de RM-003.
+- **Objetivo:** tabla `memberships(user_id, programa_id, role)` con RLS *default-deny* sobre `programas` (creada en RM-010) y `memberships`: un usuario solo ve los programas donde tiene membresía; solo el admin de plataforma crea programas. Incluye el helper `is_platform_admin()` y su bypass en las políticas (se escriben una sola vez, por eso va aquí). Reemplaza la policy provisional "todos ven todo" de RM-010. Depende de RM-010.
 - **Hecho cuando:** tablas + RLS activas y verificadas: usuario sin membresía no ve nada; con membresía ve solo su(s) programa(s); un no-admin no puede crear programas; el admin ve todo.
 - **Fecha:** 2026-08-06 · **Estado:** Abierto
 
@@ -31,6 +31,6 @@ Al terminar una tarea se mueve al changelog y se borra de aquí.
 - **Fecha:** 2026-08-06 · **Estado:** Abierto
 
 ## [RM-009] Modelo de juego/sesión
-- **Objetivo:** modelar `juego` y `sesion` con `tenant_id` + RLS, el dominio real de los juegos, heredando el aislamiento por programa. Depende de RM-005.
+- **Objetivo:** modelar `juego` y `sesion` con `programa_id` + RLS, el dominio real de los juegos, heredando el aislamiento por programa. Depende de RM-005.
 - **Hecho cuando:** tablas creadas con RLS que respeta el aislamiento por programa (verificado).
 - **Fecha:** 2026-08-06 · **Estado:** Abierto
