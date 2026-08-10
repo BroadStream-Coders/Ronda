@@ -24,8 +24,3 @@ Al terminar una tarea se mueve al changelog y se borra de aquí.
 - **Objetivo:** modelar `games` y `sessions` con `program_id` + RLS, el dominio real de los juegos, heredando el aislamiento por programa. Depende de RM-005.
 - **Hecho cuando:** tablas creadas con RLS que respeta el aislamiento por programa (verificado).
 - **Fecha:** 2026-08-06 · **Estado:** Abierto
-
-## [RM-013] Dashboard admin: gestión de usuarios
-- **Objetivo:** en el apartado "Usuarios" de `/admin`, listar las personas registradas y ver/gestionar a qué programas tienen acceso. Reemplaza el placeholder "Pronto" de RM-008. Depende de RM-008.
-- **Hecho cuando:** el admin ve la lista de usuarios y su acceso a programas desde la UI.
-- **Fecha:** 2026-08-10 · **Estado:** Abierto
