@@ -19,7 +19,9 @@ export function AdminNav() {
     <nav className="flex flex-row gap-1 md:flex-col">
       {items.map(({ href, label, icon: Icon }) => {
         const active =
-          href === "/admin" ? pathname === "/admin" : pathname.startsWith(href);
+          href === "/admin"
+            ? pathname === "/admin" || pathname.startsWith("/admin/programs")
+            : pathname.startsWith(href);
 
         return (
           <Link

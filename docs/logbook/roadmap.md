@@ -26,9 +26,9 @@ Al terminar una tarea se mueve al changelog y se borra de aquí.
 - **Fecha:** 2026-08-06 · **Estado:** Abierto
 
 ## [RM-012] Dashboard admin: gestión de programas
-- **Objetivo:** en el apartado "Programas" de `/admin`, crear un programa (nombre → slug) y listar/gestionar los existentes. Reemplaza el placeholder "Pronto" de RM-008. Depende de RM-008.
-- **Hecho cuando:** el admin crea un programa desde la UI y aparece en la lista.
-- **Fecha:** 2026-08-10 · **Estado:** Abierto
+- **Objetivo:** en el apartado "Programas" de `/admin`, crear un programa (nombre → slug), listarlos, editarlos (`/admin/programs/[id]`) y eliminarlos. Reemplaza el placeholder "Pronto" de RM-008. Depende de RM-008.
+- **Hecho cuando:** el admin crea, edita y elimina un programa desde la UI y la lista se actualiza.
+- **Fecha:** 2026-08-10 · **Estado:** En progreso (2026-08-10)
 
 ## [RM-013] Dashboard admin: gestión de usuarios
 - **Objetivo:** en el apartado "Usuarios" de `/admin`, listar las personas registradas y ver/gestionar a qué programas tienen acceso. Reemplaza el placeholder "Pronto" de RM-008. Depende de RM-008.
