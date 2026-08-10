@@ -20,12 +20,17 @@ Al terminar una tarea se mueve al changelog y se borra de aquí.
 - **Hecho cuando:** los tres casos (0 / 1 / varios programas) funcionan y el selector de programa opera.
 - **Fecha:** 2026-08-06 · **Estado:** Abierto
 
-## [RM-008] Consola maestra (admin)
-- **Objetivo:** herramienta del usuario maestro para crear programas, asignar/quitar miembros y navegar todos los programas (cross-tenant). Depende de RM-011 (bypass de admin a nivel de datos) y RM-006 (para invitar por email).
-- **Hecho cuando:** el admin puede crear un programa, asignar/retirar un usuario y abrir cualquier programa existente.
-- **Fecha:** 2026-08-06 · **Estado:** Abierto
-
 ## [RM-009] Modelo de juego/sesión
 - **Objetivo:** modelar `games` y `sessions` con `program_id` + RLS, el dominio real de los juegos, heredando el aislamiento por programa. Depende de RM-005.
 - **Hecho cuando:** tablas creadas con RLS que respeta el aislamiento por programa (verificado).
 - **Fecha:** 2026-08-06 · **Estado:** Abierto
+
+## [RM-012] Dashboard admin: gestión de programas
+- **Objetivo:** en el apartado "Programas" de `/admin`, crear un programa (nombre → slug) y listar/gestionar los existentes. Reemplaza el placeholder "Pronto" de RM-008. Depende de RM-008.
+- **Hecho cuando:** el admin crea un programa desde la UI y aparece en la lista.
+- **Fecha:** 2026-08-10 · **Estado:** Abierto
+
+## [RM-013] Dashboard admin: gestión de usuarios
+- **Objetivo:** en el apartado "Usuarios" de `/admin`, listar las personas registradas y ver/gestionar a qué programas tienen acceso. Reemplaza el placeholder "Pronto" de RM-008. Depende de RM-008.
+- **Hecho cuando:** el admin ve la lista de usuarios y su acceso a programas desde la UI.
+- **Fecha:** 2026-08-10 · **Estado:** Abierto

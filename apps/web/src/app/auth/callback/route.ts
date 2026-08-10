@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 
 import { createClient } from "@/data/supabase/server";
+import { isPlatformAdmin } from "@/data/admin";
 
 export async function GET(request: Request) {
   const { searchParams, origin } = new URL(request.url);
@@ -11,5 +12,6 @@ export async function GET(request: Request) {
     await supabase.auth.exchangeCodeForSession(code);
   }
 
-  return NextResponse.redirect(`${origin}/programs`);
+  const dest = (await isPlatformAdmin()) ? "/admin" : "/programs";
+  return NextResponse.redirect(`${origin}${dest}`);
 }
