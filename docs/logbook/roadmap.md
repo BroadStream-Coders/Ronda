@@ -10,11 +10,6 @@ Al terminar una tarea se mueve al changelog y se borra de aquí.
 
 ---
 
-## [RM-004] Integración con Google (login)
-- **Objetivo:** autenticación con cuenta de Google vía Supabase Auth y sesión persistida. Solo el login: sin lógica de membresía ni tenant; al entrar, el usuario autenticado aterriza en un área *placeholder*. La bifurcación por membresía es RM-007. Depende de RM-003.
-- **Hecho cuando:** login con Google funcionando, sesión persistida (middleware que la refresca) y logout; el usuario autenticado llega a una pantalla placeholder.
-- **Fecha:** 2026-08-05 · **Estado:** En progreso (2026-08-06)
-
 ## [RM-005] Modelo de acceso: tenant + membership + RLS
 - **Objetivo:** tablas `tenant` y `membership(user_id, tenant_id, role)` con RLS *default-deny*: un usuario solo ve los programas donde tiene membresía; solo el admin de plataforma crea programas. Incluye el helper `is_platform_admin()` y su bypass en las políticas (se escriben una sola vez, por eso va aquí). Depende de RM-003.
 - **Hecho cuando:** tablas + RLS activas y verificadas: usuario sin membresía no ve nada; con membresía ve solo su(s) programa(s); un no-admin no puede crear programas; el admin ve todo.
