@@ -10,15 +10,6 @@ Al terminar una tarea se mueve al changelog y se borra de aquí.
 
 ---
 
-## [RM-016] Guardado local de archivo (json/zip)
-- **Objetivo:** portar desde Studio los helpers de persistencia de archivo
-  (`saveAsJson`/`loadJsonFile` con validador opcional, `saveAsZip`/`loadZipFile`),
-  para descargar y volver a cargar la data de un colector como archivo. Base de
-  Deletreo (usa json).
-- **Hecho cuando:** los helpers existen en Ronda y hay un round-trip real:
-  descargar un json y volver a cargarlo restaura la data.
-- **Fecha:** 2026-08-10 · **Estado:** Abierto
-
 ## [RM-017] Sistema Lego (columnas/filas)
 - **Objetivo:** portar el esqueleto de los colectores tipo lista: componentes
   `group-column/*`, el hook de estado `use-workspace-groups` y el pegado desde
