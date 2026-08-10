@@ -27,5 +27,19 @@ export async function updateSession(request: NextRequest) {
 
   await supabase.auth.getClaims();
 
+  if (request.nextUrl.pathname.startsWith("/admin")) {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (!user) {
+      return NextResponse.redirect(new URL("/", request.url));
+    }
+
+    const { data: isAdmin } = await supabase.rpc("is_platform_admin");
+    if (!isAdmin) {
+      return NextResponse.redirect(new URL("/programs", request.url));
+    }
+  }
+
   return response;
 }

@@ -24,14 +24,6 @@ reutiliza). Al resolverse se mueve al `changelog.md` conservando su código.
 - **A corregir cuando:** se desplieguen las imágenes finales — quitar `unoptimized` y dejar que `next/image` las optimice. La caché rancia solo afecta a dev; cada `pnpm build` regenera desde cero.
 - **Fecha:** 2026-08-06 · **Estado:** Abierto
 
-## [TD-002] La ruta `/admin` no queda bloqueada para no-admins / sin sesión
-- **Ubicación:** `apps/web/src/app/admin/layout.tsx:19` (guard solo en el layout) · `apps/web/middleware.ts`
-- **Riesgo:** 7/10
-- **Problema:** El guard de admin vive solo en el layout server component. Funciona en una carga fresca, pero el router cache del cliente puede reservir el contenido de `/admin` en navegaciones sin volver al servidor, y no hay una barrera previa. No debería poder verse nada de `/admin` sin ser admin.
-- **Impacto futuro:** Fuga visual de la consola de admin (lista de usuarios, programas) a alguien sin rol; las server actions igual fallan por RLS, pero no debería mostrarse nada. Control de acceso débil en la zona sensible.
-- **A corregir cuando:** pronto. Fix: reforzar la protección de `/admin/*` en el `middleware` (sin sesión o sin `is_platform_admin()` → redirect), para no depender solo del layout.
-- **Fecha:** 2026-08-10 · **Estado:** Abierto
-
 ## [TD-003] Al cerrar sesión no regresa al home
 - **Ubicación:** `apps/web/src/components/auth-button.tsx:38` (`signOut`)
 - **Riesgo:** 5/10
