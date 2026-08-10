@@ -11,16 +11,16 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { createClient } from "@/data/supabase/server";
-import { listProgramas } from "@/data/programas";
+import { listPrograms } from "@/data/programs";
 
-export default async function ProgramasPage() {
+export default async function ProgramsPage() {
   const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
   if (!user) redirect("/");
 
-  const programas = await listProgramas();
+  const programs = await listPrograms();
 
   return (
     <div className="flex flex-1 flex-col">
@@ -45,28 +45,27 @@ export default async function ProgramasPage() {
             </p>
           </div>
 
-          {programas.length === 0 ? (
+          {programs.length === 0 ? (
             <Card className="border-dashed">
               <CardHeader>
-                <CardTitle>Aún no hay programas</CardTitle>
+                <CardTitle>Aún no tienes programas asignados</CardTitle>
                 <CardDescription>
-                  Se agregan desde Supabase. Cuando exista al menos uno,
-                  aparecerá aquí.
+                  Cuando te den acceso a un programa, aparecerá aquí.
                 </CardDescription>
               </CardHeader>
             </Card>
           ) : (
             <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {programas.map((programa) => (
-                <li key={programa.id}>
-                  <Link href={`/programas/${programa.slug}`} className="group block h-full">
+              {programs.map((program) => (
+                <li key={program.id}>
+                  <Link href={`/programs/${program.slug}`} className="group block h-full">
                     <Card className="h-full transition-all hover:border-primary hover:shadow-sm">
                       <CardHeader>
                         <div className="mb-3 flex size-11 items-center justify-center rounded-lg bg-primary/10 font-heading text-lg font-semibold text-primary">
-                          {programa.name.charAt(0)}
+                          {program.name.charAt(0)}
                         </div>
                         <CardTitle className="flex items-center justify-between gap-2 group-hover:text-primary">
-                          {programa.name}
+                          {program.name}
                           <ArrowRight className="size-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:text-primary" />
                         </CardTitle>
                         <CardDescription>

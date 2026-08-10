@@ -8,7 +8,7 @@ export function SiteHeader() {
     <header className="sticky top-0 z-10 border-b bg-background/80 backdrop-blur">
       <div className="mx-auto flex w-full max-w-5xl items-center justify-between px-6 py-4">
         <Link
-          href="/programas"
+          href="/programs"
           className="flex items-center gap-2 font-heading text-lg font-semibold tracking-tight"
         >
           <span className="flex size-7 items-center justify-center rounded-md bg-primary text-primary-foreground">

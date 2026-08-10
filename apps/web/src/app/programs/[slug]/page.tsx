@@ -10,7 +10,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { createClient } from "@/data/supabase/server";
-import { getProgramaBySlug } from "@/data/programas";
+import { getProgramBySlug } from "@/data/programs";
 
 const secciones = [
   {
@@ -38,8 +38,8 @@ export default async function DashboardPage({
   } = await supabase.auth.getUser();
   if (!user) redirect("/");
 
-  const programa = await getProgramaBySlug(slug);
-  if (!programa) notFound();
+  const program = await getProgramBySlug(slug);
+  if (!program) notFound();
 
   return (
     <div className="flex flex-1 flex-col">
@@ -47,7 +47,7 @@ export default async function DashboardPage({
 
       <main className="mx-auto w-full max-w-5xl flex-1 px-6 py-12">
         <Link
-          href="/programas"
+          href="/programs"
           className="inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
         >
           <ArrowLeft className="size-4" /> Todos los programas
@@ -55,11 +55,11 @@ export default async function DashboardPage({
 
         <div className="mt-6 flex items-center gap-4">
           <div className="flex size-14 items-center justify-center rounded-xl bg-primary/10 font-heading text-2xl font-semibold text-primary">
-            {programa.name.charAt(0)}
+            {program.name.charAt(0)}
           </div>
           <div>
             <h1 className="font-heading text-3xl font-semibold tracking-tight">
-              {programa.name}
+              {program.name}
             </h1>
             <p className="text-sm text-muted-foreground">
               Espacio de trabajo del programa

@@ -34,13 +34,15 @@ Ver [README.md](README.md) para el panorama y `docs/logbook/` para el estado.
 - **Acceso a datos aislado:** todo lo que hable con Supabase vive tras una única
   capa (`src/data/`), para poder reemplazar Supabase por una API propia en el
   futuro sin tocar el resto de la app. (Aún no existe; se crea con RM-003.)
-- **Multi-tenant:** el aislamiento vive en la base con `programa_id` + políticas RLS,
-  no en infraestructura separada. Modelo: `programa → membership → juego → sesión`.
-  (El *tenant* es el programa; en código y tablas usamos siempre `programa`, nunca
-  `tenant` ni `project`. Tablas en plural: `programas`, `memberships`, etc.)
+- **Multi-tenant:** el aislamiento vive en la base con `program_id` + políticas RLS,
+  no en infraestructura separada. Modelo: `programs → memberships → games → sessions`.
+  (El *tenant* es el programa; en código usamos siempre `program`, nunca `tenant` ni
+  `project`.)
 - **Sin comentarios en el código** salvo que se pidan; la deuda técnica se registra
   en `docs/logbook/technical-debt.md`, nunca como comentario.
-- **UI en español.**
+- **Idioma — regla dura:** todo lo que el usuario **no ve** va en **inglés** (tablas
+  en plural: `programs`, `memberships`; columnas, funciones, tipos, variables, rutas).
+  Todo lo que el usuario **sí ve** (textos de UI) va en **español**. No mezclar.
 
 ## Next.js 16 — ojo
 

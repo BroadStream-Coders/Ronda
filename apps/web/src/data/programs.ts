@@ -1,6 +1,6 @@
 import { createClient } from "./supabase/server";
 
-export type Programa = {
+export type Program = {
   id: string;
   name: string;
   slug: string;
@@ -9,10 +9,10 @@ export type Programa = {
 
 const COLUMNS = "id, name, slug, created_at";
 
-export async function listProgramas(): Promise<Programa[]> {
+export async function listPrograms(): Promise<Program[]> {
   const supabase = await createClient();
   const { data, error } = await supabase
-    .from("programas")
+    .from("programs")
     .select(COLUMNS)
     .order("name");
 
@@ -20,10 +20,10 @@ export async function listProgramas(): Promise<Programa[]> {
   return data ?? [];
 }
 
-export async function getProgramaBySlug(slug: string): Promise<Programa | null> {
+export async function getProgramBySlug(slug: string): Promise<Program | null> {
   const supabase = await createClient();
   const { data, error } = await supabase
-    .from("programas")
+    .from("programs")
     .select(COLUMNS)
     .eq("slug", slug)
     .maybeSingle();
