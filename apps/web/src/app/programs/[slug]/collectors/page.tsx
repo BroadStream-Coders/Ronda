@@ -47,10 +47,10 @@ export default async function CollectorsPage({
         </Link>
 
         <h1 className="mt-6 font-heading text-3xl font-semibold tracking-tight">
-          Juegos
+          Colectores
         </h1>
         <p className="text-sm text-muted-foreground">
-          Colectores de este programa.
+          Prepara los datos de cada juego antes del aire.
         </p>
 
         {collectors.length === 0 ? (

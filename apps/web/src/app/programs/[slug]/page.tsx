@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
-import { ArrowLeft, Gamepad2, Radio } from "lucide-react";
+import { ArrowLeft, ClipboardList, Gamepad2 } from "lucide-react";
 
 import { SiteHeader } from "@/components/site-header";
 import {
@@ -59,11 +59,12 @@ export default async function DashboardPage({
             <Card className="h-full transition-colors group-hover:border-primary">
               <CardHeader>
                 <div className="mb-2 flex size-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
-                  <Gamepad2 className="size-5" />
+                  <ClipboardList className="size-5" />
                 </div>
-                <CardTitle>Juegos</CardTitle>
+                <CardTitle>Colector</CardTitle>
                 <CardDescription>
-                  Crea y prepara los juegos de este programa antes del aire.
+                  Prepara los datos de los juegos de este programa antes del
+                  aire.
                 </CardDescription>
               </CardHeader>
             </Card>
@@ -72,10 +73,10 @@ export default async function DashboardPage({
           <Card className="border-dashed">
             <CardHeader>
               <div className="mb-2 flex size-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
-                <Radio className="size-5" />
+                <Gamepad2 className="size-5" />
               </div>
               <CardTitle className="flex items-center gap-2">
-                Sesiones en vivo
+                Juegos
                 <span className="rounded-full bg-muted px-2 py-0.5 text-xs font-normal text-muted-foreground">
                   Pronto
                 </span>
