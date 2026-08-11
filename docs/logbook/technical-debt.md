@@ -31,6 +31,14 @@ reutiliza). Al resolverse se mueve al `changelog.md` conservando su código.
 - **Impacto futuro:** Se pierden visitantes que sí querían entrar. Lo natural sería que "Empezar" dispare el login de Google (misma acción que el botón "Entrar" del header) y "Conocer más" ancle a una sección.
 - **Fecha:** 2026-08-10 · **Estado:** Abierto
 
+## [TD-008] La landing pública se cae si Supabase no responde
+- **Ubicación:** `apps/web/middleware.ts:10` (el `matcher`) + `apps/web/src/data/supabase/middleware.ts:7-28`
+- **Riesgo:** 6/10
+- **Problema:** El matcher cubre **toda** ruta, y `updateSession()` crea el cliente de Supabase y llama `getClaims()` **antes** de mirar el pathname. En `/` eso es trabajo casi puro: el bloque de guard de la línea 48 saltea explícitamente la raíz, así que el único efecto útil en la landing es refrescar la cookie de sesión — cuyo beneficio visible es que el header muestre el avatar del usuario logueado. La landing paga una dependencia dura de Supabase por un detalle cosmético. El matcher tampoco excluye `/api`, así que `/api/health` —el endpoint hecho justo para diagnosticar el estado de Supabase (RM-003)— muere por la misma causa que debería reportar.
+- **Impacto futuro:** La cara pública del producto se cae por algo que no la involucra. Los disparadores son rutinarios, no exóticos: el plan gratuito de Supabase pausa el proyecto por inactividad, se excede la cuota, o hay un incidente del proveedor. Un visitante —justo el público de la landing, que ni cuenta tiene— se encuentra un 500 y se va. Ya pasó en el primer deploy (2026-08-11): sin las variables de entorno en Vercel, se cayó el sitio entero, health incluido. El riesgo sube a 8 cuando la landing reciba tráfico real.
+- **Arreglo propuesto:** `try/catch` alrededor del trabajo de auth en `updateSession`, dejando pasar las rutas públicas y manteniendo `/admin` *fail-closed* (redirect a `/`, con el guard de layout de TD-002 como segunda barrera); y excluir `/api` del matcher. No enmascara la mala configuración: sigue rompiendo fuerte donde importa, solo evita que una caída de Supabase se lleve puesto lo que no lo necesita.
+- **Fecha:** 2026-08-11 · **Estado:** Abierto
+
 ## [TD-007] `middleware.ts` usa el nombre que Next 16 dejó deprecado
 - **Ubicación:** `apps/web/middleware.ts:5` (el archivo y el export `middleware`)
 - **Riesgo:** 3/10

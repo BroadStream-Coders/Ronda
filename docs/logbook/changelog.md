@@ -12,6 +12,9 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [RM-022] Colector Cálculo Mental (2026-08-11 10:02)
+Portado a `catalog/calculo-mental/` (Editor/Column/Board/Slot/schema): grupos → tableros → 4 casillas Q/A, capacidad, llenado rápido por pares de filas, guardar/cargar json. Registrado y asignado a que-gane-el-mejor. De paso: la tarjeta del dashboard pasa a "Colector" y "Sesiones en vivo" a "Juegos (Pronto)".
+
 ## [RM-015] Pantalla de colectores del programa (2026-08-10 22:51)
 `catalog/assignments.ts` (programSlug → [collectorId], en código; Deletreo → que-gane-el-mejor) + rutas `/programs/[slug]/collectors` (lista con estado vacío) y `/collectors/[collectorId]` (Editor + topbar con Volver). Aislamiento por RLS del programa + assignments; la tarjeta "Juegos" del dashboard ya linkea; `/testing` eliminado.
 
