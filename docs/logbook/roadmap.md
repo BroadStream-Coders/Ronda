@@ -10,14 +10,6 @@ Al terminar una tarea se mueve al changelog y se borra de aquí.
 
 ---
 
-## [RM-017] Sistema Lego (columnas/filas)
-- **Objetivo:** portar el esqueleto de los colectores tipo lista: componentes
-  `group-column/*`, el hook de estado `use-workspace-groups` y el pegado desde
-  Excel (`parseExcelPaste`/`getColumnData`).
-- **Hecho cuando:** se renderiza una grilla de grupos/filas editable (agregar/
-  quitar grupos y filas) y el llenado rápido (pegar de Excel) funciona.
-- **Fecha:** 2026-08-10 · **Estado:** Abierto
-
 ## [RM-018] Colector Deletreo
 - **Objetivo:** primer colector en Ronda, dentro del espacio de un programa. Edita
   rondas de palabras con Lego (RM-017) y exporta/carga json con el guardado local

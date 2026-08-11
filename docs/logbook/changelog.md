@@ -12,6 +12,15 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [RM-020] Topbar del colector (handshake) (2026-08-10 22:02)
+Store `use-workspace-header` (zustand) + `CollectorTopbar` con botones Cargar/Guardar en `src/collector/topbar/`. Versión lean del topbar de Studio (sin dropdowns de nube ni validación). Demostrado en `/testing`.
+
+## [RM-019] Sistema de pestañas (LevelTabs) (2026-08-10 22:02)
+`LevelTabs` portado a `src/collector/level-tabs.tsx` (todos los niveles montados, pestañas verticales a la derecha). Demostrado en `/testing` con 2 niveles, cada uno con su grilla Lego.
+
+## [RM-017] Sistema Lego (columnas/filas) (2026-08-10 22:02)
+Kit Lego portado de Studio y empaquetado en `src/collector/lego/` (layout + components + hook `use-workspace-groups` + `data-processing` + barrel). Adaptado a base-nova (brand→primary, scroll-area de base-nova). Demostrado en `/testing`.
+
 ## [RM-016] Guardado local de archivo (json/zip) (2026-08-10 17:45)
 Helpers `saveAsJson` / `loadJsonFile` (validador opcional) y `saveAsZip` (JSZip) en `src/helpers/persistence.ts`, portados de Studio. Página scratch `/testing` (textarea → json / zip) confirma el guardado a mano. `loadZipFile` se difiere hasta el primer colector con imágenes.
 
