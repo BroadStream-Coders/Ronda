@@ -10,13 +10,17 @@ Al terminar una tarea se mueve al changelog y se borra de aquí.
 
 ---
 
-## [RM-018] Colector Deletreo
-- **Objetivo:** primer colector en Ronda, dentro del espacio de un programa. Edita
-  rondas de palabras con Lego (RM-017) y exporta/carga json con el guardado local
-  (RM-016). Save/load inline, sin topbar compartido ni validación por ahora.
-  Depende de RM-016 y RM-017.
-- **Hecho cuando:** desde un programa se abre Deletreo, se editan rondas de
-  palabras, se exporta a json y se recarga desde json.
+## [RM-018] Deletreo — primer colector + catálogo
+- **Objetivo:** estrenar el catálogo con Deletreo como primer tipo. Crea
+  `src/collector/catalog/` — `registry.ts` (id → { meta, Editor }) y
+  `assignments.ts` (programSlug → [collectorId], en código) — y una ruta delgada
+  `/programs/[slug]/collectors/[collectorId]` que valida membresía + asignación y
+  renderiza el Editor del registry. Deletreo edita rondas de palabras con el kit
+  Lego y usa el topbar (RM-020) para guardar/cargar json local; las sesiones en
+  nube quedan para RM-009. Depende de RM-016, RM-017, RM-020.
+- **Hecho cuando:** desde un programa con Deletreo asignado se entra a
+  `/programs/[slug]/collectors/deletreo`, se editan rondas, se exporta/carga json;
+  un programa sin ese colector (o un no-miembro) no puede entrar.
 - **Fecha:** 2026-08-10 · **Estado:** Abierto
 
 ## [RM-009] Modelo de juego/sesión

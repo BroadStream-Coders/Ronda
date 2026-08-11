@@ -17,7 +17,7 @@ import {
   AddRowButton,
   getColumnData,
   useWorkspaceHeader,
-} from "@/collector";
+} from "@/collector/kit";
 
 interface DemoGroup {
   id: string;
