@@ -12,19 +12,6 @@ import {
 import { createClient } from "@/data/supabase/server";
 import { getProgramBySlug } from "@/data/programs";
 
-const secciones = [
-  {
-    icon: Gamepad2,
-    title: "Juegos",
-    description: "Crea y prepara los juegos de este programa antes del aire.",
-  },
-  {
-    icon: Radio,
-    title: "Sesiones en vivo",
-    description: "Emite los juegos en pantalla durante la transmisión.",
-  },
-];
-
 export default async function DashboardPage({
   params,
 }: {
@@ -68,22 +55,36 @@ export default async function DashboardPage({
         </div>
 
         <div className="mt-10 grid gap-4 sm:grid-cols-2">
-          {secciones.map(({ icon: Icon, title, description }) => (
-            <Card key={title} className="border-dashed">
+          <Link href={`/programs/${slug}/collectors`} className="group">
+            <Card className="h-full transition-colors group-hover:border-primary">
               <CardHeader>
                 <div className="mb-2 flex size-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
-                  <Icon className="size-5" />
+                  <Gamepad2 className="size-5" />
                 </div>
-                <CardTitle className="flex items-center gap-2">
-                  {title}
-                  <span className="rounded-full bg-muted px-2 py-0.5 text-xs font-normal text-muted-foreground">
-                    Pronto
-                  </span>
-                </CardTitle>
-                <CardDescription>{description}</CardDescription>
+                <CardTitle>Juegos</CardTitle>
+                <CardDescription>
+                  Crea y prepara los juegos de este programa antes del aire.
+                </CardDescription>
               </CardHeader>
             </Card>
-          ))}
+          </Link>
+
+          <Card className="border-dashed">
+            <CardHeader>
+              <div className="mb-2 flex size-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                <Radio className="size-5" />
+              </div>
+              <CardTitle className="flex items-center gap-2">
+                Sesiones en vivo
+                <span className="rounded-full bg-muted px-2 py-0.5 text-xs font-normal text-muted-foreground">
+                  Pronto
+                </span>
+              </CardTitle>
+              <CardDescription>
+                Emite los juegos en pantalla durante la transmisión.
+              </CardDescription>
+            </CardHeader>
+          </Card>
         </div>
       </main>
     </div>

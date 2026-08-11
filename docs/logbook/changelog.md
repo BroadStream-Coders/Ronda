@@ -12,6 +12,9 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [RM-015] Pantalla de colectores del programa (2026-08-10 22:51)
+`catalog/assignments.ts` (programSlug → [collectorId], en código; Deletreo → que-gane-el-mejor) + rutas `/programs/[slug]/collectors` (lista con estado vacío) y `/collectors/[collectorId]` (Editor + topbar con Volver). Aislamiento por RLS del programa + assignments; la tarjeta "Juegos" del dashboard ya linkea; `/testing` eliminado.
+
 ## [RM-018] Deletreo — primer colector + catálogo (2026-08-10 22:37)
 Catálogo en `src/collector/catalog/`: `registry.ts` (id → { meta, Editor }) y `deletreo/` (Editor con el kit Lego + topbar json + schema/type-guard), con archivos internos genéricos (Editor/Column/Row/schema). `/testing` solo lo renderiza desde el registry. `assignments.ts` + ruta real del programa quedan para RM-015.
 
