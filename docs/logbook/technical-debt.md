@@ -31,6 +31,20 @@ reutiliza). Al resolverse se mueve al `changelog.md` conservando su código.
 - **Impacto futuro:** Se pierden visitantes que sí querían entrar. Lo natural sería que "Empezar" dispare el login de Google (misma acción que el botón "Entrar" del header) y "Conocer más" ancle a una sección.
 - **Fecha:** 2026-08-10 · **Estado:** Abierto
 
+## [TD-007] `middleware.ts` usa el nombre que Next 16 dejó deprecado
+- **Ubicación:** `apps/web/middleware.ts:5` (el archivo y el export `middleware`)
+- **Riesgo:** 3/10
+- **Problema:** Next 16 renombró `middleware` → `proxy` (archivo y función) y dejó el nombre viejo como deprecado. El proyecto sigue en `middleware.ts` exportando `middleware`. Funciona hoy; la única razón válida para quedarse es usar el runtime `edge`, que acá no se usa. La migración es renombrar el archivo a `proxy.ts` y la función a `proxy`.
+- **Impacto futuro:** Ahí viven el refresco de sesión de Supabase y el guard de `/admin` (TD-002). Cuando Next remueva el nombre deprecado, el archivo simplemente deja de correr: no hay error de build, la app arranca y la protección se degrada a los guards de layout/página. Falla en silencio, que es la peor forma. Además el changelog (RM-007) ya lo llama "el proxy", así que el nombre real y el documentado no coinciden.
+- **Fecha:** 2026-08-11 · **Estado:** Abierto
+
+## [TD-006] Los colectores de un programa se asignan por `slug` (mutable)
+- **Ubicación:** `apps/web/src/collector/catalog/assignments.ts:1` (y sus dos consumidores: `app/programs/[slug]/collectors/page.tsx:33` y `.../[collectorId]/page.tsx:25`)
+- **Riesgo:** 5/10
+- **Problema:** El mapa programa→colectores está keyed por `slug`, pero el slug se recalcula desde el nombre en cada edición (`updateProgram` en `data/programs.ts:70`). Si un admin renombra un programa desde `/admin/programs/[id]`, el slug cambia y la entrada de `assignments` deja de matchear: los colectores desaparecen de la lista y la ruta directa al colector devuelve 404, sin error ni aviso. El identificador estable es `program.id` (uuid), que ya está disponible en ambas páginas vía `getProgramBySlug`.
+- **Impacto futuro:** Pérdida silenciosa de acceso a los juegos de un cliente por una acción legítima del admin, y solo se recupera tocando código y redesplegando. Empeora conforme haya más programas y colectores.
+- **Fecha:** 2026-08-11 · **Estado:** Abierto
+
 ## [TD-005] Guard de membresía usa la lista de programas como proxy
 - **Ubicación:** `apps/web/src/data/supabase/middleware.ts` (bloque que redirige a `/` al usuario sin programa)
 - **Riesgo:** 2/10

@@ -43,3 +43,17 @@ se retira de aquí.
   (Turnstile o similar) o límite por IP para que un bot no llene la tabla
   `inquiries` y consuma el tier gratuito de Supabase.
 - **Fecha:** 2026-08-10
+
+## [WL-004] Guardar en la nube lo que se llena en el colector
+- **Idea:** persistir el contenido del colector en la base en vez de que el único
+  destino sea un archivo local. Una tabla `games (program_id, collector_id, data
+  jsonb)` con RLS vía `is_member()`, detrás de `src/data/`, para que el trabajo
+  sobreviva a cerrar la pestaña y se pueda retomar desde otra máquina.
+- **Por qué / valor:** hoy el colector es efímero — el estado vive en memoria y
+  `saveAsJson` descarga un archivo; si ese archivo se pierde, el juego se rehace a
+  mano. Es la diferencia entre una herramienta y un servicio.
+- **Por qué no ahora:** el flujo de archivo local ya cubre la operación real
+  (se llena, se descarga, se lleva al aire) y conviene modelar `data` cuando haya
+  varios colectores portados (RM-022 … RM-033) y se vea qué forma toma de verdad
+  en cada uno, en vez de adivinarla con uno solo.
+- **Fecha:** 2026-08-11 (era la mitad `games` de RM-009; la mitad `sessions` se descartó)
