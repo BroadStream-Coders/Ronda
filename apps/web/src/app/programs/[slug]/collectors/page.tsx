@@ -75,7 +75,9 @@ export default async function CollectorsPage({
                         <Icon className="size-5" />
                       </div>
                       <CardTitle>{meta.name}</CardTitle>
-                      <CardDescription>Colector de datos.</CardDescription>
+                      <CardDescription>
+                        {meta.description ?? "Colector de datos."}
+                      </CardDescription>
                     </CardHeader>
                   </Card>
                 </Link>
