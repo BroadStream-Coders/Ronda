@@ -12,6 +12,12 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [TD-004] Los CTA "Empezar" del home no hacen nada (2026-08-11 15:46)
+Resuelto dentro de RM-035: la landing nueva no tiene botones muertos — "Pedir una reunión" y "Solicitar reunión" anclan a `#contacto`, "Ver qué hacemos" a `#servicios`, y el bloque de contacto resuelve según sesión (formulario, "Ir al panel" o login con Google).
+
+## [RM-035] Identidad visual + landing rediseñada (2026-08-11 15:46)
+Nueva paleta (primary verde petróleo, accent terracota, neutrales cálidos) en `globals.css` para `:root` y `.dark`, tipografías Newsreader + Libre Franklin, logo propio (`ronda-logo.tsx` + `app/icon.svg`) y landing reescrita desde el diseño de Claude Design (hero, clientes, servicios, cómo funciona, nosotros, contacto). Se agregó `next-themes` con toggle claro/oscuro (default claro, sin `enableSystem`).
+
 ## [RM-023] Colector Al Vuelo — sí/no (2026-08-11 10:11)
 Portado a `catalog/si-o-no/` (Editor/Column/Row/schema): grupos con título + filas (pregunta en textarea + botones Sí/No), llenado rápido, export a `true/false/null`. Agregado el componente `textarea` de shadcn. Nombre visible "Al Vuelo" (id interno `si-o-no`), ícono ⚡ y descripciones por colector en la lista.
 

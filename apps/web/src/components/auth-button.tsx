@@ -14,8 +14,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { createClient } from "@/data/supabase/client";
+import { cn } from "@/lib/utils";
 
-export function AuthButton() {
+export function AuthButton({ className }: { className?: string }) {
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
@@ -43,8 +44,18 @@ export function AuthButton() {
 
   if (!user) {
     return (
-      <Button variant="ghost" size="sm" onClick={signIn}>
-        Entrar
+      <Button
+        variant="outline"
+        onClick={signIn}
+        className={cn("h-10 gap-2 px-3.5 text-[15px]", className)}
+      >
+        <svg viewBox="0 0 24 24" className="size-[17px]" aria-hidden>
+          <path
+            fill="currentColor"
+            d="M12 11v2.8h3.98c-.17 1.03-1.2 3.02-3.98 3.02-2.4 0-4.35-1.98-4.35-4.42s1.95-4.42 4.35-4.42c1.36 0 2.27.58 2.79 1.08l1.9-1.83C15.86 5.1 14.13 4.4 12 4.4A7.6 7.6 0 1 0 12 19.6c4.39 0 7.29-3.08 7.29-7.42 0-.5-.05-.88-.12-1.26z"
+          />
+        </svg>
+        <span>Ingresar</span>
       </Button>
     );
   }

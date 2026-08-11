@@ -41,7 +41,8 @@ export function InquiryForm({
           name="subject"
           required
           maxLength={200}
-          placeholder="Quiero un espacio para mi programa"
+          placeholder="Ej. Juego para nueva temporada"
+          className="h-[46px]"
         />
       </div>
 
@@ -53,7 +54,7 @@ export function InquiryForm({
           required
           rows={5}
           maxLength={4000}
-          placeholder="Cuéntanos de tu programa: canal, horario y qué juegos tienes en mente."
+          placeholder="Cuéntame qué programa produces y qué quieres resolver en el aire."
           className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
         />
       </div>
@@ -69,14 +70,16 @@ export function InquiryForm({
         </p>
       )}
 
-      <div className="flex flex-wrap items-center gap-3">
-        <Button type="submit" disabled={pending}>
-          {pending ? "Enviando…" : "Enviar consulta"}
-        </Button>
-        <span className="text-sm text-muted-foreground">
-          Responderemos a {email}
-        </span>
-      </div>
+      <Button
+        type="submit"
+        disabled={pending}
+        className="h-[52px] w-full text-[16.5px] font-semibold"
+      >
+        {pending ? "Enviando…" : "Solicitar reunión"}
+      </Button>
+      <p className="text-center text-[12.5px] text-muted-foreground">
+        Te respondo a {email}. Sin listas de correo ni spam.
+      </p>
     </form>
   );
 }

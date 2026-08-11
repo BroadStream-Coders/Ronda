@@ -17,19 +17,27 @@ reutiliza). Al resolverse se mueve al `changelog.md` conservando su código.
 ---
 
 ## [TD-001] Logos de clientes servidos sin optimizar (`unoptimized`)
-- **Ubicación:** `apps/web/src/app/page.tsx:154` (los `<Image>` de la sección "Ya salieron al aire con Ronda")
+- **Ubicación:** `apps/web/src/app/page.tsx` (los `<Image>` de la sección "Clientes al aire")
 - **Riesgo:** 2/10
 - **Problema:** Los 3 logos de clientes usan la prop `unoptimized`, saltándose el optimizador de `next/image`. Se puso así porque en dev, al reemplazar un archivo dejando el mismo nombre/ruta, el optimizador seguía sirviendo la versión vieja cacheada (`.next/dev/cache/images`, indexada por URL, no por contenido) y ni el hard-refresh lo corregía. Con `unoptimized` la imagen se sirve tal cual desde `/public` y el reemplazo se ve al instante.
 - **Impacto futuro:** Sin optimizar no hay conversión a webp ni resize; con logos actuales (~50KB) es imperceptible, pero con imágenes finales/más pesadas suma peso innecesario en producción.
 - **A corregir cuando:** se desplieguen las imágenes finales — quitar `unoptimized` y dejar que `next/image` las optimice. La caché rancia solo afecta a dev; cada `pnpm build` regenera desde cero.
 - **Fecha:** 2026-08-06 · **Estado:** Abierto
 
-## [TD-004] Los CTA "Empezar" del home no hacen nada
-- **Ubicación:** `apps/web/src/app/page.tsx` (botón "Empezar" del hero y del CTA final; también "Conocer más")
+## [TD-009] El resto de la app nunca se revisó en modo oscuro
+- **Ubicación:** `apps/web/src/app/layout.tsx` (`ThemeProvider`) + páginas de `/admin` y `/programs`
 - **Riesgo:** 3/10
-- **Problema:** Son `<Button>` sin `onClick` ni `render`: se ven clickeables y no pasa nada. Para un visitante anónimo, que es justo el público de la landing, el llamado a la acción principal es un botón muerto.
-- **Impacto futuro:** Se pierden visitantes que sí querían entrar. Lo natural sería que "Empezar" dispare el login de Google (misma acción que el botón "Entrar" del header) y "Conocer más" ancle a una sección.
-- **Fecha:** 2026-08-10 · **Estado:** Abierto
+- **Problema:** Con RM-035 entró `next-themes` y un toggle claro/oscuro en la landing. El `.dark` se aplica a `<html>`, así que admin, dashboard y colectores también cambian de tema, pero se diseñaron solo en claro y nunca se miraron en oscuro. Por eso quedó `defaultTheme="light"` con `enableSystem={false}`: nadie cae en oscuro sin pedirlo.
+- **Impacto futuro:** Si alguien activa el toggle y navega al panel puede encontrar contrastes rotos o superficies planas. Al activar `enableSystem` sin revisar, le pasaría a todos los usuarios con el SO en oscuro.
+- **A corregir cuando:** se revisen admin/programs/colectores en oscuro; recién ahí considerar `enableSystem`.
+- **Fecha:** 2026-08-11 · **Estado:** Abierto
+
+## [TD-010] El formulario de contacto pide menos datos que el diseño
+- **Ubicación:** `apps/web/src/components/inquiry-form.tsx` + `apps/web/src/app/actions.ts:11-12` + tabla `inquiries`
+- **Riesgo:** 2/10
+- **Problema:** El diseño de la landing plantea nombre, programa, correo, asunto y mensaje. La implementación mantiene solo asunto + mensaje: nombre y correo salen de la sesión de Google, y **programa** simplemente no se pide ni se guarda, porque agregarlo exige migración de la tabla y cambiar la server action.
+- **Impacto futuro:** Cada consulta llega sin el dato más útil para calificarla (qué programa produce quien escribe); hay que preguntarlo por correo en un ida y vuelta extra.
+- **Fecha:** 2026-08-11 · **Estado:** Abierto
 
 ## [TD-008] La landing pública se cae si Supabase no responde
 - **Ubicación:** `apps/web/middleware.ts:10` (el `matcher`) + `apps/web/src/data/supabase/middleware.ts:7-28`
