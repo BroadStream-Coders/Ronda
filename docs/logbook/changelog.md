@@ -12,6 +12,9 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [RM-026] Colector Busca el Logo (2026-08-12 15:10)
+Portado a `catalog/busca-logo/` (Editor + BoardsSidebar/Grid/ControlsSidebar/schema): tableros con grid clicable de casillas, tamaño (4x3/5x4/6x5), llenado aleatorio, export `boards` con `logoPositions`. No es Lego (layout propio). Agregado el `select` de shadcn; emojis (⭐/💡) reemplazados por íconos lucide (Star/Lightbulb) por la regla de no-emojis, y "Board"→"Tablero". Registrado y asignado a QGEM.
+
 ## [RM-025] Colector Mi Libro Favorito (2026-08-12 14:48)
 Portado a `catalog/mi-libro-favorito/` (Editor/Column/Row/Players/schema): panel lateral fijo de 2 equipos + rondas (grupos) con filas pregunta/respuesta, llenado rápido, export con `players` (maxHealth 3) + `groups.slots`. Registrado y asignado a QGEM.
 

@@ -19,11 +19,6 @@ Al terminar una tarea se mueve al changelog y se borra de aquí.
   un zip (json + imágenes) con round-trip real.
 - **Fecha:** 2026-08-10 · **Estado:** Abierto
 
-## [RM-026] Colector Busca el Logo
-- **Objetivo:** portar el colector a `catalog/busca-logo/`. Sin imágenes ni pestañas.
-- **Hecho cuando:** funciona dentro de un programa (editar + guardar/cargar json) y es asignable.
-- **Fecha:** 2026-08-10 · **Estado:** Abierto
-
 ## [RM-027] Colector Operaciones Combinadas
 - **Objetivo:** portar el colector a `catalog/operaciones-combinadas/`. Sin imágenes ni pestañas.
 - **Hecho cuando:** funciona dentro de un programa (editar + guardar/cargar json) y es asignable.
@@ -68,3 +63,10 @@ Al terminar una tarea se mueve al changelog y se borra de aquí.
 - **Hecho cuando:** Deletreo bloquea el guardado si hay palabras vacías, apuntando
   al campo (ej. "Ronda 1 · Palabra 3"), con opción de forzar el guardado.
 - **Fecha:** 2026-08-10 · **Estado:** Abierto
+
+## [RM-036] Colector Tres en Raya
+- **Objetivo:** portar el colector a `catalog/tres-en-raya/` (agregado a Studio
+  hace poco). Sistemas que usa (imágenes/pestañas) a confirmar al revisarlo.
+- **Hecho cuando:** funciona dentro de un programa (editar + guardar/cargar) y es
+  asignable.
+- **Fecha:** 2026-08-12 · **Estado:** Abierto
