@@ -19,11 +19,6 @@ Al terminar una tarea se mueve al changelog y se borra de aquí.
   un zip (json + imágenes) con round-trip real.
 - **Fecha:** 2026-08-10 · **Estado:** Abierto
 
-## [RM-024] Colector La Sabes o No
-- **Objetivo:** portar el colector a `catalog/la-sabes-o-no/`. Sin imágenes ni pestañas.
-- **Hecho cuando:** funciona dentro de un programa (editar + guardar/cargar json) y es asignable.
-- **Fecha:** 2026-08-10 · **Estado:** Abierto
-
 ## [RM-025] Colector Mi Libro Favorito
 - **Objetivo:** portar el colector a `catalog/mi-libro-favorito/`. Sin imágenes ni pestañas.
 - **Hecho cuando:** funciona dentro de un programa (editar + guardar/cargar json) y es asignable.

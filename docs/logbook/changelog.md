@@ -12,6 +12,9 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [RM-024] Colector La Sabes o No (2026-08-12 14:43)
+Portado a `catalog/la-sabes-o-no/` (Editor/Column/Row/schema): grupos con título + filas (pregunta + dos respuestas L/R con botón para marcar la correcta), llenado rápido (reparte L/R al azar), export a `options` + `correctIndex`. Registrado y asignado a QGEM.
+
 ## [TD-011] Botones que renderizan enlaces sin `nativeButton={false}` (2026-08-12 14:27)
 `nativeButton={false}` en los seis `Button` de Base UI que renderizan un `<a>` o un `<Link>`: los cinco CTA de la landing y el "Responder" del panel de consultas. Son navegaciones, así que el elemento correcto es el enlace; lo que faltaba era declarárselo a la librería. Verificado: consola limpia.
 Se descartó centralizarlo en `button.tsx` inspeccionando `render.type`: menos código, pero lógica frágil por inferencia.
