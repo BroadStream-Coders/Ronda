@@ -12,6 +12,9 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [RM-028] Colector De Par en Par (2026-08-12 17:34)
+Portado a `catalog/de-par-en-par/` (Editor/Tab1/Tab2/schema): juego de memoria con pestañas — "Recolector" (config de N pares, cada carta imagen/texto/ambos, imágenes inline) y "Tablero" (ordenar/intercambiar/aleatorizar), formato zip. Primer colector con **pestañas** en producción. Asignado a **Más Conectados** (no QGEM).
+
 ## [RM-027] Colector Operaciones Combinadas (2026-08-12 17:29)
 Portado a `catalog/operaciones-combinadas/` (Editor/Sidebar/Grid/List/schema): rondas→tableros, grid 11×11 con colocación de operaciones (clic para ubicar con preview al hover, doble clic para ocultar), extracción tipo crucigrama del pegado, export json. No es Lego (layout propio, mucha lógica). Adaptado `success→emerald`, emoji→Lightbulb, "Board"→"Tablero". Registrado y asignado a QGEM.
 

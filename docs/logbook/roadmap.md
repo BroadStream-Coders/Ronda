@@ -10,11 +10,6 @@ Al terminar una tarea se mueve al changelog y se borra de aquí.
 
 ---
 
-## [RM-028] Colector De Par en Par
-- **Objetivo:** portar el colector a `catalog/de-par-en-par/`. Usa **pestañas** (RM-019, ya listo).
-- **Hecho cuando:** funciona dentro de un programa (editar + guardar/cargar json) y es asignable.
-- **Fecha:** 2026-08-10 · **Estado:** Abierto
-
 ## [RM-029] Colector Reto Cruzado
 - **Objetivo:** portar el colector a `catalog/reto-cruzado/`. Usa **pestañas** (RM-019, ya listo).
 - **Hecho cuando:** funciona dentro de un programa (editar + guardar/cargar json) y es asignable.

@@ -9,6 +9,7 @@ import { buscaLogo } from "./busca-logo";
 import { album } from "./album";
 import { cronos } from "./cronos";
 import { operacionesCombinadas } from "./operaciones-combinadas";
+import { deParEnPar } from "./de-par-en-par";
 
 export interface CollectorMeta {
   id: string;
@@ -32,4 +33,5 @@ export const registry: Record<string, CollectorType> = {
   [album.meta.id]: album,
   [cronos.meta.id]: cronos,
   [operacionesCombinadas.meta.id]: operacionesCombinadas,
+  [deParEnPar.meta.id]: deParEnPar,
 };
