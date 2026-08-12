@@ -24,6 +24,14 @@ reutiliza). Al resolverse se mueve al `changelog.md` conservando su código.
 - **A corregir cuando:** se desplieguen las imágenes finales — quitar `unoptimized` y dejar que `next/image` las optimice. La caché rancia solo afecta a dev; cada `pnpm build` regenera desde cero.
 - **Fecha:** 2026-08-06 · **Estado:** Abierto
 
+## [TD-011] Botones que renderizan enlaces sin `nativeButton={false}`
+- **Ubicación:** `apps/web/src/app/page.tsx:135,142,175,183,549` y `apps/web/src/app/admin/inquiries/page.tsx:71`
+- **Riesgo:** 4/10
+- **Problema:** `components/ui/button.tsx` envuelve el `Button` de Base UI, cuyo prop `nativeButton` viene en `true` por defecto. En esos seis lugares se le pasa `render={<Link/>}` o `render={<a/>}`, así que el elemento final es un `<a>` mientras el primitivo sigue asumiendo semántica de `<button>`. Base UI lo avisa en consola y explica el arreglo: usar un `<button>` real en el `render`, o pasar `nativeButton={false}` cuando no lo es. Acá corresponde lo segundo — son navegaciones, y un `<a href>` es el elemento correcto.
+- **Impacto futuro:** Son los CTA principales de la landing pública ("Pedir una reunión", "Ver qué hacemos", "Ir al panel") más el "responder" del panel de consultas: justo los controles que más se recorren por teclado y lector de pantalla, y donde la semántica mal declarada se nota. Además el aviso ensucia la consola en cada render de `/`, lo que entrena a ignorarla y termina tapando avisos futuros.
+- **A tener en cuenta al corregir:** es tentador centralizarlo en `button.tsx` infiriendo el tipo del elemento pasado en `render`, pero eso es lógica frágil basada en inspeccionar `render.type`. Pasar el prop explícito en los seis call sites es más largo de escribir y más fácil de leer.
+- **Fecha:** 2026-08-12 · **Estado:** Abierto
+
 ## [TD-009] El resto de la app nunca se revisó en modo oscuro
 - **Ubicación:** `apps/web/src/app/layout.tsx` (`ThemeProvider`) + páginas de `/admin` y `/programs`
 - **Riesgo:** 3/10
@@ -52,13 +60,6 @@ reutiliza). Al resolverse se mueve al `changelog.md` conservando su código.
 - **Riesgo:** 3/10
 - **Problema:** Next 16 renombró `middleware` → `proxy` (archivo y función) y dejó el nombre viejo como deprecado. El proyecto sigue en `middleware.ts` exportando `middleware`. Funciona hoy; la única razón válida para quedarse es usar el runtime `edge`, que acá no se usa. La migración es renombrar el archivo a `proxy.ts` y la función a `proxy`.
 - **Impacto futuro:** Ahí viven el refresco de sesión de Supabase y el guard de `/admin` (TD-002). Cuando Next remueva el nombre deprecado, el archivo simplemente deja de correr: no hay error de build, la app arranca y la protección se degrada a los guards de layout/página. Falla en silencio, que es la peor forma. Además el changelog (RM-007) ya lo llama "el proxy", así que el nombre real y el documentado no coinciden.
-- **Fecha:** 2026-08-11 · **Estado:** Abierto
-
-## [TD-006] Los colectores de un programa se asignan por `slug` (mutable)
-- **Ubicación:** `apps/web/src/collector/catalog/assignments.ts:1` (y sus dos consumidores: `app/programs/[slug]/collectors/page.tsx:33` y `.../[collectorId]/page.tsx:25`)
-- **Riesgo:** 5/10
-- **Problema:** El mapa programa→colectores está keyed por `slug`, pero el slug se recalcula desde el nombre en cada edición (`updateProgram` en `data/programs.ts:70`). Si un admin renombra un programa desde `/admin/programs/[id]`, el slug cambia y la entrada de `assignments` deja de matchear: los colectores desaparecen de la lista y la ruta directa al colector devuelve 404, sin error ni aviso. El identificador estable es `program.id` (uuid), que ya está disponible en ambas páginas vía `getProgramBySlug`.
-- **Impacto futuro:** Pérdida silenciosa de acceso a los juegos de un cliente por una acción legítima del admin, y solo se recupera tocando código y redesplegando. Empeora conforme haya más programas y colectores.
 - **Fecha:** 2026-08-11 · **Estado:** Abierto
 
 ## [TD-005] Guard de membresía usa la lista de programas como proxy

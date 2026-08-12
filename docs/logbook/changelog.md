@@ -12,6 +12,10 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [TD-006] Los colectores de un programa se asignan por `slug` (mutable) (2026-08-12 13:44)
+`assignments.ts` pasa a keyearse por `program.id` (uuid inmutable) en vez de `slug`, con el nombre del programa como dato para que el archivo siga siendo legible sin comentarios; los dos call sites usan `program.id`, que ya tenían en scope.
+De paso, Deletreo quedó asignado también a Más Conectados: el catálogo se comparte por tipo de juego y el aislamiento se verificó en la UI (cada programa ve solo lo suyo). El disparador real era más angosto de lo registrado — el form de admin reenvía el slug, había que editarlo a mano.
+
 ## [TD-004] Los CTA "Empezar" del home no hacen nada (2026-08-11 15:46)
 Resuelto dentro de RM-035: la landing nueva no tiene botones muertos — "Pedir una reunión" y "Solicitar reunión" anclan a `#contacto`, "Ver qué hacemos" a `#servicios`, y el bloque de contacto resuelve según sesión (formulario, "Ir al panel" o login con Google).
 

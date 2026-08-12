@@ -22,7 +22,7 @@ export default async function CollectorPage({
   const program = await getProgramBySlug(slug);
   if (!program) notFound();
 
-  const assigned = getProgramCollectors(slug).includes(collectorId);
+  const assigned = getProgramCollectors(program.id).includes(collectorId);
   const collector = registry[collectorId];
   if (!assigned || !collector) notFound();
 

@@ -30,7 +30,7 @@ export default async function CollectorsPage({
   const program = await getProgramBySlug(slug);
   if (!program) notFound();
 
-  const collectors = getProgramCollectors(slug)
+  const collectors = getProgramCollectors(program.id)
     .filter((id) => registry[id])
     .map((id) => ({ id, meta: registry[id].meta }));
 
