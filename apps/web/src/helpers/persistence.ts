@@ -64,3 +64,11 @@ export async function saveAsZip(
 
   setTimeout(() => URL.revokeObjectURL(url), 100);
 }
+
+export async function loadZipFile(file: File): Promise<JSZip> {
+  try {
+    return await JSZip.loadAsync(file);
+  } catch {
+    throw new Error("No se pudo leer el archivo ZIP.");
+  }
+}

@@ -17,7 +17,7 @@ Al terminar una tarea se mueve al changelog y se borra de aquí.
   colectores con fotos. Adaptar a base-nova.
 - **Hecho cuando:** un colector puede subir/recortar una imagen y guardar/cargar
   un zip (json + imágenes) con round-trip real.
-- **Fecha:** 2026-08-10 · **Estado:** Abierto
+- **Fecha:** 2026-08-10 · **Estado:** En progreso (2026-08-12)
 
 ## [RM-027] Colector Operaciones Combinadas
 - **Objetivo:** portar el colector a `catalog/operaciones-combinadas/`. Sin imágenes ni pestañas.
