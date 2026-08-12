@@ -12,6 +12,9 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [RM-025] Colector Mi Libro Favorito (2026-08-12 14:48)
+Portado a `catalog/mi-libro-favorito/` (Editor/Column/Row/Players/schema): panel lateral fijo de 2 equipos + rondas (grupos) con filas pregunta/respuesta, llenado rápido, export con `players` (maxHealth 3) + `groups.slots`. Registrado y asignado a QGEM.
+
 ## [RM-024] Colector La Sabes o No (2026-08-12 14:43)
 Portado a `catalog/la-sabes-o-no/` (Editor/Column/Row/schema): grupos con título + filas (pregunta + dos respuestas L/R con botón para marcar la correcta), llenado rápido (reparte L/R al azar), export a `options` + `correctIndex`. Registrado y asignado a QGEM.
 

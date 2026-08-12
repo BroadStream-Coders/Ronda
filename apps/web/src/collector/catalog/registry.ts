@@ -4,6 +4,7 @@ import { deletreo } from "./deletreo";
 import { calculoMental } from "./calculo-mental";
 import { siONo } from "./si-o-no";
 import { laSabesONo } from "./la-sabes-o-no";
+import { miLibroFavorito } from "./mi-libro-favorito";
 
 export interface CollectorMeta {
   id: string;
@@ -22,4 +23,5 @@ export const registry: Record<string, CollectorType> = {
   [calculoMental.meta.id]: calculoMental,
   [siONo.meta.id]: siONo,
   [laSabesONo.meta.id]: laSabesONo,
+  [miLibroFavorito.meta.id]: miLibroFavorito,
 };
