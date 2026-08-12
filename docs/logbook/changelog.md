@@ -12,6 +12,9 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [RM-032] Colector Cronos (2026-08-12 17:22)
+Portado a `catalog/cronos/` (Editor/Column/Row/schema): columnas (título aparte) con 5 eventos (fecha, título e imagen con **recorte 1:1** vía `ImagePicker crop`), llenado rápido, formato zip. Estrena el crop dialog. Registrado y asignado a QGEM.
+
 ## [RM-030] Colector Álbum (2026-08-12 15:39)
 Portado a `catalog/album/` (Editor/Column/Card/schema): columnas con título + 5 cartas (pregunta + toggle Croma + `ImagePicker`), llenado rápido de preguntas, formato **zip** (json + imágenes empaquetadas). Estrena el sistema de imágenes. Registrado y asignado a QGEM.
 

@@ -7,6 +7,7 @@ import { laSabesONo } from "./la-sabes-o-no";
 import { miLibroFavorito } from "./mi-libro-favorito";
 import { buscaLogo } from "./busca-logo";
 import { album } from "./album";
+import { cronos } from "./cronos";
 
 export interface CollectorMeta {
   id: string;
@@ -28,4 +29,5 @@ export const registry: Record<string, CollectorType> = {
   [miLibroFavorito.meta.id]: miLibroFavorito,
   [buscaLogo.meta.id]: buscaLogo,
   [album.meta.id]: album,
+  [cronos.meta.id]: cronos,
 };
