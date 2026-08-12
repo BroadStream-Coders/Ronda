@@ -132,6 +132,7 @@ export default async function Home() {
             {panel ? (
               <Button
                 className="h-10 px-4 text-[15px]"
+                nativeButton={false}
                 render={<Link href={panel} />}
               >
                 Ir al panel <ArrowRight />
@@ -139,6 +140,7 @@ export default async function Home() {
             ) : (
               <Button
                 className="h-10 px-[18px] text-[15px] font-semibold"
+                nativeButton={false}
                 render={<a href="#contacto" />}
               >
                 Solicitar reunión
@@ -172,6 +174,7 @@ export default async function Home() {
               <div className="mb-[30px] flex flex-wrap gap-3">
                 <Button
                   className="h-[52px] gap-2.5 px-6 text-[16.5px] font-semibold"
+                  nativeButton={false}
                   render={<a href="#contacto" />}
                 >
                   Pedir una reunión
@@ -180,6 +183,7 @@ export default async function Home() {
                 <Button
                   variant="outline"
                   className="h-[52px] px-6 text-[16.5px] font-semibold"
+                  nativeButton={false}
                   render={<a href="#servicios" />}
                 >
                   Ver qué hacemos
@@ -546,6 +550,7 @@ export default async function Home() {
                   </p>
                   <Button
                     className="h-[52px] w-full gap-2.5 text-[16.5px] font-semibold"
+                    nativeButton={false}
                     render={<Link href={panel} />}
                   >
                     Ir al panel <ArrowRight className="size-[18px]" />

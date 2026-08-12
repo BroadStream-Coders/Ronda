@@ -70,6 +70,7 @@ export default async function AdminInquiriesPage() {
                     <Button
                       variant="ghost"
                       size="sm"
+                      nativeButton={false}
                       render={
                         <a
                           href={`mailto:${inquiry.email}?subject=${encodeURIComponent(

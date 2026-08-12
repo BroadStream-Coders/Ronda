@@ -24,14 +24,6 @@ reutiliza). Al resolverse se mueve al `changelog.md` conservando su código.
 - **A corregir cuando:** se desplieguen las imágenes finales — quitar `unoptimized` y dejar que `next/image` las optimice. La caché rancia solo afecta a dev; cada `pnpm build` regenera desde cero.
 - **Fecha:** 2026-08-06 · **Estado:** Abierto
 
-## [TD-011] Botones que renderizan enlaces sin `nativeButton={false}`
-- **Ubicación:** `apps/web/src/app/page.tsx:135,142,175,183,549` y `apps/web/src/app/admin/inquiries/page.tsx:71`
-- **Riesgo:** 4/10
-- **Problema:** `components/ui/button.tsx` envuelve el `Button` de Base UI, cuyo prop `nativeButton` viene en `true` por defecto. En esos seis lugares se le pasa `render={<Link/>}` o `render={<a/>}`, así que el elemento final es un `<a>` mientras el primitivo sigue asumiendo semántica de `<button>`. Base UI lo avisa en consola y explica el arreglo: usar un `<button>` real en el `render`, o pasar `nativeButton={false}` cuando no lo es. Acá corresponde lo segundo — son navegaciones, y un `<a href>` es el elemento correcto.
-- **Impacto futuro:** Son los CTA principales de la landing pública ("Pedir una reunión", "Ver qué hacemos", "Ir al panel") más el "responder" del panel de consultas: justo los controles que más se recorren por teclado y lector de pantalla, y donde la semántica mal declarada se nota. Además el aviso ensucia la consola en cada render de `/`, lo que entrena a ignorarla y termina tapando avisos futuros.
-- **A tener en cuenta al corregir:** es tentador centralizarlo en `button.tsx` infiriendo el tipo del elemento pasado en `render`, pero eso es lógica frágil basada en inspeccionar `render.type`. Pasar el prop explícito en los seis call sites es más largo de escribir y más fácil de leer.
-- **Fecha:** 2026-08-12 · **Estado:** Abierto
-
 ## [TD-009] El resto de la app nunca se revisó en modo oscuro
 - **Ubicación:** `apps/web/src/app/layout.tsx` (`ThemeProvider`) + páginas de `/admin` y `/programs`
 - **Riesgo:** 3/10

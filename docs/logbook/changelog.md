@@ -12,6 +12,10 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [TD-011] Botones que renderizan enlaces sin `nativeButton={false}` (2026-08-12 14:27)
+`nativeButton={false}` en los seis `Button` de Base UI que renderizan un `<a>` o un `<Link>`: los cinco CTA de la landing y el "Responder" del panel de consultas. Son navegaciones, así que el elemento correcto es el enlace; lo que faltaba era declarárselo a la librería. Verificado: consola limpia.
+Se descartó centralizarlo en `button.tsx` inspeccionando `render.type`: menos código, pero lógica frágil por inferencia.
+
 ## [TD-006] Los colectores de un programa se asignan por `slug` (mutable) (2026-08-12 13:44)
 `assignments.ts` pasa a keyearse por `program.id` (uuid inmutable) en vez de `slug`, con el nombre del programa como dato para que el archivo siga siendo legible sin comentarios; los dos call sites usan `program.id`, que ya tenían en scope.
 De paso, Deletreo quedó asignado también a Más Conectados: el catálogo se comparte por tipo de juego y el aislamiento se verificó en la UI (cada programa ve solo lo suyo). El disparador real era más angosto de lo registrado — el form de admin reenvía el slug, había que editarlo a mano.
