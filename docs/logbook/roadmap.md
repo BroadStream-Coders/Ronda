@@ -10,15 +10,6 @@ Al terminar una tarea se mueve al changelog y se borra de aquí.
 
 ---
 
-## [RM-021] Sistema de imágenes (crop + carga zip)
-- **Objetivo:** portar de Studio el sistema de imágenes: `ImagePicker` + recorte
-  (`ImageCropperDialog`, `use-image-picker`, `cropImage`) y la carga de bundles
-  (`loadZipFile`, diferida en RM-016), al kit del colector. Prerequisito de los
-  colectores con fotos. Adaptar a base-nova.
-- **Hecho cuando:** un colector puede subir/recortar una imagen y guardar/cargar
-  un zip (json + imágenes) con round-trip real.
-- **Fecha:** 2026-08-10 · **Estado:** En progreso (2026-08-12)
-
 ## [RM-027] Colector Operaciones Combinadas
 - **Objetivo:** portar el colector a `catalog/operaciones-combinadas/`. Sin imágenes ni pestañas.
 - **Hecho cuando:** funciona dentro de un programa (editar + guardar/cargar json) y es asignable.
@@ -32,11 +23,6 @@ Al terminar una tarea se mueve al changelog y se borra de aquí.
 ## [RM-029] Colector Reto Cruzado
 - **Objetivo:** portar el colector a `catalog/reto-cruzado/`. Usa **pestañas** (RM-019, ya listo).
 - **Hecho cuando:** funciona dentro de un programa (editar + guardar/cargar json) y es asignable.
-- **Fecha:** 2026-08-10 · **Estado:** Abierto
-
-## [RM-030] Colector Álbum
-- **Objetivo:** portar el colector a `catalog/album/`. Usa **imágenes** → depende de RM-021.
-- **Hecho cuando:** funciona dentro de un programa (editar + guardar/cargar zip con imágenes) y es asignable.
 - **Fecha:** 2026-08-10 · **Estado:** Abierto
 
 ## [RM-031] Colector Galería de Fotos

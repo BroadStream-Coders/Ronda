@@ -12,6 +12,12 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [RM-030] Colector Álbum (2026-08-12 15:39)
+Portado a `catalog/album/` (Editor/Column/Card/schema): columnas con título + 5 cartas (pregunta + toggle Croma + `ImagePicker`), llenado rápido de preguntas, formato **zip** (json + imágenes empaquetadas). Estrena el sistema de imágenes. Registrado y asignado a QGEM.
+
+## [RM-021] Sistema de imágenes (crop + carga zip) (2026-08-12 15:39)
+`src/collector/kit/images/` (ImagePicker + ImageCropperDialog + use-image-picker + crop-image) exportado desde el kit, `loadZipFile` en persistence, tipo `ImageSlot` compartido. Deps: react-easy-crop + shadcn dialog/slider. Verificado end-to-end vía Álbum (upload + zip round-trip); el recorte se ejercita cuando llegue un colector con `crop`.
+
 ## [RM-026] Colector Busca el Logo (2026-08-12 15:10)
 Portado a `catalog/busca-logo/` (Editor + BoardsSidebar/Grid/ControlsSidebar/schema): tableros con grid clicable de casillas, tamaño (4x3/5x4/6x5), llenado aleatorio, export `boards` con `logoPositions`. No es Lego (layout propio). Agregado el `select` de shadcn; emojis (⭐/💡) reemplazados por íconos lucide (Star/Lightbulb) por la regla de no-emojis, y "Board"→"Tablero". Registrado y asignado a QGEM.
 
