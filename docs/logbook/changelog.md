@@ -12,6 +12,9 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [RM-027] Colector Operaciones Combinadas (2026-08-12 17:29)
+Portado a `catalog/operaciones-combinadas/` (Editor/Sidebar/Grid/List/schema): rondas→tableros, grid 11×11 con colocación de operaciones (clic para ubicar con preview al hover, doble clic para ocultar), extracción tipo crucigrama del pegado, export json. No es Lego (layout propio, mucha lógica). Adaptado `success→emerald`, emoji→Lightbulb, "Board"→"Tablero". Registrado y asignado a QGEM.
+
 ## [RM-032] Colector Cronos (2026-08-12 17:22)
 Portado a `catalog/cronos/` (Editor/Column/Row/schema): columnas (título aparte) con 5 eventos (fecha, título e imagen con **recorte 1:1** vía `ImagePicker crop`), llenado rápido, formato zip. Estrena el crop dialog. Registrado y asignado a QGEM.
 
