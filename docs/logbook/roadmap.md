@@ -10,11 +10,6 @@ Al terminar una tarea se mueve al changelog y se borra de aquí.
 
 ---
 
-## [RM-029] Colector Reto Cruzado
-- **Objetivo:** portar el colector a `catalog/reto-cruzado/`. Usa **pestañas** (RM-019, ya listo).
-- **Hecho cuando:** funciona dentro de un programa (editar + guardar/cargar json) y es asignable.
-- **Fecha:** 2026-08-10 · **Estado:** Abierto
-
 ## [RM-031] Colector Galería de Fotos
 - **Objetivo:** portar el colector a `catalog/galeria-fotos/`. Usa **imágenes** → depende de RM-021.
 - **Hecho cuando:** funciona dentro de un programa (editar + guardar/cargar zip con imágenes) y es asignable.

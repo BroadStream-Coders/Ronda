@@ -12,6 +12,9 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [RM-029] Colector Reto Cruzado (2026-08-12 19:45)
+Portado a `catalog/reto-cruzado/` (Editor/Columns/Rows/Level0/schema): cinco niveles en pestañas — lista de valores (máx. 20), preguntas L/R, opción múltiple A-D, tres pares por fila y pregunta/respuesta, cada uno con su llenado rápido; export json con las cinco secciones. Los refs imperativos de Studio se reemplazaron por estado en el Editor y una grilla genérica `Columns<T>` para los niveles 1-4. Registrado y asignado a QGEM.
+
 ## [RM-028] Colector De Par en Par (2026-08-12 17:34)
 Portado a `catalog/de-par-en-par/` (Editor/Tab1/Tab2/schema): juego de memoria con pestañas — "Recolector" (config de N pares, cada carta imagen/texto/ambos, imágenes inline) y "Tablero" (ordenar/intercambiar/aleatorizar), formato zip. Primer colector con **pestañas** en producción. Asignado a **Más Conectados** (no QGEM).
 
