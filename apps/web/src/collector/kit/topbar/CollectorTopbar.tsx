@@ -1,14 +1,17 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
 import { ArrowLeft, Download, Upload } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ValidationDialog } from "../validation/ValidationDialog";
+import type { ValidationIssue } from "../validation/validation";
 import { useWorkspaceHeader } from "./use-workspace-header";
 
 export function CollectorTopbar({ backHref }: { backHref?: string }) {
-  const { title, icon, format, onSave, onLoad } = useWorkspaceHeader();
+  const { title, icon, format, onSave, onLoad, validate } = useWorkspaceHeader();
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [issues, setIssues] = useState<ValidationIssue[]>([]);
 
   if (!title) return null;
 
@@ -16,6 +19,20 @@ export function CollectorTopbar({ backHref }: { backHref?: string }) {
     const file = e.target.files?.[0];
     if (file && onLoad) onLoad(file);
     e.target.value = "";
+  };
+
+  const handleSave = () => {
+    const found = validate?.() ?? [];
+    if (found.length > 0) {
+      setIssues(found);
+      return;
+    }
+    onSave?.();
+  };
+
+  const handleForceSave = () => {
+    setIssues([]);
+    onSave?.();
   };
 
   return (
@@ -49,7 +66,7 @@ export function CollectorTopbar({ backHref }: { backHref?: string }) {
           </Button>
         )}
         {onSave && (
-          <Button size="sm" onClick={onSave}>
+          <Button size="sm" onClick={handleSave}>
             <Download /> Guardar
           </Button>
         )}
@@ -61,6 +78,13 @@ export function CollectorTopbar({ backHref }: { backHref?: string }) {
           className="hidden"
         />
       </div>
+
+      <ValidationDialog
+        open={issues.length > 0}
+        onClose={() => setIssues([])}
+        onForceSave={handleForceSave}
+        issues={issues}
+      />
     </header>
   );
 }

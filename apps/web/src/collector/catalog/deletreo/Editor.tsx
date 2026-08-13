@@ -11,7 +11,7 @@ import {
   useWorkspaceHeader,
 } from "@/collector/kit";
 import { Column } from "./Column";
-import { buildData, isData, type Data } from "./schema";
+import { buildData, isData, validate, type Data } from "./schema";
 
 export function Editor() {
   const {
@@ -31,6 +31,8 @@ export function Editor() {
   const handleSave = useCallback(() => {
     saveAsJson("Deletreo.json", buildData(groups));
   }, [groups]);
+
+  const handleValidate = useCallback(() => validate(groups), [groups]);
 
   const handleLoad = useCallback(
     async (file: File) => {
@@ -53,8 +55,9 @@ export function Editor() {
       format: "json",
       onSave: handleSave,
       onLoad: handleLoad,
+      validate: handleValidate,
     });
-  }, [setHeader, handleSave, handleLoad]);
+  }, [setHeader, handleSave, handleLoad, handleValidate]);
 
   return (
     <GroupsContainer onAddGroup={addGroup} addLabel="Agregar ronda">

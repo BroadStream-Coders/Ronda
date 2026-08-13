@@ -3,12 +3,15 @@
 import { create } from "zustand";
 import type { ReactNode } from "react";
 
+import type { ValidationIssue } from "../validation/validation";
+
 interface WorkspaceHeaderState {
   title: string | null;
   icon: ReactNode | null;
   format?: "json" | "zip";
   onSave?: () => void;
   onLoad?: (file: File) => void;
+  validate?: () => ValidationIssue[];
   setHeader: (
     header: Omit<WorkspaceHeaderState, "setHeader" | "resetHeader">,
   ) => void;
@@ -21,6 +24,7 @@ export const useWorkspaceHeader = create<WorkspaceHeaderState>((set) => ({
   format: undefined,
   onSave: undefined,
   onLoad: undefined,
+  validate: undefined,
   setHeader: (header) => set((state) => ({ ...state, ...header })),
   resetHeader: () =>
     set({
@@ -29,5 +33,6 @@ export const useWorkspaceHeader = create<WorkspaceHeaderState>((set) => ({
       format: undefined,
       onSave: undefined,
       onLoad: undefined,
+      validate: undefined,
     }),
 }));

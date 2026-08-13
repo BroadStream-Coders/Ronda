@@ -12,6 +12,9 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [RM-034] Sistema de validación (pre-guardado) (2026-08-13 11:47)
+`kit/validation/` (helpers `ValidationIssue`/`isBlank`/`formatPath` + `ValidationDialog`) exportado desde el kit, campo opcional `validate` en el store del header y compuerta en `CollectorTopbar`: si `validate()` devuelve problemas, el diálogo bloquea el guardado listando dónde está cada uno, con "Guardar de todos modos". Es opt-in — el colector que no pasa `validate` guarda directo. Estrenado en Deletreo (palabras vacías → "Ronda 1 · Palabra 3"); los otros 12 colectores todavía no definen el suyo.
+
 ## [RM-036] Colector Tres en Raya (2026-08-13 11:28)
 Portado a `catalog/tres-en-raya/` (Editor/Column/Row/schema): rondas de 9 casillas fijas con pregunta y respuesta, llenado rápido de 2 columnas, export json (`groups[].questions[]`). Solo usa Lego — ni imágenes ni pestañas. Registrado y asignado a QGEM; con esto el catálogo queda con los 13 juegos de Studio.
 
