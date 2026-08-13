@@ -12,6 +12,7 @@ import { operacionesCombinadas } from "./operaciones-combinadas";
 import { deParEnPar } from "./de-par-en-par";
 import { retoCruzado } from "./reto-cruzado";
 import { intruso } from "./intruso";
+import { galeriaFotos } from "./galeria-fotos";
 
 export interface CollectorMeta {
   id: string;
@@ -38,4 +39,5 @@ export const registry: Record<string, CollectorType> = {
   [deParEnPar.meta.id]: deParEnPar,
   [retoCruzado.meta.id]: retoCruzado,
   [intruso.meta.id]: intruso,
+  [galeriaFotos.meta.id]: galeriaFotos,
 };

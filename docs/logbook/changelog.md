@@ -12,6 +12,9 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [RM-031] Colector Galería de Fotos (2026-08-13 08:29)
+Portado a `catalog/galeria-fotos/` (Editor/Column/Row/schema): grupos con título y hasta 30 fotos cada uno (solo imagen, sin texto), formato zip con `groups[].items[].imagePath` (`images/G1_I1.ext`). Los títulos, que en Studio vivían en un array paralelo a los grupos, ahora son parte de la columna. Registrado y asignado a QGEM.
+
 ## [RM-033] Colector Intruso (2026-08-13 08:20)
 Portado a `catalog/intruso/` (Editor/Level1/Level2/Card/schema): dos niveles en pestañas — imagen única con recorte 21:9 + hasta 4 opciones de texto, y contexto + hasta 4 fotos con recorte 3:4, con un solo intruso marcado por ronda; formato zip (`textRounds`/`photoRounds`). El emoji del botón de intruso se reemplazó por el ícono Target. Registrado y asignado a QGEM.
 
