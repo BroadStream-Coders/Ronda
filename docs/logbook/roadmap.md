@@ -15,11 +15,6 @@ Al terminar una tarea se mueve al changelog y se borra de aquí.
 - **Hecho cuando:** funciona dentro de un programa (editar + guardar/cargar zip con imágenes) y es asignable.
 - **Fecha:** 2026-08-10 · **Estado:** Abierto
 
-## [RM-033] Colector Intruso
-- **Objetivo:** portar el colector a `catalog/intruso/`. Usa **pestañas** (RM-019) + **imágenes** → depende de RM-021.
-- **Hecho cuando:** funciona dentro de un programa (editar + guardar/cargar zip con imágenes) y es asignable.
-- **Fecha:** 2026-08-10 · **Estado:** Abierto
-
 ## [RM-034] Sistema de validación (pre-guardado)
 - **Objetivo:** portar de Studio el sistema de validación opt-in: helpers
   `validation.ts` (`ValidationIssue`, `isBlank`, `formatPath`), `ValidationDialog`

@@ -12,6 +12,9 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [RM-033] Colector Intruso (2026-08-13 08:20)
+Portado a `catalog/intruso/` (Editor/Level1/Level2/Card/schema): dos niveles en pestañas — imagen única con recorte 21:9 + hasta 4 opciones de texto, y contexto + hasta 4 fotos con recorte 3:4, con un solo intruso marcado por ronda; formato zip (`textRounds`/`photoRounds`). El emoji del botón de intruso se reemplazó por el ícono Target. Registrado y asignado a QGEM.
+
 ## [RM-029] Colector Reto Cruzado (2026-08-12 19:45)
 Portado a `catalog/reto-cruzado/` (Editor/Columns/Rows/Level0/schema): cinco niveles en pestañas — lista de valores (máx. 20), preguntas L/R, opción múltiple A-D, tres pares por fila y pregunta/respuesta, cada uno con su llenado rápido; export json con las cinco secciones. Los refs imperativos de Studio se reemplazaron por estado en el Editor y una grilla genérica `Columns<T>` para los niveles 1-4. Registrado y asignado a QGEM.
 

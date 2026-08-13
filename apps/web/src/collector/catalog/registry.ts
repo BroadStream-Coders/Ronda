@@ -11,6 +11,7 @@ import { cronos } from "./cronos";
 import { operacionesCombinadas } from "./operaciones-combinadas";
 import { deParEnPar } from "./de-par-en-par";
 import { retoCruzado } from "./reto-cruzado";
+import { intruso } from "./intruso";
 
 export interface CollectorMeta {
   id: string;
@@ -36,4 +37,5 @@ export const registry: Record<string, CollectorType> = {
   [operacionesCombinadas.meta.id]: operacionesCombinadas,
   [deParEnPar.meta.id]: deParEnPar,
   [retoCruzado.meta.id]: retoCruzado,
+  [intruso.meta.id]: intruso,
 };
