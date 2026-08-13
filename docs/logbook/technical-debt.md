@@ -54,6 +54,27 @@ reutiliza). Al resolverse se mueve al `changelog.md` conservando su código.
 - **Impacto futuro:** Ahí viven el refresco de sesión de Supabase y el guard de `/admin` (TD-002). Cuando Next remueva el nombre deprecado, el archivo simplemente deja de correr: no hay error de build, la app arranca y la protección se degrada a los guards de layout/página. Falla en silencio, que es la peor forma. Además el changelog (RM-007) ya lo llama "el proxy", así que el nombre real y el documentado no coinciden.
 - **Fecha:** 2026-08-11 · **Estado:** Abierto
 
+## [TD-012] Alto fijo del recortador de imágenes
+- **Ubicación:** `apps/web/src/collector/kit/images/ImageCropperDialog.tsx:70`
+- **Riesgo:** 4/10
+- **Problema:** El área de recorte es `h-[400px]` fija. Sumando el padding del diálogo, el título, el slider de zoom y los botones, el modal pasa del alto útil de una pantalla de 720p.
+- **Impacto futuro:** En laptops de baja resolución el modal se sale de la pantalla y Cancelar/Confirmar quedan fuera de vista, bloqueando el recorte. Hoy lo usan Cronos e Intruso, y sumará De Par en Par si más adelante se le activa el recorte ([[RM-043]]).
+- **Fecha:** 2026-08-13 · **Estado:** Abierto
+
+## [TD-013] Anchos máximos fijos por cantidad de pares en De Par en Par
+- **Ubicación:** `apps/web/src/collector/catalog/de-par-en-par/Tab2.tsx:106-118`
+- **Riesgo:** 4/10
+- **Problema:** El tablero elige `max-w-[1200px]`, `[950px]`, `[1100px]` o `[1400px]` según cuántos pares haya. Son medidas afinadas a ojo para 1080p, no derivadas del espacio disponible.
+- **Impacto futuro:** En resoluciones distintas el tablero se desborda o deja las cartas demasiado chicas o grandes, y cada nuevo conteo de pares pide otro número mágico.
+- **Fecha:** 2026-08-13 · **Estado:** Abierto
+
+## [TD-014] Los colectores no tienen scroll vertical en pantallas bajas
+- **Ubicación:** `apps/web/src/collector/kit/lego/layout/GroupsContainer.tsx:17` (y la ruta del colector, `apps/web/src/app/programs/[slug]/collectors/[collectorId]/page.tsx:32`)
+- **Riesgo:** 5/10
+- **Problema:** `GroupsContainer` es `h-full overflow-y-hidden`: da scroll horizontal entre columnas, pero ninguno vertical. La columna reparte su alto entre título, filas y pie, así que en una pantalla baja las filas se comprimen o se cortan sin válvula de escape. La ruta en sí está sana (`h-dvh` + `min-h-0 flex-1`, sin números mágicos), el problema es solo del contenedor.
+- **Impacto futuro:** En laptops de 720p —caso real de producción— se pierden filas o el pie con el llenado rápido queda inaccesible. No falla, solo "se ve mal", que es lo que lo hace difícil de diagnosticar.
+- **Fecha:** 2026-08-13 · **Estado:** Abierto
+
 ## [TD-005] Guard de membresía usa la lista de programas como proxy
 - **Ubicación:** `apps/web/src/data/supabase/middleware.ts` (bloque que redirige a `/` al usuario sin programa)
 - **Riesgo:** 2/10

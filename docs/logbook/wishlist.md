@@ -44,16 +44,43 @@ se retira de aquí.
   `inquiries` y consuma el tier gratuito de Supabase.
 - **Fecha:** 2026-08-10
 
-## [WL-004] Guardar en la nube lo que se llena en el colector
-- **Idea:** persistir el contenido del colector en la base en vez de que el único
-  destino sea un archivo local. Una tabla `games (program_id, collector_id, data
-  jsonb)` con RLS vía `is_member()`, detrás de `src/data/`, para que el trabajo
-  sobreviva a cerrar la pestaña y se pueda retomar desde otra máquina.
-- **Por qué / valor:** hoy el colector es efímero — el estado vive en memoria y
-  `saveAsJson` descarga un archivo; si ese archivo se pierde, el juego se rehace a
-  mano. Es la diferencia entre una herramienta y un servicio.
-- **Por qué no ahora:** el flujo de archivo local ya cubre la operación real
-  (se llena, se descarga, se lleva al aire) y conviene modelar `data` cuando haya
-  varios colectores portados (RM-022 … RM-033) y se vea qué forma toma de verdad
-  en cada uno, en vez de adivinarla con uno solo.
-- **Fecha:** 2026-08-11 (era la mitad `games` de RM-009; la mitad `sessions` se descartó)
+## [WL-005] Validaciones propias de Operaciones Combinadas
+- **Idea:** dos chequeos que hoy no existen, sobre el sistema de validación
+  ([[RM-034]]): (1) **aritmética** — que cada operación cuadre respecto a su forma
+  `operandoA operador operandoB = resultado`; (2) **secuencias completas** — que
+  ningún `sequence.values` quede con length ≠ 5 o sin el `"="` y/o el resultado.
+  Ambos reportan dónde está el problema antes de guardar.
+- **Por qué / valor:** es el único colector donde el dato puede estar *mal* y no
+  solo incompleto: una operación que no cuadra se ve bien en pantalla y recién falla
+  al aire. Va detrás de RM-034 porque reusa su `validate` y su diálogo.
+- **Fecha:** 2026-08-13 (venía del roadmap de Studio, RM-011 y RM-012)
+
+## [WL-006] Reordenar filas por drag & drop dentro de una columna
+- **Idea:** poder arrastrar una fila dentro de su columna para cambiarle el orden,
+  en el kit Lego — es decir, en todos los colectores que usan columnas y filas, no
+  en uno solo. Camino sugerido: `@dnd-kit` (sortable) en vez de programar el
+  arrastre a mano; el orden persistido ya es el orden del array de la columna.
+- **Por qué / valor:** hoy la única forma de cambiar el orden es reescribir el
+  contenido de las filas a mano. En algunos juegos el orden además *es* el dato
+  (Cronos: la línea de tiempo es la respuesta), así que ahí deja de ser comodidad.
+- **Fecha:** 2026-08-13 (venía del roadmap de Studio, RM-016, acotado a Cronos)
+
+## [WL-007] Llenado rápido desde el portapapeles con un solo botón
+- **Idea:** un botón en el llenado rápido que lea el portapapeles
+  (`navigator.clipboard.readText()`) y ejecute el llenado de una, sin pegar en el
+  textarea ni enviar aparte. Reusa el parseo actual; hay que contemplar el permiso
+  de portapapeles del navegador.
+- **Por qué / valor:** `QuickLoad` es del kit, así que un botón mejora de golpe a
+  los 11 colectores que lo usan. El flujo real es copiar de Excel y pegar: hoy son
+  tres pasos (copiar, pegar, enviar) donde puede ser uno.
+- **Fecha:** 2026-08-13 (venía del roadmap de Studio, RM-017, acotado a Cronos)
+
+## [WL-008] Llenado rápido de imágenes
+- **Idea:** el equivalente del llenado rápido pero para fotos: elegir varias
+  imágenes de una y que se repartan en orden entre los espacios de la columna, en
+  vez de subirlas de a una. A definir al empezar: si el orden lo da el nombre del
+  archivo o el de selección, y qué pasa si sobran o faltan respecto a los espacios.
+- **Por qué / valor:** los colectores de imágenes son los más lentos de llenar —
+  Álbum, Cronos, Galería de Fotos e Intruso piden entre 4 y 30 fotos por columna,
+  todas de a un clic. Es el mismo ahorro que dio el llenado rápido para texto.
+- **Fecha:** 2026-08-13

@@ -12,6 +12,9 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [RM-036] Colector Tres en Raya (2026-08-13 11:28)
+Portado a `catalog/tres-en-raya/` (Editor/Column/Row/schema): rondas de 9 casillas fijas con pregunta y respuesta, llenado rápido de 2 columnas, export json (`groups[].questions[]`). Solo usa Lego — ni imágenes ni pestañas. Registrado y asignado a QGEM; con esto el catálogo queda con los 13 juegos de Studio.
+
 ## [RM-031] Colector Galería de Fotos (2026-08-13 08:29)
 Portado a `catalog/galeria-fotos/` (Editor/Column/Row/schema): grupos con título y hasta 30 fotos cada uno (solo imagen, sin texto), formato zip con `groups[].items[].imagePath` (`images/G1_I1.ext`). Los títulos, que en Studio vivían en un array paralelo a los grupos, ahora son parte de la columna. Registrado y asignado a QGEM.
 

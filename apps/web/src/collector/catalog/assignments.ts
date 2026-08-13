@@ -16,6 +16,7 @@ export const assignments: Record<string, Assignment> = {
       "reto-cruzado",
       "intruso",
       "galeria-fotos",
+      "tres-en-raya",
     ],
   },
   "a379ba63-30eb-4acc-95b4-5080b02c7516": {
