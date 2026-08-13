@@ -18,6 +18,7 @@ import {
   initialGroups,
   initialPlayers,
   isData,
+  validate,
   type Data,
   type PlayerData,
 } from "./schema";
@@ -66,6 +67,11 @@ export function Editor() {
     [setGroups],
   );
 
+  const handleValidate = useCallback(
+    () => validate(players, groups),
+    [players, groups],
+  );
+
   useEffect(() => () => resetHeader(), [resetHeader]);
 
   useEffect(() => {
@@ -75,8 +81,9 @@ export function Editor() {
       format: "json",
       onSave: handleSave,
       onLoad: handleLoad,
+      validate: handleValidate,
     });
-  }, [setHeader, handleSave, handleLoad]);
+  }, [setHeader, handleSave, handleLoad, handleValidate]);
 
   return (
     <div className="flex h-full overflow-hidden">

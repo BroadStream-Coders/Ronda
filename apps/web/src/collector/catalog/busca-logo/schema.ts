@@ -1,3 +1,5 @@
+import { formatPath, type ValidationIssue } from "@/collector/kit";
+
 export type BoardSize = "4x3" | "5x4" | "6x5";
 
 export const VALID_BOARD_SIZES: BoardSize[] = ["4x3", "5x4", "6x5"];
@@ -45,6 +47,19 @@ export function fromData(data: Data): BoardData[] {
     }
   }
   return boards;
+}
+
+export function validate(boards: BoardData[]): ValidationIssue[] {
+  const issues: ValidationIssue[] = [];
+  boards.forEach((board, boardIndex) => {
+    if (board.logoPositions.length === 0) {
+      issues.push({
+        path: formatPath(`Tablero ${boardIndex + 1}`),
+        message: "El tablero no tiene ningún logo marcado.",
+      });
+    }
+  });
+  return issues;
 }
 
 export function isData(data: unknown): data is Data {

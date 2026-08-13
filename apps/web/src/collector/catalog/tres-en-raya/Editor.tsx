@@ -11,6 +11,7 @@ import {
   createEmptyColumn,
   fromData,
   isData,
+  validate,
   type Data,
   type RowData,
 } from "./schema";
@@ -71,6 +72,8 @@ export function Editor() {
     }
   }, []);
 
+  const handleValidate = useCallback(() => validate(columns), [columns]);
+
   useEffect(() => () => resetHeader(), [resetHeader]);
 
   useEffect(() => {
@@ -80,8 +83,9 @@ export function Editor() {
       format: "json",
       onSave: handleSave,
       onLoad: handleLoad,
+      validate: handleValidate,
     });
-  }, [setHeader, handleSave, handleLoad]);
+  }, [setHeader, handleSave, handleLoad, handleValidate]);
 
   return (
     <GroupsContainer onAddGroup={addColumn} addLabel="Agregar ronda">

@@ -14,6 +14,7 @@ import {
   createEmptyPhoto,
   createEmptyRound,
   uid,
+  validate,
   type AlbumRound,
   type Data,
 } from "./schema";
@@ -181,6 +182,8 @@ export function Editor() {
     }
   }, []);
 
+  const handleValidate = useCallback(() => validate(rounds), [rounds]);
+
   useEffect(() => () => resetHeader(), [resetHeader]);
 
   useEffect(() => {
@@ -190,8 +193,9 @@ export function Editor() {
       format: "zip",
       onSave: handleSave,
       onLoad: handleLoad,
+      validate: handleValidate,
     });
-  }, [setHeader, handleSave, handleLoad]);
+  }, [setHeader, handleSave, handleLoad, handleValidate]);
 
   return (
     <GroupsContainer onAddGroup={addRound} addLabel="Agregar columna">

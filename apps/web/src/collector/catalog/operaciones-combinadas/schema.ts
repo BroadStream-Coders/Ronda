@@ -1,3 +1,5 @@
+import { formatPath, isBlank, type ValidationIssue } from "@/collector/kit";
+
 export type Direction = "H" | "V";
 
 export interface SequenceData {
@@ -103,6 +105,43 @@ export function fromData(data: ExportedData): RoundData[] {
       }),
     })),
   }));
+}
+
+export function validate(rounds: RoundData[]): ValidationIssue[] {
+  const issues: ValidationIssue[] = [];
+
+  rounds.forEach((round, roundIndex) => {
+    const roundLabel = `Ronda ${roundIndex + 1}`;
+    round.boards.forEach((board, boardIndex) => {
+      const boardLabel = `Tablero ${boardIndex + 1}`;
+
+      const placed = board.operations.filter((op) => op.sequence).length;
+      if (placed === 0) {
+        issues.push({
+          path: formatPath(roundLabel, boardLabel),
+          message: "El tablero no tiene operaciones colocadas.",
+        });
+      }
+
+      board.operations.forEach((op, opIndex) => {
+        const opLabel = `Operación ${opIndex + 1}`;
+        if (isBlank(op.text)) {
+          issues.push({
+            path: formatPath(roundLabel, boardLabel, opLabel),
+            message: "La operación está vacía.",
+          });
+        } else if (!op.sequence) {
+          issues.push({
+            path: formatPath(roundLabel, boardLabel, opLabel),
+            message:
+              "La operación no está colocada en el tablero (se perderá al guardar).",
+          });
+        }
+      });
+    });
+  });
+
+  return issues;
 }
 
 export function isData(data: unknown): data is ExportedData {

@@ -1,3 +1,5 @@
+import { formatPath, isBlank, type ValidationIssue } from "@/collector/kit";
+
 export interface RowData {
   id: string;
   question: string;
@@ -46,6 +48,29 @@ export function fromData(data: Data): RowData[][] {
     ),
   );
   return columns.length > 0 ? columns : [createEmptyColumn()];
+}
+
+export function validate(columns: RowData[][]): ValidationIssue[] {
+  const issues: ValidationIssue[] = [];
+  columns.forEach((rows, colIndex) => {
+    const groupLabel = `Ronda ${colIndex + 1}`;
+    rows.forEach((row, rowIndex) => {
+      const rowLabel = `Casilla ${rowIndex + 1}`;
+      if (isBlank(row.question)) {
+        issues.push({
+          path: formatPath(groupLabel, rowLabel, "Enunciado"),
+          message: "Falta el enunciado.",
+        });
+      }
+      if (isBlank(row.answer)) {
+        issues.push({
+          path: formatPath(groupLabel, rowLabel, "Respuesta"),
+          message: "Falta la respuesta.",
+        });
+      }
+    });
+  });
+  return issues;
 }
 
 export function isData(data: unknown): data is Data {

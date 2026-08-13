@@ -1,3 +1,5 @@
+import { formatPath, isBlank, type ValidationIssue } from "@/collector/kit";
+
 export interface RowData {
   id: string;
   question: string;
@@ -53,6 +55,35 @@ export function fromData(data: Data): ColumnData[] {
     })),
   }));
   return columns.length > 0 ? columns : [createEmptyColumn()];
+}
+
+export function validate(columns: ColumnData[]): ValidationIssue[] {
+  const issues: ValidationIssue[] = [];
+  columns.forEach((col, colIndex) => {
+    const groupLabel = col.title.trim() || `Grupo ${colIndex + 1}`;
+    col.rows.forEach((row, rowIndex) => {
+      const rowLabel = `Fila ${rowIndex + 1}`;
+      if (isBlank(row.question)) {
+        issues.push({
+          path: formatPath(groupLabel, rowLabel, "Enunciado"),
+          message: "Falta el enunciado.",
+        });
+      }
+      if (isBlank(row.answerL)) {
+        issues.push({
+          path: formatPath(groupLabel, rowLabel, "Respuesta izquierda"),
+          message: "Falta la respuesta izquierda.",
+        });
+      }
+      if (isBlank(row.answerR)) {
+        issues.push({
+          path: formatPath(groupLabel, rowLabel, "Respuesta derecha"),
+          message: "Falta la respuesta derecha.",
+        });
+      }
+    });
+  });
+  return issues;
 }
 
 export function isData(data: unknown): data is Data {

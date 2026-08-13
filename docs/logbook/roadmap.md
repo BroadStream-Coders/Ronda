@@ -85,22 +85,6 @@ Al terminar una tarea se mueve al changelog y se borra de aquí.
   colectores incluido el llenado rápido, y se retiró el trim manual duplicado.
 - **Fecha:** 2026-08-13 · **Estado:** Abierto
 
-## [RM-044] Cablear el `validate` en el resto de los colectores
-- **Objetivo:** que los 12 colectores que quedaron sin validación definan la suya
-  sobre el sistema de RM-034 (helper `validate` en su `schema.ts` + campo en
-  `setHeader`, como Deletreo). Trabajo mecánico salvo por un caso.
-- **De dónde sale cada uno:** 11 ya tienen el `validate` escrito en Studio
-  (`src/app/workspaces/<slug>/page.tsx`) y solo hay que traerlo y adaptarlo a los
-  tipos del port: Álbum, Al Vuelo, Busca el Logo, Cálculo Mental, Cronos, De Par en
-  Par, Galería de Fotos, Intruso, La Sabes o No, Mi Libro Favorito, Operaciones
-  Combinadas y Tres en Raya. **Reto Cruzado es el único sin `validate` en Studio**:
-  hay que redactarlo de cero, y son 5 niveles con formas distintas.
-- **Ojo:** el `validate` de Intruso en Studio cubre solo el Nivel 1 (el 2 no se
-  usaba allá); acá conviene revisar si el Nivel 2 también debe validarse.
-- **Hecho cuando:** los 13 colectores bloquean el guardado ante campos faltantes,
-  cada uno apuntando a su propia ruta (ej. "Ronda 2 · Casilla 5 · Respuesta").
-- **Fecha:** 2026-08-13 · **Estado:** Abierto
-
 ## [RM-043] De Par en Par al ImagePicker del kit (sin recorte)
 - **Objetivo:** que las cartas de De Par en Par usen el `ImagePicker` compartido en
   vez del picker propio que arrastró del original (`<input type="file">` + `<img>`

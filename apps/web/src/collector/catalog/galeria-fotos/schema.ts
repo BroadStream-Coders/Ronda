@@ -1,4 +1,8 @@
-import type { ImageSlot } from "@/collector/kit";
+import {
+  formatPath,
+  type ImageSlot,
+  type ValidationIssue,
+} from "@/collector/kit";
 
 export interface ColumnData {
   title: string;
@@ -40,6 +44,22 @@ export function buildData(columns: ColumnData[]): {
   }));
 
   return { data: { groups }, files };
+}
+
+export function validate(columns: ColumnData[]): ValidationIssue[] {
+  const issues: ValidationIssue[] = [];
+  columns.forEach((column, columnIndex) => {
+    const groupLabel = column.title.trim() || `Grupo ${columnIndex + 1}`;
+    column.photos.forEach((photo, photoIndex) => {
+      if (!photo.file && !photo.url) {
+        issues.push({
+          path: formatPath(groupLabel, `Foto ${photoIndex + 1}`),
+          message: "Falta la imagen.",
+        });
+      }
+    });
+  });
+  return issues;
 }
 
 export function isData(data: unknown): data is Data {

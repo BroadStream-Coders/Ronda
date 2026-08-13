@@ -14,6 +14,7 @@ import {
   buildData,
   createEmptyBoard,
   isData,
+  validate,
   type BoardData,
   type Data,
 } from "./schema";
@@ -67,6 +68,8 @@ export function Editor() {
     [setGroups],
   );
 
+  const handleValidate = useCallback(() => validate(groups), [groups]);
+
   useEffect(() => () => resetHeader(), [resetHeader]);
 
   useEffect(() => {
@@ -76,8 +79,9 @@ export function Editor() {
       format: "json",
       onSave: handleSave,
       onLoad: handleLoad,
+      validate: handleValidate,
     });
-  }, [setHeader, handleSave, handleLoad]);
+  }, [setHeader, handleSave, handleLoad, handleValidate]);
 
   return (
     <GroupsContainer onAddGroup={addGroup} addLabel="Agregar grupo">

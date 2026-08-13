@@ -20,6 +20,7 @@ import {
   spawnBoard,
   spawnRound,
   uid,
+  validate,
   type BoardData,
   type Direction,
   type ExportedData,
@@ -77,6 +78,8 @@ export function Editor() {
     }
   }, []);
 
+  const handleValidate = useCallback(() => validate(rounds), [rounds]);
+
   useEffect(() => () => resetHeader(), [resetHeader]);
 
   useEffect(() => {
@@ -86,8 +89,9 @@ export function Editor() {
       format: "json",
       onSave: handleSave,
       onLoad: handleLoad,
+      validate: handleValidate,
     });
-  }, [setHeader, handleSave, handleLoad]);
+  }, [setHeader, handleSave, handleLoad, handleValidate]);
 
   const handleAddRound = () => {
     if (rounds.length >= MAX_ROUNDS) return;

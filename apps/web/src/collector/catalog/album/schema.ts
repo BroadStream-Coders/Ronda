@@ -1,4 +1,9 @@
-import type { ImageSlot } from "@/collector/kit";
+import {
+  formatPath,
+  isBlank,
+  type ImageSlot,
+  type ValidationIssue,
+} from "@/collector/kit";
 
 export interface AlbumRound {
   id: string;
@@ -35,4 +40,27 @@ export function createEmptyRound(): AlbumRound {
     context: "",
     photos: Array(PHOTOS_PER_ROUND).fill(null).map(createEmptyPhoto),
   };
+}
+
+export function validate(rounds: AlbumRound[]): ValidationIssue[] {
+  const issues: ValidationIssue[] = [];
+  rounds.forEach((round, roundIndex) => {
+    const roundLabel = round.context.trim() || `Columna ${roundIndex + 1}`;
+    round.photos.forEach((photo, photoIndex) => {
+      const cardLabel = `Carta ${photoIndex + 1}`;
+      if (isBlank(photo.name)) {
+        issues.push({
+          path: formatPath(roundLabel, cardLabel, "Pregunta"),
+          message: "Falta la pregunta.",
+        });
+      }
+      if (!photo.file && !photo.url) {
+        issues.push({
+          path: formatPath(roundLabel, cardLabel, "Imagen"),
+          message: "Falta la imagen.",
+        });
+      }
+    });
+  });
+  return issues;
 }

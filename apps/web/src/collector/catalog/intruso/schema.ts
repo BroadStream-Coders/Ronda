@@ -1,4 +1,9 @@
-import type { ImageSlot } from "@/collector/kit";
+import {
+  formatPath,
+  isBlank,
+  type ImageSlot,
+  type ValidationIssue,
+} from "@/collector/kit";
 
 export type Photo = ImageSlot & { isIntruso: boolean };
 
@@ -98,6 +103,36 @@ export function buildData(
   };
 
   return { data, files };
+}
+
+export function validate(textRounds: TextRoundState[]): ValidationIssue[] {
+  const issues: ValidationIssue[] = [];
+
+  textRounds.forEach((round, roundIndex) => {
+    const roundLabel = formatPath("Nivel 1", `Ronda ${roundIndex + 1}`);
+
+    if (!round.image.file && !round.image.url) {
+      issues.push({
+        path: formatPath(roundLabel, "Imagen"),
+        message: "Falta la imagen.",
+      });
+    }
+
+    round.options.forEach((option, optionIndex) => {
+      if (isBlank(option.text)) {
+        issues.push({
+          path: formatPath(roundLabel, `Opción ${optionIndex + 1}`),
+          message: "Falta el texto de la opción.",
+        });
+      }
+    });
+
+    if (!round.options.some((option) => option.isIntruso)) {
+      issues.push({ path: roundLabel, message: "No hay un intruso marcado." });
+    }
+  });
+
+  return issues;
 }
 
 export function originalFileName(path: string): string {

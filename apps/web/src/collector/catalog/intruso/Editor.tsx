@@ -15,6 +15,7 @@ import {
   createEmptyTextRound,
   originalFileName,
   uid,
+  validate,
   type Data,
   type PhotoRoundState,
   type TextRoundState,
@@ -107,6 +108,8 @@ export function Editor() {
     }
   }, []);
 
+  const handleValidate = useCallback(() => validate(textRounds), [textRounds]);
+
   useEffect(() => () => resetHeader(), [resetHeader]);
 
   useEffect(() => {
@@ -116,8 +119,9 @@ export function Editor() {
       format: "zip",
       onSave: handleSave,
       onLoad: handleLoad,
+      validate: handleValidate,
     });
-  }, [setHeader, handleSave, handleLoad]);
+  }, [setHeader, handleSave, handleLoad, handleValidate]);
 
   return (
     <LevelTabs

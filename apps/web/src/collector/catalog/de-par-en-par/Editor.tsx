@@ -10,6 +10,7 @@ import { Tab2 } from "./Tab2";
 import {
   DEFAULT_PAIRS,
   initialBoardOrder,
+  validate,
   type CardContent,
   type Data,
   type PairData,
@@ -147,6 +148,11 @@ export function Editor() {
     }
   }, []);
 
+  const handleValidate = useCallback(
+    () => validate(numPairs, pairsData),
+    [numPairs, pairsData],
+  );
+
   useEffect(() => () => resetHeader(), [resetHeader]);
 
   useEffect(() => {
@@ -156,8 +162,9 @@ export function Editor() {
       format: "zip",
       onSave: handleSave,
       onLoad: handleLoad,
+      validate: handleValidate,
     });
-  }, [setHeader, handleSave, handleLoad]);
+  }, [setHeader, handleSave, handleLoad, handleValidate]);
 
   return (
     <LevelTabs

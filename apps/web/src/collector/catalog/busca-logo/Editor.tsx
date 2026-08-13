@@ -15,6 +15,7 @@ import {
   isData,
   isValidBoardSize,
   spawnBoard,
+  validate,
   type BoardData,
   type BoardSize,
   type Data,
@@ -50,6 +51,8 @@ export function Editor() {
     }
   }, []);
 
+  const handleValidate = useCallback(() => validate(boards), [boards]);
+
   useEffect(() => () => resetHeader(), [resetHeader]);
 
   useEffect(() => {
@@ -59,8 +62,9 @@ export function Editor() {
       format: "json",
       onSave: handleSave,
       onLoad: handleLoad,
+      validate: handleValidate,
     });
-  }, [setHeader, handleSave, handleLoad]);
+  }, [setHeader, handleSave, handleLoad, handleValidate]);
 
   const handleAddBoard = () => {
     if (boards.length >= MAX_BOARDS) return;

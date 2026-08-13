@@ -13,6 +13,7 @@ import { Column } from "./Column";
 import {
   createEmptyRow,
   createFullColumn,
+  validate,
   type Data,
   type RowData,
 } from "./schema";
@@ -136,6 +137,11 @@ export function Editor() {
     [setGroups],
   );
 
+  const handleValidate = useCallback(
+    () => validate(groups, titles),
+    [groups, titles],
+  );
+
   useEffect(() => () => resetHeader(), [resetHeader]);
 
   useEffect(() => {
@@ -145,8 +151,9 @@ export function Editor() {
       format: "zip",
       onSave: handleSave,
       onLoad: handleLoad,
+      validate: handleValidate,
     });
-  }, [setHeader, handleSave, handleLoad]);
+  }, [setHeader, handleSave, handleLoad, handleValidate]);
 
   return (
     <GroupsContainer onAddGroup={handleAddGroup} addLabel="Agregar grupo">

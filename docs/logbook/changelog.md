@@ -12,6 +12,9 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [RM-044] Validación cableada en el resto de los colectores (2026-08-13 11:55)
+`validate` propio en los 12 colectores que faltaban, portado del de Studio y adaptado a los tipos del port; cada uno vive como función pura en su `schema.ts` y se pasa por `setHeader`. **Reto Cruzado queda sin validación** (tampoco la tenía en Studio) y el de **Intruso cubre solo el Nivel 1**, ambas decisiones tomadas a propósito. Galería de Fotos y Álbum usan el título del grupo en la ruta cuando existe, en vez de "Grupo N" a secas.
+
 ## [RM-034] Sistema de validación (pre-guardado) (2026-08-13 11:47)
 `kit/validation/` (helpers `ValidationIssue`/`isBlank`/`formatPath` + `ValidationDialog`) exportado desde el kit, campo opcional `validate` en el store del header y compuerta en `CollectorTopbar`: si `validate()` devuelve problemas, el diálogo bloquea el guardado listando dónde está cada uno, con "Guardar de todos modos". Es opt-in — el colector que no pasa `validate` guarda directo. Estrenado en Deletreo (palabras vacías → "Ronda 1 · Palabra 3"); los otros 12 colectores todavía no definen el suyo.
 
