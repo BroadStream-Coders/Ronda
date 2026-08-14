@@ -1,5 +1,8 @@
 import {
+  createImagePacker,
+  emptyImageSlot,
   formatPath,
+  hasImage,
   isBlank,
   type ImageSlot,
   type ValidationIssue,
@@ -50,13 +53,13 @@ export const SESSION_DATA_FILENAME = "sessionData.json";
 export const uid = () => Math.random().toString(36).slice(2, 9);
 
 export function createEmptyPhoto(): Photo {
-  return { id: uid(), name: "", isIntruso: false };
+  return { ...emptyImageSlot(), name: "", isIntruso: false };
 }
 
 export function createEmptyTextRound(): TextRoundState {
   return {
     id: uid(),
-    image: { id: uid(), name: "" },
+    image: emptyImageSlot(),
     options: [{ text: "", isIntruso: false }],
   };
 }
@@ -71,38 +74,35 @@ export function buildData(
   textRounds: TextRoundState[],
   photoRounds: PhotoRoundState[],
 ): { data: Data; files: { name: string; file: File }[] } {
-  const files: { name: string; file: File }[] = [];
-
-  const addImage = (file?: File) => {
-    if (!file) return "";
-    const name = `images/${uid()}_${file.name}`;
-    files.push({ name, file });
-    return name;
-  };
+  const packer = createImagePacker();
 
   const data: Data = {
-    textRounds: textRounds.map((round) => ({
-      imagePath: addImage(round.image.file),
+    textRounds: textRounds.map((round, roundIndex) => ({
+      imagePath: packer.add(round.image, `T${roundIndex + 1}`),
       answerIndex: Math.max(
         0,
         round.options.findIndex((o) => o.isIntruso),
       ),
       choices: round.options.map((o) => o.text.trim()),
     })),
-    photoRounds: photoRounds.map((round) => ({
+    photoRounds: photoRounds.map((round, roundIndex) => ({
       description: round.context.trim(),
       answerIndex: Math.max(
         0,
         round.photos.findIndex((p) => p.isIntruso),
       ),
-      choices: round.photos.map((photo) => ({
+      choices: round.photos.map((photo, photoIndex) => ({
         label: photo.name?.trim() || "",
-        imagePath: addImage(photo.file),
+        imagePath: packer.add(
+          photo,
+          `P${roundIndex + 1}`,
+          `I${photoIndex + 1}`,
+        ),
       })),
     })),
   };
 
-  return { data, files };
+  return { data, files: packer.files };
 }
 
 export function validate(textRounds: TextRoundState[]): ValidationIssue[] {
@@ -111,7 +111,7 @@ export function validate(textRounds: TextRoundState[]): ValidationIssue[] {
   textRounds.forEach((round, roundIndex) => {
     const roundLabel = formatPath("Nivel 1", `Ronda ${roundIndex + 1}`);
 
-    if (!round.image.file && !round.image.url) {
+    if (!hasImage(round.image)) {
       issues.push({
         path: formatPath(roundLabel, "Imagen"),
         message: "Falta la imagen.",
@@ -133,9 +133,4 @@ export function validate(textRounds: TextRoundState[]): ValidationIssue[] {
   });
 
   return issues;
-}
-
-export function originalFileName(path: string): string {
-  const parts = (path.split("/").pop() || path).split("_");
-  return parts.length > 1 ? parts.slice(1).join("_") : parts[0];
 }

@@ -10,6 +10,8 @@ import {
   GroupsContainer,
   QuickLoad,
   RowsContainer,
+  releaseSlots,
+  setSlotImage,
 } from "@/collector/kit";
 import { Card } from "./Card";
 import {
@@ -33,20 +35,16 @@ export function Level1({ rounds, setRounds }: Level1Props) {
 
   const addRound = () => setRounds((prev) => [...prev, createEmptyTextRound()]);
 
-  const removeRound = (roundId: string) =>
-    setRounds((prev) => {
-      const round = prev.find((r) => r.id === roundId);
-      if (round?.image.url) URL.revokeObjectURL(round.image.url);
-      return prev.filter((r) => r.id !== roundId);
-    });
+  const removeRound = (roundId: string) => {
+    releaseSlots([rounds.find((r) => r.id === roundId)?.image]);
+    setRounds((prev) => prev.filter((r) => r.id !== roundId));
+  };
 
   const setImage = (roundId: string, file: File, url: string) =>
-    updateRound(roundId, (round) => {
-      if (round.image.url && round.image.url !== url) {
-        URL.revokeObjectURL(round.image.url);
-      }
-      return { ...round, image: { ...round.image, file, url } };
-    });
+    updateRound(roundId, (round) => ({
+      ...round,
+      image: setSlotImage(round.image, file, url),
+    }));
 
   const setOptions = (roundId: string, options: TextRoundState["options"]) =>
     updateRound(roundId, (round) => ({ ...round, options }));

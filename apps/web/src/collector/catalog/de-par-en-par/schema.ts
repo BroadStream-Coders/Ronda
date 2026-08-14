@@ -1,12 +1,26 @@
-import { formatPath, isBlank, type ValidationIssue } from "@/collector/kit";
+import {
+  emptyImageSlot,
+  formatPath,
+  hasImage,
+  isBlank,
+  type ImageSlot,
+  type ValidationIssue,
+} from "@/collector/kit";
 
 export type CardMode = "image" | "text" | "both";
 
 export interface CardContent {
   mode: CardMode;
-  imageFile?: File;
-  imageUrl?: string;
   text: string;
+  image: ImageSlot;
+}
+
+export function createEmptyCard(): CardContent {
+  return { mode: "image", text: "", image: emptyImageSlot() };
+}
+
+export function createEmptyPair(): PairData {
+  return { cartaA: createEmptyCard(), cartaB: createEmptyCard() };
 }
 
 export interface PairData {
@@ -53,7 +67,7 @@ export function validate(
         message: "Falta el texto.",
       });
     }
-    if ((mode === "image" || mode === "both") && !card?.imageFile) {
+    if ((mode === "image" || mode === "both") && !hasImage(card?.image)) {
       issues.push({
         path: formatPath(cardLabel, "Imagen"),
         message: "Falta la imagen.",

@@ -2,10 +2,13 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { Layers, VenetianMask } from "lucide-react";
-import type JSZip from "jszip";
 
 import { loadZipFile, saveAsZip } from "@/helpers/persistence";
-import { LevelTabs, useWorkspaceHeader } from "@/collector/kit";
+import {
+  LevelTabs,
+  readImageSlot,
+  useWorkspaceHeader,
+} from "@/collector/kit";
 import { Level1 } from "./Level1";
 import { Level2 } from "./Level2";
 import {
@@ -13,26 +16,12 @@ import {
   buildData,
   createEmptyPhotoRound,
   createEmptyTextRound,
-  originalFileName,
   uid,
   validate,
   type Data,
   type PhotoRoundState,
   type TextRoundState,
 } from "./schema";
-
-async function readImage(zip: JSZip, path: string) {
-  if (!path) return {};
-  const entry = zip.file(path);
-  if (!entry) return {};
-  const blob = await entry.async("blob");
-  return {
-    file: new File([blob], originalFileName(path), {
-      type: blob.type || "image/png",
-    }),
-    url: URL.createObjectURL(blob),
-  };
-}
 
 export function Editor() {
   const setHeader = useWorkspaceHeader((s) => s.setHeader);
@@ -70,7 +59,7 @@ export function Editor() {
       const loadedTextRounds = await Promise.all(
         (data.textRounds ?? []).map(async (round) => ({
           id: uid(),
-          image: { id: uid(), name: "", ...(await readImage(zip, round.imagePath)) },
+          image: await readImageSlot(zip, round.imagePath),
           options: round.choices?.length
             ? round.choices.map((text, i) => ({
                 text,
@@ -86,10 +75,9 @@ export function Editor() {
           context: round.description || "",
           photos: await Promise.all(
             (round.choices ?? []).map(async (choice, i) => ({
-              id: uid(),
+              ...(await readImageSlot(zip, choice.imagePath)),
               name: choice.label || "",
               isIntruso: i === round.answerIndex,
-              ...(await readImage(zip, choice.imagePath)),
             })),
           ),
         })),

@@ -12,6 +12,12 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [RM-045] Sistema único de imágenes en los cinco colectores (2026-08-14 12:55)
+`kit/images/slot.ts` con los helpers compartidos (`emptyImageSlot`, `hasImage`, `setSlotImage`, `clearSlotImage`, `releaseSlots`, `createImagePacker`, `readImageSlot`): Cronos y De Par en Par pasan a `ImageSlot`, los cinco colectores comparten convención de rutas (`images/G1_I1.ext`), un solo criterio de "hay imagen" y la limpieza de object URLs centralizada — Cronos, que no revocaba ninguna, deja de filtrar. Se fueron ~150 líneas de bucles de zip duplicados. Los zips viejos siguen cargando: la ruta viaja dentro del json.
+
+## [RM-043] De Par en Par al ImagePicker del kit (2026-08-14 12:55)
+Las cartas usan el `ImagePicker` compartido en vez del picker propio (`<input type="file">` + `<img>`), **sin recorte** por pedido de Más Conectados. El kit ganó dos props para poder absorberlo: `fill` (ocupa el alto del padre en vez de forzar cuadrado) y `onClear` (botón de eliminar). De paso se corrigió que el picker no limpiaba su vista previa cuando el padre borraba la imagen.
+
 ## [RM-044] Validación cableada en el resto de los colectores (2026-08-13 11:55)
 `validate` propio en los 12 colectores que faltaban, portado del de Studio y adaptado a los tipos del port; cada uno vive como función pura en su `schema.ts` y se pasa por `setHeader`. **Reto Cruzado queda sin validación** (tampoco la tenía en Studio) y el de **Intruso cubre solo el Nivel 1**, ambas decisiones tomadas a propósito. Galería de Fotos y Álbum usan el título del grupo en la ruta cuando existe, en vez de "Grupo N" a secas.
 

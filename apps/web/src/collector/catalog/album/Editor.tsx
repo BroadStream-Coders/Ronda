@@ -6,6 +6,10 @@ import { Image as ImageIcon } from "lucide-react";
 import { saveAsZip, loadZipFile } from "@/helpers/persistence";
 import {
   GroupsContainer,
+  createImagePacker,
+  readImageSlot,
+  releaseSlots,
+  setSlotImage,
   useWorkspaceHeader,
   type ImageSlot,
 } from "@/collector/kit";
@@ -29,10 +33,7 @@ export function Editor() {
   const addRound = () => setRounds((prev) => [...prev, createEmptyRound()]);
 
   const removeRound = (roundId: string) => {
-    const round = rounds.find((r) => r.id === roundId);
-    round?.photos.forEach((p) => {
-      if (p.url) URL.revokeObjectURL(p.url);
-    });
+    releaseSlots(rounds.find((r) => r.id === roundId)?.photos ?? []);
     setRounds((prev) => prev.filter((r) => r.id !== roundId));
   };
 
@@ -42,21 +43,35 @@ export function Editor() {
     updates: Partial<ImageSlot>,
   ) =>
     setRounds((prev) =>
-      prev.map((r) => {
-        if (r.id !== roundId) return r;
-        return {
-          ...r,
-          photos: r.photos.map((p) => {
-            if (p.id === photoId) {
-              if (updates.url && p.url && updates.url !== p.url) {
-                URL.revokeObjectURL(p.url);
-              }
-              return { ...p, ...updates };
+      prev.map((r) =>
+        r.id === roundId
+          ? {
+              ...r,
+              photos: r.photos.map((p) =>
+                p.id === photoId ? { ...p, ...updates } : p,
+              ),
             }
-            return p;
-          }),
-        };
-      }),
+          : r,
+      ),
+    );
+
+  const setPhotoImage = (
+    roundId: string,
+    photoId: string,
+    file: File,
+    url: string,
+  ) =>
+    setRounds((prev) =>
+      prev.map((r) =>
+        r.id === roundId
+          ? {
+              ...r,
+              photos: r.photos.map((p) =>
+                p.id === photoId ? setSlotImage(p, file, url) : p,
+              ),
+            }
+          : r,
+      ),
     );
 
   const updateRound = (roundId: string, updates: Partial<{ context: string }>) =>
@@ -87,32 +102,28 @@ export function Editor() {
   };
 
   const handleSave = useCallback(async () => {
+    const packer = createImagePacker();
+
     const sessionData: Data = {
-      rounds: rounds.map((round) => ({
+      rounds: rounds.map((round, roundIndex) => ({
         title: round.context.trim(),
-        cards: round.photos.map((photo) => ({
+        cards: round.photos.map((photo, photoIndex) => ({
           isCroma: photo.isCroma ? true : undefined,
           question: (photo.name || "").trim(),
-          imagePath: photo.file ? `images/${uid()}_${photo.file.name}` : "",
+          imagePath: packer.add(
+            photo,
+            `G${roundIndex + 1}`,
+            `I${photoIndex + 1}`,
+          ),
         })),
       })),
     };
-
-    const filesToInclude: { name: string; file: File }[] = [];
-    rounds.forEach((round, roundIndex) => {
-      round.photos.forEach((photo, photoIndex) => {
-        if (photo.file) {
-          const path = sessionData.rounds[roundIndex].cards[photoIndex].imagePath;
-          if (path) filesToInclude.push({ name: path, file: photo.file });
-        }
-      });
-    });
 
     try {
       await saveAsZip(
         "Album.zip",
         sessionData,
-        filesToInclude,
+        packer.files,
         SESSION_DATA_FILENAME,
       );
     } catch {
@@ -138,32 +149,11 @@ export function Editor() {
       const loaded = await Promise.all(
         sessionData.rounds.map(async (roundMeta) => {
           const photos = await Promise.all(
-            (roundMeta.cards || []).map(async (pMeta) => {
-              let imageFile: File | undefined;
-              let imageUrl: string | undefined;
-              if (pMeta.imagePath) {
-                const imgEntry = zip.file(pMeta.imagePath);
-                if (imgEntry) {
-                  const blob = await imgEntry.async("blob");
-                  const parts = (
-                    pMeta.imagePath.split("/").pop() || pMeta.imagePath
-                  ).split("_");
-                  const originalName =
-                    parts.length > 1 ? parts.slice(1).join("_") : parts[0];
-                  imageFile = new File([blob], originalName, {
-                    type: blob.type || "image/png",
-                  });
-                  imageUrl = URL.createObjectURL(blob);
-                }
-              }
-              return {
-                id: uid(),
-                name: pMeta.question || "",
-                file: imageFile,
-                url: imageUrl,
-                isCroma: pMeta.isCroma ?? false,
-              } as ImageSlot;
-            }),
+            (roundMeta.cards || []).map(async (pMeta) => ({
+              ...(await readImageSlot(zip, pMeta.imagePath)),
+              name: pMeta.question || "",
+              isCroma: pMeta.isCroma ?? false,
+            })),
           );
           return {
             id: uid(),
@@ -207,6 +197,9 @@ export function Editor() {
           context={round.context}
           onUpdatePhoto={(photoId, updates) =>
             updatePhotoInRound(round.id, photoId, updates)
+          }
+          onSetPhotoImage={(photoId, file, url) =>
+            setPhotoImage(round.id, photoId, file, url)
           }
           onUpdateRound={(updates) => updateRound(round.id, updates)}
           onRemoveColumn={() => removeRound(round.id)}

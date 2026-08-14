@@ -4,11 +4,18 @@ import { useCallback, useEffect, useState } from "react";
 import { Grid2x2, Layers } from "lucide-react";
 
 import { saveAsZip, loadZipFile } from "@/helpers/persistence";
-import { LevelTabs, useWorkspaceHeader } from "@/collector/kit";
+import {
+  LevelTabs,
+  createImagePacker,
+  readImageSlot,
+  useWorkspaceHeader,
+} from "@/collector/kit";
 import { Tab1 } from "./Tab1";
 import { Tab2 } from "./Tab2";
 import {
   DEFAULT_PAIRS,
+  createEmptyCard,
+  createEmptyPair,
   initialBoardOrder,
   validate,
   type CardContent,
@@ -33,30 +40,21 @@ export function Editor() {
 
   const handleSave = useCallback(async () => {
     const cells: Data["cells"] = [];
-    const filesToInclude: { name: string; file: File }[] = [];
+    const packer = createImagePacker();
 
     for (let i = 0; i < numPairs; i++) {
-      const pair = pairsData[i + 1] || {
-        cartaA: { mode: "image", text: "" },
-        cartaB: { mode: "image", text: "" },
-      };
+      const pair = pairsData[i + 1] || createEmptyPair();
 
       const processCard = (cardData: CardContent, side: "A" | "B") => {
         let type = 0;
         if (cardData.mode === "image") type = 1;
         if (cardData.mode === "both") type = 2;
 
-        let pictureFileStr = "";
-        if ((type === 1 || type === 2) && cardData.imageFile) {
-          const ext = cardData.imageFile.name.split(".").pop();
-          pictureFileStr = `images/${i}_${side}.${ext || "png"}`;
-          filesToInclude.push({ name: pictureFileStr, file: cardData.imageFile });
-        }
-
         return {
           type,
           text: type === 0 || type === 2 ? cardData.text || "" : "",
-          pictureFile: pictureFileStr,
+          pictureFile:
+            type === 0 ? "" : packer.add(cardData.image, `P${i + 1}`, side),
         };
       };
 
@@ -72,7 +70,7 @@ export function Editor() {
       await saveAsZip(
         "DeParEnPar.zip",
         exportData,
-        filesToInclude,
+        packer.files,
         "sessionData.json",
       );
     } catch {
@@ -111,22 +109,12 @@ export function Editor() {
           if (cardInfo.type === 1) mode = "image";
           if (cardInfo.type === 2) mode = "both";
 
-          let imageFile: File | undefined;
-          let imageUrl: string | undefined;
-          if ((mode === "image" || mode === "both") && cardInfo.pictureFile) {
-            const imgEntry = zip.file(cardInfo.pictureFile);
-            if (imgEntry) {
-              const blob = await imgEntry.async("blob");
-              const filename =
-                cardInfo.pictureFile.split("/").pop() || "image.png";
-              imageFile = new File([blob], filename, {
-                type: blob.type || "image/png",
-              });
-              imageUrl = URL.createObjectURL(blob);
-            }
-          }
-
-          return { mode, text: cardInfo.text || "", imageFile, imageUrl };
+          return {
+            ...createEmptyCard(),
+            mode,
+            text: cardInfo.text || "",
+            image: await readImageSlot(zip, cardInfo.pictureFile),
+          };
         };
 
         newPairsData[i + 1] = {

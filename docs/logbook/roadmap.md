@@ -85,14 +85,3 @@ Al terminar una tarea se mueve al changelog y se borra de aquí.
   colectores incluido el llenado rápido, y se retiró el trim manual duplicado.
 - **Fecha:** 2026-08-13 · **Estado:** Abierto
 
-## [RM-043] De Par en Par al ImagePicker del kit (sin recorte)
-- **Objetivo:** que las cartas de De Par en Par usen el `ImagePicker` compartido en
-  vez del picker propio que arrastró del original (`<input type="file">` + `<img>`
-  con `eslint-disable`, y su propio botón de borrar). Es el único colector del
-  catálogo fuera del sistema de imágenes.
-- **Sin recorte por ahora:** se monta **sin** la prop `crop` — Más Conectados pidió
-  expresamente que el recorte no se aplique todavía. Puede activarse más adelante,
-  y con el picker compartido eso será agregar una prop.
-- **Hecho cuando:** las cartas usan `ImagePicker`, el zip sigue guardando y cargando
-  igual, y no queda código de subida de imágenes propio en el colector.
-- **Fecha:** 2026-08-13 · **Estado:** Abierto

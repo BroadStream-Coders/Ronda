@@ -70,10 +70,10 @@ export function Tab2({ boardOrder, setBoardOrder, pairsData }: Tab2Props) {
           <div
             className={`relative flex flex-col items-center justify-center bg-card ${data.mode === "both" ? "flex-1 min-h-0 shrink border-b border-border/40" : "h-full w-full"}`}
           >
-            {data.imageUrl ? (
+            {data.image.url ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img
-                src={data.imageUrl}
+                src={data.image.url}
                 className="w-full h-full object-cover"
                 alt="Carta"
               />

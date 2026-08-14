@@ -4,7 +4,13 @@ import { useCallback, useEffect, useState } from "react";
 import { Images } from "lucide-react";
 
 import { loadZipFile, saveAsZip } from "@/helpers/persistence";
-import { GroupsContainer, useWorkspaceHeader } from "@/collector/kit";
+import {
+  GroupsContainer,
+  readImageSlot,
+  releaseSlots,
+  setSlotImage,
+  useWorkspaceHeader,
+} from "@/collector/kit";
 import { Column } from "./Column";
 import {
   SESSION_DATA_FILENAME,
@@ -12,7 +18,6 @@ import {
   createEmptyColumn,
   createEmptyPhoto,
   isData,
-  uid,
   validate,
   type ColumnData,
   type Data,
@@ -37,9 +42,7 @@ export function Editor() {
   const addColumn = () => setColumns((prev) => [...prev, createEmptyColumn()]);
 
   const removeColumn = (columnIndex: number) => {
-    columns[columnIndex]?.photos.forEach((photo) => {
-      if (photo.url) URL.revokeObjectURL(photo.url);
-    });
+    releaseSlots(columns[columnIndex]?.photos ?? []);
     setColumns((prev) => prev.filter((_, i) => i !== columnIndex));
   };
 
@@ -51,16 +54,14 @@ export function Editor() {
   ) =>
     updateColumn(columnIndex, (column) => ({
       ...column,
-      photos: column.photos.map((photo) => {
-        if (photo.id !== photoId) return photo;
-        if (photo.url && photo.url !== url) URL.revokeObjectURL(photo.url);
-        return { ...photo, file, url };
-      }),
+      photos: column.photos.map((photo) =>
+        photo.id === photoId ? setSlotImage(photo, file, url) : photo,
+      ),
     }));
 
   const removePhoto = (columnIndex: number, photoId: string) => {
     const photo = columns[columnIndex]?.photos.find((p) => p.id === photoId);
-    if (photo?.url) URL.revokeObjectURL(photo.url);
+    releaseSlots([photo]);
     updateColumn(columnIndex, (column) => ({
       ...column,
       photos: column.photos.filter((p) => p.id !== photoId),
@@ -97,21 +98,7 @@ export function Editor() {
         data.groups.map(async (group) => ({
           title: group.title || "",
           photos: await Promise.all(
-            (group.items ?? []).map(async (item) => {
-              if (!item.imagePath) return createEmptyPhoto();
-              const entry = zip.file(item.imagePath);
-              if (!entry) return createEmptyPhoto();
-              const blob = await entry.async("blob");
-              return {
-                id: uid(),
-                file: new File(
-                  [blob],
-                  item.imagePath.split("/").pop() || "image.png",
-                  { type: blob.type || "image/png" },
-                ),
-                url: URL.createObjectURL(blob),
-              };
-            }),
+            (group.items ?? []).map((item) => readImageSlot(zip, item.imagePath)),
           ),
         })),
       );

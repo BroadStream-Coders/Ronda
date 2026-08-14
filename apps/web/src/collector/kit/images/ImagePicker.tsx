@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Plus, Crop } from "lucide-react";
+import { Plus, Crop, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import { useImagePicker } from "./use-image-picker";
@@ -12,6 +12,8 @@ interface ImagePickerProps {
   onChange: (file: File, url: string) => void;
   crop?: { x: number; y: number };
   placeholder?: string;
+  fill?: boolean;
+  onClear?: () => void;
 }
 
 export function ImagePicker({
@@ -19,6 +21,8 @@ export function ImagePicker({
   onChange,
   crop,
   placeholder = "Foto",
+  fill = false,
+  onClear,
 }: ImagePickerProps) {
   const [isCropperOpen, setIsCropperOpen] = useState(false);
   const isCropEnabled = !!crop;
@@ -43,16 +47,18 @@ export function ImagePicker({
   const srcForCrop = uncroppedUrl || previewUrl;
 
   useEffect(() => {
-    if (value) setPreviewUrl(value);
+    setPreviewUrl(value ?? null);
   }, [value, setPreviewUrl]);
+
+  const shapeClass = crop ? "" : fill ? "h-full" : "aspect-square";
 
   return (
     <>
       <div
-        className={`relative w-full ${crop ? "" : "aspect-square"} overflow-hidden rounded-lg bg-muted/20 border border-dashed border-border hover:border-primary/50 transition-colors cursor-pointer group`}
+        className={`relative w-full ${shapeClass} overflow-hidden rounded-lg bg-muted/20 border border-dashed border-border hover:border-primary/50 transition-colors cursor-pointer group`}
         style={crop ? { aspectRatio: `${crop.x} / ${crop.y}` } : undefined}
         onClick={(e) => {
-          if ((e.target as HTMLElement).closest(".edit-crop-btn")) return;
+          if ((e.target as HTMLElement).closest(".picker-action-btn")) return;
           triggerUpload();
         }}
       >
@@ -69,13 +75,25 @@ export function ImagePicker({
             />
             {isCropEnabled && srcForCrop && (
               <div
-                className="edit-crop-btn absolute top-2 left-2 p-1.5 bg-black/60 rounded max-md:opacity-100 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/80 z-10"
+                className="picker-action-btn absolute top-2 left-2 p-1.5 bg-black/60 rounded max-md:opacity-100 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/80 z-10"
                 onClick={(e) => {
                   e.stopPropagation();
                   setIsCropperOpen(true);
                 }}
               >
                 <Crop className="w-4 h-4 text-white" />
+              </div>
+            )}
+            {onClear && (
+              <div
+                className="picker-action-btn absolute top-2 right-2 p-1.5 bg-black/60 rounded max-md:opacity-100 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-destructive z-10"
+                title="Eliminar imagen"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onClear();
+                }}
+              >
+                <Trash2 className="w-4 h-4 text-white" />
               </div>
             )}
           </>

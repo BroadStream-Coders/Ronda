@@ -10,6 +10,8 @@ import {
   GroupsContainer,
   QuickLoad,
   RowsContainer,
+  releaseSlots,
+  setSlotImage,
 } from "@/collector/kit";
 import { Card } from "./Card";
 import {
@@ -35,14 +37,10 @@ export function Level2({ rounds, setRounds }: Level2Props) {
 
   const addRound = () => setRounds((prev) => [...prev, createEmptyPhotoRound()]);
 
-  const removeRound = (roundId: string) =>
-    setRounds((prev) => {
-      const round = prev.find((r) => r.id === roundId);
-      round?.photos.forEach((p) => {
-        if (p.url) URL.revokeObjectURL(p.url);
-      });
-      return prev.filter((r) => r.id !== roundId);
-    });
+  const removeRound = (roundId: string) => {
+    releaseSlots(rounds.find((r) => r.id === roundId)?.photos ?? []);
+    setRounds((prev) => prev.filter((r) => r.id !== roundId));
+  };
 
   const updatePhoto = (
     roundId: string,
@@ -52,22 +50,32 @@ export function Level2({ rounds, setRounds }: Level2Props) {
     updateRound(roundId, (round) => ({
       ...round,
       photos: round.photos.map((photo) => {
-        if (photo.id === photoId) {
-          if (updates.url && photo.url && updates.url !== photo.url) {
-            URL.revokeObjectURL(photo.url);
-          }
-          return { ...photo, ...updates };
-        }
+        if (photo.id === photoId) return { ...photo, ...updates };
         return updates.isIntruso === true ? { ...photo, isIntruso: false } : photo;
       }),
     }));
 
-  const removePhoto = (roundId: string, photoId: string) =>
-    updateRound(roundId, (round) => {
-      const photo = round.photos.find((p) => p.id === photoId);
-      if (photo?.url) URL.revokeObjectURL(photo.url);
-      return { ...round, photos: round.photos.filter((p) => p.id !== photoId) };
-    });
+  const setPhotoImage = (
+    roundId: string,
+    photoId: string,
+    file: File,
+    url: string,
+  ) =>
+    updateRound(roundId, (round) => ({
+      ...round,
+      photos: round.photos.map((photo) =>
+        photo.id === photoId ? setSlotImage(photo, file, url) : photo,
+      ),
+    }));
+
+  const removePhoto = (roundId: string, photoId: string) => {
+    const round = rounds.find((r) => r.id === roundId);
+    releaseSlots([round?.photos.find((p) => p.id === photoId)]);
+    updateRound(roundId, (current) => ({
+      ...current,
+      photos: current.photos.filter((p) => p.id !== photoId),
+    }));
+  };
 
   const handleQuickLoad = (roundId: string, matrix: string[][]) => {
     const names: string[] = [];
@@ -116,7 +124,7 @@ export function Level2({ rounds, setRounds }: Level2Props) {
                   isIntruso={photo.isIntruso}
                   crop={PHOTO_CROP}
                   onImageChange={(file, url) =>
-                    updatePhoto(round.id, photo.id, { file, url })
+                    setPhotoImage(round.id, photo.id, file, url)
                   }
                   onNameChange={(name) =>
                     updatePhoto(round.id, photo.id, { name })

@@ -16,6 +16,7 @@ interface ColumnProps {
   photos: ImageSlot[];
   context: string;
   onUpdatePhoto: (id: string, updates: Partial<ImageSlot>) => void;
+  onSetPhotoImage: (id: string, file: File, url: string) => void;
   onUpdateRound: (updates: Partial<{ context: string }>) => void;
   onRemoveColumn: () => void;
   onQuickLoad: (data: string[][]) => void;
@@ -26,6 +27,7 @@ export function Column({
   photos,
   context,
   onUpdatePhoto,
+  onSetPhotoImage,
   onUpdateRound,
   onRemoveColumn,
   onQuickLoad,
@@ -52,7 +54,7 @@ export function Column({
               name={photo.name}
               imageUrl={photo.url}
               isCroma={photo.isCroma}
-              onImageChange={(file, url) => onUpdatePhoto(photo.id, { file, url })}
+              onImageChange={(file, url) => onSetPhotoImage(photo.id, file, url)}
               onNameChange={(name) => onUpdatePhoto(photo.id, { name })}
               onToggleCroma={() =>
                 onUpdatePhoto(photo.id, { isCroma: !photo.isCroma })

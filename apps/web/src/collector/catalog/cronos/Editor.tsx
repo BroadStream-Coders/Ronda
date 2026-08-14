@@ -6,6 +6,9 @@ import { History } from "lucide-react";
 import { saveAsZip, loadZipFile } from "@/helpers/persistence";
 import {
   GroupsContainer,
+  createImagePacker,
+  readImageSlot,
+  releaseSlots,
   useWorkspaceGroups,
   useWorkspaceHeader,
 } from "@/collector/kit";
@@ -49,6 +52,7 @@ export function Editor() {
   };
 
   const handleRemoveGroup = (idx: number) => {
+    releaseSlots((groups[idx] ?? []).map((item) => item.image));
     removeGroup(idx);
     setTitles((prev) => prev.filter((_, i) => i !== idx));
   };
@@ -58,24 +62,23 @@ export function Editor() {
   };
 
   const handleSave = useCallback(async () => {
-    const filesToInclude: { name: string; file: File }[] = [];
-    const exportGroups = groups.map((items, groupIndex) => {
-      const title = titles[groupIndex] || "";
-      const exportItems = items.map((item, itemIndex) => {
-        let imagePath = "";
-        if (item.file) {
-          const ext = item.file.name.split(".").pop();
-          imagePath = `images/G${groupIndex + 1}_I${itemIndex + 1}.${ext}`;
-          filesToInclude.push({ name: imagePath, file: item.file });
-        }
-        return { date: item.date.trim(), title: item.title.trim(), imagePath };
-      });
-      return { title, items: exportItems };
-    });
+    const packer = createImagePacker();
+    const exportGroups = groups.map((items, groupIndex) => ({
+      title: titles[groupIndex] || "",
+      items: items.map((item, itemIndex) => ({
+        date: item.date.trim(),
+        title: item.title.trim(),
+        imagePath: packer.add(
+          item.image,
+          `G${groupIndex + 1}`,
+          `I${itemIndex + 1}`,
+        ),
+      })),
+    }));
 
     const sessionData: Data = { groups: exportGroups };
     try {
-      await saveAsZip("Cronos.zip", sessionData, filesToInclude);
+      await saveAsZip("Cronos.zip", sessionData, packer.files);
     } catch {
       alert("Error al exportar los datos.");
     }
@@ -100,29 +103,12 @@ export function Editor() {
         const loadedGroups = await Promise.all(
           sessionData.groups.map(async (g) => {
             const items = await Promise.all(
-              (g.items || []).map(async (item) => {
-                let imageFile: File | undefined;
-                let url: string | undefined;
-                if (item.imagePath) {
-                  const entry = zip.file(item.imagePath);
-                  if (entry) {
-                    const blob = await entry.async("blob");
-                    imageFile = new File(
-                      [blob],
-                      item.imagePath.split("/").pop() || "image",
-                      { type: blob.type },
-                    );
-                    url = URL.createObjectURL(blob);
-                  }
-                }
-                return {
-                  ...createEmptyRow(),
-                  date: item.date || "",
-                  title: item.title || "",
-                  file: imageFile,
-                  url,
-                } as RowData;
-              }),
+              (g.items || []).map(async (item) => ({
+                ...createEmptyRow(),
+                date: item.date || "",
+                title: item.title || "",
+                image: await readImageSlot(zip, item.imagePath),
+              })),
             );
             return { title: g.title || "", items };
           }),

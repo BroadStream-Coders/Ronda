@@ -1,5 +1,7 @@
 import {
+  emptyImageSlot,
   formatPath,
+  hasImage,
   isBlank,
   type ImageSlot,
   type ValidationIssue,
@@ -31,7 +33,7 @@ export const PHOTOS_PER_ROUND = 5;
 export const uid = () => Math.random().toString(36).slice(2, 9);
 
 export function createEmptyPhoto(): ImageSlot {
-  return { id: uid(), name: "" };
+  return { ...emptyImageSlot(), name: "" };
 }
 
 export function createEmptyRound(): AlbumRound {
@@ -54,7 +56,7 @@ export function validate(rounds: AlbumRound[]): ValidationIssue[] {
           message: "Falta la pregunta.",
         });
       }
-      if (!photo.file && !photo.url) {
+      if (!hasImage(photo)) {
         issues.push({
           path: formatPath(roundLabel, cardLabel, "Imagen"),
           message: "Falta la imagen.",

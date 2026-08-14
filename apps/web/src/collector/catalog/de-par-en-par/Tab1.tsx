@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback } from "react";
-import { Copy, Image as ImageIcon, Trash2 } from "lucide-react";
+import { Copy } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -12,6 +12,8 @@ import {
 import { Card } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
+import { ImagePicker, clearSlotImage, setSlotImage } from "@/collector/kit";
+import { createEmptyCard, createEmptyPair } from "./schema";
 import type { CardMode, CardContent, PairData } from "./schema";
 
 const OPTIONS = [
@@ -39,11 +41,8 @@ export function Tab1({
   const getCardData = useCallback(
     (pairIndex: number, cardSide: "A" | "B"): CardContent => {
       const pair = pairsData[pairIndex];
-      const defaultContent: CardContent = { mode: "image", text: "" };
-      if (!pair) return defaultContent;
-      return cardSide === "A"
-        ? pair.cartaA || defaultContent
-        : pair.cartaB || defaultContent;
+      if (!pair) return createEmptyCard();
+      return (cardSide === "A" ? pair.cartaA : pair.cartaB) || createEmptyCard();
     },
     [pairsData],
   );
@@ -51,18 +50,17 @@ export function Tab1({
   const updateCardContent = useCallback(
     (pairIndex: number, cardSide: "A" | "B", updates: Partial<CardContent>) => {
       setPairsData((prev) => {
-        const currentPair = prev[pairIndex] || {
-          cartaA: { mode: "image", text: "" },
-          cartaB: { mode: "image", text: "" },
-        };
+        const currentPair = prev[pairIndex] || createEmptyPair();
         const currentCard =
           cardSide === "A" ? currentPair.cartaA : currentPair.cartaB;
-        const newContent = { ...currentCard, ...updates };
         return {
           ...prev,
           [pairIndex]: {
             ...currentPair,
-            [cardSide === "A" ? "cartaA" : "cartaB"]: newContent,
+            [cardSide === "A" ? "cartaA" : "cartaB"]: {
+              ...currentCard,
+              ...updates,
+            },
           },
         };
       });
@@ -70,31 +68,9 @@ export function Tab1({
     [setPairsData],
   );
 
-  const handleImageUpload = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    pairIndex: number,
-    cardSide: "A" | "B",
-  ) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      updateCardContent(pairIndex, cardSide, { imageFile: file, imageUrl });
-    }
-    e.target.value = "";
-  };
-
-  const removeImage = (pairIndex: number, cardSide: "A" | "B") => {
-    const cardData = getCardData(pairIndex, cardSide);
-    if (cardData.imageUrl) URL.revokeObjectURL(cardData.imageUrl);
-    updateCardContent(pairIndex, cardSide, {
-      imageFile: undefined,
-      imageUrl: undefined,
-    });
-  };
-
   const renderCardSlot = (pairNum: number, cardSide: "A" | "B") => {
     const cardData = getCardData(pairNum, cardSide);
-    const { mode, imageUrl, text } = cardData;
+    const { mode, image, text } = cardData;
 
     return (
       <div className="flex-1 flex flex-col gap-1.5 p-1.5 bg-muted/30 rounded-lg border border-border/50 aspect-4/5">
@@ -127,45 +103,22 @@ export function Tab1({
 
         <div className="flex-1 flex flex-col gap-2 min-h-0">
           {(mode === "image" || mode === "both") && (
-            <div
-              className={`relative flex-1 min-h-0 rounded-md border-2 border-dashed overflow-hidden flex flex-col items-center justify-center transition-colors ${
-                imageUrl
-                  ? "border-transparent bg-transparent"
-                  : "border-border/60 hover:border-primary/50 hover:bg-primary/5 cursor-pointer group bg-card"
-              }`}
-            >
-              {imageUrl ? (
-                <>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={imageUrl}
-                    alt={`Carta ${cardSide}`}
-                    className="w-full h-full object-cover"
-                  />
-                  <button
-                    onClick={() => removeImage(pairNum, cardSide)}
-                    className="absolute top-1 right-1 p-1 bg-destructive/90 hover:bg-destructive text-destructive-foreground rounded-md shadow-sm transition-opacity opacity-0 group-hover:opacity-100 focus:opacity-100"
-                    title="Eliminar imagen"
-                  >
-                    <Trash2 className="h-3.5 w-3.5" />
-                  </button>
-                </>
-              ) : (
-                <>
-                  <div className="p-2 rounded-full bg-muted group-hover:bg-primary/10 transition-colors">
-                    <ImageIcon className="h-5 w-5 text-muted-foreground group-hover:text-primary" />
-                  </div>
-                  <span className="text-[9px] mt-2 font-medium text-muted-foreground group-hover:text-primary px-2 text-center">
-                    Subir imagen
-                  </span>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={(e) => handleImageUpload(e, pairNum, cardSide)}
-                    className="absolute inset-0 opacity-0 cursor-pointer"
-                  />
-                </>
-              )}
+            <div className="flex-1 min-h-0">
+              <ImagePicker
+                fill
+                value={image.url}
+                placeholder="Subir imagen"
+                onChange={(file, url) =>
+                  updateCardContent(pairNum, cardSide, {
+                    image: setSlotImage(image, file, url),
+                  })
+                }
+                onClear={() =>
+                  updateCardContent(pairNum, cardSide, {
+                    image: clearSlotImage(image),
+                  })
+                }
+              />
             </div>
           )}
 

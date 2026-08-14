@@ -1,11 +1,17 @@
-import { formatPath, isBlank, type ValidationIssue } from "@/collector/kit";
+import {
+  emptyImageSlot,
+  formatPath,
+  hasImage,
+  isBlank,
+  type ImageSlot,
+  type ValidationIssue,
+} from "@/collector/kit";
 
 export interface RowData {
   id: string;
   date: string;
   title: string;
-  file?: File;
-  url?: string;
+  image: ImageSlot;
 }
 
 export interface ExportItem {
@@ -28,7 +34,7 @@ export const COLUMN_SIZE = 5;
 const uid = () => Math.random().toString(36).slice(2, 9);
 
 export function createEmptyRow(): RowData {
-  return { id: uid(), date: "", title: "" };
+  return { id: uid(), date: "", title: "", image: emptyImageSlot() };
 }
 
 export function createFullColumn(): RowData[] {
@@ -62,7 +68,7 @@ export function validate(
           message: "Falta el título.",
         });
       }
-      if (!item.file) {
+      if (!hasImage(item.image)) {
         issues.push({
           path: formatPath(groupLabel, rowLabel, "Imagen"),
           message: "Falta la imagen.",

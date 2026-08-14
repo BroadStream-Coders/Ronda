@@ -1,7 +1,7 @@
 "use client";
 
 import { Trash2 } from "lucide-react";
-import { ImagePicker } from "@/collector/kit";
+import { ImagePicker, setSlotImage } from "@/collector/kit";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import type { RowData } from "./schema";
@@ -45,8 +45,10 @@ export function Row({ index, data, onChange, onRemove }: RowProps) {
           className="h-8 text-xs"
         />
         <ImagePicker
-          value={data.url}
-          onChange={(file, url) => onChange({ file, url })}
+          value={data.image.url}
+          onChange={(file, url) =>
+            onChange({ image: setSlotImage(data.image, file, url) })
+          }
           crop={{ x: 1, y: 1 }}
           placeholder="Subir imagen"
         />
