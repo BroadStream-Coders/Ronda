@@ -74,6 +74,12 @@ Se descartó centralizarlo en `button.tsx` inspeccionando `render.type`: menos c
 `assignments.ts` pasa a keyearse por `program.id` (uuid inmutable) en vez de `slug`, con el nombre del programa como dato para que el archivo siga siendo legible sin comentarios; los dos call sites usan `program.id`, que ya tenían en scope.
 De paso, Deletreo quedó asignado también a Más Conectados: el catálogo se comparte por tipo de juego y el aislamiento se verificó en la UI (cada programa ve solo lo suyo). El disparador real era más angosto de lo registrado — el form de admin reenvía el slug, había que editarlo a mano.
 
+## [RM-037] Espacio de trabajo del programa con barra lateral (2026-08-17 09:25)
+Nuevo shell `(workspace)` para el dashboard y la lista de colectores: barra lateral colapsable (240px / 64px) con navegación, cuenta al pie y selector de tema (claro / oscuro / el del sistema) en su menú. La lista de colectores pasó a ancho de trabajo con tarjetas nuevas. El editor de colector queda fuera del grupo, a pantalla completa.
+
+## [TD-009] El resto de la app nunca se revisó en modo oscuro (2026-08-17 09:25)
+Cerrado parcialmente por RM-037: el tema ahora se elige desde la cuenta y `enableSystem` quedó activo, con `defaultTheme="light"` para que nadie caiga en oscuro sin pedirlo. Falta revisar `/admin` en oscuro.
+
 ## [TD-013] Los arquetipos de barra lateral y tablero quedaron fuera del rediseño (2026-08-17 09:13)
 Busca el Logo y Operaciones Combinadas migrados al lenguaje del kit con un primitivo nuevo (`Panel`, `PanelList`, `PanelCount`, `PanelHint`): cabeceras de 48px, listas de tableros/rondas unificadas, celdas sin transform ni anillos, y los verdes fuera de paleta cambiados por `primary`/`accent`.
 

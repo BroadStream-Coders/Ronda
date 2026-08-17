@@ -31,13 +31,12 @@ reutiliza). Al resolverse se mueve al `changelog.md` conservando su código.
 - **A corregir cuando:** se desplieguen las imágenes finales — quitar `unoptimized` y dejar que `next/image` las optimice. La caché rancia solo afecta a dev; cada `pnpm build` regenera desde cero.
 - **Fecha:** 2026-08-06 · **Estado:** Abierto
 
-## [TD-009] El resto de la app nunca se revisó en modo oscuro
-- **Ubicación:** `apps/web/src/app/layout.tsx` (`ThemeProvider`) + páginas de `/admin` y `/programs`
+## [TD-014] El panel de admin nunca se revisó en modo oscuro
+- **Ubicación:** `apps/web/src/app/admin/**`
 - **Riesgo:** 3/10
-- **Problema:** Con RM-035 entró `next-themes` y un toggle claro/oscuro en la landing. El `.dark` se aplica a `<html>`, así que admin, dashboard y colectores también cambian de tema, pero se diseñaron solo en claro y nunca se miraron en oscuro. Por eso quedó `defaultTheme="light"` con `enableSystem={false}`: nadie cae en oscuro sin pedirlo.
-- **Impacto futuro:** Si alguien activa el toggle y navega al panel puede encontrar contrastes rotos o superficies planas. Al activar `enableSystem` sin revisar, le pasaría a todos los usuarios con el SO en oscuro.
-- **A corregir cuando:** se revisen admin/programs/colectores en oscuro; recién ahí considerar `enableSystem`.
-- **Fecha:** 2026-08-11 · **Estado:** Abierto
+- **Problema:** Con RM-037 el tema se elige desde la cuenta y `enableSystem` quedó activo, así que ahora sí es fácil terminar en oscuro. La landing y el espacio de trabajo se revisaron; las cinco pantallas de `/admin` se diseñaron solo en claro y nunca se miraron en oscuro. El sidebar de `admin/layout.tsx` además sigue con el ícono `Radio` viejo en vez del logo.
+- **Impacto futuro:** Contrastes rotos o superficies planas en el panel, y una marca inconsistente con el resto de la app.
+- **Fecha:** 2026-08-17 · **Estado:** Abierto
 
 ## [TD-010] El formulario de contacto pide menos datos que el diseño
 - **Ubicación:** `apps/web/src/components/inquiry-form.tsx` + `apps/web/src/app/actions.ts:11-12` + tabla `inquiries`
