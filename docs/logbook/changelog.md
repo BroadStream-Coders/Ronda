@@ -12,6 +12,9 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [RM-054] Speed Insights (2026-08-17 14:04)
+`@vercel/speed-insights` con `<SpeedInsights />` en el layout raíz, al lado del `<Analytics />` de [[RM-052]]. Queda en toda la app y no solo en la landing: hoy el tráfico es de desarrollo, y si la cuota del plan gratuito aprieta se acota después — mover el componente a la landing es una línea.
+
 ## [RM-052] Vercel Analytics (2026-08-17 14:00)
 `@vercel/analytics` con `<Analytics />` en el layout raíz: una línea, cubre toda la app y las rutas dinámicas se agrupan solas por el patrón (`/programs/[slug]/...`). Speed Insights queda fuera — es otro paquete con su propia cuota de eventos, y en el tier gratuito conviene gastarla en tráfico, no en métricas de rendimiento.
 
