@@ -12,6 +12,9 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [RM-046] Storage en la nube para los colectores con imágenes (2026-08-16 20:36)
+Los 5 de zip (Álbum, Cronos, De Par en Par, Galería de Fotos, Intruso) suben y bajan de la nube: cada imagen es un objeto suelto en `<program_id>/<collector_id>/images/G1_I1.ext`, con **las mismas rutas relativas que ya usaba el zip**, así que el json no cambió. Al bajar, la capa de datos rearma un zip en memoria y se lo pasa al `onLoad` que cada colector ya tenía — cero lógica de carga nueva en los colectores, y de paso muere el riesgo del zip sin `File` que estaba anotado: los slots vuelven con archivo real. La subida borra las imágenes que dejaron de estar referenciadas, y el listado pagina (el `list()` de Supabase corta en 100 y Galería puede pasarse con 4 columnas). El tope de peso queda en [[RM-047]].
+
 ## [RM-040] Storage en la nube para los colectores json (2026-08-16 18:45)
 Bucket privado `collector-data` con un archivo por programa+colector (`<program_id>/<collector_id>/session.json`), aislado por `is_member()` sobre `storage.objects` (migración `0011`). **Sin tabla**: mientras sea un documento sin historial no hay nada que consultar; la ruta usa el uuid y no el slug, por lo mismo que TD-006. `src/data/collector-storage.ts` (subir/bajar) y el topbar pasa a botones con desplegable al estilo Studio — Guardar/Cargar siguen siendo locales, la nube va en el desplegable, sin "datos de ejemplo". Cada colector json expone su `getData`; la validación corre también antes de subir, y bajar de la nube pide confirmación porque pisa la pantalla. Los 5 colectores de zip quedan igual que antes (siguen en [[RM-046]]).
 

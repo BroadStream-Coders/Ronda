@@ -34,14 +34,19 @@ export function Editor() {
     createEmptyPhotoRound(),
   ]);
 
+  const handleGetBundle = useCallback(
+    () => buildData(textRounds, photoRounds),
+    [textRounds, photoRounds],
+  );
+
   const handleSave = useCallback(async () => {
-    const { data, files } = buildData(textRounds, photoRounds);
+    const { data, files } = handleGetBundle();
     try {
       await saveAsZip("Intruso.zip", data, files, SESSION_DATA_FILENAME);
     } catch {
       alert("Error al exportar los datos.");
     }
-  }, [textRounds, photoRounds]);
+  }, [handleGetBundle]);
 
   const handleLoad = useCallback(async (file: File) => {
     try {
@@ -108,8 +113,10 @@ export function Editor() {
       onSave: handleSave,
       onLoad: handleLoad,
       validate: handleValidate,
+      getData: () => handleGetBundle().data,
+      getFiles: () => handleGetBundle().files,
     });
-  }, [setHeader, handleSave, handleLoad, handleValidate]);
+  }, [setHeader, handleSave, handleLoad, handleValidate, handleGetBundle]);
 
   return (
     <LevelTabs

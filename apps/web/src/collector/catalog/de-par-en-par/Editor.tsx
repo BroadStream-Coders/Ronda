@@ -38,7 +38,7 @@ export function Editor() {
     setBoardOrder(initialBoardOrder(newPairs));
   }, []);
 
-  const handleSave = useCallback(async () => {
+  const handleGetBundle = useCallback(() => {
     const cells: Data["cells"] = [];
     const packer = createImagePacker();
 
@@ -64,19 +64,19 @@ export function Editor() {
       });
     }
 
-    const exportData: Data = { cells, answer: boardOrder };
+    const data: Data = { cells, answer: boardOrder };
 
+    return { data, files: packer.files };
+  }, [numPairs, pairsData, boardOrder]);
+
+  const handleSave = useCallback(async () => {
+    const { data, files } = handleGetBundle();
     try {
-      await saveAsZip(
-        "DeParEnPar.zip",
-        exportData,
-        packer.files,
-        "sessionData.json",
-      );
+      await saveAsZip("DeParEnPar.zip", data, files, "sessionData.json");
     } catch {
       alert("Error al exportar los datos.");
     }
-  }, [numPairs, pairsData, boardOrder]);
+  }, [handleGetBundle]);
 
   const handleLoad = useCallback(async (file: File) => {
     try {
@@ -151,8 +151,10 @@ export function Editor() {
       onSave: handleSave,
       onLoad: handleLoad,
       validate: handleValidate,
+      getData: () => handleGetBundle().data,
+      getFiles: () => handleGetBundle().files,
     });
-  }, [setHeader, handleSave, handleLoad, handleValidate]);
+  }, [setHeader, handleSave, handleLoad, handleValidate, handleGetBundle]);
 
   return (
     <LevelTabs

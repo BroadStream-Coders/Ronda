@@ -13,6 +13,7 @@ interface WorkspaceHeaderState {
   onLoad?: (file: File) => void;
   validate?: () => ValidationIssue[];
   getData?: () => unknown;
+  getFiles?: () => { name: string; file: File }[];
   setHeader: (
     header: Omit<WorkspaceHeaderState, "setHeader" | "resetHeader">,
   ) => void;
@@ -27,6 +28,7 @@ export const useWorkspaceHeader = create<WorkspaceHeaderState>((set) => ({
   onLoad: undefined,
   validate: undefined,
   getData: undefined,
+  getFiles: undefined,
   setHeader: (header) => set((state) => ({ ...state, ...header })),
   resetHeader: () =>
     set({
@@ -37,5 +39,6 @@ export const useWorkspaceHeader = create<WorkspaceHeaderState>((set) => ({
       onLoad: undefined,
       validate: undefined,
       getData: undefined,
+      getFiles: undefined,
     }),
 }));

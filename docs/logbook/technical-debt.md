@@ -54,6 +54,14 @@ reutiliza). Al resolverse se mueve al `changelog.md` conservando su código.
 - **Impacto futuro:** Ahí viven el refresco de sesión de Supabase y el guard de `/admin` (TD-002). Cuando Next remueva el nombre deprecado, el archivo simplemente deja de correr: no hay error de build, la app arranca y la protección se degrada a los guards de layout/página. Falla en silencio, que es la peor forma. Además el changelog (RM-007) ya lo llama "el proxy", así que el nombre real y el documentado no coinciden.
 - **Fecha:** 2026-08-11 · **Estado:** Abierto
 
+## [TD-015] El platform admin no tiene bypass en el storage del colector
+- **Ubicación:** `apps/web/supabase/migrations/0011_collector_storage.sql` (las cuatro policies) + `apps/web/src/app/programs/[slug]/collectors/[collectorId]/page.tsx`
+- **Riesgo:** 5/10
+- **Problema:** El admin de plataforma **ve** todos los programas (bypass de RLS en `programs`, RM-011) y puede entrar a cualquier colector, porque la pantalla no exige membresía: le alcanza con poder leer el programa. Pero las policies del storage preguntan `is_member()`, que para un admin sin fila en `memberships` es `false`. Resultado: entra, llena el colector, y recién al subir se topa con `new row violates row-level security policy` — el error crudo de Postgres, sin traducir. Salió a la luz al estrenar RM-040; se destrabó agregando la membresía a mano, que es justo lo que el admin no debería tener que hacer.
+- **Impacto futuro:** El admin no tiene el acceso irrestricto que se supone que tiene, y el desajuste es silencioso hasta que alguien pierde trabajo al guardar. Cada capa nueva con RLS por membresía (juegos, la vista de conductores) repite el mismo hueco si no se resuelve de raíz.
+- **Cómo cerrarlo:** dos caminos coherentes, hay que elegir uno. (1) Dar el bypass al admin también en el storage: `or public.is_platform_admin()` en las cuatro policies — mantiene la promesa de "el admin ve y hace todo" y es una migración corta. (2) Que la pantalla del colector exija membresía y no lo deje entrar, en vez de dejarlo trabajar y fallar al final. Lo que no puede quedar es lo de hoy: entra pero no puede escribir. Ver también [[TD-005]], que es el otro lado de la misma inconsistencia.
+- **Fecha:** 2026-08-16 · **Estado:** Abierto
+
 ## [TD-012] Alto fijo del recortador de imágenes
 - **Ubicación:** `apps/web/src/collector/kit/images/ImageCropperDialog.tsx:70`
 - **Riesgo:** 4/10

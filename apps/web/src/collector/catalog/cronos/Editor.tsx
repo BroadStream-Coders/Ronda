@@ -61,28 +61,34 @@ export function Editor() {
     setTitles((prev) => prev.map((t, i) => (i === idx ? value : t)));
   };
 
-  const handleSave = useCallback(async () => {
+  const handleGetBundle = useCallback(() => {
     const packer = createImagePacker();
-    const exportGroups = groups.map((items, groupIndex) => ({
-      title: titles[groupIndex] || "",
-      items: items.map((item, itemIndex) => ({
-        date: item.date.trim(),
-        title: item.title.trim(),
-        imagePath: packer.add(
-          item.image,
-          `G${groupIndex + 1}`,
-          `I${itemIndex + 1}`,
-        ),
+    const data: Data = {
+      groups: groups.map((items, groupIndex) => ({
+        title: titles[groupIndex] || "",
+        items: items.map((item, itemIndex) => ({
+          date: item.date.trim(),
+          title: item.title.trim(),
+          imagePath: packer.add(
+            item.image,
+            `G${groupIndex + 1}`,
+            `I${itemIndex + 1}`,
+          ),
+        })),
       })),
-    }));
+    };
 
-    const sessionData: Data = { groups: exportGroups };
+    return { data, files: packer.files };
+  }, [groups, titles]);
+
+  const handleSave = useCallback(async () => {
+    const { data, files } = handleGetBundle();
     try {
-      await saveAsZip("Cronos.zip", sessionData, packer.files);
+      await saveAsZip("Cronos.zip", data, files);
     } catch {
       alert("Error al exportar los datos.");
     }
-  }, [groups, titles]);
+  }, [handleGetBundle]);
 
   const handleLoad = useCallback(
     async (file: File) => {
@@ -138,8 +144,10 @@ export function Editor() {
       onSave: handleSave,
       onLoad: handleLoad,
       validate: handleValidate,
+      getData: () => handleGetBundle().data,
+      getFiles: () => handleGetBundle().files,
     });
-  }, [setHeader, handleSave, handleLoad, handleValidate]);
+  }, [setHeader, handleSave, handleLoad, handleValidate, handleGetBundle]);
 
   return (
     <GroupsContainer onAddGroup={handleAddGroup} addLabel="Agregar grupo">

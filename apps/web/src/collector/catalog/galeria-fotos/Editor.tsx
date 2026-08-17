@@ -68,14 +68,16 @@ export function Editor() {
     }));
   };
 
+  const handleGetBundle = useCallback(() => buildData(columns), [columns]);
+
   const handleSave = useCallback(async () => {
-    const { data, files } = buildData(columns);
+    const { data, files } = handleGetBundle();
     try {
       await saveAsZip("GaleriaFotos.zip", data, files, SESSION_DATA_FILENAME);
     } catch {
       alert("Error al exportar los datos.");
     }
-  }, [columns]);
+  }, [handleGetBundle]);
 
   const handleLoad = useCallback(async (file: File) => {
     try {
@@ -121,8 +123,10 @@ export function Editor() {
       onSave: handleSave,
       onLoad: handleLoad,
       validate: handleValidate,
+      getData: () => handleGetBundle().data,
+      getFiles: () => handleGetBundle().files,
     });
-  }, [setHeader, handleSave, handleLoad, handleValidate]);
+  }, [setHeader, handleSave, handleLoad, handleValidate, handleGetBundle]);
 
   return (
     <GroupsContainer onAddGroup={addColumn} addLabel="Agregar grupo">

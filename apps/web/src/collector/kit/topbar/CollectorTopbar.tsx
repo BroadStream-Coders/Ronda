@@ -64,7 +64,7 @@ export function CollectorTopbar({
   programId,
   collectorId,
 }: CollectorTopbarProps) {
-  const { title, icon, format, onSave, onLoad, validate, getData } =
+  const { title, icon, format, onSave, onLoad, validate, getData, getFiles } =
     useWorkspaceHeader();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const pendingActionRef = useRef<() => void>(() => {});
@@ -101,7 +101,12 @@ export function CollectorTopbar({
     if (!programId || !collectorId || !getData) return;
     setStatus({ kind: "busy", text: "Subiendo…" });
     try {
-      await uploadCollectorData(programId, collectorId, getData());
+      await uploadCollectorData(
+        programId,
+        collectorId,
+        getData(),
+        getFiles?.() ?? [],
+      );
       setStatus({ kind: "done", text: "Subido" });
       setTimeout(() => setStatus(null), 4000);
     } catch (error) {
@@ -116,7 +121,11 @@ export function CollectorTopbar({
     if (!programId || !collectorId || !onLoad) return;
     setStatus({ kind: "busy", text: "Cargando…" });
     try {
-      const file = await downloadCollectorData(programId, collectorId);
+      const file = await downloadCollectorData(
+        programId,
+        collectorId,
+        format === "zip" ? "zip" : "json",
+      );
       if (!file) {
         setStatus({ kind: "error", text: "No hay nada guardado en la nube" });
         return;

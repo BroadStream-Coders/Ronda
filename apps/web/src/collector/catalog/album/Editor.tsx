@@ -101,10 +101,10 @@ export function Editor() {
     );
   };
 
-  const handleSave = useCallback(async () => {
+  const handleGetBundle = useCallback(() => {
     const packer = createImagePacker();
 
-    const sessionData: Data = {
+    const data: Data = {
       rounds: rounds.map((round, roundIndex) => ({
         title: round.context.trim(),
         cards: round.photos.map((photo, photoIndex) => ({
@@ -119,17 +119,17 @@ export function Editor() {
       })),
     };
 
+    return { data, files: packer.files };
+  }, [rounds]);
+
+  const handleSave = useCallback(async () => {
+    const { data, files } = handleGetBundle();
     try {
-      await saveAsZip(
-        "Album.zip",
-        sessionData,
-        packer.files,
-        SESSION_DATA_FILENAME,
-      );
+      await saveAsZip("Album.zip", data, files, SESSION_DATA_FILENAME);
     } catch {
       alert("Error al exportar los datos.");
     }
-  }, [rounds]);
+  }, [handleGetBundle]);
 
   const handleLoad = useCallback(async (file: File) => {
     try {
@@ -184,8 +184,10 @@ export function Editor() {
       onSave: handleSave,
       onLoad: handleLoad,
       validate: handleValidate,
+      getData: () => handleGetBundle().data,
+      getFiles: () => handleGetBundle().files,
     });
-  }, [setHeader, handleSave, handleLoad, handleValidate]);
+  }, [setHeader, handleSave, handleLoad, handleValidate, handleGetBundle]);
 
   return (
     <GroupsContainer onAddGroup={addRound} addLabel="Agregar columna">

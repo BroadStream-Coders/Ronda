@@ -40,22 +40,19 @@ Al terminar una tarea se mueve al changelog y se borra de aquí.
   colector y por su juego; ningún contrato está definido dos veces.
 - **Fecha:** 2026-08-13 · **Estado:** Abierto
 
-## [RM-046] Storage para los colectores con imágenes
-- **Objetivo:** completar lo que quedó fuera de [[RM-040]], que cubrió solo los 9
-  colectores json. Faltan los 5 de zip (Álbum, Cronos, De Par en Par, Galería de
-  Fotos, Intruso): las imágenes tienen que subirse al bucket junto al json, y
-  `ImageSlot` gana la ruta en storage además del `File` en memoria.
-- **A tener en cuenta:** hay que **limitar el peso de las imágenes** antes de
-  subirlas (redimensionar y/o comprimir del lado del cliente, y rechazar lo que
-  pase de cierto tamaño). En el tier gratuito lo que se acaba primero no es el
-  almacenamiento sino la **transferencia**: cada vez que alguien abre el colector,
-  el juego o la tablet se vuelve a bajar el paquete de imágenes.
-- **Ojo con el zip:** cuando el contenido venga de la nube, los slots van a tener
-  URL pero no `File`, y el empaquetador del zip necesita el `File`. Exportar un zip
-  después de cargar de la nube exige bajarse las imágenes primero, o el zip sale
-  sin fotos y en silencio.
-- **Hecho cuando:** los 5 colectores de imágenes suben y bajan de la nube, con tope
-  de peso aplicado, y el guardado local a zip sigue funcionando en ambos casos.
+## [RM-047] Límite de peso de las imágenes antes de subir
+- **Objetivo:** que ninguna imagen entre al bucket sin pasar por un tope:
+  redimensionar y/o comprimir del lado del cliente, y rechazar lo que se pase.
+  Quedó fuera de [[RM-046]] a propósito, que subió las imágenes tal cual llegan.
+- **Por qué importa:** en el tier gratuito lo que se acaba primero no es el
+  almacenamiento sino la **transferencia**, y hoy cada apertura del colector baja
+  el paquete completo de imágenes. Cuando entren los juegos ([[RM-038]]) y la
+  tablet ([[RM-041]]) el mismo paquete se baja varias veces más por emisión.
+- **Dónde engancha:** el recorte ya pasa por canvas (`kit/images/crop-image.ts`),
+  así que hay dónde redimensionar sin agregar dependencias; y la subida es un solo
+  punto (`data/collector-storage.ts`), no cinco.
+- **Hecho cuando:** hay un tope aplicado en la subida, con aviso claro al usuario
+  cuando una imagen no entra, y una medición de cuánto pesa hoy una sesión típica.
 - **Fecha:** 2026-08-16 · **Estado:** Abierto
 
 ## [RM-041] Servicio de consulta en tablet para conductores
