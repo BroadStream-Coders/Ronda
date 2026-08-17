@@ -74,6 +74,15 @@ Se descartó centralizarlo en `button.tsx` inspeccionando `render.type`: menos c
 `assignments.ts` pasa a keyearse por `program.id` (uuid inmutable) en vez de `slug`, con el nombre del programa como dato para que el archivo siga siendo legible sin comentarios; los dos call sites usan `program.id`, que ya tenían en scope.
 De paso, Deletreo quedó asignado también a Más Conectados: el catálogo se comparte por tipo de juego y el aislamiento se verificó en la UI (cada programa ve solo lo suyo). El disparador real era más angosto de lo registrado — el form de admin reenvía el slug, había que editarlo a mano.
 
+## [RM-053] Panel de admin al lenguaje visual nuevo (2026-08-17 13:02)
+Las 5 pantallas (programas, usuarios, invitaciones, mensajes, editar programa) pasan al shell del espacio de trabajo: lateral fija de 240px con el logo en vez del ícono `Radio`, cabecera de página compartida (`AdminPage`/`AdminEmpty`), tarjetas y estados vacíos con el estilo del resto, y barra compacta con íconos en móvil. El menú de cuenta se extrajo a `account-menu.tsx` y ahora lo comparten admin y workspace, así que el selector de tema también está en admin.
+
+## [TD-019] El panel de admin nunca se revisó en modo oscuro (2026-08-17 13:02)
+Cerrado por [[RM-053]]: se retiraron los colores y superficies que no salían de tokens, y la marca quedó consistente con el resto de la app.
+
+## [TD-018] `admin-placeholder.tsx` quedó sin usos (2026-08-17 13:02)
+Archivo eliminado dentro de [[RM-053]].
+
 ## [RM-050] Árbol de colectores en la barra lateral (2026-08-17 12:05)
 El editor de colector entró al shell `(workspace)`, así que la barra lateral está en todas las pantallas del programa. Bajo "Colectores" cuelga el árbol de juegos asignados (con su ícono, activo resaltado, y visible también como rail cuando está contraída). El botón de contraer pasó al borde derecho a la altura de la cabecera y la elección se recuerda en cookie. Se quitó el "Volver" del topbar, que la lateral ya cubre.
 

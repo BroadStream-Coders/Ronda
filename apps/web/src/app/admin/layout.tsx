@@ -1,10 +1,11 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { Radio } from "lucide-react";
+import { ArrowLeftRight } from "lucide-react";
 
+import { AccountMenu } from "@/components/account-menu";
 import { AdminNav } from "@/components/admin-nav";
-import { AuthButton } from "@/components/auth-button";
+import { RondaMark } from "@/components/ronda-logo";
 import { createClient } from "@/data/supabase/server";
 import { isPlatformAdmin } from "@/data/admin";
 import { countUnreadInquiries } from "@/data/inquiries";
@@ -23,38 +24,62 @@ export default async function AdminLayout({
 
   const unread = await countUnreadInquiries();
 
+  const name = (user.user_metadata.full_name ?? user.user_metadata.name) as
+    | string
+    | undefined;
+  const avatar = (user.user_metadata.avatar_url ??
+    user.user_metadata.picture) as string | undefined;
+
   return (
-    <div className="flex min-h-dvh flex-col md:flex-row">
-      <aside className="flex shrink-0 flex-col gap-6 border-b bg-muted/30 p-4 md:w-60 md:border-b-0 md:border-r">
-        <div className="flex items-center justify-between">
-          <Link
-            href="/admin"
-            className="flex items-center gap-2 font-heading text-lg font-semibold tracking-tight"
-          >
-            <span className="flex size-7 items-center justify-center rounded-md bg-primary text-primary-foreground">
-              <Radio className="size-4" />
+    <div className="flex h-dvh overflow-hidden">
+      <aside className="flex w-60 shrink-0 flex-col border-r border-border bg-card max-md:hidden">
+        <div className="flex h-14 shrink-0 items-center gap-2.5 border-b border-border px-3">
+          <Link href="/admin" className="flex min-w-0 items-center gap-2.5">
+            <RondaMark className="size-7" />
+            <span className="min-w-0 flex-1">
+              <span className="font-heading block truncate text-sm font-semibold">
+                Ronda
+              </span>
+              <span className="block truncate text-xs text-muted-foreground">
+                Panel de plataforma
+              </span>
             </span>
-            Ronda
           </Link>
-          <span className="rounded-full bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary">
-            Admin
-          </span>
         </div>
 
-        <AdminNav unread={unread} />
+        <nav className="flex min-h-0 flex-1 flex-col gap-1 overflow-y-auto p-2">
+          <AdminNav unread={unread} />
+        </nav>
 
-        <div className="mt-auto flex items-center justify-between gap-2 pt-4">
-          <Link
-            href="/programs"
-            className="text-xs text-muted-foreground transition-colors hover:text-foreground"
-          >
-            Ver como usuario
-          </Link>
-          <AuthButton />
+        <div className="shrink-0 border-t border-border p-2">
+          <AccountMenu
+            user={{
+              name: name ?? null,
+              email: user.email ?? null,
+              avatar: avatar ?? null,
+            }}
+            secondary={{
+              href: "/programs",
+              label: "Ver como usuario",
+              icon: <ArrowLeftRight />,
+            }}
+          />
         </div>
       </aside>
 
-      <main className="flex-1">{children}</main>
+      <div className="flex min-w-0 flex-1 flex-col">
+        <header className="flex h-14 shrink-0 items-center gap-3 border-b border-border bg-card px-4 md:hidden">
+          <RondaMark className="size-6" />
+          <span className="font-heading text-sm font-semibold">Admin</span>
+          <nav className="ml-auto flex items-center gap-1">
+            <AdminNav unread={unread} compact />
+          </nav>
+        </header>
+
+        <main className="min-w-0 flex-1 overflow-y-auto bg-muted/40">
+          {children}
+        </main>
+      </div>
     </div>
   );
 }
