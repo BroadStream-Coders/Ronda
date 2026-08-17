@@ -1,13 +1,13 @@
 import { ReactNode } from "react";
 import { Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardContent } from "@/components/ui/card";
 
 interface GroupColumnProps {
   index: number;
   onRemove: () => void;
   children: ReactNode;
   width?: string;
+  label?: string;
   currentCapacity?: number;
   maxCapacity?: number;
 }
@@ -17,48 +17,55 @@ export function GroupColumn({
   onRemove,
   children,
   width = "w-[320px]",
+  label = "Ronda",
   currentCapacity,
   maxCapacity,
 }: GroupColumnProps) {
-  return (
-    <Card
-      className={`flex h-full flex-col shrink-0 rounded-xl border border-border bg-card shadow-none gap-0 py-0 overflow-hidden ${width}`}
-    >
-      <CardHeader className="flex flex-row items-center justify-between border-b border-border p-4 shrink-0 bg-muted/5">
-        <div className="flex items-center gap-3">
-          <div className="flex h-6 w-6 items-center justify-center rounded-md bg-primary/20 text-primary text-[10px] font-bold font-mono">
-            {index}
-          </div>
+  const showCapacity =
+    currentCapacity !== undefined && maxCapacity !== undefined;
+  const ratio = showCapacity ? currentCapacity / maxCapacity : 0;
+  const full = ratio >= 1;
 
-          {maxCapacity !== undefined && currentCapacity !== undefined && (
-            <div className="flex items-center gap-2">
-              <span className="text-[10px] font-mono text-muted-foreground tracking-wider">
-                CAPACIDAD: {currentCapacity}/{maxCapacity}
-              </span>
-              <div className="h-1.5 w-16 bg-muted overflow-hidden rounded-full">
-                <div
-                  className="h-full bg-primary transition-all"
-                  style={{
-                    width: `${Math.min(100, (currentCapacity / maxCapacity) * 100)}%`,
-                  }}
-                />
-              </div>
-            </div>
-          )}
-        </div>
+  return (
+    <section
+      className={`group/column flex h-full shrink-0 flex-col overflow-hidden rounded-xl border border-border bg-card ${width}`}
+    >
+      <header className="flex h-12 shrink-0 items-center gap-2.5 border-b border-border px-3">
+        <span className="font-heading flex size-7 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-sm font-semibold text-primary tabular-nums">
+          {index}
+        </span>
+        <span className="text-sm font-medium">
+          {label} {index}
+        </span>
+
+        {showCapacity && (
+          <span className="ml-auto flex items-center gap-2">
+            <span
+              className={`text-xs tabular-nums ${full ? "font-medium text-accent" : "text-muted-foreground"}`}
+            >
+              {currentCapacity}/{maxCapacity}
+            </span>
+            <span className="h-1 w-10 overflow-hidden rounded-full bg-muted">
+              <span
+                className={`block h-full transition-all ${full ? "bg-accent" : "bg-primary"}`}
+                style={{ width: `${Math.min(100, ratio * 100)}%` }}
+              />
+            </span>
+          </span>
+        )}
+
         <Button
           variant="ghost"
-          size="icon"
+          size="icon-sm"
           onClick={onRemove}
-          className="h-7 w-7 text-muted-foreground hover:bg-destructive/10 hover:text-destructive transition-colors"
+          aria-label={`Eliminar ${label.toLowerCase()} ${index}`}
+          className={`${showCapacity ? "" : "ml-auto"} text-muted-foreground opacity-0 transition-opacity group-hover/column:opacity-100 focus-visible:opacity-100 hover:text-destructive`}
         >
-          <Trash2 className="h-3.5 w-3.5" />
+          <Trash2 />
         </Button>
-      </CardHeader>
+      </header>
 
-      <CardContent className="flex flex-1 flex-col min-h-0 p-0">
-        {children}
-      </CardContent>
-    </Card>
+      <div className="flex min-h-0 flex-1 flex-col">{children}</div>
+    </section>
   );
 }

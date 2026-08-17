@@ -8,6 +8,7 @@ import {
   LevelTabs,
   readImageSlot,
   useWorkspaceHeader,
+  notifyError,
 } from "@/collector/kit";
 import { Level1 } from "./Level1";
 import { Level2 } from "./Level2";
@@ -44,7 +45,7 @@ export function Editor() {
     try {
       await saveAsZip("Intruso.zip", data, files, SESSION_DATA_FILENAME);
     } catch {
-      alert("Error al exportar los datos.");
+      notifyError("Error al exportar los datos.");
     }
   }, [handleGetBundle]);
 
@@ -53,7 +54,7 @@ export function Editor() {
       const zip = await loadZipFile(file);
       const dataFile = zip.file(SESSION_DATA_FILENAME);
       if (!dataFile) {
-        alert(
+        notifyError(
           "El archivo no es un paquete válido de Intruso (falta sessionData.json).",
         );
         return;
@@ -97,7 +98,7 @@ export function Editor() {
           : [createEmptyPhotoRound()],
       );
     } catch {
-      alert("Error al importar los datos.");
+      notifyError("Error al importar los datos.");
     }
   }, []);
 

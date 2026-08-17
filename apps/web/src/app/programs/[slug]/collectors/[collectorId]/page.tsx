@@ -1,6 +1,6 @@
 import { notFound, redirect } from "next/navigation";
 
-import { CollectorTopbar } from "@/collector/kit";
+import { CollectorTopbar, NoticeStack } from "@/collector/kit";
 import { createClient } from "@/data/supabase/server";
 import { getProgramBySlug } from "@/data/programs";
 import { getProgramCollectors } from "@/collector/catalog/assignments";
@@ -35,9 +35,10 @@ export default async function CollectorPage({
         programId={program.id}
         collectorId={collectorId}
       />
-      <div className="min-h-0 flex-1">
+      <div className="min-h-0 flex-1 bg-muted/40">
         <Editor />
       </div>
+      <NoticeStack />
     </div>
   );
 }

@@ -1,7 +1,6 @@
 "use client";
 
 import { ReactNode } from "react";
-import { CardFooter } from "@/components/ui/card";
 
 interface GroupFooterProps {
   children: ReactNode;
@@ -9,8 +8,8 @@ interface GroupFooterProps {
 
 export function GroupFooter({ children }: GroupFooterProps) {
   return (
-    <CardFooter className="shrink-0 border-t border-border bg-muted/5 p-4 flex flex-col gap-3">
+    <div className="flex shrink-0 flex-col gap-2 border-t border-border bg-muted/30 p-3">
       {children}
-    </CardFooter>
+    </div>
   );
 }

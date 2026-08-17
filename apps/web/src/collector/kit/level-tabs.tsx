@@ -17,42 +17,44 @@ export function LevelTabs({ levels, className = "" }: LevelTabsProps) {
   const [activeIndex, setActiveIndex] = useState(0);
 
   return (
-    <div className={`flex h-full ${className}`}>
-      <div className="flex-1 relative overflow-hidden">
+    <div className={`flex h-full flex-col ${className}`}>
+      <div
+        role="tablist"
+        aria-label="Niveles"
+        className="flex shrink-0 items-center gap-1 overflow-x-auto border-b border-border bg-card px-3 py-2"
+      >
+        {levels.map((level, index) => {
+          const active = activeIndex === index;
+          const Icon = level.icon;
+          return (
+            <button
+              key={index}
+              role="tab"
+              aria-selected={active}
+              onClick={() => setActiveIndex(index)}
+              className={`inline-flex h-9 shrink-0 items-center gap-2 rounded-lg px-3 text-sm font-medium transition-colors outline-none focus-visible:ring-3 focus-visible:ring-ring/50 ${
+                active
+                  ? "bg-primary text-primary-foreground"
+                  : "text-muted-foreground hover:bg-muted hover:text-foreground"
+              }`}
+            >
+              {Icon && <Icon className="size-4" />}
+              {level.name}
+            </button>
+          );
+        })}
+      </div>
+
+      <div className="relative min-h-0 flex-1">
         {levels.map((level, index) => (
           <div
             key={index}
+            role="tabpanel"
+            hidden={activeIndex !== index}
             className="absolute inset-0"
-            style={{
-              opacity: activeIndex === index ? 1 : 0,
-              pointerEvents: activeIndex === index ? "auto" : "none",
-              zIndex: activeIndex === index ? 1 : 0,
-            }}
           >
             {level.component}
           </div>
-        ))}
-      </div>
-
-      <div className="flex flex-col shrink-0 border-l border-border bg-card/50">
-        {levels.map((level, index) => (
-          <button
-            key={index}
-            onClick={() => setActiveIndex(index)}
-            className={`flex flex-col items-center gap-1.5 px-2 py-4 transition-colors border-r-2 ${
-              activeIndex === index
-                ? "text-primary border-primary bg-primary/5"
-                : "text-muted-foreground border-transparent hover:text-foreground hover:bg-muted/30"
-            }`}
-          >
-            {level.icon && <level.icon className="h-3.5 w-3.5 shrink-0 mb-1" />}
-            <span
-              className="text-[10px] font-bold uppercase tracking-widest"
-              style={{ writingMode: "vertical-lr" }}
-            >
-              {level.name}
-            </span>
-          </button>
         ))}
       </div>
     </div>

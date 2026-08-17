@@ -8,6 +8,7 @@ import {
   GroupsContainer,
   useWorkspaceGroups,
   useWorkspaceHeader,
+  notifyError,
 } from "@/collector/kit";
 import { Column } from "./Column";
 import {
@@ -64,7 +65,7 @@ export function Editor() {
         const data = await loadJsonFile<Data>(file, isData);
         setGroups(data.groups.map((g) => g.boards));
       } catch {
-        alert("Archivo de Cálculo Mental no válido.");
+        notifyError("Archivo de Cálculo Mental no válido.");
       }
     },
     [setGroups],

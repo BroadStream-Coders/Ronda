@@ -13,13 +13,13 @@ export function AddRowButton({
   className = "",
 }: AddRowButtonProps) {
   return (
-    <div className="p-4 shrink-0 border-t border-border/50">
+    <div className="shrink-0 px-3 pb-3">
       <Button
         onClick={onClick}
-        variant="outline"
-        className={`w-full h-9 gap-2 border-dashed border-border text-muted-foreground hover:text-foreground hover:border-primary/50 hover:bg-primary/5 text-xs transition-all ${className}`}
+        variant="ghost"
+        className={`h-9 w-full justify-start gap-2 pl-1.5 text-muted-foreground hover:text-foreground ${className}`}
       >
-        <Plus className="h-3.5 w-3.5" />
+        <Plus />
         {label}
       </Button>
     </div>

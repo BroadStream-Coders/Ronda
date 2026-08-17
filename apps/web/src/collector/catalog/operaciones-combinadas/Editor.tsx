@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import { Sigma } from "lucide-react";
 
 import { saveAsJson, loadJsonFile } from "@/helpers/persistence";
-import { useWorkspaceHeader } from "@/collector/kit";
+import {useWorkspaceHeader, notifyError } from "@/collector/kit";
 import { Sidebar } from "./Sidebar";
 import { Grid, type PreviewCell } from "./Grid";
 import { List } from "./List";
@@ -76,7 +76,7 @@ export function Editor() {
         setHoverCell(null);
       }
     } catch {
-      alert("Archivo de Operaciones Combinadas no válido.");
+      notifyError("Archivo de Operaciones Combinadas no válido.");
     }
   }, []);
 
@@ -149,14 +149,14 @@ export function Editor() {
     const operation = currentBoard.operations[operationIndex];
     const text = operation.text.trim();
     if (!text) {
-      alert("La operación está vacía. Escribe algo como '15+12=27' primero.");
+      notifyError("La operación está vacía. Escribe algo como '15+12=27' primero.");
       return;
     }
 
     const values = text.match(/\d+|[+\-*/=]/g);
     const joinedValues = values ? values.join("") : "";
     if (!values || joinedValues.length !== text.replace(/\s+/g, "").length) {
-      alert(
+      notifyError(
         "Formato de operación no válido. Usa números y operadores (+, -, *, /, =).",
       );
       return;
@@ -170,7 +170,7 @@ export function Editor() {
       colIndex + values.length * dirX > GRID_SIZE ||
       rowIndex + values.length * dirY > GRID_SIZE
     ) {
-      alert("La operación no cabe en el tablero iniciando en esta posición.");
+      notifyError("La operación no cabe en el tablero iniciando en esta posición.");
       return;
     }
 
@@ -196,7 +196,7 @@ export function Editor() {
       }
     }
     if (overlapsConflict) {
-      alert("Hay un cruce conflictivo. Un carácter distinto ya ocupa esa celda.");
+      notifyError("Hay un cruce conflictivo. Un carácter distinto ya ocupa esa celda.");
       return;
     }
 
@@ -284,7 +284,7 @@ export function Editor() {
     if (isListMode) {
       const availableSlots = MAX_OPERATIONS - currentBoard.operations.length;
       if (availableSlots <= 0) {
-        alert("No hay más espacio para agregar operaciones en este tablero.");
+        notifyError("No hay más espacio para agregar operaciones en este tablero.");
         return;
       }
       const lines = matrix.flatMap((row) => {
@@ -520,7 +520,7 @@ export function Editor() {
   }
 
   return (
-    <div className="flex h-full flex-col xl:flex-row gap-4 xl:gap-6 p-4 xl:p-6 overflow-hidden">
+    <div className="flex h-full flex-col gap-3 overflow-hidden p-4 lg:flex-row">
       <Sidebar
         rounds={rounds}
         selectedRoundId={selectedRoundId}

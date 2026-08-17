@@ -13,28 +13,24 @@ export function AddColumnButton({
   label,
   sublabel,
   onClick,
-  width = "w-[180px]",
+  width = "w-[200px]",
 }: AddColumnButtonProps) {
   return (
-    <div className={`h-full ${width} shrink-0`}>
-      <button
-        onClick={onClick}
-        className="group flex h-full w-full flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-border/60 bg-muted/5 text-muted-foreground transition-all hover:border-primary/40 hover:bg-muted/10 hover:text-foreground"
-      >
-        <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-dashed border-current transition-all group-hover:scale-110 group-hover:bg-primary group-hover:text-primary-foreground group-hover:border-transparent">
-          <Plus className="h-4 w-4" />
-        </div>
-        <div className="text-center">
-          <span className="block text-xs font-bold uppercase tracking-wider">
-            {label}
+    <button
+      onClick={onClick}
+      className={`group flex h-full shrink-0 flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-border bg-card/40 px-4 text-muted-foreground transition-colors hover:border-primary/50 hover:bg-card hover:text-foreground ${width}`}
+    >
+      <span className="flex size-9 items-center justify-center rounded-lg bg-muted text-muted-foreground transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+        <Plus className="size-4" />
+      </span>
+      <span className="text-center">
+        <span className="block text-sm font-medium">{label}</span>
+        {sublabel && (
+          <span className="mt-0.5 block text-xs text-muted-foreground">
+            {sublabel}
           </span>
-          {sublabel && (
-            <span className="text-[10px] text-muted-foreground/50 font-medium">
-              {sublabel}
-            </span>
-          )}
-        </div>
-      </button>
-    </div>
+        )}
+      </span>
+    </button>
   );
 }

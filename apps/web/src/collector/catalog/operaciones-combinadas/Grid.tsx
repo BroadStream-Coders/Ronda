@@ -1,6 +1,6 @@
 "use client";
 
-import { Lightbulb } from "lucide-react";
+import { Panel, PanelHint } from "@/collector/kit";
 import { GRID_SIZE } from "./schema";
 
 export interface PreviewCell {
@@ -30,28 +30,21 @@ export function Grid({
   isPlacementMode = false,
 }: GridProps) {
   return (
-    <section
-      className={`flex-1 flex flex-col items-center justify-center border rounded-xl p-6 overflow-hidden transition-all duration-300 ${
-        isPlacementMode
-          ? "border-primary bg-primary/5 shadow-lg shadow-primary/20 relative"
-          : "border-border bg-card shadow-sm"
-      }`}
-    >
-      {isPlacementMode && (
-        <div className="absolute top-4 left-0 w-full text-center pointer-events-none animate-pulse">
-          <span className="bg-primary text-primary-foreground text-xs font-bold px-3 py-1 rounded-full shadow-md uppercase tracking-wider">
-            Modo ubicación activo
+    <Panel
+      title="Tablero"
+      aside={
+        isPlacementMode ? (
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-accent/10 px-2.5 py-1 text-xs font-medium text-accent">
+            <span className="size-1.5 rounded-full bg-accent" />
+            Elige dónde colocarla
           </span>
-        </div>
-      )}
-
-      <div
-        className={`w-full max-w-[650px] aspect-square shrink-0 transition-transform duration-300 ${isPlacementMode ? "scale-[1.02]" : ""}`}
-      >
+        ) : null
+      }
+      className={`min-w-0 flex-1 ${isPlacementMode ? "border-accent" : ""}`}
+    >
+      <div className="flex min-h-0 flex-1 items-center justify-center overflow-auto bg-muted/30 p-4">
         <div
-          className={`grid gap-[2px] lg:gap-1 w-full h-full p-1 lg:p-2 rounded-lg transition-colors duration-300 ${
-            isPlacementMode ? "bg-primary/20 ring-1 ring-primary/30" : "bg-border/20"
-          }`}
+          className="grid aspect-square w-full max-w-[620px] gap-1"
           style={{
             gridTemplateColumns: `repeat(${GRID_SIZE}, minmax(0, 1fr))`,
             gridTemplateRows: `repeat(${GRID_SIZE}, minmax(0, 1fr))`,
@@ -65,40 +58,30 @@ export function Grid({
               const isHidden = hiddenCells.has(cellKey);
 
               let content = cellValue;
-              let extraClass = "border-border/80 bg-background text-primary";
+              let cellClass =
+                "border-border bg-card text-foreground hover:bg-muted";
 
               if (preview) {
                 content = preview.value;
-                extraClass = preview.isValid
-                  ? "border-emerald-500 bg-emerald-500/20 text-emerald-500 ring-2 ring-emerald-500 scale-110 z-10 shadow-md"
-                  : "border-destructive bg-destructive/20 text-destructive ring-2 ring-destructive scale-110 z-10 shadow-md";
+                cellClass = preview.isValid
+                  ? "border-primary bg-primary text-primary-foreground"
+                  : "border-destructive bg-destructive/15 text-destructive";
               } else if (cellValue) {
-                if (isHidden) {
-                  extraClass =
-                    "border-primary/40 border-dashed bg-background text-primary/30 shadow-inner font-extrabold";
-                } else {
-                  extraClass =
-                    "border-primary/40 bg-primary/10 text-primary shadow-sm font-extrabold";
-                }
+                cellClass = isHidden
+                  ? "border-dashed border-primary/50 bg-card text-primary/40"
+                  : "border-primary/30 bg-primary/10 text-primary";
               } else if (isPlacementMode) {
-                extraClass =
-                  "border-primary/20 bg-background text-primary hover:bg-primary/10";
-              } else {
-                extraClass =
-                  "border-border/80 bg-background text-primary hover:bg-muted/50";
+                cellClass =
+                  "border-border bg-card text-foreground hover:border-accent hover:bg-accent/10";
               }
 
               return (
                 <button
                   key={cellKey}
                   onClick={() => onCellClick(rowIndex, colIndex)}
-                  onDoubleClick={() =>
-                    onCellDoubleClick && onCellDoubleClick(rowIndex, colIndex)
-                  }
-                  onMouseEnter={() =>
-                    onCellHover && onCellHover(rowIndex, colIndex)
-                  }
-                  className={`w-full h-full border transition-all duration-150 rounded-sm lg:rounded-md flex items-center justify-center font-mono font-bold text-sm lg:text-lg focus:outline-none ${extraClass}`}
+                  onDoubleClick={() => onCellDoubleClick?.(rowIndex, colIndex)}
+                  onMouseEnter={() => onCellHover?.(rowIndex, colIndex)}
+                  className={`flex size-full items-center justify-center rounded-md border text-sm font-medium tabular-nums transition-colors outline-none focus-visible:ring-3 focus-visible:ring-ring/50 lg:text-base ${cellClass}`}
                 >
                   {content}
                 </button>
@@ -108,14 +91,10 @@ export function Grid({
         </div>
       </div>
 
-      <div className="mt-4 md:mt-6 text-sm text-muted-foreground flex items-center justify-center gap-1.5 opacity-90 text-center font-medium bg-muted/30 px-4 py-2 rounded-lg border border-border/50">
-        <Lightbulb className="size-4 shrink-0 text-primary" />
-        <span className="font-bold text-foreground">Tip:</span>
-        <span>
-          Doble clic sobre un número para marcarlo como &quot;oculto&quot; para
-          los jugadores.
-        </span>
-      </div>
-    </section>
+      <PanelHint>
+        Doble clic sobre un número para ocultarlo a los jugadores. Los números
+        ocultos se ven con borde punteado.
+      </PanelHint>
+    </Panel>
   );
 }

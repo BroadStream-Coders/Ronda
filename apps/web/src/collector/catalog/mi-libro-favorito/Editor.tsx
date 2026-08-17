@@ -8,6 +8,7 @@ import {
   GroupsContainer,
   useWorkspaceGroups,
   useWorkspaceHeader,
+  notifyError,
 } from "@/collector/kit";
 import { Column } from "./Column";
 import { Players } from "./Players";
@@ -66,7 +67,7 @@ export function Editor() {
         setPlayers(parsed.players);
         setGroups(parsed.groups);
       } catch {
-        alert("Archivo de Mi Libro Favorito no válido.");
+        notifyError("Archivo de Mi Libro Favorito no válido.");
       }
     },
     [setGroups],

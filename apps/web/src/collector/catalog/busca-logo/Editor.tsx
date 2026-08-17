@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import { Search } from "lucide-react";
 
 import { saveAsJson, loadJsonFile } from "@/helpers/persistence";
-import { useWorkspaceHeader } from "@/collector/kit";
+import {useWorkspaceHeader, notifyError } from "@/collector/kit";
 import { BoardsSidebar } from "./BoardsSidebar";
 import { Grid } from "./Grid";
 import { ControlsSidebar } from "./ControlsSidebar";
@@ -49,7 +49,7 @@ export function Editor() {
         setSelectedBoardId(newBoards[0].id);
       }
     } catch {
-      alert("Archivo de Busca el Logo no válido.");
+      notifyError("Archivo de Busca el Logo no válido.");
     }
   }, []);
 
@@ -119,7 +119,7 @@ export function Editor() {
   if (!currentBoard) return null;
 
   return (
-    <div className="flex h-full flex-col xl:flex-row gap-4 xl:gap-6 p-4 xl:p-6 overflow-hidden">
+    <div className="flex h-full flex-col gap-3 overflow-hidden p-4 lg:flex-row">
       <BoardsSidebar
         boards={boards}
         selectedBoardId={selectedBoardId}

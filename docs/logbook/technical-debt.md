@@ -16,6 +16,13 @@ reutiliza). Al resolverse se mueve al `changelog.md` conservando su código.
 
 ---
 
+## [TD-012] `admin-placeholder.tsx` quedó sin usos
+- **Ubicación:** `apps/web/src/components/admin-placeholder.tsx`
+- **Riesgo:** 1/10
+- **Problema:** El componente no se importa desde ningún lado; las páginas de admin ya tienen contenido real.
+- **Impacto futuro:** Ruido: aparece en búsquedas y en cualquier refactor del panel como si fuera parte del diseño vigente.
+- **Fecha:** 2026-08-17 · **Estado:** Abierto
+
 ## [TD-001] Logos de clientes servidos sin optimizar (`unoptimized`)
 - **Ubicación:** `apps/web/src/app/page.tsx` (los `<Image>` de la sección "Clientes al aire")
 - **Riesgo:** 2/10

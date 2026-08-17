@@ -11,6 +11,7 @@ import {
   releaseSlots,
   useWorkspaceGroups,
   useWorkspaceHeader,
+  notifyError,
 } from "@/collector/kit";
 import { Column } from "./Column";
 import {
@@ -86,7 +87,7 @@ export function Editor() {
     try {
       await saveAsZip("Cronos.zip", data, files);
     } catch {
-      alert("Error al exportar los datos.");
+      notifyError("Error al exportar los datos.");
     }
   }, [handleGetBundle]);
 
@@ -96,13 +97,13 @@ export function Editor() {
         const zip = await loadZipFile(file);
         const dataFile = zip.file("sessionData.json");
         if (!dataFile) {
-          alert("El ZIP no contiene un sessionData.json válido.");
+          notifyError("El ZIP no contiene un sessionData.json válido.");
           return;
         }
         const content = await dataFile.async("string");
         const sessionData = JSON.parse(content) as Data;
         if (!Array.isArray(sessionData.groups)) {
-          alert("El archivo no contiene grupos válidos.");
+          notifyError("El archivo no contiene grupos válidos.");
           return;
         }
 
@@ -123,7 +124,7 @@ export function Editor() {
         setTitles(loadedGroups.map((g) => g.title));
         setGroups(loadedGroups.map((g) => g.items));
       } catch {
-        alert("Error al procesar el archivo ZIP.");
+        notifyError("Error al procesar el archivo ZIP.");
       }
     },
     [setGroups],

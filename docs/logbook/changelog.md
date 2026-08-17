@@ -74,6 +74,15 @@ Se descartó centralizarlo en `button.tsx` inspeccionando `render.type`: menos c
 `assignments.ts` pasa a keyearse por `program.id` (uuid inmutable) en vez de `slug`, con el nombre del programa como dato para que el archivo siga siendo legible sin comentarios; los dos call sites usan `program.id`, que ya tenían en scope.
 De paso, Deletreo quedó asignado también a Más Conectados: el catálogo se comparte por tipo de juego y el aislamiento se verificó en la UI (cada programa ve solo lo suyo). El disparador real era más angosto de lo registrado — el form de admin reenvía el slug, había que editarlo a mano.
 
+## [TD-013] Los arquetipos de barra lateral y tablero quedaron fuera del rediseño (2026-08-17 09:13)
+Busca el Logo y Operaciones Combinadas migrados al lenguaje del kit con un primitivo nuevo (`Panel`, `PanelList`, `PanelCount`, `PanelHint`): cabeceras de 48px, listas de tableros/rondas unificadas, celdas sin transform ni anillos, y los verdes fuera de paleta cambiados por `primary`/`accent`.
+
+## [RM-036] Rediseño del kit del colector (2026-08-17 09:06)
+Kit rediseñado y aplicado a los 14 colectores: topbar de 56px con estado de guardado ("sin guardar / guardado hace X / en la nube"), columnas y filas con densidad nueva (primitivo `GroupRow` + `rowFieldClass`), pegado desde planilla promovido a acción explícita, pestañas de nivel horizontales en vez de texto rotado, y sistema de avisos propio (`NoticeStack`).
+
+## [TD-011] Los 14 colectores avisan errores con `alert()` nativo (2026-08-17 09:06)
+Resuelto dentro de RM-036: las 34 llamadas a `alert()` pasaron a `notifyError()` del nuevo sistema de avisos, con mensajes reescritos en lenguaje de producción.
+
 ## [TD-004] Los CTA "Empezar" del home no hacen nada (2026-08-11 15:46)
 Resuelto dentro de RM-035: la landing nueva no tiene botones muertos — "Pedir una reunión" y "Solicitar reunión" anclan a `#contacto`, "Ver qué hacemos" a `#servicios`, y el bloque de contacto resuelve según sesión (formulario, "Ir al panel" o login con Google).
 

@@ -1,7 +1,10 @@
 "use client";
 
-import { Plus, X, ChevronDown, CheckCircle2 } from "lucide-react";
-import { QuickLoad } from "@/collector/kit";
+import { Check, Plus, Trash2 } from "lucide-react";
+
+import { Panel, PanelCount, QuickLoad } from "@/collector/kit";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import type { Operation } from "./schema";
 
 interface ListProps {
@@ -30,108 +33,107 @@ export function List({
   onQuickLoad,
 }: ListProps) {
   return (
-    <section className="w-full lg:w-[380px] shrink-0 flex flex-col border border-border rounded-xl bg-card overflow-hidden shadow-sm">
-      <div className="flex-none bg-muted px-4 py-3 border-b border-border h-12 flex items-center justify-between shrink-0">
-        <h2 className="text-sm font-bold text-foreground">Operaciones</h2>
-        <span className="text-[10px] font-mono font-bold text-muted-foreground bg-background px-2 py-0.5 rounded border border-border">
-          {operations.length} / {maxOperations}
-        </span>
-      </div>
-
-      <div className="flex-1 overflow-y-auto px-3 py-3 space-y-2 bg-background/30">
+    <Panel
+      title="Operaciones"
+      aside={<PanelCount value={operations.length} max={maxOperations} />}
+      className="w-full shrink-0 lg:w-[360px]"
+    >
+      <div className="min-h-0 flex-1 overflow-y-auto p-3">
         {operations.length === 0 ? (
-          <div className="h-full flex flex-col items-center justify-center text-muted-foreground/60 text-sm space-y-2">
-            <p className="italic">No hay operaciones</p>
-          </div>
+          <p className="px-2 py-8 text-center text-sm text-muted-foreground">
+            Todavía no hay operaciones. Agrégalas a mano o pégalas desde tu
+            planilla.
+          </p>
         ) : (
-          operations.map((op, index) => {
-            const isSelected = selectedOperationId === op.id;
-            const isPlaced = !!op.sequence;
+          <div className="space-y-1.5">
+            {operations.map((op, index) => {
+              const selected = selectedOperationId === op.id;
+              const placed = Boolean(op.sequence);
 
-            return (
-              <div
-                key={op.id}
-                className={`flex items-center gap-1.5 p-1.5 rounded-lg border shadow-sm transition-colors group ${
-                  isSelected
-                    ? "border-primary bg-primary/5 ring-1 ring-primary/30"
-                    : "border-border bg-card hover:border-primary/40"
-                }`}
-              >
-                <button
-                  onClick={() => onSelectOperation(op.id)}
-                  className={`relative w-8 h-8 shrink-0 flex items-center justify-center rounded-md text-xs font-bold transition-all ${
-                    isSelected
-                      ? "bg-primary text-primary-foreground shadow-md shadow-primary/40"
-                      : "bg-muted text-foreground hover:bg-primary/20"
+              return (
+                <div
+                  key={op.id}
+                  className={`group/op flex items-center gap-1.5 rounded-lg border p-1.5 transition-colors ${
+                    selected
+                      ? "border-primary bg-primary/5"
+                      : "border-transparent bg-muted/40 hover:bg-muted"
                   }`}
-                  title={
-                    isSelected
-                      ? "Modo ubicación activo"
-                      : "Seleccionar para ubicar en tablero"
-                  }
                 >
-                  {index + 1}
-                  {isPlaced && !isSelected && (
-                    <div className="absolute -top-1.5 -right-1.5 bg-emerald-500 rounded-full text-white p-[1px] shadow-sm">
-                      <CheckCircle2 className="h-2.5 w-2.5" />
-                    </div>
-                  )}
-                </button>
+                  <button
+                    onClick={() => onSelectOperation(op.id)}
+                    title={
+                      selected
+                        ? "Ubicando en el tablero"
+                        : "Seleccionar para ubicar en el tablero"
+                    }
+                    className={`relative flex size-8 shrink-0 items-center justify-center rounded-md text-xs font-medium tabular-nums transition-colors outline-none focus-visible:ring-3 focus-visible:ring-ring/50 ${
+                      selected
+                        ? "bg-primary text-primary-foreground"
+                        : "bg-background text-foreground hover:bg-secondary"
+                    }`}
+                  >
+                    {index + 1}
+                    {placed && !selected && (
+                      <span className="absolute -top-1 -right-1 flex size-3.5 items-center justify-center rounded-full bg-primary text-primary-foreground">
+                        <Check className="size-2.5" />
+                      </span>
+                    )}
+                  </button>
 
-                <input
-                  type="text"
-                  value={op.text}
-                  onChange={(e) => onUpdateOperation(op.id, "text", e.target.value)}
-                  placeholder="Ej: 15+12=27"
-                  className="flex-1 h-8 min-w-0 font-mono rounded-md border-transparent bg-transparent px-2 text-sm text-foreground placeholder:text-muted-foreground/40 focus:outline-hidden focus:ring-1 focus:ring-primary/40 focus:bg-background transition-all"
-                />
+                  <Input
+                    value={op.text}
+                    onChange={(e) =>
+                      onUpdateOperation(op.id, "text", e.target.value)
+                    }
+                    placeholder="15+12=27"
+                    className="h-8 min-w-0 flex-1 border-transparent bg-background tabular-nums"
+                  />
 
-                <div className="relative shrink-0 w-12">
                   <select
                     value={op.direction}
+                    aria-label="Dirección"
                     onChange={(e) =>
                       onUpdateOperation(op.id, "direction", e.target.value)
                     }
-                    className="w-full h-8 appearance-none rounded-md border border-border bg-background pl-2 pr-5 text-xs font-bold text-foreground focus:outline-hidden focus:ring-1 focus:ring-primary/40 cursor-pointer"
+                    className="h-8 shrink-0 rounded-md border border-input bg-background px-1.5 text-sm outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
                   >
                     <option value="H">H</option>
                     <option value="V">V</option>
                   </select>
-                  <ChevronDown className="absolute right-1.5 top-1/2 -translate-y-1/2 h-3 w-3 text-muted-foreground pointer-events-none" />
-                </div>
 
-                <button
-                  onClick={() => onRemoveOperation(op.id)}
-                  className="w-7 h-7 flex shrink-0 items-center justify-center rounded-md text-muted-foreground hover:bg-destructive/10 hover:text-destructive transition-colors ml-0.5"
-                  title="Eliminar"
-                >
-                  <X className="h-4 w-4" />
-                </button>
-              </div>
-            );
-          })
+                  <Button
+                    variant="ghost"
+                    size="icon-sm"
+                    onClick={() => onRemoveOperation(op.id)}
+                    aria-label={`Eliminar operación ${index + 1}`}
+                    className="shrink-0 text-muted-foreground opacity-0 transition-opacity group-hover/op:opacity-100 focus-visible:opacity-100 hover:text-destructive"
+                  >
+                    <Trash2 />
+                  </Button>
+                </div>
+              );
+            })}
+          </div>
         )}
       </div>
 
-      <div className="flex-none p-3 border-t border-border bg-card space-y-3">
-        <button
+      <div className="flex shrink-0 flex-col gap-2 border-t border-border bg-muted/30 p-3">
+        <Button
+          variant="outline"
           onClick={onAddOperation}
           disabled={operations.length >= maxOperations}
-          className="w-full flex items-center justify-center gap-2 rounded-lg bg-primary/10 hover:bg-primary/20 text-primary py-2.5 font-bold transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+          className="h-9 w-full gap-2"
         >
-          <Plus className="h-4 w-4" />
-          Agregar operación manual
-        </button>
-
-        <div className="pt-2 border-t border-border/60">
-          <QuickLoad
-            onLoad={(matrix) => {
-              if (matrix.length > 0) onQuickLoad(matrix);
-            }}
-            placeholder="Pega listado o tabla de Excel de 11x11"
-          />
-        </div>
+          <Plus />
+          Agregar operación
+        </Button>
+        <QuickLoad
+          onLoad={(matrix) => {
+            if (matrix.length > 0) onQuickLoad(matrix);
+          }}
+          placeholder="Pega una lista de operaciones, o el tablero completo de 11 x 11…"
+        />
       </div>
-    </section>
+    </Panel>
   );
 }

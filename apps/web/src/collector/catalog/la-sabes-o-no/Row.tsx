@@ -1,9 +1,10 @@
 "use client";
 
-import { Trash2 } from "lucide-react";
+import { Check } from "lucide-react";
+
+import { GroupRow, rowFieldClass } from "@/collector/kit";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
 import type { RowData } from "./schema";
 
 interface RowProps {
@@ -14,57 +15,51 @@ interface RowProps {
 }
 
 export function Row({ index, data, onChange, onRemove }: RowProps) {
-  const optionClass = (side: "L" | "R") =>
-    `flex h-8 w-full items-center justify-center rounded border text-xs font-bold font-mono transition-colors ${
-      data.correctAnswer === side
-        ? "border-primary bg-primary text-primary-foreground"
-        : "border-border bg-muted/20 text-muted-foreground hover:bg-muted/50"
-    }`;
+  const option = (side: "L" | "R", value: string, placeholder: string) => {
+    const correct = data.correctAnswer === side;
+    return (
+      <div className="flex items-center gap-1.5">
+        <button
+          onClick={() => onChange({ correctAnswer: side })}
+          aria-label={`Marcar "${placeholder}" como correcta`}
+          aria-pressed={correct}
+          className={`flex size-8 shrink-0 items-center justify-center rounded-md border transition-colors ${
+            correct
+              ? "border-primary bg-primary text-primary-foreground"
+              : "border-border bg-background text-muted-foreground/50 hover:text-foreground"
+          }`}
+        >
+          <Check className="size-3.5" />
+        </button>
+        <Input
+          value={value}
+          onChange={(e) =>
+            onChange(side === "L" ? { answerL: e.target.value } : { answerR: e.target.value })
+          }
+          placeholder={placeholder}
+          className={`${rowFieldClass} h-8 border-transparent bg-background`}
+        />
+      </div>
+    );
+  };
 
   return (
-    <div className="flex flex-col rounded-lg border border-border bg-card p-3 shadow-sm transition-all hover:border-primary/30">
-      <div className="grid grid-cols-[2rem_1fr] items-start gap-2 w-full">
-        <div className="flex flex-col gap-1 w-full shrink-0">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={onRemove}
-            className="h-8 w-full rounded bg-destructive/10 text-destructive hover:bg-destructive hover:text-destructive-foreground transition-colors"
-          >
-            <Trash2 className="size-4" />
-          </Button>
-          <div className="flex h-8 w-full items-center justify-center rounded border border-border bg-muted/30 text-xs font-mono font-medium text-muted-foreground">
-            {index + 1}
-          </div>
-        </div>
-
+    <GroupRow
+      index={index}
+      onRemove={onRemove}
+      align="start"
+      removeLabel="Eliminar pregunta"
+    >
+      <div className="flex flex-col gap-2 rounded-lg border border-border bg-muted/30 p-2">
         <Textarea
           value={data.question}
           onChange={(e) => onChange({ question: e.target.value })}
-          placeholder="Ingrese la pregunta..."
-          className="h-[68px] min-h-[68px] resize-none w-full border-border bg-background px-2.5 py-2 text-xs text-foreground placeholder:text-muted-foreground/50 focus-visible:ring-1 focus-visible:ring-primary"
+          placeholder="Pregunta"
+          className={`${rowFieldClass} h-16 min-h-16 resize-none border-transparent bg-background py-2`}
         />
-
-        <button onClick={() => onChange({ correctAnswer: "L" })} className={optionClass("L")}>
-          L
-        </button>
-        <Input
-          value={data.answerL}
-          onChange={(e) => onChange({ answerL: e.target.value })}
-          placeholder="Respuesta izquierda..."
-          className="h-8 w-full border-border bg-background px-2.5 text-xs text-foreground placeholder:text-muted-foreground/50 focus-visible:ring-1 focus-visible:ring-primary"
-        />
-
-        <button onClick={() => onChange({ correctAnswer: "R" })} className={optionClass("R")}>
-          R
-        </button>
-        <Input
-          value={data.answerR}
-          onChange={(e) => onChange({ answerR: e.target.value })}
-          placeholder="Respuesta derecha..."
-          className="h-8 w-full border-border bg-background px-2.5 text-xs text-foreground placeholder:text-muted-foreground/50 focus-visible:ring-1 focus-visible:ring-primary"
-        />
+        {option("L", data.answerL, "Primera opción")}
+        {option("R", data.answerR, "Segunda opción")}
       </div>
-    </div>
+    </GroupRow>
   );
 }

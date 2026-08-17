@@ -1,9 +1,7 @@
 "use client";
 
-import { Trash2 } from "lucide-react";
-import { ImagePicker, setSlotImage } from "@/collector/kit";
+import { GroupRow, ImagePicker, rowFieldClass, setSlotImage } from "@/collector/kit";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import type { RowData } from "./schema";
 
 interface RowProps {
@@ -15,34 +13,24 @@ interface RowProps {
 
 export function Row({ index, data, onChange, onRemove }: RowProps) {
   return (
-    <div className="group/row flex gap-3 rounded-lg border border-border/50 bg-muted/10 p-3 transition-colors hover:border-border/80">
-      <div className="flex shrink-0 flex-col items-center justify-between">
-        <div className="flex h-5 w-5 items-center justify-center rounded-full bg-primary/10 text-[10px] font-bold text-primary">
-          {index + 1}
-        </div>
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={onRemove}
-          className="h-7 w-7 text-muted-foreground hover:bg-destructive/10 hover:text-destructive transition-colors"
-          title="Eliminar evento"
-        >
-          <Trash2 className="h-3.5 w-3.5" />
-        </Button>
-      </div>
-
-      <div className="flex-1 space-y-2">
+    <GroupRow
+      index={index}
+      onRemove={onRemove}
+      align="start"
+      removeLabel="Eliminar evento"
+    >
+      <div className="flex flex-col gap-1.5 rounded-lg border border-border bg-muted/30 p-2">
         <Input
           value={data.date}
           onChange={(e) => onChange({ date: e.target.value })}
-          placeholder="Fecha..."
-          className="h-8 text-xs"
+          placeholder="Fecha"
+          className={`${rowFieldClass} h-8 border-transparent bg-background`}
         />
         <Input
           value={data.title}
           onChange={(e) => onChange({ title: e.target.value })}
-          placeholder="Título..."
-          className="h-8 text-xs"
+          placeholder="Título del evento"
+          className={`${rowFieldClass} h-8 border-transparent bg-background`}
         />
         <ImagePicker
           value={data.image.url}
@@ -50,9 +38,9 @@ export function Row({ index, data, onChange, onRemove }: RowProps) {
             onChange({ image: setSlotImage(data.image, file, url) })
           }
           crop={{ x: 1, y: 1 }}
-          placeholder="Subir imagen"
+          placeholder="Imagen"
         />
       </div>
-    </div>
+    </GroupRow>
   );
 }

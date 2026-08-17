@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import { Layers, Shuffle } from "lucide-react";
 
 import { loadJsonFile, saveAsJson } from "@/helpers/persistence";
-import { LevelTabs, useWorkspaceHeader } from "@/collector/kit";
+import {LevelTabs, useWorkspaceHeader, notifyError } from "@/collector/kit";
 import { Columns } from "./Columns";
 import { Level0 } from "./Level0";
 import { RowChoice, RowPairs, RowQa } from "./Rows";
@@ -59,7 +59,7 @@ export function Editor() {
     try {
       saveAsJson("RetoCruzado.json", handleGetData());
     } catch {
-      alert("Error al exportar los datos.");
+      notifyError("Error al exportar los datos.");
     }
   }, [handleGetData]);
 
@@ -73,7 +73,7 @@ export function Editor() {
       setLevel3(loaded.level3);
       setLevel4(loaded.level4);
     } catch {
-      alert("Archivo de Reto Cruzado no válido.");
+      notifyError("Archivo de Reto Cruzado no válido.");
     }
   }, []);
 

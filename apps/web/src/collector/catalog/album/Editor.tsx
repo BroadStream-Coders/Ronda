@@ -12,6 +12,7 @@ import {
   setSlotImage,
   useWorkspaceHeader,
   type ImageSlot,
+  notifyError,
 } from "@/collector/kit";
 import { Column } from "./Column";
 import {
@@ -127,7 +128,7 @@ export function Editor() {
     try {
       await saveAsZip("Album.zip", data, files, SESSION_DATA_FILENAME);
     } catch {
-      alert("Error al exportar los datos.");
+      notifyError("Error al exportar los datos.");
     }
   }, [handleGetBundle]);
 
@@ -136,13 +137,13 @@ export function Editor() {
       const zip = await loadZipFile(file);
       const dataFile = zip.file(SESSION_DATA_FILENAME) || zip.file("data.json");
       if (!dataFile) {
-        alert("El archivo no es un paquete válido de Álbum (falta sessionData.json).");
+        notifyError("El archivo no es un paquete válido de Álbum (falta sessionData.json).");
         return;
       }
       const content = await dataFile.async("string");
       const sessionData = JSON.parse(content) as Data;
       if (!sessionData.rounds || !Array.isArray(sessionData.rounds)) {
-        alert("El archivo no contiene rondas válidas.");
+        notifyError("El archivo no contiene rondas válidas.");
         return;
       }
 
@@ -168,7 +169,7 @@ export function Editor() {
 
       setRounds(loaded.length > 0 ? loaded : [createEmptyRound()]);
     } catch {
-      alert("Error al importar los datos.");
+      notifyError("Error al importar los datos.");
     }
   }, []);
 

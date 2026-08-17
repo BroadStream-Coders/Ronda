@@ -1,7 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { Dices, Lightbulb } from "lucide-react";
+import { Dices } from "lucide-react";
+
+import { Panel, PanelHint } from "@/collector/kit";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
@@ -32,85 +37,62 @@ export function ControlsSidebar({
   };
 
   return (
-    <section className="w-full lg:w-[280px] shrink-0 flex flex-col border border-border rounded-xl bg-card overflow-hidden shadow-sm">
-      <div className="flex-none bg-muted px-4 py-3 border-b border-border h-12 flex items-center justify-between">
-        <h2 className="text-sm font-semibold text-foreground">Configuración</h2>
-      </div>
-
-      <div className="flex-1 overflow-y-auto p-4 space-y-6">
-        <div className="space-y-3">
-          <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest">
-            Logos marcados
-          </p>
-          <div className="w-full h-10 text-sm bg-background border border-border rounded-md flex items-center justify-between px-3 font-medium">
-            <span>Total de logos</span>
-            <span className="text-xs font-bold px-2 py-0.5 rounded bg-primary/10 text-primary">
-              {logoCount}
-            </span>
-          </div>
-        </div>
-
-        <div className="space-y-3 pt-4 border-t border-border">
-          <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest">
-            Tamaño del tablero
-          </p>
+    <Panel
+      title="Configuración"
+      aside={
+        <span className="rounded-full bg-primary/10 px-2.5 py-1 text-xs font-medium tabular-nums text-primary">
+          {logoCount} logos
+        </span>
+      }
+      className="w-full shrink-0 lg:w-[260px]"
+    >
+      <div className="min-h-0 flex-1 space-y-5 overflow-y-auto p-3">
+        <div className="space-y-1.5">
+          <Label htmlFor="board-size">Tamaño del tablero</Label>
           <Select
             value={boardSize}
             onValueChange={(val) => onSizeChange(val as BoardSize)}
           >
-            <SelectTrigger className="w-full">
+            <SelectTrigger id="board-size" className="w-full">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="4x3">4x3 (12 casillas)</SelectItem>
-              <SelectItem value="5x4">5x4 (20 casillas)</SelectItem>
-              <SelectItem value="6x5">6x5 (30 casillas)</SelectItem>
+              <SelectItem value="4x3">4 x 3 · 12 casillas</SelectItem>
+              <SelectItem value="5x4">5 x 4 · 20 casillas</SelectItem>
+              <SelectItem value="6x5">6 x 5 · 30 casillas</SelectItem>
             </SelectContent>
           </Select>
         </div>
 
-        <div className="space-y-3">
-          <label
-            htmlFor="random-count"
-            className="text-xs font-bold text-muted-foreground uppercase tracking-widest"
-          >
-            Llenado aleatorio
-          </label>
+        <div className="space-y-1.5">
+          <Label htmlFor="random-count">Llenado aleatorio</Label>
           <div className="flex gap-2">
-            <input
+            <Input
               id="random-count"
               type="number"
               min="1"
               value={randomCount}
               onChange={(e) => setRandomCount(e.target.value)}
-              className="w-16 h-10 flex-none rounded-md border border-border bg-background px-3 text-sm font-mono text-center focus:outline-none focus:ring-2 focus:ring-primary/50 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+              className="h-9 w-16 shrink-0 text-center tabular-nums"
             />
-            <button
+            <Button
+              variant="outline"
               onClick={handleRandomFill}
-              className="flex-1 flex items-center justify-center gap-2 rounded-md bg-primary/10 hover:bg-primary/20 text-primary font-bold text-sm transition-colors"
+              className="h-9 flex-1 gap-2"
             >
-              <Dices className="size-4" />
+              <Dices />
               Generar
-            </button>
+            </Button>
           </div>
           <p className="text-xs text-muted-foreground">
-            Coloca logos de forma aleatoria en el tablero actual.
+            Reparte esa cantidad de logos al azar en el tablero actual.
           </p>
         </div>
       </div>
 
-      <div className="p-4 bg-muted/30 border-t border-border mt-auto">
-        <div className="text-sm text-muted-foreground flex flex-col gap-2 font-medium">
-          <div className="flex items-center gap-1.5">
-            <Lightbulb className="size-4 text-primary" />
-            <span className="font-bold text-foreground">Tip:</span>
-          </div>
-          <span className="leading-snug">
-            Clic sobre una casilla del tablero para colocar o quitar un logo
-            manualmente.
-          </span>
-        </div>
-      </div>
-    </section>
+      <PanelHint>
+        Haz clic en una casilla del tablero para poner o quitar un logo a mano.
+      </PanelHint>
+    </Panel>
   );
 }

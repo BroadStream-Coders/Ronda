@@ -11,13 +11,13 @@ interface RowsContainerProps {
 
 export function RowsContainer({
   children,
-  gap = "gap-2",
+  gap = "gap-1.5",
   className = "",
 }: RowsContainerProps) {
   return (
-    <div className="flex-1 min-h-0">
+    <div className="min-h-0 flex-1">
       <ScrollArea className={`h-full ${className}`}>
-        <div className={`flex flex-col px-4 py-3.5 ${gap}`}>{children}</div>
+        <div className={`flex flex-col px-3 py-3 ${gap}`}>{children}</div>
       </ScrollArea>
     </div>
   );

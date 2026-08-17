@@ -9,6 +9,7 @@ import {
   getColumnData,
   useWorkspaceGroups,
   useWorkspaceHeader,
+  notifyError,
 } from "@/collector/kit";
 import { Column } from "./Column";
 import { buildData, isData, validate, type Data } from "./schema";
@@ -42,7 +43,7 @@ export function Editor() {
         const data = await loadJsonFile<Data>(file, isData);
         setGroups(data.groups.map((g) => g.words));
       } catch {
-        alert("Archivo de Deletreo no válido.");
+        notifyError("Archivo de Deletreo no válido.");
       }
     },
     [setGroups],

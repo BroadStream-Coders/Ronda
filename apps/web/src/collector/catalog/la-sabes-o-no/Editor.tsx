@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import { HelpCircle } from "lucide-react";
 
 import { saveAsJson, loadJsonFile } from "@/helpers/persistence";
-import { GroupsContainer, useWorkspaceHeader } from "@/collector/kit";
+import {GroupsContainer, useWorkspaceHeader, notifyError } from "@/collector/kit";
 import { Column } from "./Column";
 import {
   buildData,
@@ -96,7 +96,7 @@ export function Editor() {
       const data = await loadJsonFile<Data>(file, isData);
       setColumns(fromData(data));
     } catch {
-      alert("Archivo de La Sabes o No no válido.");
+      notifyError("Archivo de La Sabes o No no válido.");
     }
   }, []);
 

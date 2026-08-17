@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowUp } from "lucide-react";
+import { ClipboardPaste, X } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 import { parseExcelPaste } from "../data-processing";
 
@@ -13,36 +14,67 @@ interface QuickLoadProps {
 
 export function QuickLoad({
   onLoad,
-  placeholder = "Pegar lista aquí...",
+  placeholder = "Pega aquí las celdas copiadas de tu planilla…",
   className = "",
 }: QuickLoadProps) {
-  const [inputValue, setInputValue] = useState("");
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState("");
 
-  const handleProcessLoad = () => {
-    if (!inputValue.trim()) return;
-    const matrix = parseExcelPaste(inputValue);
-    if (matrix.length > 0) {
-      onLoad(matrix);
-      setInputValue("");
-    }
+  const close = () => {
+    setOpen(false);
+    setValue("");
   };
 
-  return (
-    <div className={`flex gap-2 w-full ${className}`}>
-      <textarea
-        placeholder={placeholder}
-        className="block h-[72px] flex-1 resize-none rounded-md border border-border bg-background px-2.5 py-1.5 text-xs text-foreground placeholder:text-muted-foreground/40 focus:outline-hidden focus:ring-1 focus:ring-primary/40 transition-all overflow-y-auto"
-        value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
-      />
+  const handleLoad = () => {
+    if (!value.trim()) return;
+    const matrix = parseExcelPaste(value);
+    if (matrix.length > 0) onLoad(matrix);
+    close();
+  };
+
+  if (!open) {
+    return (
       <Button
         variant="outline"
-        size="icon"
-        className="h-auto w-9 shrink-0 border-border bg-background hover:bg-accent hover:text-foreground self-stretch text-muted-foreground"
-        onClick={handleProcessLoad}
-        title="Cargar datos"
+        onClick={() => setOpen(true)}
+        className={`h-9 w-full justify-start gap-2 text-muted-foreground ${className}`}
       >
-        <ArrowUp className="h-3.5 w-3.5" />
+        <ClipboardPaste />
+        Pegar desde planilla
+      </Button>
+    );
+  }
+
+  return (
+    <div className={`flex flex-col gap-2 ${className}`}>
+      <div className="flex items-center justify-between">
+        <span className="text-xs font-medium">Pegar desde planilla</span>
+        <Button
+          variant="ghost"
+          size="icon-xs"
+          onClick={close}
+          aria-label="Cancelar pegado"
+          className="text-muted-foreground"
+        >
+          <X />
+        </Button>
+      </div>
+
+      <textarea
+        autoFocus
+        rows={3}
+        value={value}
+        placeholder={placeholder}
+        onChange={(e) => setValue(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === "Escape") close();
+          if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) handleLoad();
+        }}
+        className="w-full resize-none rounded-lg border border-input bg-background px-2.5 py-2 text-sm outline-none transition-colors placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
+      />
+
+      <Button onClick={handleLoad} disabled={!value.trim()} className="h-9">
+        Llenar filas
       </Button>
     </div>
   );

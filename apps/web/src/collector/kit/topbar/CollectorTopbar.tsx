@@ -1,14 +1,15 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import {
-  AlertTriangle,
   ArrowLeft,
   ChevronDown,
   CloudDownload,
   CloudUpload,
-  Download,
+  Loader2,
+  Save,
+  TriangleAlert,
   Upload,
 } from "lucide-react";
 
@@ -31,8 +32,10 @@ import {
   downloadCollectorData,
   uploadCollectorData,
 } from "@/data/collector-storage";
+import { notifyError, notifySuccess } from "../notices/use-notices";
 import { ValidationDialog } from "../validation/ValidationDialog";
 import type { ValidationIssue } from "../validation/validation";
+import { SaveState, type SaveStage } from "./SaveState";
 import { useWorkspaceHeader } from "./use-workspace-header";
 
 interface CollectorTopbarProps {
@@ -41,8 +44,6 @@ interface CollectorTopbarProps {
   collectorId?: string;
 }
 
-type Status = { kind: "busy" | "done" | "error"; text: string };
-
 type Confirmation = {
   title: string;
   body: string;
@@ -50,14 +51,8 @@ type Confirmation = {
   action: () => void;
 };
 
-const STATUS_COLOR = {
-  busy: "text-muted-foreground",
-  done: "text-emerald-500",
-  error: "text-destructive",
-};
-
-const TRIGGER_BASE =
-  "inline-flex h-7 items-center justify-center rounded-[min(var(--radius-md),12px)] rounded-l-none px-1 outline-none transition-colors disabled:pointer-events-none disabled:opacity-50 [&_svg]:size-3.5";
+const SPLIT_TRIGGER =
+  "inline-flex h-9 items-center justify-center rounded-lg rounded-l-none px-1.5 outline-none transition-colors focus-visible:ring-3 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 [&_svg]:size-3.5";
 
 export function CollectorTopbar({
   backHref,
@@ -69,8 +64,19 @@ export function CollectorTopbar({
   const fileInputRef = useRef<HTMLInputElement>(null);
   const pendingActionRef = useRef<() => void>(() => {});
   const [issues, setIssues] = useState<ValidationIssue[]>([]);
-  const [status, setStatus] = useState<Status | null>(null);
+  const [busy, setBusy] = useState<string | null>(null);
+  const [stage, setStage] = useState<SaveStage>({ kind: "pristine" });
   const [confirmation, setConfirmation] = useState<Confirmation | null>(null);
+
+  const firstDataRef = useRef(true);
+  useEffect(() => {
+    if (!getData) return;
+    if (firstDataRef.current) {
+      firstDataRef.current = false;
+      return;
+    }
+    setStage({ kind: "dirty" });
+  }, [getData]);
 
   if (!title) return null;
 
@@ -92,14 +98,14 @@ export function CollectorTopbar({
     action();
   };
 
-  const handleForceSave = () => {
-    setIssues([]);
-    pendingActionRef.current();
+  const doSave = () => {
+    onSave?.();
+    setStage({ kind: "saved", at: Date.now() });
   };
 
   const doUpload = async () => {
     if (!programId || !collectorId || !getData) return;
-    setStatus({ kind: "busy", text: "Subiendo…" });
+    setBusy("Subiendo…");
     try {
       await uploadCollectorData(
         programId,
@@ -107,19 +113,22 @@ export function CollectorTopbar({
         getData(),
         getFiles?.() ?? [],
       );
-      setStatus({ kind: "done", text: "Subido" });
-      setTimeout(() => setStatus(null), 4000);
+      setStage({ kind: "uploaded", at: Date.now() });
+      notifySuccess("Los datos quedaron guardados en la nube.");
     } catch (error) {
-      setStatus({
-        kind: "error",
-        text: error instanceof Error ? error.message : "Error al subir",
-      });
+      notifyError(
+        error instanceof Error
+          ? `No se pudo subir: ${error.message}`
+          : "No se pudo subir a la nube. Revisa tu conexión e intenta de nuevo.",
+      );
+    } finally {
+      setBusy(null);
     }
   };
 
   const doDownload = async () => {
     if (!programId || !collectorId || !onLoad) return;
-    setStatus({ kind: "busy", text: "Cargando…" });
+    setBusy("Cargando…");
     try {
       const file = await downloadCollectorData(
         programId,
@@ -127,64 +136,75 @@ export function CollectorTopbar({
         format === "zip" ? "zip" : "json",
       );
       if (!file) {
-        setStatus({ kind: "error", text: "No hay nada guardado en la nube" });
+        notifyError("Todavía no hay nada guardado en la nube para este juego.");
         return;
       }
       onLoad(file);
-      setStatus({ kind: "done", text: "Cargado" });
-      setTimeout(() => setStatus(null), 4000);
+      setStage({ kind: "uploaded", at: Date.now() });
+      notifySuccess("Se cargó lo último que había en la nube.");
     } catch {
-      setStatus({ kind: "error", text: "Error al cargar" });
+      notifyError("No se pudo cargar desde la nube. Intenta de nuevo.");
+    } finally {
+      setBusy(null);
     }
   };
 
   return (
-    <header className="flex h-12 shrink-0 items-center justify-between border-b border-border bg-background px-4">
-      <div className="flex items-center gap-3">
-        {backHref && (
-          <Link
-            href={backHref}
-            className="flex items-center gap-1.5 rounded-md px-2 py-1 text-xs text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
-          >
-            <ArrowLeft className="h-3.5 w-3.5" />
-            <span className="hidden sm:inline">Volver</span>
-          </Link>
-        )}
+    <header className="flex h-14 shrink-0 items-center gap-3 border-b border-border bg-card px-3 sm:px-4">
+      {backHref && (
+        <Button
+          variant="ghost"
+          size="sm"
+          nativeButton={false}
+          className="h-9 gap-1.5 text-muted-foreground"
+          render={<Link href={backHref} />}
+        >
+          <ArrowLeft />
+          <span className="hidden sm:inline">Volver</span>
+        </Button>
+      )}
+
+      <span className="h-6 w-px bg-border" aria-hidden />
+
+      <div className="flex min-w-0 items-center gap-2.5">
         {icon && (
-          <div className="flex h-5 w-5 items-center justify-center rounded bg-primary/20 text-primary ring-1 ring-primary/10">
+          <span className="flex size-7 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary [&_svg]:size-4">
             {icon}
-          </div>
+          </span>
         )}
-        <span className="text-sm font-semibold tracking-tight">{title}</span>
+        <span className="font-heading truncate text-base font-semibold tracking-tight">
+          {title}
+        </span>
       </div>
 
-      <div className="flex items-center gap-2">
-        {status && (
-          <span
-            className={`max-w-48 truncate text-[10px] font-bold uppercase ${STATUS_COLOR[status.kind]}`}
-            title={status.text}
-          >
-            {status.text}
+      <div className="ml-auto flex items-center gap-2 sm:gap-3">
+        {busy ? (
+          <span className="inline-flex items-center gap-1.5 text-xs text-muted-foreground">
+            <Loader2 className="size-3.5 animate-spin" />
+            {busy}
           </span>
+        ) : (
+          <SaveState stage={stage} />
         )}
 
         {onLoad && (
           <div className="flex items-center">
             <Button
-              variant="ghost"
-              size="sm"
+              variant="outline"
               onClick={() => fileInputRef.current?.click()}
-              className={cloudEnabled ? "rounded-r-none" : undefined}
+              disabled={busy !== null}
+              className={`h-9 gap-1.5 ${cloudEnabled ? "rounded-r-none border-r-0" : ""}`}
             >
-              <Upload /> Cargar
+              <Upload />
+              <span className="hidden sm:inline">Cargar</span>
             </Button>
 
             {cloudEnabled && (
               <DropdownMenu>
                 <DropdownMenuTrigger
-                  disabled={status?.kind === "busy"}
+                  disabled={busy !== null}
                   aria-label="Más opciones de carga"
-                  className={`${TRIGGER_BASE} border-l border-border text-muted-foreground hover:bg-accent hover:text-foreground`}
+                  className={`${SPLIT_TRIGGER} border border-border bg-background text-muted-foreground hover:bg-muted hover:text-foreground`}
                 >
                   <ChevronDown />
                 </DropdownMenuTrigger>
@@ -193,8 +213,8 @@ export function CollectorTopbar({
                     onClick={() =>
                       setConfirmation({
                         title: "Cargar de la nube",
-                        body: "Esto reemplaza lo que tienes en pantalla con lo guardado en la nube. Lo que no hayas guardado se pierde.",
-                        actionLabel: "Cargar",
+                        body: "Se reemplaza lo que tienes en pantalla por lo último guardado en la nube. Lo que no hayas guardado se pierde.",
+                        actionLabel: "Cargar de la nube",
                         action: doDownload,
                       })
                     }
@@ -210,19 +230,20 @@ export function CollectorTopbar({
         {onSave && (
           <div className="flex items-center">
             <Button
-              size="sm"
-              onClick={() => runValidated(() => onSave())}
-              className={cloudEnabled ? "rounded-r-none" : undefined}
+              onClick={() => runValidated(doSave)}
+              disabled={busy !== null}
+              className={`h-9 gap-1.5 ${cloudEnabled ? "rounded-r-none" : ""}`}
             >
-              <Download /> Guardar
+              <Save />
+              Guardar
             </Button>
 
             {cloudEnabled && (
               <DropdownMenu>
                 <DropdownMenuTrigger
-                  disabled={status?.kind === "busy"}
+                  disabled={busy !== null}
                   aria-label="Más opciones de guardado"
-                  className={`${TRIGGER_BASE} border-l border-primary-foreground/25 bg-primary text-primary-foreground hover:bg-primary/80`}
+                  className={`${SPLIT_TRIGGER} border-l border-primary-foreground/25 bg-primary text-primary-foreground hover:bg-primary/80`}
                 >
                   <ChevronDown />
                 </DropdownMenuTrigger>
@@ -231,8 +252,8 @@ export function CollectorTopbar({
                     onClick={() =>
                       setConfirmation({
                         title: "Subir a la nube",
-                        body: "Esto reemplaza lo que esté guardado en la nube para este programa.",
-                        actionLabel: "Subir",
+                        body: "Se reemplaza lo que esté guardado en la nube para este programa por lo que tienes en pantalla.",
+                        actionLabel: "Subir a la nube",
                         action: () => runValidated(doUpload),
                       })
                     }
@@ -257,7 +278,10 @@ export function CollectorTopbar({
       <ValidationDialog
         open={issues.length > 0}
         onClose={() => setIssues([])}
-        onForceSave={handleForceSave}
+        onForceSave={() => {
+          setIssues([]);
+          pendingActionRef.current();
+        }}
         issues={issues}
       />
 
@@ -268,7 +292,7 @@ export function CollectorTopbar({
         <DialogContent>
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
-              <AlertTriangle className="size-5 text-primary" />
+              <TriangleAlert className="size-5 text-accent" />
               {confirmation?.title}
             </DialogTitle>
             <DialogDescription>{confirmation?.body}</DialogDescription>

@@ -55,7 +55,7 @@ export function ImagePicker({
   return (
     <>
       <div
-        className={`relative w-full ${shapeClass} overflow-hidden rounded-lg bg-muted/20 border border-dashed border-border hover:border-primary/50 transition-colors cursor-pointer group`}
+        className={`relative w-full ${shapeClass} group cursor-pointer overflow-hidden rounded-lg border border-dashed border-border bg-background transition-colors hover:border-primary/50 hover:bg-muted/40`}
         style={crop ? { aspectRatio: `${crop.x} / ${crop.y}` } : undefined}
         onClick={(e) => {
           if ((e.target as HTMLElement).closest(".picker-action-btn")) return;
@@ -98,13 +98,11 @@ export function ImagePicker({
             )}
           </>
         ) : (
-          <div className="flex h-full w-full flex-col items-center justify-center gap-2 text-muted-foreground group-hover:text-foreground transition-colors">
-            <div className="flex h-7 w-7 items-center justify-center rounded-full bg-muted/50 border border-dashed border-border">
-              <Plus className="h-3.5 w-3.5" />
-            </div>
-            <span className="text-[9px] uppercase tracking-wider font-bold">
-              {placeholder}
+          <div className="flex h-full w-full flex-col items-center justify-center gap-1.5 text-muted-foreground transition-colors group-hover:text-foreground">
+            <span className="flex size-8 items-center justify-center rounded-lg bg-muted transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+              <Plus className="size-4" />
             </span>
+            <span className="text-xs font-medium">{placeholder}</span>
           </div>
         )}
 

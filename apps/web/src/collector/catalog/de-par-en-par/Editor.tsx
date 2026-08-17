@@ -9,6 +9,7 @@ import {
   createImagePacker,
   readImageSlot,
   useWorkspaceHeader,
+  notifyError,
 } from "@/collector/kit";
 import { Tab1 } from "./Tab1";
 import { Tab2 } from "./Tab2";
@@ -74,7 +75,7 @@ export function Editor() {
     try {
       await saveAsZip("DeParEnPar.zip", data, files, "sessionData.json");
     } catch {
-      alert("Error al exportar los datos.");
+      notifyError("Error al exportar los datos.");
     }
   }, [handleGetBundle]);
 
@@ -83,14 +84,14 @@ export function Editor() {
       const zip = await loadZipFile(file);
       const dataFile = zip.file("sessionData.json") || zip.file("data.json");
       if (!dataFile) {
-        alert("El archivo no es un paquete válido de De Par en Par.");
+        notifyError("El archivo no es un paquete válido de De Par en Par.");
         return;
       }
 
       const content = await dataFile.async("string");
       const sessionData = JSON.parse(content) as Data;
       if (!sessionData.cells || !Array.isArray(sessionData.cells)) {
-        alert("Estructura del archivo inválida.");
+        notifyError("Estructura del archivo inválida.");
         return;
       }
 
@@ -132,7 +133,7 @@ export function Editor() {
         setBoardOrder(initialBoardOrder(newNumPairs));
       }
     } catch {
-      alert("Error al importar los datos.");
+      notifyError("Error al importar los datos.");
     }
   }, []);
 

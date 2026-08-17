@@ -10,6 +10,7 @@ import {
   releaseSlots,
   setSlotImage,
   useWorkspaceHeader,
+  notifyError,
 } from "@/collector/kit";
 import { Column } from "./Column";
 import {
@@ -75,7 +76,7 @@ export function Editor() {
     try {
       await saveAsZip("GaleriaFotos.zip", data, files, SESSION_DATA_FILENAME);
     } catch {
-      alert("Error al exportar los datos.");
+      notifyError("Error al exportar los datos.");
     }
   }, [handleGetBundle]);
 
@@ -84,7 +85,7 @@ export function Editor() {
       const zip = await loadZipFile(file);
       const dataFile = zip.file(SESSION_DATA_FILENAME);
       if (!dataFile) {
-        alert(
+        notifyError(
           "El archivo no es un paquete válido de Galería de Fotos (falta sessionData.json).",
         );
         return;
@@ -92,7 +93,7 @@ export function Editor() {
 
       const data = JSON.parse(await dataFile.async("string")) as Data;
       if (!isData(data)) {
-        alert("El archivo no contiene grupos válidos.");
+        notifyError("El archivo no contiene grupos válidos.");
         return;
       }
 
@@ -107,7 +108,7 @@ export function Editor() {
 
       setColumns(loaded.length > 0 ? loaded : [createEmptyColumn()]);
     } catch {
-      alert("Error al importar los datos.");
+      notifyError("Error al importar los datos.");
     }
   }, []);
 
