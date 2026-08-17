@@ -82,3 +82,33 @@ Al terminar una tarea se mueve al changelog y se borra de aquí.
   colectores incluido el llenado rápido, y se retiró el trim manual duplicado.
 - **Fecha:** 2026-08-13 · **Estado:** Abierto
 
+## [RM-051] Cómo escala el árbol de la barra lateral al sumar Juegos
+- **Objetivo:** decidir e implementar cómo se comporta la navegación de la barra
+  lateral cuando Juegos ([[RM-037]], [[RM-038]]) deje de ser "Pronto" y cuelgue su
+  propia lista. Hoy Colectores cuelga los juegos asignados del programa; si Juegos
+  hace lo mismo, la barra llega a ~28 ítems.
+- **Decidido — la estructura se mantiene por servicio, no por juego:** se evaluó
+  invertir el eje (`Deletreo → [Cargar, Emitir]`) para tener una sola lista, y se
+  **descartó**. Los roles están separados en la práctica: quien llena colectores
+  no toca emisión y quien emite no llena. Agrupar por juego le cobraría un clic
+  extra a todos, en cada entrada, para llegar a la única pantalla que sí usan.
+- **Decisión abierta (elegir al construir Juegos):** (1) **acordeón** — una sola
+  rama abierta a la vez; abrir Juegos cierra Colectores; barato, sin cambios de
+  rutas, tope de ~15 ítems visibles; (2) **flyout en el rail** — contraída, el
+  ícono del servicio abre un submenú a la derecha con sus juegos en vez de
+  listarlos en la columna, así el rail se queda en 3 íconos; se puede armar
+  reusando el `DropdownMenu` que ya está en el proyecto.
+- **A considerar aparte:** pasando los ~20 ítems, un buscador o paleta de comandos
+  gana a cualquier árbol, y sirve para las dos opciones.
+- **Hecho cuando:** con Juegos activo y sus juegos colgando, se llega a cualquier
+  colector sin hacer scroll en la barra, ni contraída ni expandida.
+- **Fecha:** 2026-08-17 · **Estado:** Abierto
+
+## [RM-052] Vercel Analytics
+- **Objetivo:** instrumentar la app con Vercel Analytics (`@vercel/analytics`) para
+  tener visitas y páginas vistas sin montar nada propio. Evaluar de paso si suma
+  Speed Insights, que es la misma clase de integración.
+- **Hecho cuando:** el panel de Vercel muestra tráfico real de producción, con la
+  landing y el espacio de trabajo diferenciados.
+- **Fecha:** 2026-08-17 · **Estado:** Abierto
+

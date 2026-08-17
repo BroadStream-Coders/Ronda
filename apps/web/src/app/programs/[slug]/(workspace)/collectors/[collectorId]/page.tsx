@@ -29,13 +29,9 @@ export default async function CollectorPage({
   const Editor = collector.Editor;
 
   return (
-    <div className="flex h-dvh flex-col">
-      <CollectorTopbar
-        backHref={`/programs/${slug}/collectors`}
-        programId={program.id}
-        collectorId={collectorId}
-      />
-      <div className="min-h-0 flex-1 bg-muted/40">
+    <div className="flex h-full flex-col">
+      <CollectorTopbar programId={program.id} collectorId={collectorId} />
+      <div className="min-h-0 flex-1">
         <Editor />
       </div>
       <NoticeStack />

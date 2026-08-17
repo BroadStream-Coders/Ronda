@@ -1,9 +1,12 @@
 import type { ReactNode } from "react";
+import { cookies } from "next/headers";
 import { notFound, redirect } from "next/navigation";
 
 import { ProgramSidebar } from "@/components/program-sidebar";
 import { createClient } from "@/data/supabase/server";
 import { getProgramBySlug } from "@/data/programs";
+import { getProgramCollectors } from "@/collector/catalog/assignments";
+import { registry } from "@/collector/catalog/registry";
 
 export default async function WorkspaceLayout({
   children,
@@ -23,11 +26,21 @@ export default async function WorkspaceLayout({
   const program = await getProgramBySlug(slug);
   if (!program) notFound();
 
+  const collectors = getProgramCollectors(program.id)
+    .filter((id) => registry[id])
+    .map((id) => {
+      const { meta } = registry[id];
+      const Icon = meta.icon;
+      return { id, name: meta.name, icon: <Icon /> };
+    });
+
   const name = (user.user_metadata.full_name ?? user.user_metadata.name) as
     | string
     | undefined;
   const avatar = (user.user_metadata.avatar_url ??
     user.user_metadata.picture) as string | undefined;
+
+  const collapsed = (await cookies()).get("ronda_sidebar")?.value === "1";
 
   return (
     <div className="flex h-dvh overflow-hidden">
@@ -39,6 +52,8 @@ export default async function WorkspaceLayout({
           email: user.email ?? null,
           avatar: avatar ?? null,
         }}
+        collectors={collectors}
+        defaultCollapsed={collapsed}
       />
       <main className="min-w-0 flex-1 overflow-y-auto bg-muted/40">
         {children}

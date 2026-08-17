@@ -16,7 +16,7 @@ reutiliza). Al resolverse se mueve al `changelog.md` conservando su código.
 
 ---
 
-## [TD-012] `admin-placeholder.tsx` quedó sin usos
+## [TD-018] `admin-placeholder.tsx` quedó sin usos
 - **Ubicación:** `apps/web/src/components/admin-placeholder.tsx`
 - **Riesgo:** 1/10
 - **Problema:** El componente no se importa desde ningún lado; las páginas de admin ya tienen contenido real.
@@ -31,10 +31,10 @@ reutiliza). Al resolverse se mueve al `changelog.md` conservando su código.
 - **A corregir cuando:** se desplieguen las imágenes finales — quitar `unoptimized` y dejar que `next/image` las optimice. La caché rancia solo afecta a dev; cada `pnpm build` regenera desde cero.
 - **Fecha:** 2026-08-06 · **Estado:** Abierto
 
-## [TD-014] El panel de admin nunca se revisó en modo oscuro
+## [TD-019] El panel de admin nunca se revisó en modo oscuro
 - **Ubicación:** `apps/web/src/app/admin/**`
 - **Riesgo:** 3/10
-- **Problema:** Con RM-037 el tema se elige desde la cuenta y `enableSystem` quedó activo, así que ahora sí es fácil terminar en oscuro. La landing y el espacio de trabajo se revisaron; las cinco pantallas de `/admin` se diseñaron solo en claro y nunca se miraron en oscuro. El sidebar de `admin/layout.tsx` además sigue con el ícono `Radio` viejo en vez del logo.
+- **Problema:** Con [[RM-049]] el tema se elige desde la cuenta y `enableSystem` quedó activo, así que ahora sí es fácil terminar en oscuro. La landing y el espacio de trabajo se revisaron; las cinco pantallas de `/admin` se diseñaron solo en claro y nunca se miraron en oscuro. El sidebar de `admin/layout.tsx` además sigue con el ícono `Radio` viejo en vez del logo.
 - **Impacto futuro:** Contrastes rotos o superficies planas en el panel, y una marca inconsistente con el resto de la app.
 - **Fecha:** 2026-08-17 · **Estado:** Abierto
 

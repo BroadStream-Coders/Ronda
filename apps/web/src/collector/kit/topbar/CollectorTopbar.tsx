@@ -1,9 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Link from "next/link";
 import {
-  ArrowLeft,
   ChevronDown,
   CloudDownload,
   CloudUpload,
@@ -39,7 +37,6 @@ import { SaveState, type SaveStage } from "./SaveState";
 import { useWorkspaceHeader } from "./use-workspace-header";
 
 interface CollectorTopbarProps {
-  backHref?: string;
   programId?: string;
   collectorId?: string;
 }
@@ -55,7 +52,6 @@ const SPLIT_TRIGGER =
   "inline-flex h-9 items-center justify-center rounded-lg rounded-l-none px-1.5 outline-none transition-colors focus-visible:ring-3 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 [&_svg]:size-3.5";
 
 export function CollectorTopbar({
-  backHref,
   programId,
   collectorId,
 }: CollectorTopbarProps) {
@@ -151,21 +147,6 @@ export function CollectorTopbar({
 
   return (
     <header className="flex h-14 shrink-0 items-center gap-3 border-b border-border bg-card px-3 sm:px-4">
-      {backHref && (
-        <Button
-          variant="ghost"
-          size="sm"
-          nativeButton={false}
-          className="h-9 gap-1.5 text-muted-foreground"
-          render={<Link href={backHref} />}
-        >
-          <ArrowLeft />
-          <span className="hidden sm:inline">Volver</span>
-        </Button>
-      )}
-
-      <span className="h-6 w-px bg-border" aria-hidden />
-
       <div className="flex min-w-0 items-center gap-2.5">
         {icon && (
           <span className="flex size-7 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary [&_svg]:size-4">
