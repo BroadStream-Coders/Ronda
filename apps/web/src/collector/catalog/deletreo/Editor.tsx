@@ -28,9 +28,11 @@ export function Editor() {
   const setHeader = useWorkspaceHeader((s) => s.setHeader);
   const resetHeader = useWorkspaceHeader((s) => s.resetHeader);
 
+  const handleGetData = useCallback(() => buildData(groups), [groups]);
+
   const handleSave = useCallback(() => {
-    saveAsJson("Deletreo.json", buildData(groups));
-  }, [groups]);
+    saveAsJson("Deletreo.json", handleGetData());
+  }, [handleGetData]);
 
   const handleValidate = useCallback(() => validate(groups), [groups]);
 
@@ -56,8 +58,9 @@ export function Editor() {
       onSave: handleSave,
       onLoad: handleLoad,
       validate: handleValidate,
+      getData: handleGetData,
     });
-  }, [setHeader, handleSave, handleLoad, handleValidate]);
+  }, [setHeader, handleSave, handleLoad, handleValidate, handleGetData]);
 
   return (
     <GroupsContainer onAddGroup={addGroup} addLabel="Agregar ronda">

@@ -30,7 +30,11 @@ export default async function CollectorPage({
 
   return (
     <div className="flex h-dvh flex-col">
-      <CollectorTopbar backHref={`/programs/${slug}/collectors`} />
+      <CollectorTopbar
+        backHref={`/programs/${slug}/collectors`}
+        programId={program.id}
+        collectorId={collectorId}
+      />
       <div className="min-h-0 flex-1">
         <Editor />
       </div>

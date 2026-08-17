@@ -12,6 +12,9 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [RM-040] Storage en la nube para los colectores json (2026-08-16 18:45)
+Bucket privado `collector-data` con un archivo por programa+colector (`<program_id>/<collector_id>/session.json`), aislado por `is_member()` sobre `storage.objects` (migración `0011`). **Sin tabla**: mientras sea un documento sin historial no hay nada que consultar; la ruta usa el uuid y no el slug, por lo mismo que TD-006. `src/data/collector-storage.ts` (subir/bajar) y el topbar pasa a botones con desplegable al estilo Studio — Guardar/Cargar siguen siendo locales, la nube va en el desplegable, sin "datos de ejemplo". Cada colector json expone su `getData`; la validación corre también antes de subir, y bajar de la nube pide confirmación porque pisa la pantalla. Los 5 colectores de zip quedan igual que antes (siguen en [[RM-046]]).
+
 ## [RM-045] Sistema único de imágenes en los cinco colectores (2026-08-14 12:55)
 `kit/images/slot.ts` con los helpers compartidos (`emptyImageSlot`, `hasImage`, `setSlotImage`, `clearSlotImage`, `releaseSlots`, `createImagePacker`, `readImageSlot`): Cronos y De Par en Par pasan a `ImageSlot`, los cinco colectores comparten convención de rutas (`images/G1_I1.ext`), un solo criterio de "hay imagen" y la limpieza de object URLs centralizada — Cronos, que no revocaba ninguna, deja de filtrar. Se fueron ~150 líneas de bucles de zip duplicados. Los zips viejos siguen cargando: la ruta viaja dentro del json.
 
@@ -22,10 +25,10 @@ Las cartas usan el `ImagePicker` compartido en vez del picker propio (`<input ty
 `validate` propio en los 12 colectores que faltaban, portado del de Studio y adaptado a los tipos del port; cada uno vive como función pura en su `schema.ts` y se pasa por `setHeader`. **Reto Cruzado queda sin validación** (tampoco la tenía en Studio) y el de **Intruso cubre solo el Nivel 1**, ambas decisiones tomadas a propósito. Galería de Fotos y Álbum usan el título del grupo en la ruta cuando existe, en vez de "Grupo N" a secas.
 
 ## [RM-034] Sistema de validación (pre-guardado) (2026-08-13 11:47)
-`kit/validation/` (helpers `ValidationIssue`/`isBlank`/`formatPath` + `ValidationDialog`) exportado desde el kit, campo opcional `validate` en el store del header y compuerta en `CollectorTopbar`: si `validate()` devuelve problemas, el diálogo bloquea el guardado listando dónde está cada uno, con "Guardar de todos modos". Es opt-in — el colector que no pasa `validate` guarda directo. Estrenado en Deletreo (palabras vacías → "Ronda 1 · Palabra 3"); los otros 12 colectores todavía no definen el suyo.
+`kit/validation/` (helpers `ValidationIssue`/`isBlank`/`formatPath` + `ValidationDialog`) exportado desde el kit, campo opcional `validate` en el store del header y compuerta en `CollectorTopbar`: si `validate()` devuelve problemas, el diálogo bloquea el guardado listando dónde está cada uno, con "Guardar de todos modos". Es opt-in — el colector que no pasa `validate` guarda directo. Estrenado en Deletreo (palabras vacías → "Ronda 1 · Palabra 3"); los otros 13 colectores todavía no definen el suyo.
 
 ## [RM-036] Colector Tres en Raya (2026-08-13 11:28)
-Portado a `catalog/tres-en-raya/` (Editor/Column/Row/schema): rondas de 9 casillas fijas con pregunta y respuesta, llenado rápido de 2 columnas, export json (`groups[].questions[]`). Solo usa Lego — ni imágenes ni pestañas. Registrado y asignado a QGEM; con esto el catálogo queda con los 13 juegos de Studio.
+Portado a `catalog/tres-en-raya/` (Editor/Column/Row/schema): rondas de 9 casillas fijas con pregunta y respuesta, llenado rápido de 2 columnas, export json (`groups[].questions[]`). Solo usa Lego — ni imágenes ni pestañas. Registrado y asignado a QGEM; con esto el catálogo queda con los 14 juegos de Studio.
 
 ## [RM-031] Colector Galería de Fotos (2026-08-13 08:29)
 Portado a `catalog/galeria-fotos/` (Editor/Column/Row/schema): grupos con título y hasta 30 fotos cada uno (solo imagen, sin texto), formato zip con `groups[].items[].imagePath` (`images/G1_I1.ext`). Los títulos, que en Studio vivían en un array paralelo a los grupos, ahora son parte de la columna. Registrado y asignado a QGEM.

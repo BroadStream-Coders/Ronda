@@ -34,9 +34,11 @@ export function Editor() {
   const currentBoard =
     currentBoardIndex !== -1 ? boards[currentBoardIndex] : boards[0];
 
+  const handleGetData = useCallback(() => buildData(boards), [boards]);
+
   const handleSave = useCallback(() => {
-    saveAsJson("BuscaLogo.json", buildData(boards));
-  }, [boards]);
+    saveAsJson("BuscaLogo.json", handleGetData());
+  }, [handleGetData]);
 
   const handleLoad = useCallback(async (file: File) => {
     try {
@@ -63,8 +65,9 @@ export function Editor() {
       onSave: handleSave,
       onLoad: handleLoad,
       validate: handleValidate,
+      getData: handleGetData,
     });
-  }, [setHeader, handleSave, handleLoad, handleValidate]);
+  }, [setHeader, handleSave, handleLoad, handleValidate, handleGetData]);
 
   const handleAddBoard = () => {
     if (boards.length >= MAX_BOARDS) return;

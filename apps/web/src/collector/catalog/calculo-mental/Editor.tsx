@@ -52,9 +52,11 @@ export function Editor() {
     if (boards.length > 0) replaceGroup(groupIndex, boards);
   };
 
+  const handleGetData = useCallback(() => buildData(groups), [groups]);
+
   const handleSave = useCallback(() => {
-    saveAsJson("CalculoMental.json", buildData(groups));
-  }, [groups]);
+    saveAsJson("CalculoMental.json", handleGetData());
+  }, [handleGetData]);
 
   const handleLoad = useCallback(
     async (file: File) => {
@@ -80,8 +82,9 @@ export function Editor() {
       onSave: handleSave,
       onLoad: handleLoad,
       validate: handleValidate,
+      getData: handleGetData,
     });
-  }, [setHeader, handleSave, handleLoad, handleValidate]);
+  }, [setHeader, handleSave, handleLoad, handleValidate, handleGetData]);
 
   return (
     <GroupsContainer onAddGroup={addGroup} addLabel="Agregar grupo">

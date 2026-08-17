@@ -40,23 +40,23 @@ Al terminar una tarea se mueve al changelog y se borra de aquí.
   colector y por su juego; ningún contrato está definido dos veces.
 - **Fecha:** 2026-08-13 · **Estado:** Abierto
 
-## [RM-040] Sistema de storage para colectores y juegos
-- **Objetivo:** que lo que se llena en el colector viva en la nube y no solo en un
-  archivo local: datos en la base (por programa, detrás de `src/data/` y con RLS) e
-  imágenes en storage, de modo que el juego pueda leer lo mismo que produjo el
-  colector. Cubre a todos los juegos, no a uno. Hoy el colector es efímero: el
-  estado vive en memoria y el guardado descarga un archivo — si ese archivo se
-  pierde, el juego se rehace a mano. Es la diferencia entre una herramienta y un
-  servicio. La forma real de `data` ya se puede modelar con los 13 colectores
-  portados a la vista, en vez de adivinarla con uno solo.
+## [RM-046] Storage para los colectores con imágenes
+- **Objetivo:** completar lo que quedó fuera de [[RM-040]], que cubrió solo los 9
+  colectores json. Faltan los 5 de zip (Álbum, Cronos, De Par en Par, Galería de
+  Fotos, Intruso): las imágenes tienen que subirse al bucket junto al json, y
+  `ImageSlot` gana la ruta en storage además del `File` en memoria.
 - **A tener en cuenta:** hay que **limitar el peso de las imágenes** antes de
   subirlas (redimensionar y/o comprimir del lado del cliente, y rechazar lo que
-  pase de cierto tamaño). Estamos en el tier gratuito de Supabase, donde lo que se
-  acaba primero no es el almacenamiento sino la **transferencia**: cada vez que un
-  juego abre su sesión se vuelve a descargar todo el paquete de imágenes.
-- **Hecho cuando:** un colector guarda en la nube, el juego correspondiente lee esos
-  datos e imágenes, y existe un tope de peso aplicado en la subida.
-- **Fecha:** 2026-08-13 · **Estado:** Abierto (promovido desde WL-004, que se retira)
+  pase de cierto tamaño). En el tier gratuito lo que se acaba primero no es el
+  almacenamiento sino la **transferencia**: cada vez que alguien abre el colector,
+  el juego o la tablet se vuelve a bajar el paquete de imágenes.
+- **Ojo con el zip:** cuando el contenido venga de la nube, los slots van a tener
+  URL pero no `File`, y el empaquetador del zip necesita el `File`. Exportar un zip
+  después de cargar de la nube exige bajarse las imágenes primero, o el zip sale
+  sin fotos y en silencio.
+- **Hecho cuando:** los 5 colectores de imágenes suben y bajan de la nube, con tope
+  de peso aplicado, y el guardado local a zip sigue funcionando en ambos casos.
+- **Fecha:** 2026-08-16 · **Estado:** Abierto
 
 ## [RM-041] Servicio de consulta en tablet para conductores
 - **Objetivo:** un tercer servicio del programa, junto a colectores y juegos: que el

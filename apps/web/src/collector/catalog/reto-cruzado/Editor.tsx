@@ -50,16 +50,18 @@ export function Editor() {
     createEmptyColumn(createEmptyQaRow),
   ]);
 
+  const handleGetData = useCallback(
+    () => buildData({ courses, level1, level2, level3, level4 }),
+    [courses, level1, level2, level3, level4],
+  );
+
   const handleSave = useCallback(() => {
     try {
-      saveAsJson(
-        "RetoCruzado.json",
-        buildData({ courses, level1, level2, level3, level4 }),
-      );
+      saveAsJson("RetoCruzado.json", handleGetData());
     } catch {
       alert("Error al exportar los datos.");
     }
-  }, [courses, level1, level2, level3, level4]);
+  }, [handleGetData]);
 
   const handleLoad = useCallback(async (file: File) => {
     try {
@@ -84,8 +86,9 @@ export function Editor() {
       format: "json",
       onSave: handleSave,
       onLoad: handleLoad,
+      getData: handleGetData,
     });
-  }, [setHeader, handleSave, handleLoad]);
+  }, [setHeader, handleSave, handleLoad, handleGetData]);
 
   return (
     <LevelTabs

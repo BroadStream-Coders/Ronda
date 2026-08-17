@@ -49,9 +49,14 @@ export function Editor() {
       matrix.map((row) => ({ question: row[0] || "", answer: row[1] || "" })),
     );
 
+  const handleGetData = useCallback(
+    () => buildData(players, groups),
+    [players, groups],
+  );
+
   const handleSave = useCallback(() => {
-    saveAsJson("MiLibroFavorito.json", buildData(players, groups));
-  }, [players, groups]);
+    saveAsJson("MiLibroFavorito.json", handleGetData());
+  }, [handleGetData]);
 
   const handleLoad = useCallback(
     async (file: File) => {
@@ -82,8 +87,9 @@ export function Editor() {
       onSave: handleSave,
       onLoad: handleLoad,
       validate: handleValidate,
+      getData: handleGetData,
     });
-  }, [setHeader, handleSave, handleLoad, handleValidate]);
+  }, [setHeader, handleSave, handleLoad, handleValidate, handleGetData]);
 
   return (
     <div className="flex h-full overflow-hidden">

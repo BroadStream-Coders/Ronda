@@ -85,9 +85,11 @@ export function Editor() {
     [],
   );
 
+  const handleGetData = useCallback(() => buildData(columns), [columns]);
+
   const handleSave = useCallback(() => {
-    saveAsJson("LaSabesONo.json", buildData(columns));
-  }, [columns]);
+    saveAsJson("LaSabesONo.json", handleGetData());
+  }, [handleGetData]);
 
   const handleLoad = useCallback(async (file: File) => {
     try {
@@ -110,8 +112,9 @@ export function Editor() {
       onSave: handleSave,
       onLoad: handleLoad,
       validate: handleValidate,
+      getData: handleGetData,
     });
-  }, [setHeader, handleSave, handleLoad, handleValidate]);
+  }, [setHeader, handleSave, handleLoad, handleValidate, handleGetData]);
 
   return (
     <GroupsContainer onAddGroup={addColumn} addLabel="Agregar grupo">

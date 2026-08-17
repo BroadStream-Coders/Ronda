@@ -58,9 +58,11 @@ export function Editor() {
       ? currentRound.boards[currentBoardIndex]
       : currentRound?.boards[0];
 
+  const handleGetData = useCallback(() => buildData(rounds), [rounds]);
+
   const handleSave = useCallback(() => {
-    saveAsJson("OperacionesCombinadas.json", buildData(rounds));
-  }, [rounds]);
+    saveAsJson("OperacionesCombinadas.json", handleGetData());
+  }, [handleGetData]);
 
   const handleLoad = useCallback(async (file: File) => {
     try {
@@ -90,8 +92,9 @@ export function Editor() {
       onSave: handleSave,
       onLoad: handleLoad,
       validate: handleValidate,
+      getData: handleGetData,
     });
-  }, [setHeader, handleSave, handleLoad, handleValidate]);
+  }, [setHeader, handleSave, handleLoad, handleValidate, handleGetData]);
 
   const handleAddRound = () => {
     if (rounds.length >= MAX_ROUNDS) return;
