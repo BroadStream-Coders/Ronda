@@ -104,11 +104,15 @@ Al terminar una tarea se mueve al changelog y se borra de aquí.
   colector sin hacer scroll en la barra, ni contraída ni expandida.
 - **Fecha:** 2026-08-17 · **Estado:** Abierto
 
-## [RM-052] Vercel Analytics
-- **Objetivo:** instrumentar la app con Vercel Analytics (`@vercel/analytics`) para
-  tener visitas y páginas vistas sin montar nada propio. Evaluar de paso si suma
-  Speed Insights, que es la misma clase de integración.
-- **Hecho cuando:** el panel de Vercel muestra tráfico real de producción, con la
-  landing y el espacio de trabajo diferenciados.
+## [RM-054] Speed Insights
+- **Objetivo:** sumar `@vercel/speed-insights` con `<SpeedInsights />` en el layout
+  raíz, misma mecánica que Analytics ([[RM-052]]): paquete + una línea + activarlo
+  en el panel de Vercel. Mide Web Vitals reales (LCP, CLS, INP) de visitantes.
+- **Lo que hay que mirar antes:** en el plan gratuito trae su propia cuota de
+  eventos, separada de la de Analytics. Confirmar el tope vigente en el panel antes
+  de dejarlo prendido, y si el tráfico del colector se lo come, limitarlo a la
+  landing en vez de ponerlo en el layout raíz.
+- **Hecho cuando:** el panel de Vercel muestra Web Vitals de producción y se
+  verificó que la cuota aguanta el tráfico real.
 - **Fecha:** 2026-08-17 · **Estado:** Abierto
 

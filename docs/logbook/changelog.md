@@ -12,6 +12,9 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [RM-052] Vercel Analytics (2026-08-17 14:00)
+`@vercel/analytics` con `<Analytics />` en el layout raíz: una línea, cubre toda la app y las rutas dinámicas se agrupan solas por el patrón (`/programs/[slug]/...`). Speed Insights queda fuera — es otro paquete con su propia cuota de eventos, y en el tier gratuito conviene gastarla en tráfico, no en métricas de rendimiento.
+
 ## [RM-046] Storage en la nube para los colectores con imágenes (2026-08-16 20:36)
 Los 5 de zip (Álbum, Cronos, De Par en Par, Galería de Fotos, Intruso) suben y bajan de la nube: cada imagen es un objeto suelto en `<program_id>/<collector_id>/images/G1_I1.ext`, con **las mismas rutas relativas que ya usaba el zip**, así que el json no cambió. Al bajar, la capa de datos rearma un zip en memoria y se lo pasa al `onLoad` que cada colector ya tenía — cero lógica de carga nueva en los colectores, y de paso muere el riesgo del zip sin `File` que estaba anotado: los slots vuelven con archivo real. La subida borra las imágenes que dejaron de estar referenciadas, y el listado pagina (el `list()` de Supabase corta en 100 y Galería puede pasarse con 4 columnas). El tope de peso queda en [[RM-047]].
 
