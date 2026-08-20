@@ -6,6 +6,8 @@ import { createClient } from "@/data/supabase/server";
 import { getProgramBySlug } from "@/data/programs";
 import { getProgramCollectors } from "@/collector/catalog/assignments";
 import { registry } from "@/collector/catalog/registry";
+import { getProgramGames } from "@/game/catalog/assignments";
+import { registry as gameRegistry } from "@/game/catalog/registry";
 
 export default async function DashboardPage({
   params,
@@ -25,6 +27,9 @@ export default async function DashboardPage({
 
   const total = getProgramCollectors(program.id).filter(
     (id) => registry[id],
+  ).length;
+  const totalGames = getProgramGames(program.id).filter(
+    (id) => gameRegistry[id],
   ).length;
 
   return (
@@ -59,21 +64,45 @@ export default async function DashboardPage({
           </span>
         </Link>
 
-        <div className="flex flex-col rounded-xl border border-dashed border-border bg-card/40 p-6">
-          <span className="mb-4 flex size-11 items-center justify-center rounded-xl bg-muted text-muted-foreground">
-            <Gamepad2 className="size-5" />
-          </span>
-          <h2 className="font-heading flex items-center gap-2 text-xl font-semibold text-muted-foreground">
-            Juegos
-            <span className="rounded-full bg-muted px-2 py-0.5 text-xs font-normal">
-              Pronto
+        {totalGames === 0 ? (
+          <div className="flex flex-col rounded-xl border border-dashed border-border bg-card/40 p-6">
+            <span className="mb-4 flex size-11 items-center justify-center rounded-xl bg-muted text-muted-foreground">
+              <Gamepad2 className="size-5" />
             </span>
-          </h2>
-          <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
-            Emite los juegos en pantalla durante la transmisión, con lo que tu
-            equipo cargó en el colector.
-          </p>
-        </div>
+            <h2 className="font-heading flex items-center gap-2 text-xl font-semibold text-muted-foreground">
+              Juegos
+              <span className="rounded-full bg-muted px-2 py-0.5 text-xs font-normal">
+                Pronto
+              </span>
+            </h2>
+            <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
+              Emite los juegos en pantalla durante la transmisión, con lo que tu
+              equipo cargó en el colector.
+            </p>
+          </div>
+        ) : (
+          <Link
+            href={`/programs/${slug}/games`}
+            className="group flex flex-col rounded-xl border border-border bg-card p-6 transition-colors hover:border-primary"
+          >
+            <span className="mb-4 flex size-11 items-center justify-center rounded-xl bg-primary/10 text-primary">
+              <Gamepad2 className="size-5" />
+            </span>
+            <h2 className="font-heading text-xl font-semibold group-hover:text-primary">
+              Juegos
+            </h2>
+            <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
+              Emite los juegos en pantalla durante la transmisión, con lo que tu
+              equipo cargó en el colector.
+            </p>
+            <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-primary">
+              {totalGames === 1
+                ? "1 juego asignado"
+                : `${totalGames} juegos asignados`}
+              <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
+            </span>
+          </Link>
+        )}
       </div>
     </div>
   );

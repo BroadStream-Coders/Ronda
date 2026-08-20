@@ -29,6 +29,7 @@ interface ProgramSidebarProps {
   programName: string;
   user: SidebarUser;
   collectors: SidebarCollector[];
+  hasGames: boolean;
   defaultCollapsed?: boolean;
 }
 
@@ -43,6 +44,7 @@ export function ProgramSidebar({
   programName,
   user,
   collectors,
+  hasGames,
   defaultCollapsed = false,
 }: ProgramSidebarProps) {
   const [collapsed, setCollapsed] = useState(defaultCollapsed);
@@ -51,6 +53,7 @@ export function ProgramSidebar({
 
   const home = `/programs/${slug}`;
   const list = `${home}/collectors`;
+  const games = `${home}/games`;
 
   function toggleCollapsed() {
     const next = !collapsed;
@@ -190,23 +193,40 @@ export function ProgramSidebar({
           </ul>
         )}
 
-        <span
-          title={collapsed ? "Juegos · Pronto" : undefined}
-          className={cn(
-            navRow(collapsed),
-            "mt-1 cursor-default text-muted-foreground/50",
-          )}
-        >
-          <Gamepad2 className="size-4 shrink-0" />
-          {!collapsed && (
-            <>
-              <span className="truncate">Juegos</span>
-              <span className="ml-auto rounded-full bg-muted px-2 py-0.5 text-xs text-muted-foreground">
-                Pronto
-              </span>
-            </>
-          )}
-        </span>
+        {hasGames ? (
+          <Link
+            href={games}
+            title={collapsed ? "Juegos" : undefined}
+            className={cn(
+              navRow(collapsed),
+              "mt-1",
+              pathname.startsWith(games)
+                ? "bg-primary/10 text-primary"
+                : "text-muted-foreground hover:bg-muted hover:text-foreground",
+            )}
+          >
+            <Gamepad2 className="size-4 shrink-0" />
+            {!collapsed && <span className="truncate">Juegos</span>}
+          </Link>
+        ) : (
+          <span
+            title={collapsed ? "Juegos · Pronto" : undefined}
+            className={cn(
+              navRow(collapsed),
+              "mt-1 cursor-default text-muted-foreground/50",
+            )}
+          >
+            <Gamepad2 className="size-4 shrink-0" />
+            {!collapsed && (
+              <>
+                <span className="truncate">Juegos</span>
+                <span className="ml-auto rounded-full bg-muted px-2 py-0.5 text-xs text-muted-foreground">
+                  Pronto
+                </span>
+              </>
+            )}
+          </span>
+        )}
       </nav>
 
       <div className="shrink-0 border-t border-border p-2">

@@ -10,24 +10,70 @@ Al terminar una tarea se mueve al changelog y se borra de aquí.
 
 ---
 
-## [RM-037] Estructurar el sistema de juegos
-- **Objetivo:** montar el apartado de **juegos** como servicio propio del programa,
-  al lado del de colectores: dónde vive el código (`src/game/` con su kit y su
-  catálogo), cómo se registra y se asigna cada juego a un programa, y cómo entra
-  en la navegación del programa. Es la base sobre la que se traen los juegos uno a
-  uno ([[RM-038]]); no incluye portar ninguno.
-- **Hecho cuando:** existe la estructura (kit + catálogo + registro + asignación) y
-  la ruta del programa lista los juegos asignados, aunque el catálogo esté vacío.
-- **Fecha:** 2026-08-13 · **Estado:** Abierto
+## [RM-055] Cómo se declara qué servicios tiene cada programa
+- **Objetivo:** un solo lugar donde se declara qué servicios tiene contratado un
+  programa y qué le toca de cada uno, en vez de una lista por sistema. Hoy
+  `collector/catalog/assignments.ts` y `game/catalog/assignments.ts` repiten el uuid
+  y el nombre del programa; con la tablet ([[RM-041]]) serían tres archivos y tres
+  lugares donde olvidarse de uno.
+- **Por qué es RM y no deuda:** lo de hoy funciona y es coherente — cada sistema
+  autocontenido con su propia asignación. Lo que falta no es corregir un error, es
+  **tomar una decisión de modelo** que recién se puede tomar bien con el tercer
+  servicio a la vista: Más Conectados tiene colector y juegos; Que Gane El Mejor va
+  a tener además el display en tablet.
+- **Decisión abierta (elegir al construir el tercer servicio):** (1) un archivo por
+  programa con `{ collectors, games, tablet }` y un getter por servicio — lo más
+  corto, pero el archivo crece con cada servicio; (2) un registro de servicios donde
+  cada servicio declara su catálogo y el programa solo lista qué servicios tiene más
+  su selección — más indirecto, pero sumar un servicio no toca a los otros; (3)
+  llevarlo a la base (`program_services`), que es donde termina cuando la asignación
+  deje de estar hardcodeada y la maneje el panel de admin.
+- **Hecho cuando:** dar de alta un programa o habilitarle un servicio se hace en un
+  solo lugar, y los tres servicios leen de ahí.
+- **Fecha:** 2026-08-20 · **Estado:** Abierto
+
+## [RM-056] Barra de configuración del juego
+- **Objetivo:** que el operador cambie, en el momento y sin programador, un conjunto
+  **cerrado** de valores que el propio juego declara.
+- **El caso que lo dispara:** el **color del croma** de Deletreo. Producción lo cambia
+  de un día para el otro para unificarlo con el resto de sus juegos, y no admite
+  esperar un deploy — hay que cambiarlo en el momento. La versión de Unity ya lo
+  tenía.
+- **El límite duro que lo separa de un editor:** el operador cambia **valores que el
+  autor del juego declaró**, nunca la estructura. No se agregan ni se quitan layers o
+  parts, no se posiciona nada, no se selecciona nada. El juego que no declara knobs no
+  muestra barra. Ese límite es a propósito: quien opera no tiene por qué tener
+  competencias técnicas, y el software existe para que no las necesite.
+- **Decisión abierta:** el alcance del valor — si el croma es de **cada juego** o del
+  **programa** (cuando lo cambian, lo cambian para todos sus juegos a la vez). Cambia
+  dónde vive la clave de persistencia.
+- **Persistencia — propuesta:** `localStorage` en la máquina del estudio. Es la misma
+  máquina siempre, cuesta cero infraestructura, y no mete una dependencia de red en
+  una pantalla que tiene que funcionar sí o sí. Si la máquina cambia, el operador
+  vuelve a elegir el color una vez.
+- **Hecho cuando:** en Deletreo se cambia el color del croma desde la pantalla,
+  sobrevive a recargar, y un juego sin knobs declarados no muestra la barra.
+- **Fecha:** 2026-08-20 · **Estado:** Abierto
 
 ## [RM-038] Importar los juegos desde el proyecto Games
 - **Objetivo:** traer a Ronda los juegos del proyecto **Games** (no Studio), uno por
-  uno, sobre la estructura de RM-037 — el mismo método que se usó con los 13
-  colectores. Primer paso: inventariar qué juegos existen en Games y con qué
-  sistemas se arman, para partirlo en tareas por juego.
-- **Hecho cuando:** existe el listado de juegos con su estado, y cada juego
-  importado corre dentro de un programa y es asignable.
-- **Fecha:** 2026-08-13 · **Estado:** Abierto
+  uno, sobre la estructura de [[RM-037]] — el mismo método que se usó con los 13
+  colectores.
+- **Inventario de Games (10 juegos + sandbox):** deletreo, cálculo mental, intruso,
+  álbum, la sabes o no, al vuelo, busca logo, mi libro favorito, cronos y
+  operaciones combinadas (prototipo). Ojo con los nombres: el colector `si-o-no`
+  es el que alimenta al juego **Al Vuelo**; no todos los pares comparten slug.
+- **Sin juego del otro lado:** `de-par-en-par`, `reto-cruzado`, `galeria-fotos` y
+  `tres-en-raya` tienen colector en Ronda pero no existen en Games — esos se
+  construyen, no se portan.
+- **Deletreo — primer juego, parcial:** corre en Ronda con layout, lógica de teclas
+  y carga de archivo local. Le falta lo que se recortó a propósito del primer corte:
+  imágenes de marco (hoy es un div de color), fuente GeniusTechno, sonidos y las
+  animaciones (pop/shake/bounce/slide). Eso vuelve cuando entre el pipeline de
+  assets desde `public/`.
+- **Hecho cuando:** cada juego del inventario corre dentro de un programa y es
+  asignable.
+- **Fecha:** 2026-08-13 · **Estado:** En progreso (2026-08-20)
 
 ## [RM-039] Esquemas de datos centralizados (colector ↔ juego)
 - **Objetivo:** que el contrato de datos de cada juego se defina **una sola vez** y

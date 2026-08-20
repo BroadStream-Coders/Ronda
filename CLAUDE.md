@@ -38,6 +38,32 @@ Ver [README.md](README.md) para el panorama y `docs/logbook/` para el estado.
   no en infraestructura separada. Modelo: `programs → memberships → games → sessions`.
   (El *tenant* es el programa; en código usamos siempre `program`, nunca `tenant` ni
   `project`.)
+- **Juegos — no es Unity.** `src/game/` es el segundo servicio, con la misma forma
+  que `src/collector/`: `kit/` (el sistema) + `catalog/` (un juego por carpeta con
+  su ficha `GameType`). Vino del proyecto **Games**, que sí era un mini-editor estilo
+  Unity, pero acá entra **solo lo que corre en pantalla**: no hay editor, ni inspector,
+  ni jerarquía, ni modo play. Son juegos en navegador. El vocabulario lo refleja y no
+  se vuelve atrás:
+
+  | Games (Unity) | Ronda |
+  |---|---|
+  | `GameObject` | `Layer` |
+  | `components[]` | `parts[]` |
+  | `transform` / `RectTransform` | `rect` |
+  | `Scene` (el lienzo) | `Stage` |
+  | `behavior` | `logic` |
+  | `mergeRuntime(design, runtime)` | `applyState(layout, state)` |
+  | `scene.json` | `layout.json` |
+
+  El modelo: **un layout de layers; cada layer tiene un rect y unas parts**. El
+  `layout.json` es data — da igual si lo generó un editor, Unity o la mano. La lógica
+  del juego escribe en `useGameState` y `applyState` lo fusiona sobre el layout al
+  renderizar; el layout nunca se muta.
+
+- **El Stage es un container-query context.** Todo lo que se dibuja adentro se mide en
+  `cqw`/`cqh`/`cqi`, **nunca** en `vw`/`rem`/`px`. Es lo que hace que la vista en
+  ventana y en pantalla completa sean idénticas; usar unidades de viewport rompe eso.
+
 - **Sin comentarios en el código** salvo que se pidan; la deuda técnica se registra
   en `docs/logbook/technical-debt.md`, nunca como comentario.
 - **Idioma — regla dura:** todo lo que el usuario **no ve** va en **inglés** (tablas

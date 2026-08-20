@@ -1,0 +1,44 @@
+[
+  {
+    "id": "background",
+    "name": "Fondo",
+    "visible": true,
+    "rect": {
+      "position": { "x": 0, "y": 0 },
+      "size": { "x": 1920, "y": 1080 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [{ "type": "color", "value": "#01FF02" }]
+  },
+  {
+    "id": "frame",
+    "name": "Marco",
+    "visible": true,
+    "rect": {
+      "position": { "x": 25, "y": -358 },
+      "size": { "x": 1170, "y": 204 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [{ "type": "color", "value": "#141b2d" }]
+  },
+  {
+    "id": "word",
+    "name": "Palabra",
+    "visible": true,
+    "parentId": "frame",
+    "rect": {
+      "position": { "x": 0, "y": 0 },
+      "size": { "x": 900, "y": 160 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      {
+        "type": "spelling",
+        "word": "",
+        "revealed": 0,
+        "fontSize": 60,
+        "letterSpacing": 20
+      }
+    ]
+  }
+]

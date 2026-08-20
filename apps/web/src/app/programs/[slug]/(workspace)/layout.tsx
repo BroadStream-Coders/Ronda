@@ -7,6 +7,8 @@ import { createClient } from "@/data/supabase/server";
 import { getProgramBySlug } from "@/data/programs";
 import { getProgramCollectors } from "@/collector/catalog/assignments";
 import { registry } from "@/collector/catalog/registry";
+import { getProgramGames } from "@/game/catalog/assignments";
+import { registry as gameRegistry } from "@/game/catalog/registry";
 
 export default async function WorkspaceLayout({
   children,
@@ -34,6 +36,8 @@ export default async function WorkspaceLayout({
       return { id, name: meta.name, icon: <Icon /> };
     });
 
+  const hasGames = getProgramGames(program.id).some((id) => gameRegistry[id]);
+
   const name = (user.user_metadata.full_name ?? user.user_metadata.name) as
     | string
     | undefined;
@@ -53,6 +57,7 @@ export default async function WorkspaceLayout({
           avatar: avatar ?? null,
         }}
         collectors={collectors}
+        hasGames={hasGames}
         defaultCollapsed={collapsed}
       />
       <main className="min-w-0 flex-1 overflow-y-auto bg-muted/40">

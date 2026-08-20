@@ -12,6 +12,10 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [RM-037] Estructura del sistema de juegos (2026-08-20 08:54)
+`src/game/` con la misma forma que `src/collector/`: `kit/` (Stage con fullscreen, modelo de layers, LayerView, registro de parts, estado de juego, sesión, teclas) y `catalog/` (registro + asignación por programa + un juego). Rutas `programs/[slug]/games` y `.../games/[gameId]`, y "Juegos · Pronto" pasa a enlace real cuando el programa tiene juegos asignados.
+Se decidió traer **solo el runtime** de Games: fuera dockview, inspectores, `useSceneEditor`, play mode y undo — se caen 5 dependencias y no entra ninguna nueva. El vocabulario se despega de Unity (`GameObject`→`Layer`, `components[]`→`parts[]`, `transform`→`rect`, `behavior`→`logic`, `mergeRuntime`→`applyState`) porque esto son juegos en navegador; el editor se queda en Games como herramienta de autoría.
+
 ## [RM-054] Speed Insights (2026-08-17 14:04)
 `@vercel/speed-insights` con `<SpeedInsights />` en el layout raíz, al lado del `<Analytics />` de [[RM-052]]. Queda en toda la app y no solo en la landing: hoy el tráfico es de desarrollo, y si la cuota del plan gratuito aprieta se acota después — mover el componente a la landing es una línea.
 
