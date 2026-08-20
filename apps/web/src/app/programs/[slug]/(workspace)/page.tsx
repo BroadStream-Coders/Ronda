@@ -7,7 +7,7 @@ import { getProgramBySlug } from "@/data/programs";
 import { getProgramCollectors } from "@/collector/catalog/assignments";
 import { registry } from "@/collector/catalog/registry";
 import { getProgramGames } from "@/game/catalog/assignments";
-import { registry as gameRegistry } from "@/game/catalog/registry";
+import { metas as gameMetas } from "@/game/catalog/metas";
 
 export default async function DashboardPage({
   params,
@@ -29,7 +29,7 @@ export default async function DashboardPage({
     (id) => registry[id],
   ).length;
   const totalGames = getProgramGames(program.id).filter(
-    (id) => gameRegistry[id],
+    (id) => gameMetas[id],
   ).length;
 
   return (

@@ -8,7 +8,7 @@ import { getProgramBySlug } from "@/data/programs";
 import { getProgramCollectors } from "@/collector/catalog/assignments";
 import { registry } from "@/collector/catalog/registry";
 import { getProgramGames } from "@/game/catalog/assignments";
-import { registry as gameRegistry } from "@/game/catalog/registry";
+import { metas as gameMetas } from "@/game/catalog/metas";
 
 export default async function WorkspaceLayout({
   children,
@@ -36,7 +36,13 @@ export default async function WorkspaceLayout({
       return { id, name: meta.name, icon: <Icon /> };
     });
 
-  const hasGames = getProgramGames(program.id).some((id) => gameRegistry[id]);
+  const games = getProgramGames(program.id)
+    .filter((id) => gameMetas[id])
+    .map((id) => {
+      const meta = gameMetas[id];
+      const Icon = meta.icon;
+      return { id, name: meta.name, icon: <Icon /> };
+    });
 
   const name = (user.user_metadata.full_name ?? user.user_metadata.name) as
     | string
@@ -57,7 +63,7 @@ export default async function WorkspaceLayout({
           avatar: avatar ?? null,
         }}
         collectors={collectors}
-        hasGames={hasGames}
+        games={games}
         defaultCollapsed={collapsed}
       />
       <main className="min-w-0 flex-1 overflow-y-auto bg-muted/40">

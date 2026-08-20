@@ -11,6 +11,16 @@ se retira de aquí.
 
 ---
 
+## [WL-010] Flyout en el rail contraído de la barra lateral
+- **Idea:** que en la barra contraída el ícono del servicio abra un submenú a la
+  derecha con sus juegos (reusando el `DropdownMenu` ya instalado), en vez de
+  listarlos como íconos apilados debajo. Era la opción 2 de [[RM-051]]; se dejó
+  fuera porque el acordeón + scroll por rama ya resuelve el problema de espacio.
+- **Por qué / valor:** hoy el rail contraído muestra una columna de íconos sin
+  etiqueta, que hay que distinguir por tooltip uno por uno. El flyout los muestra
+  con nombre y deja el rail en 3 íconos fijos.
+- **Fecha:** 2026-08-20.
+
 ## [WL-009] El croma configurado se guarda en la base
 - **Idea:** que el color del croma de cada juego ([[RM-056]]) viva en Supabase por
   programa + juego, en vez de solo en el `localStorage` de la máquina del estudio.

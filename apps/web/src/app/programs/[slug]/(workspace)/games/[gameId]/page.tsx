@@ -2,7 +2,7 @@ import { notFound, redirect } from "next/navigation";
 
 import { getProgramGames } from "@/game/catalog/assignments";
 import { GameMount } from "@/game/catalog/GameMount";
-import { registry } from "@/game/catalog/registry";
+import { metas } from "@/game/catalog/metas";
 import { getProgramBySlug } from "@/data/programs";
 import { createClient } from "@/data/supabase/server";
 
@@ -23,7 +23,7 @@ export default async function GamePage({
   if (!program) notFound();
 
   const assigned = getProgramGames(program.id).includes(gameId);
-  if (!assigned || !registry[gameId]) notFound();
+  if (!assigned || !metas[gameId]) notFound();
 
   return <GameMount gameId={gameId} programId={program.id} />;
 }

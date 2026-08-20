@@ -16,14 +16,6 @@ reutiliza). Al resolverse se mueve al `changelog.md` conservando su código.
 
 ---
 
-## [TD-021] La ruta que lista los juegos importa el catálogo entero
-- **Ubicación:** `apps/web/src/app/programs/[slug]/(workspace)/games/page.tsx:6` + `apps/web/src/game/catalog/registry.ts`
-- **Riesgo:** 3/10
-- **Problema:** La lista solo necesita `meta` (nombre, descripción, ícono), pero importa `catalog/registry`, que importa la ficha **completa** de cada juego: su `layout.json`, su lógica, sus parts y sus fuentes. Verificado en el manifest de `next/font` del build: la ruta lista precarga `genius-techno.woff2` sin dibujar una sola letra con ella.
-- **Impacto futuro:** Hoy son 17 KB en una pantalla de paso. Con los 10 juegos del catálogo son las 4 tipografías (~160 KB en woff2) precargadas de más, y cada `layout.json` en el grafo de la ruta — el de Busca Logo solo pesa 100 KB. Crece con cada juego que se suma y no lo nota nadie, porque no rompe nada.
-- **Cómo cerrarlo:** separar la **ficha** del **metadato**: que el registro exponga los `meta` de forma plana y el juego se cargue con `import()` dinámico recién en la ruta que lo monta. La lista y la barra lateral se quedan solo con los metas.
-- **Fecha:** 2026-08-20 · **Estado:** Abierto
-
 ## [TD-001] Logos de clientes servidos sin optimizar (`unoptimized`)
 - **Ubicación:** `apps/web/src/app/page.tsx` (los `<Image>` de la sección "Clientes al aire")
 - **Riesgo:** 2/10

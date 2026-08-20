@@ -3,7 +3,7 @@ import { notFound, redirect } from "next/navigation";
 import { ArrowUpRight, Gamepad2 } from "lucide-react";
 
 import { getProgramGames } from "@/game/catalog/assignments";
-import { registry } from "@/game/catalog/registry";
+import { metas } from "@/game/catalog/metas";
 import { getProgramBySlug } from "@/data/programs";
 import { createClient } from "@/data/supabase/server";
 
@@ -24,8 +24,8 @@ export default async function GamesPage({
   if (!program) notFound();
 
   const games = getProgramGames(program.id)
-    .filter((id) => registry[id])
-    .map((id) => ({ id, meta: registry[id].meta }));
+    .filter((id) => metas[id])
+    .map((id) => ({ id, meta: metas[id] }));
 
   return (
     <div className="mx-auto w-full max-w-6xl px-6 py-10 sm:px-8">

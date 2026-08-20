@@ -12,6 +12,14 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [RM-051] Cómo escala el árbol de la barra lateral al sumar Juegos (2026-08-20 13:34)
+Juegos cuelga sus juegos asignados igual que Colectores, con acordeón (una rama abierta a la vez)
+y scroll propio en la rama: las tres filas de servicio ya no se van de pantalla, sin números mágicos.
+
+## [TD-021] La ruta que lista los juegos importa el catálogo entero (2026-08-20 13:34)
+Se separó el `meta` de la ficha (`catalog/metas.ts` + `<juego>/meta.ts`) y `GameMount` carga el juego
+con `import()` dinámico; `genius_techno.woff2` ya solo se precarga en `games/[gameId]`.
+
 ## [RM-057] Guías de migración a Ronda (2026-08-20 11:09)
 `docs/migracion-games.md` (desde el proyecto Games) y `docs/migracion-unity.md` (desde Unity, adaptada de la de Games). Registran la decisión de traer solo el runtime, la tabla de vocabulario que despega el sistema de Unity, el procedimiento paso a paso, la regla de assets y las trampas que ya costaron caro — la compuerta del viewMode, `partView` en un módulo cliente, el ref escrito en render, el preload de `next/font` por grafo de módulos y los target locales de bounce/slide.
 Cada una lleva su lista de **lo que el kit todavía no tiene** (part `text`, `mask`, 6 animaciones, override de `visible`, sesión ZIP) para que una sesión nueva sepa qué entra con qué juego. Enlazadas desde `CLAUDE.md` y el README.
