@@ -11,19 +11,41 @@
     "parts": [{ "type": "color", "value": "#01FF02" }]
   },
   {
-    "id": "frame",
-    "name": "Marco",
+    "id": "anchor",
+    "name": "Ancla",
     "visible": true,
     "rect": {
       "position": { "x": 25, "y": -358 },
       "size": { "x": 1170, "y": 204 },
       "pivot": { "x": 0.5, "y": 0.5 }
     },
+    "parts": []
+  },
+  {
+    "id": "frame",
+    "name": "Marco",
+    "visible": true,
+    "parentId": "anchor",
+    "rect": {
+      "position": { "x": 0, "y": 0 },
+      "size": { "x": 1170, "y": 204 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
     "parts": [
+      { "type": "image", "src": "/games/deletreo/main-frame.png", "fit": "fill" },
+      { "type": "pop", "scale": 1.1, "duration": 0.3 },
+      { "type": "shake", "amplitude": 2, "shakes": 3, "duration": 0.4 },
       {
-        "type": "image",
-        "src": "/games/deletreo/main-frame.png",
-        "fit": "fill"
+        "type": "bounce",
+        "travelSpeed": 1800,
+        "bounceAmplitude": 40,
+        "bounceDuration": 0.4,
+        "target": { "x": 0, "y": 0 }
+      },
+      {
+        "type": "slide",
+        "speed": 1800,
+        "target": { "x": 0, "y": -330 }
       }
     ]
   },

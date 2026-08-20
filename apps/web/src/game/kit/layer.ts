@@ -42,11 +42,20 @@ export function layerStyle(rect: Rect, parentSize: Vec2): CSSProperties {
   };
 }
 
+export function partOf<P extends LayerPart>(
+  layer: Layer | undefined,
+  type: P["type"],
+): P | undefined {
+  return layer?.parts.find((part) => part.type === type) as P | undefined;
+}
+
 export function findPart<P extends LayerPart>(
   layout: Layer[],
   layerId: string,
   type: P["type"],
 ): P | undefined {
-  const layer = layout.find((candidate) => candidate.id === layerId);
-  return layer?.parts.find((part) => part.type === type) as P | undefined;
+  return partOf<P>(
+    layout.find((candidate) => candidate.id === layerId),
+    type,
+  );
 }

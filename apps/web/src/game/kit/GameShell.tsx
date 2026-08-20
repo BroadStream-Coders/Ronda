@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef } from "react";
 
+import { AnimationsProvider } from "./animations/context";
 import { GameConfig } from "./GameConfig";
 import type { GameType } from "./game";
 import { GameTopbar } from "./GameTopbar";
@@ -22,6 +23,7 @@ export function GameShell({
   programId: string;
 }) {
   const state = useGameState((s) => s.state);
+  const setPosition = useGameState((s) => s.setPosition);
   const resetState = useGameState((s) => s.reset);
   const clearSession = useGameSession((s) => s.clear);
 
@@ -56,29 +58,36 @@ export function GameShell({
 
   return (
     <PartRegistryProvider value={registry}>
-      {Logic && <Logic />}
-      <div className="flex h-full flex-col">
-        <GameTopbar
-          game={game}
-          onFullscreen={() => fullscreenRef.current?.()}
-        />
-        <div className="flex min-h-0 flex-1">
-          <Stage onReady={registerFullscreen}>
-            {layers
-              .filter((layer) => !layer.parentId && layer.visible)
-              .map((layer) => (
-                <LayerView key={layer.id} layer={layer} all={layers} />
-              ))}
-          </Stage>
-          {game.chromaLayerId && (
-            <GameConfig
-              game={game}
-              programId={programId}
-              layerId={game.chromaLayerId}
-            />
-          )}
+      <AnimationsProvider>
+        {Logic && <Logic />}
+        <div className="flex h-full flex-col">
+          <GameTopbar
+            game={game}
+            onFullscreen={() => fullscreenRef.current?.()}
+          />
+          <div className="flex min-h-0 flex-1">
+            <Stage onReady={registerFullscreen}>
+              {layers
+                .filter((layer) => !layer.parentId && layer.visible)
+                .map((layer) => (
+                  <LayerView
+                    key={layer.id}
+                    layer={layer}
+                    all={layers}
+                    onPosition={setPosition}
+                  />
+                ))}
+            </Stage>
+            {game.chromaLayerId && (
+              <GameConfig
+                game={game}
+                programId={programId}
+                layerId={game.chromaLayerId}
+              />
+            )}
+          </div>
         </div>
-      </div>
+      </AnimationsProvider>
     </PartRegistryProvider>
   );
 }

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 
 import {
   playSound,
+  useAnimations,
   useGameKeys,
   useGameSession,
   useGameState,
@@ -32,6 +33,7 @@ const START: Cursor = {
 
 export function DeletreoLogic() {
   const patch = useGameState((s) => s.patch);
+  const { play } = useAnimations();
   const session = useGameSession((s) => s.session) as DeletreoSession | null;
   const loadedAt = useGameSession((s) => s.loadedAt);
 
@@ -82,11 +84,15 @@ export function DeletreoLogic() {
     onShowAnswer: () => {
       setCursor((c) => ({ ...c, revealed: word.length, error: false }));
       playSound(SOUNDS.correct);
+      void play(FRAME_ID, "pop");
     },
     onMarkError: () => {
       setCursor((c) => ({ ...c, error: true }));
       playSound(SOUNDS.incorrect);
+      void play(FRAME_ID, "shake");
     },
+    onArrowUp: () => void play(FRAME_ID, "bounce"),
+    onArrowDown: () => void play(FRAME_ID, "slide"),
   });
 
   return null;

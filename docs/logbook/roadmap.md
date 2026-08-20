@@ -43,17 +43,24 @@ Al terminar una tarea se mueve al changelog y se borra de aquí.
 - **Sin juego del otro lado:** `de-par-en-par`, `reto-cruzado`, `galeria-fotos` y
   `tres-en-raya` tienen colector en Ronda pero no existen en Games — esos se
   construyen, no se portan.
-- **Deletreo — primer juego, parcial:** corre en Ronda con layout, lógica de teclas,
-  carga de archivo local, croma configurable y su gráfica real (marcos normal/error,
-  fuente GeniusTechno, sonidos). Los assets salieron de los originales del proyecto
-  **Unity** (`ManagedGames/Assets/_Project/`), no del bucket de Games. **Le faltan solo las animaciones** (pop en revelar,
-  shake en error, bounce/slide), que arrastran la dependencia `motion` y el registro
-  de triggers por layer.
-- **Ojo al traer animaciones:** en Games, `useGameObjectAnimations` sólo registra sus
-  triggers si `useSceneViewMode() === "game"` — una compuerta que existía para que el
-  panel Scene del editor no pisara al panel Game. Acá no hay editor ni viewMode, así
-  que **esa compuerta hay que quitarla al portar**. Si se copia el archivo tal cual,
-  nada se registra: el juego se ve bien y no anima nunca, sin un error en consola.
+- **Deletreo — primer juego, completo.** Layout, lógica de teclas, carga de archivo
+  local, croma configurable, gráfica real (marcos normal/error, GeniusTechno, sonidos)
+  y animaciones (pop al revelar, shake al error, bounce/slide en las flechas). Los
+  assets salieron de los originales del proyecto **Unity**
+  (`ManagedGames/Assets/_Project/`), no del bucket de Games.
+- **Del sistema de animaciones sólo entraron 4:** pop, shake, bounce y slide, que son
+  las que usa Deletreo. Faltan flip, float, blink, sparkles, shimmer y holo; cada una
+  llega con el juego que la pida.
+- **Ojo al portar las que faltan:** en Games, `useGameObjectAnimations` registra sus
+  triggers sólo si `useSceneViewMode() === "game"` — compuerta que existía para que el
+  panel Scene del editor no pisara al panel Game. Acá no hay editor ni viewMode, así que
+  **hay que quitarla**. Copiada tal cual, nada se registra: el juego se ve bien y no
+  anima nunca, sin un error en consola.
+- **Techo conocido de bounce/slide:** animan la posición escribiendo en `useGameState`
+  en cada frame, así que hay un re-render de React por frame de animación. Con los 4
+  layers de Deletreo no se nota y en Games funcionaba igual, pero **Busca Logo tiene 202
+  layers** — si ahí se arrastra, la salida es animar el transform del DOM en vez de la
+  posición del estado.
 - **Hecho cuando:** cada juego del inventario corre dentro de un programa y es
   asignable.
 - **Fecha:** 2026-08-13 · **Estado:** En progreso (2026-08-20)

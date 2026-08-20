@@ -70,6 +70,13 @@ Ver [README.md](README.md) para el panorama y `docs/logbook/` para el estado.
   en 7. Se guardan en **woff2**, no ttf (pesa un 70% menos). Los originales de los juegos portados están en el proyecto Unity
   (`TvPeru-QGEM-ManagedGames/Assets/_Project/`), no en el repo de Games.
 
+- **Las animaciones son parts sin vista.** Un layer declara `pop`, `shake`, `bounce` o
+  `slide` en sus `parts[]` como data; no dibujan nada. `useLayerAnimations` las lee del
+  propio layer, registra un trigger por `(layerId, tipo)` y la lógica del juego las
+  dispara con `play(layerId, "pop")`. **`bounce` y `slide` mueven la posición local**,
+  relativa al padre — por eso el layer animado cuelga de un ancla que le fija el "home";
+  aplanarlo manda el objeto al centro de la pantalla.
+
 - **El Stage es un container-query context.** Todo lo que se dibuja adentro se mide en
   `cqw`/`cqh`/`cqi`, **nunca** en `vw`/`rem`/`px`. Es lo que hace que la vista en
   ventana y en pantalla completa sean idénticas; usar unidades de viewport rompe eso.
