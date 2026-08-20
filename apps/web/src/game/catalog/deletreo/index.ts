@@ -15,6 +15,7 @@ export const deletreo: GameType = {
     icon: SpellCheck,
   },
   layout: layout as Layer[],
+  chromaLayerId: "background",
   parts: { spelling: partView<SpellingPart>(SpellingView) },
   logic: DeletreoLogic,
   load: async (file) => {

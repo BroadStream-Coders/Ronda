@@ -12,6 +12,10 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [RM-056] Barra de configuración del juego — color del croma (2026-08-20 09:57)
+Panel plegable al lado del stage (mismo lenguaje que la barra izquierda: botón redondo al borde, `w-60`/`w-12`, estado recordado) con el color del croma, que se aplica por `patch` sobre el layer que la ficha declara en `chromaLayerId` (en Deletreo, `background`). Persiste en `localStorage` bajo `ronda_game:<programId>:<gameId>:chroma` vía `useSyncExternalStore` — sin desajuste de hidratación y sin `setState` en efectos. El juego que no declara `chromaLayerId` no muestra panel. Arranca contraído —la configuración se toca de vez en cuando y el stage se queda con el espacio—, y contraído deja a la vista el color actual como pastilla, que además expande al hacer clic.
+**El croma es por juego y por programa, aislado a propósito:** el director de cámaras compone cada juego por separado y suele tener un color ya keyeado para cada uno, así que cambiar todos de golpe le rompería la composición. Guardarlo en la base queda en [[WL-009]]. El límite se mantiene: el operador cambia valores declarados por el autor, nunca la estructura.
+
 ## [RM-037] Estructura del sistema de juegos (2026-08-20 08:54)
 `src/game/` con la misma forma que `src/collector/`: `kit/` (Stage con fullscreen, modelo de layers, LayerView, registro de parts, estado de juego, sesión, teclas) y `catalog/` (registro + asignación por programa + un juego). Rutas `programs/[slug]/games` y `.../games/[gameId]`, y "Juegos · Pronto" pasa a enlace real cuando el programa tiene juegos asignados.
 Se decidió traer **solo el runtime** de Games: fuera dockview, inspectores, `useSceneEditor`, play mode y undo — se caen 5 dependencias y no entra ninguna nueva. El vocabulario se despega de Unity (`GameObject`→`Layer`, `components[]`→`parts[]`, `transform`→`rect`, `behavior`→`logic`, `mergeRuntime`→`applyState`) porque esto son juegos en navegador; el editor se queda en Games como herramienta de autoría.

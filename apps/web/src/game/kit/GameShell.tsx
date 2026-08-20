@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef } from "react";
 
+import { GameConfig } from "./GameConfig";
 import type { GameType } from "./game";
 import { GameTopbar } from "./GameTopbar";
 import { LayerView } from "./LayerView";
@@ -12,7 +13,13 @@ import { useGameSession } from "./session";
 import { Stage } from "./Stage";
 import { applyState, useGameState } from "./state";
 
-export function GameShell({ game }: { game: GameType }) {
+export function GameShell({
+  game,
+  programId,
+}: {
+  game: GameType;
+  programId: string;
+}) {
   const state = useGameState((s) => s.state);
   const resetState = useGameState((s) => s.reset);
   const clearSession = useGameSession((s) => s.clear);
@@ -49,13 +56,22 @@ export function GameShell({ game }: { game: GameType }) {
           game={game}
           onFullscreen={() => fullscreenRef.current?.()}
         />
-        <Stage onReady={registerFullscreen}>
-          {layers
-            .filter((layer) => !layer.parentId && layer.visible)
-            .map((layer) => (
-              <LayerView key={layer.id} layer={layer} all={layers} />
-            ))}
-        </Stage>
+        <div className="flex min-h-0 flex-1">
+          <Stage onReady={registerFullscreen}>
+            {layers
+              .filter((layer) => !layer.parentId && layer.visible)
+              .map((layer) => (
+                <LayerView key={layer.id} layer={layer} all={layers} />
+              ))}
+          </Stage>
+          {game.chromaLayerId && (
+            <GameConfig
+              game={game}
+              programId={programId}
+              layerId={game.chromaLayerId}
+            />
+          )}
+        </div>
       </div>
     </PartRegistryProvider>
   );

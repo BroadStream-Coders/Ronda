@@ -11,6 +11,19 @@ se retira de aquí.
 
 ---
 
+## [WL-009] El croma configurado se guarda en la base
+- **Idea:** que el color del croma de cada juego ([[RM-056]]) viva en Supabase por
+  programa + juego, en vez de solo en el `localStorage` de la máquina del estudio.
+- **Por qué / valor:** hoy el ajuste vive en el navegador de esa máquina. Si se
+  reinstala, se cambia de equipo o se opera desde otro lado, los colores vuelven al
+  del layout y hay que volver a elegirlos uno por uno — y el croma es justo el dato
+  que no se puede tener mal al aire. Guardado en la base, el operador lo configura
+  una vez y lo encuentra en cualquier máquina.
+- **A tener en cuenta:** `localStorage` sigue siendo la verdad para operar, porque la
+  pantalla de emisión no puede depender de la red; la base sería respaldo y
+  sincronización, no la fuente en el momento del aire.
+- **Fecha:** 2026-08-20
+
 ## [WL-001] Google One Tap ("Continuar con Google" nativo)
 - **Idea:** integrar el prompt nativo de Google (One Tap / FedCM) que aparece en Chrome — la tarjetita "Continuar con Google" que sale sin ir a otra página, autocompletando con la cuenta ya iniciada en el navegador. Hoy el login usa el flujo por redirección estándar (sale a Google y vuelve).
 - **Por qué / valor:** login más rápido y llamativo, con menos fricción; entras casi de un clic sin salir del sitio. Requiere el SDK de Google Identity + verificar el nonce con Supabase (`signInWithIdToken`).

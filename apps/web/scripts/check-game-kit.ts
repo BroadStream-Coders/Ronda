@@ -1,7 +1,8 @@
 import assert from "node:assert/strict";
 
-import { DESIGN_SIZE, layerStyle, type Layer } from "../src/game/kit/layer.ts";
+import { DESIGN_SIZE, findPart, layerStyle, type Layer } from "../src/game/kit/layer.ts";
 import { applyState } from "../src/game/kit/state.ts";
+import { settingKey } from "../src/game/kit/use-game-setting.ts";
 
 const centered = {
   position: { x: 0, y: 0 },
@@ -66,5 +67,24 @@ assert.deepEqual(
   "el layout original no se muta",
 );
 assert.equal(applyState(layout, {})[0], layout[0]);
+
+const chroma = findPart<{ type: "color"; value: string }>(
+  layout,
+  "word",
+  "color",
+);
+assert.equal(chroma?.value, "#000");
+assert.equal(findPart(layout, "word", "spelling")?.type, "spelling");
+assert.equal(findPart(layout, "nope", "color"), undefined);
+assert.equal(findPart(layout, "word", "image"), undefined);
+
+assert.notEqual(
+  settingKey("programa-a", "deletreo", "chroma"),
+  settingKey("programa-b", "deletreo", "chroma"),
+);
+assert.notEqual(
+  settingKey("programa-a", "deletreo", "chroma"),
+  settingKey("programa-a", "album", "chroma"),
+);
 
 console.log("game/kit: checks ok");

@@ -13,6 +13,7 @@ export interface GameMeta {
 export interface GameType {
   meta: GameMeta;
   layout: Layer[];
+  chromaLayerId?: string;
   parts?: PartRegistry;
   logic?: ComponentType;
   load: (file: File) => Promise<void>;

@@ -32,29 +32,6 @@ Al terminar una tarea se mueve al changelog y se borra de aquí.
   solo lugar, y los tres servicios leen de ahí.
 - **Fecha:** 2026-08-20 · **Estado:** Abierto
 
-## [RM-056] Barra de configuración del juego
-- **Objetivo:** que el operador cambie, en el momento y sin programador, un conjunto
-  **cerrado** de valores que el propio juego declara.
-- **El caso que lo dispara:** el **color del croma** de Deletreo. Producción lo cambia
-  de un día para el otro para unificarlo con el resto de sus juegos, y no admite
-  esperar un deploy — hay que cambiarlo en el momento. La versión de Unity ya lo
-  tenía.
-- **El límite duro que lo separa de un editor:** el operador cambia **valores que el
-  autor del juego declaró**, nunca la estructura. No se agregan ni se quitan layers o
-  parts, no se posiciona nada, no se selecciona nada. El juego que no declara knobs no
-  muestra barra. Ese límite es a propósito: quien opera no tiene por qué tener
-  competencias técnicas, y el software existe para que no las necesite.
-- **Decisión abierta:** el alcance del valor — si el croma es de **cada juego** o del
-  **programa** (cuando lo cambian, lo cambian para todos sus juegos a la vez). Cambia
-  dónde vive la clave de persistencia.
-- **Persistencia — propuesta:** `localStorage` en la máquina del estudio. Es la misma
-  máquina siempre, cuesta cero infraestructura, y no mete una dependencia de red en
-  una pantalla que tiene que funcionar sí o sí. Si la máquina cambia, el operador
-  vuelve a elegir el color una vez.
-- **Hecho cuando:** en Deletreo se cambia el color del croma desde la pantalla,
-  sobrevive a recargar, y un juego sin knobs declarados no muestra la barra.
-- **Fecha:** 2026-08-20 · **Estado:** Abierto
-
 ## [RM-038] Importar los juegos desde el proyecto Games
 - **Objetivo:** traer a Ronda los juegos del proyecto **Games** (no Studio), uno por
   uno, sobre la estructura de [[RM-037]] — el mismo método que se usó con los 13

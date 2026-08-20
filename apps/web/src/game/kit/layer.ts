@@ -41,3 +41,12 @@ export function layerStyle(rect: Rect, parentSize: Vec2): CSSProperties {
     transform: rotation ? `rotate(${rotation}deg)` : undefined,
   };
 }
+
+export function findPart<P extends LayerPart>(
+  layout: Layer[],
+  layerId: string,
+  type: P["type"],
+): P | undefined {
+  const layer = layout.find((candidate) => candidate.id === layerId);
+  return layer?.parts.find((part) => part.type === type) as P | undefined;
+}

@@ -25,5 +25,5 @@ export default async function GamePage({
   const assigned = getProgramGames(program.id).includes(gameId);
   if (!assigned || !registry[gameId]) notFound();
 
-  return <GameMount gameId={gameId} />;
+  return <GameMount gameId={gameId} programId={program.id} />;
 }
