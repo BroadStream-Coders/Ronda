@@ -11,6 +11,16 @@ se retira de aquí.
 
 ---
 
+## [WL-011] Presupuesto de memoria del juego (`useMemoryBudget`)
+- **Idea:** portar de Games el diagnóstico que mide cuánta memoria consume el juego
+  en el navegador del estudio. Quedó fuera del reparto de [[RM-038]] a propósito:
+  no lo necesita ningún juego para funcionar.
+- **Por qué / valor:** serviría el día que una emisión larga con imágenes ([[RM-061]])
+  se ponga lenta y no se sepa si es fuga de blobs, re-renders o el navegador. Hoy no
+  hay síntoma, así que puede no volver nunca — y si vuelve, quizá convenga medirlo con
+  las herramientas del navegador en vez de código propio.
+- **Fecha:** 2026-08-20.
+
 ## [WL-010] Flyout en el rail contraído de la barra lateral
 - **Idea:** que en la barra contraída el ícono del servicio abra un submenú a la
   derecha con sus juegos (reusando el `DropdownMenu` ya instalado), en vez de

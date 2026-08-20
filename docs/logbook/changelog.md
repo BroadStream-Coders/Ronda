@@ -12,6 +12,10 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [RM-058] Portar Deletreo — primer juego completo (2026-08-20 13:52)
+Layout, lógica de teclas, carga de archivo local, croma configurable ([[RM-056]]), gráfica real (marcos normal/error, GeniusTechno, sonidos) y animaciones (pop al revelar, shake al error, bounce/slide en las flechas). Los assets salieron de los originales del proyecto **Unity** (`ManagedGames/Assets/_Project/`), no del bucket de Games.
+Del sistema de animaciones entraron solo 4 — pop, shake, bounce y slide, las que este juego usa; flip, float, blink, sparkles, shimmer y holo llegan con el juego que las pida. Código asignado al partir [[RM-038]] en una tarea por juego: el trabajo se había hecho dentro de RM-037/RM-038 sin código propio.
+
 ## [RM-051] Cómo escala el árbol de la barra lateral al sumar Juegos (2026-08-20 13:34)
 Juegos cuelga sus juegos asignados igual que Colectores, con acordeón (una rama abierta a la vez)
 y scroll propio en la rama: las tres filas de servicio ya no se van de pantalla, sin números mágicos.

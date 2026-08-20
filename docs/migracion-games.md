@@ -80,10 +80,11 @@ src/game/
 ├── fonts/                               # tipografías COMPARTIDAS, woff2
 │   └── genius-techno.ts + .woff2        #   un módulo por tipografía
 └── catalog/
-    ├── registry.ts                      #   id → GameType
+    ├── metas.ts                         #   id → GameMeta (plano, sin la ficha)
     ├── assignments.ts                   #   qué juegos ve cada programa
-    ├── GameMount.tsx                    #   puente servidor → cliente
+    ├── GameMount.tsx                    #   puente servidor → cliente + import() por juego
     └── deletreo/                        #   ← el juego de referencia
+        ├── meta.ts                      #   nombre, descripción, ícono
         ├── index.ts                     #   la ficha
         ├── layout.json                  #   los layers
         ├── assets.ts                    #   rutas de imágenes y sonidos
@@ -119,11 +120,17 @@ interface GameType {
 4. **Traer las parts propias** del juego a `catalog/<juego>/parts/`, **sin sus
    Inspectors**. Una part es `{ modelo, vista }`; si no dibuja, no lleva vista.
 5. **Portar el behavior → `Logic.tsx`** (§6).
-6. **Registrar y asignar**: `catalog/registry.ts` + `catalog/assignments.ts`.
+6. **Registrar y asignar**: el `meta` en `catalog/metas.ts`, el `import()` del juego
+   en `catalog/GameMount.tsx`, y el programa en `catalog/assignments.ts`. **El meta
+   va en su propio módulo** (`<juego>/meta.ts`), separado de la ficha: la barra
+   lateral y la lista solo importan metas, así que meterlo en `index.ts` arrastraría
+   el `layout.json` y las fuentes a todas las rutas del workspace (fue TD-021).
 7. **Validar**: `pnpm build` (nunca `pnpm dev` — lo levanta Esteban), `pnpm lint`,
    `pnpm check`. Extender `scripts/check-game.ts` con lo que el juego nuevo pueda
    romper en silencio.
-8. **Logbook**: avance en RM-038, deuda nueva en `technical-debt.md`.
+8. **Logbook**: cada juego tiene **su propia tarea** en `roadmap.md` (RM-063 a
+   RM-071); al terminar se mueve al `changelog.md`. RM-038 es solo el paraguas.
+   Deuda nueva en `technical-debt.md`.
 
 ---
 
@@ -262,8 +269,19 @@ combinadas (prototipo).
 todos los pares comparten slug — por eso la ficha puede declarar su colector en vez
 de asumir que coincide.
 
-**Sin juego del otro lado** (tienen colector en Ronda pero no existen en Games, así
-que se **construyen**, no se portan): `de-par-en-par`, `reto-cruzado`,
-`galeria-fotos`, `tres-en-raya`.
+**Sin juego en Games:** `de-par-en-par` tiene colector en Ronda pero no existe acá —
+se migra **desde Unity** (RM-073), con la otra guía.
 
-El avance vive en **RM-038** (`docs/logbook/roadmap.md`).
+**Colector en Ronda, juego fuera de Ronda:** `reto-cruzado`, `galeria-fotos` y
+`tres-en-raya` **se quedan en Unity a propósito** — no se pueden llevar a web. Su
+colector acá sigue sirviendo porque alimenta al juego de Unity. No son un pendiente
+de migración y no hay que buscarles juego.
+
+**Una tarea por juego** en `docs/logbook/roadmap.md`: RM-063 a RM-071 para los que se
+portan desde acá, RM-073 para De Par en Par. RM-038 quedó como paraguas con lo
+transversal.
+
+**Lo que le falta al kit no se hace por adelantado:** cada pieza entra con el primer
+juego que la pida, pero escrita en `kit/` y no en la carpeta del juego (§9). Empieza
+por **Cálculo Mental (RM-063)**, que trae la part `text` — sin ella ningún otro juego
+puede escribir una letra.

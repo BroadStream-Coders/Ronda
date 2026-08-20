@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
 
 import { AdminEmpty, AdminPage } from "@/components/admin-page";
 import { DeleteProgramButton } from "@/components/delete-program-button";
@@ -34,6 +35,16 @@ export default async function AdminProgramsPage() {
                   </div>
                 </div>
                 <div className="flex shrink-0 items-center gap-2">
+                  <Link
+                    href={`/programs/${program.slug}`}
+                    className={buttonVariants({
+                      variant: "outline",
+                      size: "sm",
+                    })}
+                  >
+                    Abrir
+                    <ArrowUpRight className="size-4" />
+                  </Link>
                   <Link
                     href={`/admin/programs/${program.id}`}
                     className={buttonVariants({

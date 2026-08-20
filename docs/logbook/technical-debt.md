@@ -16,6 +16,14 @@ reutiliza). Al resolverse se mueve al `changelog.md` conservando su código.
 
 ---
 
+## [TD-022] El juego no avisa nada mientras carga su chunk
+- **Ubicación:** `apps/web/src/game/catalog/GameMount.tsx`
+- **Riesgo:** 3/10
+- **Problema:** Al cerrar [[TD-021]] el juego pasó a cargarse con `import()` dinámico. Mientras baja el chunk, `GameMount` devuelve `null`: pantalla en blanco, sin esqueleto, sin spinner y sin mensaje de error si el `import()` rechaza — la promesa se descarta en silencio.
+- **Impacto futuro:** Hoy es un parpadeo en la pantalla de control, previa al aire, con un solo juego liviano. Con los 10 juegos de [[RM-038]] los chunks pesan más (el `layout.json` de Busca Logo solo son 100 KB) y en la conexión del estudio el blanco dura lo suficiente para que el operador dude si hizo clic. Peor si falla la descarga: se queda en blanco para siempre, sin nada que diagnosticar.
+- **Cómo cerrarlo:** un esqueleto o spinner mientras carga, y un `catch` que muestre un error accionable con opción de reintentar.
+- **Fecha:** 2026-08-20 · **Estado:** Abierto
+
 ## [TD-001] Logos de clientes servidos sin optimizar (`unoptimized`)
 - **Ubicación:** `apps/web/src/app/page.tsx` (los `<Image>` de la sección "Clientes al aire")
 - **Riesgo:** 2/10

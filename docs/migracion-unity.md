@@ -34,7 +34,9 @@ jerarquía, ni modo play**. Son juegos en navegador.
 4. Validar con `pnpm build` (**nunca** `pnpm dev`) y esperar el visto bueno visual de
    Esteban comparando contra Unity.
 5. Cablear la funcionalidad: `Logic.tsx` + carga de sesión.
-6. Logbook: avance en RM-038, deuda nueva en `technical-debt.md`.
+6. Logbook: cada juego tiene su propia tarea en `roadmap.md`. Desde Unity hoy hay
+   una sola: **De Par en Par (RM-073)**, el único juego con colector en Ronda que no
+   existe en Games. RM-038 es el paraguas. Deuda nueva en `technical-debt.md`.
 
 ---
 
