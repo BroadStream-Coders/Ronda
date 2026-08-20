@@ -12,6 +12,10 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [RM-063] Portar Cálculo Mental — y con él tres piezas de kit (2026-08-20 15:04)
+El juego (14 layers, part `slot`, lógica de teclas, gráfica de los originales de Unity) más las tres piezas que estrena, todas en `kit/` y no en su carpeta: la part **`text` con auto-size** (búsqueda binaria de 12 pasos, `ResizeObserver` y re-medición en `document.fonts.ready` — sin eso mide con la tipografía de reemplazo), el **override de `visible`** en `applyState` y **`playStagger`**. Las tres salieron del port, no de un diseño nuevo.
+La fuente se resuelve **por clave contra las que declara la ficha** (`fonts` en `GameType` + `FontRegistryProvider`), no contra un registro central, que metería las 4 tipografías en toda ruta que dibuje texto — lo mismo que costó [[TD-021]]. Poppins entra por `next/font/google` en vez de convertir el TTF: mismo woff2 autohospedado y con preload, sin binario en el repo. `check-game.ts` cubre assets inexistentes, layers que la lógica referencia por id, que las preguntas arranquen apagadas y que ningún `autoSize` tenga rango inválido. El auto-size ya traía `fontSizeMin`, así que el tope de largo en el colector no hizo falta: validado al aire con enunciados reales.
+
 ## [RM-058] Portar Deletreo — primer juego completo (2026-08-20 13:52)
 Layout, lógica de teclas, carga de archivo local, croma configurable ([[RM-056]]), gráfica real (marcos normal/error, GeniusTechno, sonidos) y animaciones (pop al revelar, shake al error, bounce/slide en las flechas). Los assets salieron de los originales del proyecto **Unity** (`ManagedGames/Assets/_Project/`), no del bucket de Games.
 Del sistema de animaciones entraron solo 4 — pop, shake, bounce y slide, las que este juego usa; flip, float, blink, sparkles, shimmer y holo llegan con el juego que las pida. Código asignado al partir [[RM-038]] en una tarea por juego: el trabajo se había hecho dentro de RM-037/RM-038 sin código propio.

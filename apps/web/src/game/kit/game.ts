@@ -1,6 +1,7 @@
 import type { ComponentType, ElementType } from "react";
 
 import type { Layer } from "./layer";
+import type { FontRegistry } from "./font-context";
 import type { PartRegistry } from "./registry";
 
 export interface GameMeta {
@@ -16,6 +17,7 @@ export interface GameType {
   chromaLayerId?: string;
   preload?: string[];
   parts?: PartRegistry;
+  fonts?: FontRegistry;
   logic?: ComponentType;
   load: (file: File) => Promise<void>;
 }

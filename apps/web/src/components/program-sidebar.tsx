@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, type ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -182,11 +182,13 @@ export function ProgramSidebar({
   const [open, setOpen] = useState<Branch | null>(() =>
     pathname.startsWith(gamesHref) ? "games" : "collectors",
   );
+  const [lastPath, setLastPath] = useState(pathname);
 
-  useEffect(() => {
+  if (lastPath !== pathname) {
+    setLastPath(pathname);
     if (pathname.startsWith(gamesHref)) setOpen("games");
     else if (pathname.startsWith(collectorsHref)) setOpen("collectors");
-  }, [pathname, gamesHref, collectorsHref]);
+  }
 
   function toggleCollapsed() {
     const next = !collapsed;

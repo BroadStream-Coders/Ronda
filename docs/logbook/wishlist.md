@@ -11,6 +11,27 @@ se retira de aquí.
 
 ---
 
+## [WL-012] Notación matemática real en los enunciados
+- **Idea:** que un enunciado pueda mostrarse como notación —`5²`, una fracción, una
+  raíz— en vez de deletrearse en palabras. Hoy, con [[RM-063]] al aire, "5 elevado al
+  cuadrado" se ve correcto y cabe bien, pero dice en texto lo que debería verse como
+  un 5 con un 2 arriba.
+- **Por qué / valor:** es un juego de cálculo mental en televisión; la notación es
+  más rápida de leer de un vistazo que la frase, y es como el espectador la reconoce
+  de la escuela. No es un problema de legibilidad —el auto-size ya resuelve que
+  entre—, es de **fidelidad**: el enunciado dice la operación en vez de mostrarla.
+- **Toca las dos puntas, y por eso no es barato:** el **colector** necesita una forma
+  de expresarlo (un editor con superíndices, o una sintaxis acordada), y el **juego**
+  necesita renderizarlo — la part `text` de hoy es una sola cadena plana con
+  `pre-wrap`, no sabe de tramos con formato. Habría que decidir entre subir la part a
+  texto enriquecido, sumar una part aparte, o apoyarse en algo ya hecho (MathML nativo
+  del navegador, o KaTeX, que sería una dependencia nueva).
+- **Por qué no ahora:** funciona sin esto y no bloquea ninguna emisión. Entra el día
+  que se toque el colector de Cálculo Mental por otro motivo, o si alguien pide la
+  notación explícitamente. Aplica también a [[RM-071]] (Operaciones Combinadas), que
+  es el otro juego de operaciones.
+- **Fecha:** 2026-08-20.
+
 ## [WL-011] Presupuesto de memoria del juego (`useMemoryBudget`)
 - **Idea:** portar de Games el diagnóstico que mide cuánta memoria consume el juego
   en el navegador del estudio. Quedó fuera del reparto de [[RM-038]] a propósito:

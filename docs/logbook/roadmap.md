@@ -37,16 +37,16 @@ Al terminar una tarea se mueve al changelog y se borra de aquí.
 # Juegos — el núcleo del negocio
 
 `RM-038` es el paraguas. Debajo va **un juego por tarea**: los que se portan desde
-Games ([[RM-063]]–[[RM-071]]) y De Par en Par ([[RM-073]]), que no existe en Games y
+Games ([[RM-064]]–[[RM-071]]) y De Par en Par ([[RM-073]]), que no existe en Games y
 se migra desde Unity.
 
 **Lo que le falta al kit no se hace por adelantado.** Cada pieza entra con el primer
 juego que la pida, escrita en `kit/` y no en la carpeta del juego — el mismo criterio
 que ya se aplicó con las animaciones, de las que entraron 4 de 10. Hacerlas sueltas
 significa construirlas sin nadie que las use y sin forma de validarlas: `pnpm build`
-no avisa si un texto desborda su rect. Las únicas que están anotadas aparte son
-[[RM-060]] y [[RM-061]], porque las piden **varios** juegos y conviene que el primero
-que las traiga sepa que no son suyas.
+no avisa si un texto desborda su rect. La única anotada aparte es [[RM-061]],
+porque la piden **varios** juegos y conviene que el primero que la traiga sepa que no
+es suya.
 
 El procedimiento, las trampas y la tabla de lo que el kit no tiene viven en
 [`docs/migracion-games.md`](../migracion-games.md) — se lee antes de empezar
@@ -57,13 +57,13 @@ cualquiera de estas tareas, no se repite acá.
   eso se repartió en una tarea por juego. Lo que queda acá es lo **transversal**:
   las decisiones y las piezas que no le pertenecen a ningún juego en particular.
 - **Qué queda adentro:**
-  1. **El orden de portado.** **Cálculo Mental primero** ([[RM-063]]), porque trae
-     consigo la part `text` que necesitan todos los demás; después el resto de los de
-     solo texto (La Sabes o No, Al Vuelo, Mi Libro Favorito), que ya la encuentran
-     hecha; luego los que traen imágenes por sesión (Intruso, Álbum, Cronos), que
-     dependen del ZIP ([[RM-061]]); Busca Logo al final, que es el que puede romper
-     supuestos de rendimiento; Operaciones Combinadas aparte, porque del otro lado es
-     un prototipo.
+  1. **El orden de portado.** Cálculo Mental ya cerró ([[RM-063]]) y con él entraron
+     la part `text`, el override de `visible` y `playStagger`, que era lo que
+     bloqueaba al resto. Siguen los de solo texto (La Sabes o No, Al Vuelo, Mi Libro
+     Favorito), que ya los encuentran hechos; luego los que traen imágenes por
+     sesión (Intruso, Álbum, Cronos), que dependen del ZIP ([[RM-061]]); Busca Logo
+     al final, que es el que puede romper supuestos de rendimiento; Operaciones
+     Combinadas aparte, porque del otro lado es un prototipo.
   2. **La ficha debe declarar su colector.** Hoy se asume que el slug del juego y el
      del colector coinciden, y no siempre pasa: el colector `si-o-no` es el que
      alimenta al juego **Al Vuelo** (de hecho el colector ya se llama "Al Vuelo" en
@@ -85,18 +85,6 @@ cualquiera de estas tareas, no se repite acá.
   son asignables.
 - **Fecha:** 2026-08-13 · **Estado:** En progreso (2026-08-20)
 
-## [RM-060] Override de `visible` en `useGameState`
-- **Objetivo:** que la lógica pueda prender y apagar layers desde el estado. Hoy
-  `applyState` fusiona overrides de rect y parches de parts, pero no la visibilidad,
-  así que el patrón de "frames de estado" —normal / correcto / incorrecto como layers
-  hermanos que se alternan— no se puede expresar.
-- **Cómo lo resuelve Deletreo hoy:** cambiando la imagen del marco por parche de
-  part, que funciona con dos frames y una sola part, y no escala a un juego que
-  alterna grupos enteros.
-- **Hecho cuando:** un `LayerOverride` puede fijar `visible`, y hay un caso en
-  `check-game.ts`.
-- **Fecha:** 2026-08-20 · **Estado:** Abierto
-
 ## [RM-061] Sesión ZIP y ciclo de vida de los blobs
 - **Objetivo:** que un juego pueda cargar una sesión que trae imágenes, no solo JSON:
   leer el ZIP, crear las URLs de objeto y **liberarlas** al cambiar de sesión o
@@ -108,31 +96,10 @@ cualquiera de estas tareas, no se repite acá.
   revoca las URLs al reemplazar o desmontar la sesión.
 - **Fecha:** 2026-08-20 · **Estado:** Abierto
 
-## [RM-063] Portar Cálculo Mental — y con él la part `text`
-- **Objetivo:** traer el juego de Games. Colector: `calculo-mental` (operaciones
-  mentales en tableros). **Va primero de todos** y es el más cargado de los nueve,
-  porque además del juego trae la pieza de kit que bloquea al resto.
-- **La part `text` con auto-size.** Hoy el kit **no sabe dibujar texto**: Deletreo se
-  salva porque sus letras son una part propia (`spelling`) hecha a medida. Cualquier
-  otro juego —una pregunta, una respuesta, un número, un marcador— no tiene con qué
-  escribirse. Se porta el ajuste automático de tamaño estilo TMP que traía Games.
-- **Va en `kit/parts/`, no en `catalog/calculo-mental/`.** Nace acá porque necesita un
-  consumidor real que la valide —`pnpm build` no avisa si un texto desborda su rect—,
-  pero es del kit desde el primer commit. Cálculo Mental es el caso correcto para
-  estrenarla: texto corto en celdas de tamaño fijo, que es justo lo que estresa el
-  auto-size.
-- **Contra el riesgo de que salga recortada a este juego:** la ubicación del archivo y
-  un caso en `check-game.ts` que cubra el cálculo de tamaño. El segundo juego que la
-  use la va a estirar; eso está bien, lo que no puede pasar es que la reescriba.
-- **Hecho cuando:** el juego corre dentro de un programa, es asignable y consume el
-  archivo de su colector; y un layer cualquiera puede declarar `text` en sus `parts[]`
-  y ajustarse a su rect sin desbordarlo.
-- **Fecha:** 2026-08-20 · **Estado:** Abierto
-
 ## [RM-064] Portar La Sabes o No
 - **Objetivo:** traer el juego de Games. Colector: `la-sabes-o-no` (elegir la
   respuesta correcta entre dos).
-- **Depende de:** la part `text` ([[RM-063]]).
+- **Depende de:** nada nuevo — la part `text` ya entró con [[RM-063]].
 - **Hecho cuando:** corre dentro de un programa, es asignable y consume el archivo
   que produce su colector.
 - **Fecha:** 2026-08-20 · **Estado:** Abierto
@@ -140,7 +107,8 @@ cualquiera de estas tareas, no se repite acá.
 ## [RM-065] Portar Al Vuelo
 - **Objetivo:** traer el juego de Games. Colector: **`si-o-no`** — el slug no
   coincide con el del juego, es el caso que motiva el punto 2 de [[RM-038]].
-- **Depende de:** la part `text` ([[RM-063]]) y el campo de colector en la ficha ([[RM-038]]).
+- **Depende de:** el campo de colector en la ficha ([[RM-038]]); la part `text` ya
+  entró con [[RM-063]].
 - **Hecho cuando:** corre dentro de un programa, es asignable y consume el archivo
   que produce `si-o-no` sin un caso especial escrito a mano.
 - **Fecha:** 2026-08-20 · **Estado:** Abierto
@@ -148,8 +116,8 @@ cualquiera de estas tareas, no se repite acá.
 ## [RM-066] Portar Mi Libro Favorito
 - **Objetivo:** traer el juego de Games. Colector: `mi-libro-favorito` (preguntas por
   ronda para dos equipos).
-- **Depende de:** la part `text` ([[RM-063]]). Verificar si el marcador por equipo necesita
-  [[RM-060]].
+- **Depende de:** nada nuevo — la part `text` y el override de `visible` que pide el
+  marcador por equipo ya entraron con [[RM-063]].
 - **Hecho cuando:** corre dentro de un programa, es asignable y consume el archivo
   que produce su colector.
 - **Fecha:** 2026-08-20 · **Estado:** Abierto
@@ -175,7 +143,7 @@ cualquiera de estas tareas, no se repite acá.
 ## [RM-069] Portar Cronos
 - **Objetivo:** traer el juego de Games. Colector: `cronos` (eventos con fecha,
   título e imagen).
-- **Depende de:** [[RM-061]] y la part `text` ([[RM-063]]). Mismo grupo de animaciones que
+- **Depende de:** [[RM-061]]. Mismo grupo de animaciones que
   [[RM-068]]; si Álbum va primero, acá ya están.
 - **Hecho cuando:** corre dentro de un programa, es asignable y consume la sesión que
   produce su colector, imágenes incluidas.
@@ -185,8 +153,8 @@ cualquiera de estas tareas, no se repite acá.
 - **Objetivo:** traer el juego de Games. Colector: `busca-logo` (marcar dónde van los
   logos en cada tablero). **Va último a propósito:** es el que puede romper supuestos
   que hoy no molestan.
-- **Depende de:** la part `text` ([[RM-063]]), la animación `flip` y `playStagger` (animar en
-  cascada), ninguna de las dos en el kit.
+- **Depende de:** la animación `flip`, que el kit no tiene. La part `text` y
+  `playStagger` ya entraron con [[RM-063]].
 - **El riesgo real — 202 layers.** `bounce` y `slide` animan la posición escribiendo
   en `useGameState` en cada frame, o sea un re-render de React por frame. Con los 4
   layers de Deletreo no se nota y en Games funcionaba igual, pero acá son 202. Si se
@@ -202,7 +170,7 @@ cualquiera de estas tareas, no se repite acá.
   (operaciones en un tablero tipo crucigrama). **Del otro lado es un prototipo**, no
   un juego terminado: la primera parte de la tarea es decidir qué se porta y qué se
   completa acá.
-- **Depende de:** la part `text` ([[RM-063]]).
+- **Depende de:** nada nuevo — la part `text` ya entró con [[RM-063]].
 - **Hecho cuando:** corre dentro de un programa, es asignable y consume el archivo
   que produce su colector.
 - **Fecha:** 2026-08-20 · **Estado:** Abierto
@@ -216,8 +184,9 @@ cualquiera de estas tareas, no se repite acá.
   (`CardMode`), y la sesión trae las imágenes por nombre de archivo
   (`pictureFile`) más el orden del tablero (`answer`) — o sea, sesión ZIP, no JSON
   suelto.
-- **Depende de:** [[RM-061]] (ZIP y blobs) y la part `text` ([[RM-063]]) si las cartas de texto usan
-  auto-size. Necesita además la animación **flip** para voltear la carta, que el kit
+- **Depende de:** [[RM-061]] (ZIP y blobs). La part `text` que usan las cartas de
+  texto ya entró con [[RM-063]]. Necesita además la animación **flip** para voltear
+  la carta, que el kit
   no tiene; es la misma que pide Busca Logo ([[RM-070]]), así que la trae el primero
   de los dos que se haga.
 - **Ojo:** [[TD-013]] es del **colector** (anchos fijos por cantidad de pares), no

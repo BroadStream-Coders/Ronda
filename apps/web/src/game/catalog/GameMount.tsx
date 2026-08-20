@@ -6,6 +6,8 @@ import { GameShell, type GameType } from "@/game/kit";
 
 const loaders: Record<string, () => Promise<GameType>> = {
   deletreo: () => import("./deletreo").then((m) => m.deletreo),
+  "calculo-mental": () =>
+    import("./calculo-mental").then((m) => m.calculoMental),
 };
 
 export function GameMount({
@@ -15,19 +17,20 @@ export function GameMount({
   gameId: string;
   programId: string;
 }) {
-  const [game, setGame] = useState<GameType | null>(null);
+  const [loaded, setLoaded] = useState<{ id: string; game: GameType } | null>(
+    null,
+  );
 
   useEffect(() => {
     let alive = true;
-    setGame(null);
-    loaders[gameId]?.().then((g) => {
-      if (alive) setGame(g);
+    loaders[gameId]?.().then((game) => {
+      if (alive) setLoaded({ id: gameId, game });
     });
     return () => {
       alive = false;
     };
   }, [gameId]);
 
-  if (!game) return null;
-  return <GameShell game={game} programId={programId} />;
+  if (loaded?.id !== gameId) return null;
+  return <GameShell game={loaded.game} programId={programId} />;
 }

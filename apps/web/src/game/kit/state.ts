@@ -8,6 +8,7 @@ export type PartPatch = Record<string, unknown>;
 
 export interface LayerOverride {
   position?: Vec2;
+  visible?: boolean;
   parts?: Record<string, PartPatch>;
 }
 
@@ -17,9 +18,10 @@ export function applyState(layout: Layer[], state: GameState): Layer[] {
   return layout.map((layer) => {
     const override = state[layer.id];
     if (!override) return layer;
-    const { position, parts } = override;
+    const { position, visible, parts } = override;
     return {
       ...layer,
+      visible: visible ?? layer.visible,
       rect: position ? { ...layer.rect, position } : layer.rect,
       parts: parts
         ? layer.parts.map((part) => {
@@ -35,6 +37,7 @@ interface GameStateStore {
   state: GameState;
   patch: (layerId: string, partType: string, fields: PartPatch) => void;
   setPosition: (layerId: string, position: Vec2) => void;
+  setVisible: (layerId: string, visible: boolean) => void;
   reset: () => void;
 }
 
@@ -59,6 +62,13 @@ export const useGameState = create<GameStateStore>((set) => ({
       state: {
         ...store.state,
         [layerId]: { ...(store.state[layerId] ?? {}), position },
+      },
+    })),
+  setVisible: (layerId, visible) =>
+    set((store) => ({
+      state: {
+        ...store.state,
+        [layerId]: { ...(store.state[layerId] ?? {}), visible },
       },
     })),
   reset: () => set({ state: {} }),

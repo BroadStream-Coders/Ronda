@@ -15,13 +15,21 @@ export interface AnimationsApi {
   register: (layerId: string, type: string, run: AnimationTrigger) => void;
   unregister: (layerId: string, type: string) => void;
   play: (layerId: string, type: string) => Promise<void>;
+  playStagger: (
+    layerIds: string[],
+    type: string,
+    stepMs?: number,
+  ) => Promise<void>;
 }
 
 const AnimationsContext = createContext<AnimationsApi>({
   register: () => {},
   unregister: () => {},
   play: () => Promise.resolve(),
+  playStagger: () => Promise.resolve(),
 });
+
+const delay = (ms: number) => new Promise<void>((r) => setTimeout(r, ms));
 
 export function AnimationsProvider({ children }: { children: ReactNode }) {
   const triggers = useRef(new Map<string, Map<string, AnimationTrigger>>());
@@ -51,9 +59,19 @@ export function AnimationsProvider({ children }: { children: ReactNode }) {
     [],
   );
 
+  const playStagger = useCallback(
+    (layerIds: string[], type: string, stepMs = 100) =>
+      Promise.all(
+        layerIds.map((layerId, i) =>
+          delay(i * stepMs).then(() => play(layerId, type)),
+        ),
+      ).then(() => {}),
+    [play],
+  );
+
   const api = useMemo(
-    () => ({ register, unregister, play }),
-    [register, unregister, play],
+    () => ({ register, unregister, play, playStagger }),
+    [register, unregister, play, playStagger],
   );
 
   return (

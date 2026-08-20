@@ -69,16 +69,18 @@ src/game/
 │   ├── LayerView.tsx                    #   render recursivo del árbol
 │   ├── layer.ts                         #   modelo + layerStyle + partOf/findPart
 │   ├── registry.ts / part-context.tsx   #   type → view (+ su contexto)
+│   ├── font-context.tsx                 #   clave → fuente que declara la ficha
 │   ├── state.ts                         #   applyState + useGameState
 │   ├── session.ts                       #   useGameSession
 │   ├── game.ts                          #   el contrato GameType
 │   ├── media.ts                         #   playSound + preloadMedia
 │   ├── use-game-keys.ts                 #   mapa de teclas
 │   ├── use-game-setting.ts              #   preferencias en localStorage
-│   ├── parts/                           #   parts nativas: color, image
+│   ├── parts/                           #   parts nativas: color, image, text
 │   └── animations/                      #   context + parts + use-layer-animations
 ├── fonts/                               # tipografías COMPARTIDAS, woff2
-│   └── genius-techno.ts + .woff2        #   un módulo por tipografía
+│   ├── genius-techno.ts + .woff2        #   un módulo por tipografía (local)
+│   └── poppins.ts                       #   de Google: sin archivo en el repo
 └── catalog/
     ├── metas.ts                         #   id → GameMeta (plano, sin la ficha)
     ├── assignments.ts                   #   qué juegos ve cada programa
@@ -100,6 +102,7 @@ interface GameType {
   meta: { id, name, description?, icon }   // espeja CollectorMeta
   layout: Layer[]                          // el layout.json importado
   parts?: PartRegistry                     // las parts propias del juego
+  fonts?: FontRegistry                     // clave → fuente, para la part `text`
   logic?: ComponentType                    // la lógica (devuelve null)
   chromaLayerId?: string                   // qué layer lleva el croma
   preload?: string[]                       // assets a calentar al montar
@@ -128,8 +131,8 @@ interface GameType {
 7. **Validar**: `pnpm build` (nunca `pnpm dev` — lo levanta Esteban), `pnpm lint`,
    `pnpm check`. Extender `scripts/check-game.ts` con lo que el juego nuevo pueda
    romper en silencio.
-8. **Logbook**: cada juego tiene **su propia tarea** en `roadmap.md` (RM-063 a
-   RM-071); al terminar se mueve al `changelog.md`. RM-038 es solo el paraguas.
+8. **Logbook**: cada juego tiene **su propia tarea** en `roadmap.md` (RM-064 a
+   RM-071, más RM-073); al terminar se mueve al `changelog.md`. RM-038 es el paraguas.
    Deuda nueva en `technical-debt.md`.
 
 ---
@@ -152,9 +155,17 @@ cada día. Son dos cosas y van a dos lugares.
   `../TvPeru-QGEM-ManagedGames/Assets/_Project/` — `Games/<Juego>/Graphics/`,
   `MediaLibrary/Sounds/`, `MediaLibrary/Fonts/Originals/`. Games los servía desde un
   bucket público de Supabase; esa vía queda retirada.
-- **Convertir TTF a woff2**: `pnpm dlx ttf2woff2 < fuente.ttf > fuente.woff2`
-  (lee stdin, no acepta `--help`). Ahorra ~70%. Verificar la firma del resultado:
-  los primeros 4 bytes deben ser `wOF2`.
+- **Antes de convertir un TTF, mirar si la tipografía es de Google.** Si lo es
+  —Poppins lo es, y es la de Cálculo Mental— va con `next/font/google` y no hay
+  nada que convertir ni ningún binario que entre al repo: Next la descarga en el
+  build, la autohospeda en woff2, la subseteliza y emite el preload igual que con
+  `local`. Mismo resultado, sin el archivo. El módulo por tipografía en
+  `src/game/fonts/` se mantiene (ver `poppins.ts`); lo único que cambia es de dónde
+  sale el archivo.
+- **Convertir TTF a woff2** — solo para las que no están en Google, como
+  GeniusTechno: `pnpm dlx ttf2woff2 < fuente.ttf > fuente.woff2` (lee stdin, no
+  acepta `--help`). Ahorra ~70%. Verificar la firma del resultado: los primeros 4
+  bytes deben ser `wOF2`.
 - Todo lo que la lógica intercambia en vivo (marco normal↔error) va en `preload`,
   o la primera vez que aparece parpadea **al aire**.
 
@@ -245,23 +256,25 @@ juego**:
 
 | Falta | Lo necesita |
 |---|---|
-| Part `text` (con auto-size estilo TMP) | casi todos los juegos con texto libre |
 | Parts `video`, `videoControl`, `mask` | mask lo usa Intruso |
-| Animaciones flip, float, blink, sparkles, shimmer, holo | Busca Logo (flip), Álbum, Cronos |
-| Override de `visible` en `useGameState` | juegos con frames de estado (normal/correcto/incorrecto como layers hermanos que se prenden y apagan) |
+| Animaciones flip, float, blink, sparkles, shimmer, holo | Busca Logo y De Par en Par (flip), Álbum, Cronos |
 | Sesión **ZIP** + ciclo de vida de blobs (`dispose`) | Álbum, Cronos, Intruso, De Par en Par, Galería de Fotos |
-| Presupuesto de memoria (`useMemoryBudget`) | diagnóstico; puede no volver nunca |
-| Carga desde la nube (`downloadCollectorData`) | engancha sin rediseño: devuelve un `File`, igual que el input |
-| `playStagger` (animar en cascada) | Busca Logo |
+| Presupuesto de memoria (`useMemoryBudget`) | diagnóstico; puede no volver nunca (WL-011) |
+| Carga desde la nube (`downloadCollectorData`) | engancha sin rediseño: devuelve un `File`, igual que el input (RM-062) |
+| Texto con formato (superíndices, fracciones) | notación matemática real; hoy la part `text` es una cadena plana (WL-012) |
+
+**Ya entraron** (con Cálculo Mental, RM-063): la part `text` con auto-size, el
+override de `visible` en `useGameState` y `playStagger`.
 
 ---
 
 ## 10. Estado
 
 **Portado:** Deletreo (layout, teclas, carga local, croma configurable, gráfica,
-sonidos, animaciones).
+sonidos, animaciones) y Cálculo Mental, que estrenó la part `text` con auto-size, el
+override de `visible` y `playStagger`.
 
-**Inventario de Games (10 juegos + sandbox):** deletreo ✅, cálculo mental, intruso,
+**Inventario de Games (10 juegos + sandbox):** deletreo ✅, cálculo mental ✅, intruso,
 álbum, la sabes o no, al vuelo, busca logo, mi libro favorito, cronos, operaciones
 combinadas (prototipo).
 

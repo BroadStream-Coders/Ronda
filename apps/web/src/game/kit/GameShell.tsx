@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef } from "react";
 
 import { AnimationsProvider } from "./animations/context";
+import { FontRegistryProvider } from "./font-context";
 import { GameConfig } from "./GameConfig";
 import type { GameType } from "./game";
 import { GameTopbar } from "./GameTopbar";
@@ -56,9 +57,12 @@ export function GameShell({
 
   const Logic = game.logic;
 
+  const fonts = useMemo(() => game.fonts ?? {}, [game.fonts]);
+
   return (
-    <PartRegistryProvider value={registry}>
-      <AnimationsProvider>
+    <FontRegistryProvider value={fonts}>
+      <PartRegistryProvider value={registry}>
+        <AnimationsProvider>
         {Logic && <Logic />}
         <div className="flex h-full flex-col">
           <GameTopbar
@@ -87,7 +91,8 @@ export function GameShell({
             )}
           </div>
         </div>
-      </AnimationsProvider>
-    </PartRegistryProvider>
+        </AnimationsProvider>
+      </PartRegistryProvider>
+    </FontRegistryProvider>
   );
 }

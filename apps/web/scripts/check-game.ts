@@ -11,6 +11,7 @@ import {
 import { applyState } from "../src/game/kit/state.ts";
 import { settingKey } from "../src/game/kit/use-game-setting.ts";
 import { FRAMES, PRELOAD } from "../src/game/catalog/deletreo/assets.ts";
+import { PRELOAD as CALCULO_PRELOAD } from "../src/game/catalog/calculo-mental/assets.ts";
 
 // --- coordenadas ---
 
@@ -138,5 +139,83 @@ assert.deepEqual(
   { x: 0, y: 0 },
   "'frame' arranca en el origen de su padre: es el 'home' al que vuelve bounce",
 );
+
+// --- el override de visible ---
+
+const hidden = applyState(layout, { word: { visible: false } });
+assert.equal(hidden[0].visible, false, "visible:false apaga el layer");
+assert.equal(layout[0].visible, true, "el layout original no se muta");
+assert.equal(
+  applyState(layout, { word: { position: { x: 1, y: 1 } } })[0].visible,
+  true,
+  "un override sin visible no apaga el layer",
+);
+
+// --- el layout de calculo mental contra lo que la logica espera ---
+
+const calculo = JSON.parse(
+  readFileSync("src/game/catalog/calculo-mental/layout.json", "utf8"),
+) as Layer[];
+
+for (const src of CALCULO_PRELOAD) {
+  assert.ok(existsSync(`public${src}`), `asset declarado que no existe: ${src}`);
+}
+
+assert.ok(
+  findPart(calculo, "background", "color"),
+  "el layer 'background' debe llevar una part 'color' (es el croma)",
+);
+
+for (let i = 0; i < 4; i++) {
+  const slotId = `slot-${i}`;
+  const slot = calculo.find((layer) => layer.id === slotId);
+  assert.ok(slot, `falta el layer '${slotId}'`);
+  assert.ok(
+    partOf(slot, "slot"),
+    `'${slotId}' debe llevar una part 'slot' (la pisa Logic)`,
+  );
+
+  for (const type of ["pop", "shake", "bounce", "slide"]) {
+    assert.ok(partOf(slot, type), `'${slotId}' debe llevar la part '${type}'`);
+  }
+  assert.ok(
+    slot.parentId,
+    `'${slotId}' debe colgar de un padre: los target de bounce/slide son locales`,
+  );
+
+  // Logic escribe el texto y prende/apaga estos dos layers por id.
+  for (const id of [`${slotId}-question`, `${slotId}-answer`]) {
+    const text = findPart<{ type: "text"; autoSize?: boolean; fontKey?: string }>(
+      calculo,
+      id,
+      "text",
+    );
+    assert.ok(text, `'${id}' debe llevar una part 'text' (la pisa Logic)`);
+    assert.equal(text.fontKey, "poppins", `'${id}' debe usar la fuente declarada`);
+    const layer = calculo.find((candidate) => candidate.id === id);
+    assert.equal(
+      layer?.visible,
+      false,
+      `'${id}' arranca apagado: Logic lo prende al revelar`,
+    );
+  }
+}
+
+// El auto-size solo tiene sentido con un rango real; min > max o min == max lo
+// vuelven un tamano fijo disfrazado.
+for (const layer of calculo) {
+  const text = layer.parts.find((part) => part.type === "text") as
+    | { autoSize?: boolean; fontSizeMin?: number; fontSizeMax?: number }
+    | undefined;
+  if (!text?.autoSize) continue;
+  assert.ok(
+    typeof text.fontSizeMin === "number" && typeof text.fontSizeMax === "number",
+    `'${layer.id}' usa autoSize sin fontSizeMin/fontSizeMax`,
+  );
+  assert.ok(
+    text.fontSizeMin > 0 && text.fontSizeMin < text.fontSizeMax,
+    `'${layer.id}': el rango de autoSize debe ser 0 < min < max`,
+  );
+}
 
 console.log("game: checks ok");
