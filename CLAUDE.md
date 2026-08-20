@@ -12,6 +12,10 @@ Ver [README.md](README.md) para el panorama y `docs/logbook/` para el estado.
 
 - `apps/web/` — app **Next.js autónoma** y único deployable (en Vercel se apunta
   aquí). Tiene su propio lockfile y `node_modules`; **NO es un monorepo pnpm**.
+- `docs/` — material de referencia. **Para portar un juego, leer primero
+  [`docs/migracion-games.md`](docs/migracion-games.md)** (desde el proyecto Games) o
+  [`docs/migracion-unity.md`](docs/migracion-unity.md) (desde Unity, si el juego no
+  existe en Games).
 - `docs/logbook/` — seguimiento del proyecto (ver abajo).
 - `LICENSE` — software propietario, todos los derechos reservados. El repo es
   público solo por requisitos de hosting.
@@ -59,6 +63,10 @@ Ver [README.md](README.md) para el panorama y `docs/logbook/` para el estado.
   `layout.json` es data — da igual si lo generó un editor, Unity o la mano. La lógica
   del juego escribe en `useGameState` y `applyState` lo fusiona sobre el layout al
   renderizar; el layout nunca se muta.
+
+  **Antes de portar un juego, leer [`docs/migracion-games.md`](docs/migracion-games.md).**
+  Ahí están el procedimiento, las trampas que ya costaron caro y la lista de lo que el
+  kit todavía no tiene.
 
 - **Assets de juego = código, datos de sesión = archivo/storage.** Marcos, fuentes y
   sonidos son parte del juego: viven en `public/games/<juego>/` (o `public/games/shared/`

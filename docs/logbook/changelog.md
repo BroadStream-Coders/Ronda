@@ -12,6 +12,10 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [RM-057] Guías de migración a Ronda (2026-08-20 11:09)
+`docs/migracion-games.md` (desde el proyecto Games) y `docs/migracion-unity.md` (desde Unity, adaptada de la de Games). Registran la decisión de traer solo el runtime, la tabla de vocabulario que despega el sistema de Unity, el procedimiento paso a paso, la regla de assets y las trampas que ya costaron caro — la compuerta del viewMode, `partView` en un módulo cliente, el ref escrito en render, el preload de `next/font` por grafo de módulos y los target locales de bounce/slide.
+Cada una lleva su lista de **lo que el kit todavía no tiene** (part `text`, `mask`, 6 animaciones, override de `visible`, sesión ZIP) para que una sesión nueva sepa qué entra con qué juego. Enlazadas desde `CLAUDE.md` y el README.
+
 ## [RM-056] Barra de configuración del juego — color del croma (2026-08-20 09:57)
 Panel plegable al lado del stage (mismo lenguaje que la barra izquierda: botón redondo al borde, `w-60`/`w-12`, estado recordado) con el color del croma, que se aplica por `patch` sobre el layer que la ficha declara en `chromaLayerId` (en Deletreo, `background`). Persiste en `localStorage` bajo `ronda_game:<programId>:<gameId>:chroma` vía `useSyncExternalStore` — sin desajuste de hidratación y sin `setState` en efectos. El juego que no declara `chromaLayerId` no muestra panel. Arranca contraído —la configuración se toca de vez en cuando y el stage se queda con el espacio—, y contraído deja a la vista el color actual como pastilla, que además expande al hacer clic.
 **El croma es por juego y por programa, aislado a propósito:** el director de cámaras compone cada juego por separado y suele tener un color ya keyeado para cada uno, así que cambiar todos de golpe le rompería la composición. Guardarlo en la base queda en [[WL-009]]. El límite se mantiene: el operador cambia valores declarados por el autor, nunca la estructura.

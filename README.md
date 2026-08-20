@@ -74,6 +74,8 @@ Ronda/
 │       └── supabase/
 │           └── migrations/   # Esquema versionado (tablas + RLS)
 ├── docs/
+│   ├── migracion-games.md    # Cómo portar un juego desde el proyecto Games
+│   ├── migracion-unity.md    # Cómo portar un juego desde Unity
 │   └── logbook/              # Seguimiento del proyecto
 └── LICENSE
 ```
