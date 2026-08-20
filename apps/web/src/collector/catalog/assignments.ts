@@ -21,7 +21,7 @@ export const assignments: Record<string, Assignment> = {
   },
   "a379ba63-30eb-4acc-95b4-5080b02c7516": {
     program: "Más Conectados",
-    collectors: ["deletreo", "de-par-en-par"],
+    collectors: ["de-par-en-par"],
   },
 };
 
