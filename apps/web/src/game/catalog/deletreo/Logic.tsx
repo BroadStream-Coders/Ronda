@@ -2,13 +2,17 @@
 
 import { useEffect, useState } from "react";
 
-import { useGameKeys, useGameSession, useGameState } from "@/game/kit";
+import {
+  playSound,
+  useGameKeys,
+  useGameSession,
+  useGameState,
+} from "@/game/kit";
+import { FRAMES, SOUNDS } from "./assets";
 import type { DeletreoSession } from "./session";
 
 const FRAME_ID = "frame";
 const WORD_ID = "word";
-const FRAME_NORMAL = "#141b2d";
-const FRAME_ERROR = "#7f1d1d";
 
 interface Cursor {
   loadedAt: number;
@@ -45,8 +49,8 @@ export function DeletreoLogic() {
   }, [word, revealed, patch]);
 
   useEffect(() => {
-    patch(FRAME_ID, "color", {
-      value: cursor.error ? FRAME_ERROR : FRAME_NORMAL,
+    patch(FRAME_ID, "image", {
+      src: cursor.error ? FRAMES.error : FRAMES.normal,
     });
   }, [cursor.error, patch]);
 
@@ -75,9 +79,14 @@ export function DeletreoLogic() {
     },
     onInteract: () =>
       setCursor((c) => ({ ...c, revealed: Math.min(c.revealed + 1, word.length) })),
-    onShowAnswer: () =>
-      setCursor((c) => ({ ...c, revealed: word.length, error: false })),
-    onMarkError: () => setCursor((c) => ({ ...c, error: true })),
+    onShowAnswer: () => {
+      setCursor((c) => ({ ...c, revealed: word.length, error: false }));
+      playSound(SOUNDS.correct);
+    },
+    onMarkError: () => {
+      setCursor((c) => ({ ...c, error: true }));
+      playSound(SOUNDS.incorrect);
+    },
   });
 
   return null;

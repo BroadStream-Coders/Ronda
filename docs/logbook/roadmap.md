@@ -43,11 +43,17 @@ Al terminar una tarea se mueve al changelog y se borra de aquí.
 - **Sin juego del otro lado:** `de-par-en-par`, `reto-cruzado`, `galeria-fotos` y
   `tres-en-raya` tienen colector en Ronda pero no existen en Games — esos se
   construyen, no se portan.
-- **Deletreo — primer juego, parcial:** corre en Ronda con layout, lógica de teclas
-  y carga de archivo local. Le falta lo que se recortó a propósito del primer corte:
-  imágenes de marco (hoy es un div de color), fuente GeniusTechno, sonidos y las
-  animaciones (pop/shake/bounce/slide). Eso vuelve cuando entre el pipeline de
-  assets desde `public/`.
+- **Deletreo — primer juego, parcial:** corre en Ronda con layout, lógica de teclas,
+  carga de archivo local, croma configurable y su gráfica real (marcos normal/error,
+  fuente GeniusTechno, sonidos). Los assets salieron de los originales del proyecto
+  **Unity** (`ManagedGames/Assets/_Project/`), no del bucket de Games. **Le faltan solo las animaciones** (pop en revelar,
+  shake en error, bounce/slide), que arrastran la dependencia `motion` y el registro
+  de triggers por layer.
+- **Ojo al traer animaciones:** en Games, `useGameObjectAnimations` sólo registra sus
+  triggers si `useSceneViewMode() === "game"` — una compuerta que existía para que el
+  panel Scene del editor no pisara al panel Game. Acá no hay editor ni viewMode, así
+  que **esa compuerta hay que quitarla al portar**. Si se copia el archivo tal cual,
+  nada se registra: el juego se ve bien y no anima nunca, sin un error en consola.
 - **Hecho cuando:** cada juego del inventario corre dentro de un programa y es
   asignable.
 - **Fecha:** 2026-08-13 · **Estado:** En progreso (2026-08-20)

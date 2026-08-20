@@ -1,3 +1,4 @@
+import { geniusTechno } from "@/game/fonts/genius-techno";
 import { DESIGN_WIDTH, type LayerPart } from "@/game/kit";
 
 export interface SpellingPart extends LayerPart {
@@ -11,7 +12,7 @@ export interface SpellingPart extends LayerPart {
 export function SpellingView({ part }: { part: SpellingPart }) {
   return (
     <div
-      className="flex h-full w-full items-center justify-center uppercase leading-none text-white"
+      className={`${geniusTechno.className} flex h-full w-full items-center justify-center uppercase leading-none text-white`}
       style={{
         fontSize: `${(part.fontSize / DESIGN_WIDTH) * 100}cqw`,
         gap: `${(part.letterSpacing / DESIGN_WIDTH) * 100}cqw`,

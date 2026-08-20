@@ -1,8 +1,10 @@
 import assert from "node:assert/strict";
+import { existsSync, readFileSync } from "node:fs";
 
 import { DESIGN_SIZE, findPart, layerStyle, type Layer } from "../src/game/kit/layer.ts";
 import { applyState } from "../src/game/kit/state.ts";
 import { settingKey } from "../src/game/kit/use-game-setting.ts";
+import { FRAMES, PRELOAD } from "../src/game/catalog/deletreo/assets.ts";
 
 const centered = {
   position: { x: 0, y: 0 },
@@ -87,4 +89,33 @@ assert.notEqual(
   settingKey("programa-a", "album", "chroma"),
 );
 
-console.log("game/kit: checks ok");
+const deletreo = JSON.parse(
+  readFileSync("src/game/catalog/deletreo/layout.json", "utf8"),
+) as Layer[];
+
+for (const src of PRELOAD) {
+  assert.ok(existsSync(`public${src}`), `asset declarado que no existe: ${src}`);
+}
+
+const frame = findPart<{ type: "image"; src: string }>(
+  deletreo,
+  "frame",
+  "image",
+);
+assert.ok(frame, "el layer 'frame' debe llevar una part 'image' (la pisa Logic)");
+assert.ok(
+  existsSync(`public${frame.src}`),
+  `el marco del layout no existe: ${frame.src}`,
+);
+assert.equal(frame.src, FRAMES.normal);
+
+assert.ok(
+  findPart(deletreo, "word", "spelling"),
+  "el layer 'word' debe llevar una part 'spelling' (la pisa Logic)",
+);
+assert.ok(
+  findPart(deletreo, "background", "color"),
+  "el layer 'background' debe llevar una part 'color' (es el croma)",
+);
+
+console.log("game: checks ok");

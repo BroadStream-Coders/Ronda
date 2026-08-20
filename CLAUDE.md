@@ -60,6 +60,16 @@ Ver [README.md](README.md) para el panorama y `docs/logbook/` para el estado.
   del juego escribe en `useGameState` y `applyState` lo fusiona sobre el layout al
   renderizar; el layout nunca se muta.
 
+- **Assets de juego = código, datos de sesión = archivo/storage.** Marcos, fuentes y
+  sonidos son parte del juego: viven en `public/games/<juego>/` (o `public/games/shared/`
+  lo compartido), los sirve el CDN de Vercel y cambian con un deploy. **No van a Supabase
+  Storage** — ese bucket es para lo que produce el colector y cambia cada día. Las fuentes
+  son la excepción de ubicación: van **compartidas** en `src/game/fonts/`, un módulo por
+  tipografía (`next/font/local` necesita importarlas, y así emite el preload y el hash
+  solo). Nunca una copia por juego: son 4 tipografías para 9 juegos y GeniusTechno sola va
+  en 7. Se guardan en **woff2**, no ttf (pesa un 70% menos). Los originales de los juegos portados están en el proyecto Unity
+  (`TvPeru-QGEM-ManagedGames/Assets/_Project/`), no en el repo de Games.
+
 - **El Stage es un container-query context.** Todo lo que se dibuja adentro se mide en
   `cqw`/`cqh`/`cqi`, **nunca** en `vw`/`rem`/`px`. Es lo que hace que la vista en
   ventana y en pantalla completa sean idénticas; usar unidades de viewport rompe eso.

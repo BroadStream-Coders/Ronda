@@ -5,6 +5,7 @@ import { loadJsonFile } from "@/helpers/persistence";
 import layout from "./layout.json";
 import { DeletreoLogic } from "./Logic";
 import { SpellingView, type SpellingPart } from "./parts/spelling";
+import { PRELOAD } from "./assets";
 import { isDeletreoSession } from "./session";
 
 export const deletreo: GameType = {
@@ -16,6 +17,7 @@ export const deletreo: GameType = {
   },
   layout: layout as Layer[],
   chromaLayerId: "background",
+  preload: PRELOAD,
   parts: { spelling: partView<SpellingPart>(SpellingView) },
   logic: DeletreoLogic,
   load: async (file) => {

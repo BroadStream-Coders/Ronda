@@ -14,6 +14,7 @@ export interface GameType {
   meta: GameMeta;
   layout: Layer[];
   chromaLayerId?: string;
+  preload?: string[];
   parts?: PartRegistry;
   logic?: ComponentType;
   load: (file: File) => Promise<void>;

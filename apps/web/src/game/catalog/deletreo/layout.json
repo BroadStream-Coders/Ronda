@@ -19,7 +19,13 @@
       "size": { "x": 1170, "y": 204 },
       "pivot": { "x": 0.5, "y": 0.5 }
     },
-    "parts": [{ "type": "color", "value": "#141b2d" }]
+    "parts": [
+      {
+        "type": "image",
+        "src": "/games/deletreo/main-frame.png",
+        "fit": "fill"
+      }
+    ]
   },
   {
     "id": "word",

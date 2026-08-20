@@ -6,6 +6,7 @@ import { GameConfig } from "./GameConfig";
 import type { GameType } from "./game";
 import { GameTopbar } from "./GameTopbar";
 import { LayerView } from "./LayerView";
+import { preloadMedia } from "./media";
 import { NATIVE_PARTS } from "./parts";
 import { PartRegistryProvider } from "./part-context";
 import type { PartRegistry } from "./registry";
@@ -37,6 +38,11 @@ export function GameShell({
   const registerFullscreen = useCallback((toggle: () => void) => {
     fullscreenRef.current = toggle;
   }, []);
+
+  const preload = game.preload;
+  useEffect(() => {
+    if (preload?.length) preloadMedia(preload);
+  }, [preload]);
 
   useEffect(
     () => () => {
