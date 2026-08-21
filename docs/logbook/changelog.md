@@ -12,6 +12,17 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [RM-080] Arma la Palabra reparte las letras, y los dos fondos pasan a claro (2026-08-21 11:05)
+Debajo de los guiones va ahora el **pozo de letras** desordenadas; al revelar (flecha derecha, E o **M** para toda la palabra) la ficha vuela del pozo a su guion — mismo `layoutId` de `motion` en los dos sitios, así que el vuelo lo calcula solo. El desorden usa la misma permutación sembrada que Arma la Oración, que por eso subió a `kit/shuffle.ts`.
+Los fondos dejaron de ser oscuros: `backdrop` arranca en blanco con halos pastel y viñeta suave, y las fichas se invirtieron a tarjeta blanca con texto pizarra (la armada sigue en violeta, la colocada en verde azulado). **El fondo del juego no depende del tema claro/oscuro de la app** — el Stage pinta su propia gráfica; lo único que sigue negro es la caja alrededor del 16:9 en la vista en ventana.
+
+## [RM-077] Juego Arma la Palabra — guiones estilo ahorcado (2026-08-21 10:18)
+Un guion por letra: la letra cae sobre su guion al revelarse (flecha derecha o E, una a una; **M** completa la palabra) y el guion pasa de blanco tenue a dorado con glow; el guion que sigue late para marcar dónde va la próxima. Fuente GeniusTechno, misma familia de teclas que [[RM-075]]: numpad ronda, dígitos palabra, N/B mover, C reiniciar, F error, flechas arriba/abajo bounce/slide.
+`splitLetters` corta con `Intl.Segmenter` en grafemas, no en code points: la ñ y una tilde combinante ocupan **un** guion, no dos — la trampa que un `split("")` no ve. La part `backdrop` subió al kit ([[RM-078]]) y este juego la usa con su propia paleta (verde-azulado y ámbar). **Gráfica provisional en CSS** — la del diseñador entra con [[RM-079]].
+
+## [RM-078] La part backdrop sube al kit (2026-08-21 10:18)
+El fondo que estrenó Arma la Oración pasó de `catalog/arma-la-oracion/parts/` a `kit/parts/backdrop.tsx` y entró a `NATIVE_PARTS` en cuanto lo pidió el segundo juego. La geometría de los tres halos queda fija; lo que el layout declara son los colores (`from`/`mid`/`to` + `halos`), así que cada juego tiene su identidad sin duplicar el componente.
+
 ## [RM-075] Juego Arma la Oración — primer juego que no viene de un port (2026-08-21 09:32)
 Dos estados sobre el mismo stage: la oración en pedazos (fichas desordenadas, con inclinación y desnivel deterministas) y, con **M**, las palabras volando a su sitio en orden + sonido de correcto y `pop`. Teclas: numpad = ronda, dígitos = oración, N/B mover, M armar, C volver a desordenar, F error, flechas para bounce/slide.
 La limpieza del texto vive acá y no en el colector ([[RM-074]]): `splitWords` colapsa espacios y tira los invisibles (`\p{C}`) conservando tildes, ñ y signos; el desorden es una permutación sembrada por (ronda, oración), así que no se rebaraja en cada render ni deja la oración ya armada. **Sin croma**: el juego se emite con fondo propio (part `backdrop`, degradado y tres halos que respiran), así que la ficha no declara `chromaLayerId` y no aparece el panel de color. Gráfica provisional en CSS — la del diseñador entra con [[RM-076]].

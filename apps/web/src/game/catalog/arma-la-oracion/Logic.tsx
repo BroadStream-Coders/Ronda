@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 
 import {
   playSound,
+  shuffledOrder,
   useAnimations,
   useGameKeys,
   useGameSession,
@@ -11,7 +12,7 @@ import {
 } from "@/game/kit";
 import { SOUNDS } from "./assets";
 import type { ArmaOracionSession } from "./session";
-import { shuffledOrder, splitWords } from "./words";
+import { splitWords } from "./words";
 
 const BOARD_ID = "board";
 

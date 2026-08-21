@@ -20,15 +20,16 @@ const SPRING = { type: "spring" as const, stiffness: 220, damping: 26 };
 
 const CHIP = {
   loose: {
-    background:
-      "linear-gradient(180deg, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0.06) 100%)",
-    border: "0.05em solid rgba(255,255,255,0.34)",
-    boxShadow: "0 0.16em 0.55em rgba(0,0,0,0.45)",
+    background: "linear-gradient(180deg, #ffffff 0%, #f1f4fd 100%)",
+    border: "0.05em solid rgba(30,45,95,0.16)",
+    boxShadow: "0 0.1em 0.3em rgba(30,45,95,0.18)",
+    color: "#1d2542",
   },
   solved: {
-    background: "linear-gradient(180deg, #7b6bff 0%, #3524b8 100%)",
-    border: "0.05em solid rgba(255,255,255,0.45)",
-    boxShadow: "0 0.14em 0.6em rgba(90,66,255,0.6)",
+    background: "linear-gradient(180deg, #7b6bff 0%, #4a34d6 100%)",
+    border: "0.05em solid rgba(255,255,255,0.55)",
+    boxShadow: "0 0.12em 0.4em rgba(90,66,255,0.45)",
+    color: "#ffffff",
   },
 } as const;
 
@@ -55,7 +56,7 @@ export function SentenceView({ part }: { part: SentencePart }) {
               rotate: solved ? 0 : tilt(wordIndex),
               y: solved ? 0 : `${drift(wordIndex)}%`,
             }}
-            className="inline-block whitespace-nowrap leading-none text-white"
+            className="inline-block whitespace-nowrap leading-none"
             style={{
               padding: "0.3em 0.62em 0.36em",
               borderRadius: "0.28em",
@@ -77,7 +78,7 @@ export function SentenceView({ part }: { part: SentencePart }) {
           height: "0.08em",
           borderRadius: "0.04em",
           background:
-            "linear-gradient(90deg, rgba(255,197,61,0) 0%, #ffc53d 50%, rgba(255,197,61,0) 100%)",
+            "linear-gradient(90deg, rgba(255,160,20,0) 0%, #ffa014 50%, rgba(255,160,20,0) 100%)",
         }}
       />
     </div>

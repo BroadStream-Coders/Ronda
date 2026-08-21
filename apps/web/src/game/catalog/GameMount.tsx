@@ -10,6 +10,8 @@ const loaders: Record<string, () => Promise<GameType>> = {
     import("./calculo-mental").then((m) => m.calculoMental),
   "arma-la-oracion": () =>
     import("./arma-la-oracion").then((m) => m.armaLaOracion),
+  "arma-la-palabra": () =>
+    import("./arma-la-palabra").then((m) => m.armaLaPalabra),
 };
 
 export function GameMount({

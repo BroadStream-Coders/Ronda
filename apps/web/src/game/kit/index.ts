@@ -5,7 +5,7 @@ export { partView } from "./registry";
 export type { PartRegistry, PartView } from "./registry";
 export { PartRegistryProvider, usePartRegistry } from "./part-context";
 export { NATIVE_PARTS } from "./parts";
-export type { ColorPart, ImagePart, TextPart } from "./parts";
+export type { BackdropPart, ColorPart, ImagePart, TextPart } from "./parts";
 export { FontRegistryProvider, useFontRegistry } from "./font-context";
 export type { FontRegistry, GameFont } from "./font-context";
 export { playSound, preloadMedia } from "./media";
@@ -20,6 +20,7 @@ export type {
 export { applyState, useGameState } from "./state";
 export type { GameState, LayerOverride, PartPatch } from "./state";
 export { useGameSession } from "./session";
+export { shuffledOrder } from "./shuffle";
 export { settingKey, useGameSetting } from "./use-game-setting";
 export { GameConfig } from "./GameConfig";
 export { useGameKeys } from "./use-game-keys";

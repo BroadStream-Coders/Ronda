@@ -13,10 +13,10 @@ import { settingKey } from "../src/game/kit/use-game-setting.ts";
 import { FRAMES, PRELOAD } from "../src/game/catalog/deletreo/assets.ts";
 import { PRELOAD as CALCULO_PRELOAD } from "../src/game/catalog/calculo-mental/assets.ts";
 import { PRELOAD as ORACION_PRELOAD } from "../src/game/catalog/arma-la-oracion/assets.ts";
-import {
-  shuffledOrder,
-  splitWords,
-} from "../src/game/catalog/arma-la-oracion/words.ts";
+import { shuffledOrder } from "../src/game/kit/shuffle.ts";
+import { splitWords } from "../src/game/catalog/arma-la-oracion/words.ts";
+import { PRELOAD as PALABRA_PRELOAD } from "../src/game/catalog/arma-la-palabra/assets.ts";
+import { splitLetters } from "../src/game/catalog/arma-la-palabra/letters.ts";
 
 // --- coordenadas ---
 
@@ -303,6 +303,81 @@ assert.ok(
 );
 assert.deepEqual(
   board.rect.position,
+  { x: 0, y: 0 },
+  "'board' arranca en el origen de su padre: es el 'home' al que vuelve bounce",
+);
+
+// --- arma la palabra: las letras de los guiones ---
+
+assert.deepEqual(splitLetters(" casa "), ["C", "A", "S", "A"]);
+assert.deepEqual(splitLetters(""), [], "una palabra vacia no da guiones");
+assert.deepEqual(
+  splitLetters("dos palabras"),
+  [..."DOSPALABRAS"],
+  "los espacios no cuentan como letra: es una sola palabra",
+);
+assert.deepEqual(
+  splitLetters("niño"),
+  ["N", "I", "Ñ", "O"],
+  "la enie es una sola letra",
+);
+assert.deepEqual(
+  splitLetters("niño"),
+  ["N", "I", "Ñ", "O"],
+  "una tilde combinante viaja con su letra, no ocupa un guion propio",
+);
+assert.equal(
+  splitLetters("café").length,
+  4,
+  "los acentos no agregan guiones",
+);
+
+// --- el layout de arma la palabra contra lo que la logica espera ---
+
+const palabra = JSON.parse(
+  readFileSync("src/game/catalog/arma-la-palabra/layout.json", "utf8"),
+) as Layer[];
+
+for (const src of PALABRA_PRELOAD) {
+  assert.ok(existsSync(`public${src}`), `asset declarado que no existe: ${src}`);
+}
+
+assert.ok(
+  findPart(palabra, "background", "backdrop"),
+  "el layer 'background' debe llevar la part 'backdrop'",
+);
+assert.equal(
+  findPart(palabra, "background", "color"),
+  undefined,
+  "'background' no lleva croma: este juego se emite con fondo propio",
+);
+
+const wordBoard = palabra.find((layer) => layer.id === "board");
+assert.ok(wordBoard, "falta el layer 'board'");
+const blanks = partOf<{
+  type: "blanks";
+  letters?: string[];
+  order?: number[];
+  revealed?: number;
+}>(wordBoard, "blanks");
+assert.ok(blanks, "'board' debe llevar una part 'blanks' (la pisa Logic)");
+// Logic pisa las tres: sin 'order' en el layout, applyState fusiona un campo que
+// la vista lee para repartir el pozo de letras y el pozo sale vacio.
+for (const field of ["letters", "order", "revealed"] as const) {
+  assert.ok(
+    blanks[field] !== undefined,
+    `la part 'blanks' debe declarar '${field}'`,
+  );
+}
+for (const type of ["pop", "shake", "bounce", "slide"]) {
+  assert.ok(partOf(wordBoard, type), `'board' debe llevar la part '${type}'`);
+}
+assert.ok(
+  wordBoard.parentId,
+  "'board' debe colgar de un padre: los target de bounce/slide son locales",
+);
+assert.deepEqual(
+  wordBoard.rect.position,
   { x: 0, y: 0 },
   "'board' arranca en el origen de su padre: es el 'home' al que vuelve bounce",
 );

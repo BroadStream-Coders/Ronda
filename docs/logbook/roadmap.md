@@ -10,6 +10,21 @@ Al terminar una tarea se mueve al changelog y se borra de aquí.
 
 ---
 
+## [RM-079] Gráfica real de Arma la Palabra
+- **Objetivo:** reemplazar el diseño provisional en CSS de la part `blanks`
+  (`src/game/catalog/arma-la-palabra/parts/blanks.tsx`) por la gráfica del
+  diseñador: casilla o guion de cada letra, tipografía y el estado revelado.
+- **Lo que ya está resuelto y no hay que rehacer:** el reparto en grafemas, el
+  revelado letra a letra, el latido del guion siguiente y las teclas ([[RM-077]]).
+- **Ojo con el croma:** este juego **no va sobre croma**; si la gráfica final lo
+  cambia, hay que declarar `chromaLayerId` en la ficha o el panel de color ofrece
+  algo que nadie pinta.
+- **Hecho cuando:** la part dibuja con los assets entregados y no queda color
+  hardcodeado de relleno.
+- **Fecha:** 2026-08-21 · **Estado:** Abierto
+
+---
+
 ## [RM-076] Gráfica real de Arma la Oración
 - **Objetivo:** reemplazar el diseño provisional en CSS de la part `sentence`
   (`src/game/catalog/arma-la-oracion/parts/sentence.tsx`) por la gráfica del

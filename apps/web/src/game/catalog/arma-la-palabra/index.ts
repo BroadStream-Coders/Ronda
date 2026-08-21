@@ -2,21 +2,21 @@ import { partView, useGameSession, type GameType, type Layer } from "@/game/kit"
 import { loadJsonFile } from "@/helpers/persistence";
 import layout from "./layout.json";
 import { meta } from "./meta";
-import { ArmaLaOracionLogic } from "./Logic";
-import { SentenceView, type SentencePart } from "./parts/sentence";
+import { ArmaLaPalabraLogic } from "./Logic";
+import { BlanksView, type BlanksPart } from "./parts/blanks";
 import { PRELOAD } from "./assets";
-import { isArmaOracionSession } from "./session";
+import { isArmaPalabraSession } from "./session";
 
-export const armaLaOracion: GameType = {
+export const armaLaPalabra: GameType = {
   meta,
   layout: layout as Layer[],
   preload: PRELOAD,
-  parts: { sentence: partView<SentencePart>(SentenceView) },
-  logic: ArmaLaOracionLogic,
+  parts: { blanks: partView<BlanksPart>(BlanksView) },
+  logic: ArmaLaPalabraLogic,
   load: async (file) => {
     const data = await loadJsonFile<unknown>(file);
-    if (!isArmaOracionSession(data)) {
-      throw new Error("El archivo no tiene el formato de Arma la Oración.");
+    if (!isArmaPalabraSession(data)) {
+      throw new Error("El archivo no tiene el formato de Arma la Palabra.");
     }
     useGameSession.getState().setSession(data, file.name);
   },
