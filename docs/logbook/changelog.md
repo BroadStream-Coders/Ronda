@@ -12,6 +12,10 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [RM-075] Juego Arma la Oración — primer juego que no viene de un port (2026-08-21 09:32)
+Dos estados sobre el mismo stage: la oración en pedazos (fichas desordenadas, con inclinación y desnivel deterministas) y, con **M**, las palabras volando a su sitio en orden + sonido de correcto y `pop`. Teclas: numpad = ronda, dígitos = oración, N/B mover, M armar, C volver a desordenar, F error, flechas para bounce/slide.
+La limpieza del texto vive acá y no en el colector ([[RM-074]]): `splitWords` colapsa espacios y tira los invisibles (`\p{C}`) conservando tildes, ñ y signos; el desorden es una permutación sembrada por (ronda, oración), así que no se rebaraja en cada render ni deja la oración ya armada. **Sin croma**: el juego se emite con fondo propio (part `backdrop`, degradado y tres halos que respiran), así que la ficha no declara `chromaLayerId` y no aparece el panel de color. Gráfica provisional en CSS — la del diseñador entra con [[RM-076]].
+
 ## [RM-074] Colectores Arma la Palabra y Arma la Oración (2026-08-21 08:45)
 Dos colectores nuevos para Más Conectados, calcados de Deletreo: rondas con lista de palabras (`groups[].words`) y de oraciones (`groups[].sentences`), ambos con QuickLoad, validación e indicador de largo.
 El dato se guarda crudo (la palabra u oración como string); el trim, la limpieza de caracteres y el separado en letras/palabras los hace el juego al leerlo — ver [[RM-042]].

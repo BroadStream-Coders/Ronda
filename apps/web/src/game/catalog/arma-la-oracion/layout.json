@@ -1,0 +1,58 @@
+[
+  {
+    "id": "background",
+    "name": "Fondo",
+    "visible": true,
+    "rect": {
+      "position": { "x": 0, "y": 0 },
+      "size": { "x": 1920, "y": 1080 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [{ "type": "backdrop" }]
+  },
+  {
+    "id": "anchor",
+    "name": "Ancla",
+    "visible": true,
+    "rect": {
+      "position": { "x": 0, "y": -60 },
+      "size": { "x": 1560, "y": 520 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": []
+  },
+  {
+    "id": "board",
+    "name": "Oración",
+    "visible": true,
+    "parentId": "anchor",
+    "rect": {
+      "position": { "x": 0, "y": 0 },
+      "size": { "x": 1560, "y": 520 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      {
+        "type": "sentence",
+        "words": [],
+        "order": [],
+        "solved": false,
+        "fontSize": 74
+      },
+      { "type": "pop", "scale": 1.06, "duration": 0.35 },
+      { "type": "shake", "amplitude": 1.5, "shakes": 3, "duration": 0.4 },
+      {
+        "type": "bounce",
+        "travelSpeed": 2400,
+        "bounceAmplitude": 40,
+        "bounceDuration": 0.4,
+        "target": { "x": 0, "y": 0 }
+      },
+      {
+        "type": "slide",
+        "speed": 2400,
+        "target": { "x": 0, "y": -800 }
+      }
+    ]
+  }
+]

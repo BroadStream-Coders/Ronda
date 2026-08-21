@@ -8,6 +8,8 @@ const loaders: Record<string, () => Promise<GameType>> = {
   deletreo: () => import("./deletreo").then((m) => m.deletreo),
   "calculo-mental": () =>
     import("./calculo-mental").then((m) => m.calculoMental),
+  "arma-la-oracion": () =>
+    import("./arma-la-oracion").then((m) => m.armaLaOracion),
 };
 
 export function GameMount({

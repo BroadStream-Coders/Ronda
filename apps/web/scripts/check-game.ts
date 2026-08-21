@@ -12,6 +12,11 @@ import { applyState } from "../src/game/kit/state.ts";
 import { settingKey } from "../src/game/kit/use-game-setting.ts";
 import { FRAMES, PRELOAD } from "../src/game/catalog/deletreo/assets.ts";
 import { PRELOAD as CALCULO_PRELOAD } from "../src/game/catalog/calculo-mental/assets.ts";
+import { PRELOAD as ORACION_PRELOAD } from "../src/game/catalog/arma-la-oracion/assets.ts";
+import {
+  shuffledOrder,
+  splitWords,
+} from "../src/game/catalog/arma-la-oracion/words.ts";
 
 // --- coordenadas ---
 
@@ -219,3 +224,85 @@ for (const layer of calculo) {
 }
 
 console.log("game: checks ok");
+
+// --- arma la oracion: limpieza y desorden ---
+
+assert.deepEqual(
+  splitWords("  El   perro	corre  "),
+  ["El", "perro", "corre"],
+  "trim, tabs y espacios de mas se colapsan",
+);
+assert.deepEqual(splitWords(""), [], "una oracion vacia no da palabras");
+assert.deepEqual(
+  splitWords("Hola​mundo raro"),
+  ["Holamundo", "raro"],
+  "los caracteres invisibles se caen sin partir la palabra",
+);
+assert.deepEqual(
+  splitWords("¿Quién vino? ¡Nadie!"),
+  ["¿Quién", "vino?", "¡Nadie!"],
+  "tildes, ñ y signos se conservan",
+);
+
+assert.deepEqual(shuffledOrder(0, 1), []);
+assert.deepEqual(shuffledOrder(1, 1), [0]);
+for (let seed = 0; seed < 50; seed++) {
+  for (const count of [2, 3, 7, 12]) {
+    const order = shuffledOrder(count, seed);
+    assert.deepEqual(
+      [...order].sort((a, b) => a - b),
+      Array.from({ length: count }, (_, i) => i),
+      "el desorden es una permutacion: ninguna palabra se pierde ni se repite",
+    );
+    assert.ok(
+      order.some((value, index) => value !== index),
+      "el desorden nunca deja la oracion ya armada",
+    );
+  }
+}
+assert.deepEqual(
+  shuffledOrder(8, 3),
+  shuffledOrder(8, 3),
+  "misma semilla, mismo desorden: no se rebaraja en cada render",
+);
+
+// --- el layout de arma la oracion contra lo que la logica espera ---
+
+const oracion = JSON.parse(
+  readFileSync("src/game/catalog/arma-la-oracion/layout.json", "utf8"),
+) as Layer[];
+
+for (const src of ORACION_PRELOAD) {
+  assert.ok(existsSync(`public${src}`), `asset declarado que no existe: ${src}`);
+}
+
+// Este juego no va sobre croma: el fondo es una part propia y la ficha no
+// declara chromaLayerId (si no, el panel ofrecería un color que nadie pinta).
+assert.ok(
+  findPart(oracion, "background", "backdrop"),
+  "el layer 'background' debe llevar la part 'backdrop'",
+);
+assert.equal(
+  findPart(oracion, "background", "color"),
+  undefined,
+  "'background' no lleva croma: este juego se emite con fondo propio",
+);
+
+const board = oracion.find((layer) => layer.id === "board");
+assert.ok(board, "falta el layer 'board'");
+assert.ok(
+  partOf(board, "sentence"),
+  "'board' debe llevar una part 'sentence' (la pisa Logic)",
+);
+for (const type of ["pop", "shake", "bounce", "slide"]) {
+  assert.ok(partOf(board, type), `'board' debe llevar la part '${type}'`);
+}
+assert.ok(
+  board.parentId,
+  "'board' debe colgar de un padre: los target de bounce/slide son locales",
+);
+assert.deepEqual(
+  board.rect.position,
+  { x: 0, y: 0 },
+  "'board' arranca en el origen de su padre: es el 'home' al que vuelve bounce",
+);

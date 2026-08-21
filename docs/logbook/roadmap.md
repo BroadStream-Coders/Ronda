@@ -10,6 +10,25 @@ Al terminar una tarea se mueve al changelog y se borra de aquí.
 
 ---
 
+## [RM-076] Gráfica real de Arma la Oración
+- **Objetivo:** reemplazar el diseño provisional en CSS de la part `sentence`
+  (`src/game/catalog/arma-la-oracion/parts/sentence.tsx`) por la gráfica del
+  diseñador cuando la entregue: marcos de las fichas, tipografía y el estado
+  "armado", y el fondo (part `backdrop`) si el diseño trae uno.
+- **Ojo con el croma:** este juego **no va sobre croma**; si la gráfica final lo
+  cambia, hay que volver a declarar `chromaLayerId` en la ficha o el panel de color
+  ofrece algo que nadie pinta.
+- **Lo que ya está resuelto y no hay que rehacer:** los dos estados, el vuelo de las
+  fichas a su sitio (layout animation de `motion`), las teclas y la limpieza del
+  texto ([[RM-075]]). Lo que cambia es solo cómo se pinta cada ficha.
+- **Ojo:** los assets van a `public/games/arma-la-oracion/` y las medidas dentro del
+  Stage en `cqw`/`cqh`, nunca `px`.
+- **Hecho cuando:** la part dibuja con los assets entregados y no queda color
+  hardcodeado de relleno.
+- **Fecha:** 2026-08-21 · **Estado:** Abierto
+
+---
+
 ## [RM-055] Cómo se declara qué servicios tiene cada programa
 - **Objetivo:** un solo lugar donde se declara qué servicios tiene contratado un
   programa y qué le toca de cada uno, en vez de una lista por sistema. Hoy
