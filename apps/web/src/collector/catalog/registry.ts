@@ -14,6 +14,8 @@ import { retoCruzado } from "./reto-cruzado";
 import { intruso } from "./intruso";
 import { galeriaFotos } from "./galeria-fotos";
 import { tresEnRaya } from "./tres-en-raya";
+import { armaLaPalabra } from "./arma-la-palabra";
+import { armaLaOracion } from "./arma-la-oracion";
 
 export interface CollectorMeta {
   id: string;
@@ -42,4 +44,6 @@ export const registry: Record<string, CollectorType> = {
   [intruso.meta.id]: intruso,
   [galeriaFotos.meta.id]: galeriaFotos,
   [tresEnRaya.meta.id]: tresEnRaya,
+  [armaLaPalabra.meta.id]: armaLaPalabra,
+  [armaLaOracion.meta.id]: armaLaOracion,
 };

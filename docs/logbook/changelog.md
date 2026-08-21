@@ -12,6 +12,10 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [RM-074] Colectores Arma la Palabra y Arma la Oración (2026-08-21 08:45)
+Dos colectores nuevos para Más Conectados, calcados de Deletreo: rondas con lista de palabras (`groups[].words`) y de oraciones (`groups[].sentences`), ambos con QuickLoad, validación e indicador de largo.
+El dato se guarda crudo (la palabra u oración como string); el trim, la limpieza de caracteres y el separado en letras/palabras los hace el juego al leerlo — ver [[RM-042]].
+
 ## [RM-063] Portar Cálculo Mental — y con él tres piezas de kit (2026-08-20 15:04)
 El juego (14 layers, part `slot`, lógica de teclas, gráfica de los originales de Unity) más las tres piezas que estrena, todas en `kit/` y no en su carpeta: la part **`text` con auto-size** (búsqueda binaria de 12 pasos, `ResizeObserver` y re-medición en `document.fonts.ready` — sin eso mide con la tipografía de reemplazo), el **override de `visible`** en `applyState` y **`playStagger`**. Las tres salieron del port, no de un diseño nuevo.
 La fuente se resuelve **por clave contra las que declara la ficha** (`fonts` en `GameType` + `FontRegistryProvider`), no contra un registro central, que metería las 4 tipografías en toda ruta que dibuje texto — lo mismo que costó [[TD-021]]. Poppins entra por `next/font/google` en vez de convertir el TTF: mismo woff2 autohospedado y con preload, sin binario en el repo. `check-game.ts` cubre assets inexistentes, layers que la lógica referencia por id, que las preguntas arranquen apagadas y que ningún `autoSize` tenga rango inválido. El auto-size ya traía `fontSizeMin`, así que el tope de largo en el colector no hizo falta: validado al aire con enunciados reales.
