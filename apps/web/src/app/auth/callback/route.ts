@@ -17,5 +17,14 @@ export async function GET(request: Request) {
   }
 
   const dest = (await isPlatformAdmin()) ? "/admin" : "/programs";
-  return NextResponse.redirect(`${origin}${dest}`);
+
+  // Detrás del proxy de Vercel, request.url trae el host interno del deploy: sin
+  // esto la vuelta del login aterriza en una URL que no es la del programa.
+  const forwardedHost = request.headers.get("x-forwarded-host");
+  const base =
+    forwardedHost && process.env.NODE_ENV === "production"
+      ? `https://${forwardedHost}`
+      : origin;
+
+  return NextResponse.redirect(`${base}${dest}`);
 }

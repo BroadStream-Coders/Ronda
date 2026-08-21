@@ -36,16 +36,16 @@ const PILL =
 
 const clientes = [
   {
-    nombre: "Que Gane El Mejor",
-    tipo: "TV Perú · Concurso",
-    img: "/clientes/que-gane-el-mejor.jpg",
-    url: "https://www.tvperu.gob.pe/programas/que-gane-el-mejor",
-  },
-  {
     nombre: "Pukllaspa Yachay",
     tipo: "TV Perú · Educativo",
     img: "/clientes/pukllaspa-yachay.jpg",
     url: "https://www.tvperu.gob.pe/programas/pukllaspa-yachay",
+  },
+  {
+    nombre: "Que Gane El Mejor",
+    tipo: "TV Perú · Concurso",
+    img: "/clientes/que-gane-el-mejor.jpg",
+    url: "https://www.tvperu.gob.pe/programas/que-gane-el-mejor",
   },
   {
     nombre: "Más Conectados",
@@ -295,7 +295,7 @@ export default async function Home() {
                   rel="noreferrer"
                   className="group flex flex-col overflow-hidden rounded-[calc(var(--radius)*1.3)] border border-border bg-card transition-colors hover:border-primary"
                 >
-                  <div className="relative h-[150px] border-b border-border bg-[color-mix(in_oklch,var(--foreground)_4%,var(--card))]">
+                  <div className="relative aspect-[20/23] border-b border-border bg-[color-mix(in_oklch,var(--foreground)_4%,var(--card))]">
                     <Image
                       unoptimized
                       loading="eager"

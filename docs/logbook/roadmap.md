@@ -10,6 +10,23 @@ Al terminar una tarea se mueve al changelog y se borra de aquí.
 
 ---
 
+## [RM-081] El cursor en pantalla completa lo decide cada juego
+- **Objetivo:** que la ficha del juego declare si el cursor se oculta al entrar en
+  pantalla completa. Hoy se oculta siempre, y **De Par en Par necesita el mouse**
+  para voltear cartas.
+- **Lo que ya está y no hay que inventar:** `Stage` ya recibe
+  `hideCursorOnFullscreen` (default `true`) — lo que falta es que `GameShell` se lo
+  pase desde la ficha, o sea un campo nuevo en `GameType`
+  (`src/game/kit/game.ts`) que `GameShell` (`src/game/kit/GameShell.tsx`) traduzca
+  a esa prop. Ningún juego actual lo declara, así que el default no cambia para los
+  que ya corren.
+- **Hecho cuando:** un juego puede pedir cursor visible y los demás siguen
+  ocultándolo sin tocar nada.
+- **Bloquea a:** [[RM-073]] (De Par en Par desde Unity).
+- **Fecha:** 2026-08-21 · **Estado:** Abierto
+
+---
+
 ## [RM-079] Gráfica real de Arma la Palabra
 - **Objetivo:** reemplazar el diseño provisional en CSS de la part `blanks`
   (`src/game/catalog/arma-la-palabra/parts/blanks.tsx`) por la gráfica del

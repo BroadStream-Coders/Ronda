@@ -12,6 +12,13 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [TD-083] Las tarjetas de programas recortaban el arte del landing (2026-08-21 12:10)
+La caja de la imagen era `h-[150px]` fija contra archivos de 400x460: con `object-cover` se veía una franja del centro. Ahora la caja lleva `aspect-[20/23]`, la proporción real de los archivos, así que la tarjeta crece y el arte entra completo, sin franjas ni recorte.
+
+## [TD-082] La vuelta del login aterrizaba fuera del dominio de producción (2026-08-21 11:40)
+`/auth/callback` armaba el redirect con el `origin` de `request.url`, que detrás del proxy de Vercel es el host interno del deploy; ahora usa `x-forwarded-host` cuando corre en producción y deja el `origin` para local.
+El disparador real del bug —volver a `localhost` tras el login en producción— **no vive en el repo**: es la *Site URL* del proyecto en Supabase y su lista de *Redirect URLs*. Si la URL que manda `signInWithOAuth` no está permitida, Supabase la descarta y usa la Site URL; con `localhost` ahí, todo login de producción cae en local.
+
 ## [RM-080] Arma la Palabra reparte las letras, y los dos fondos pasan a claro (2026-08-21 11:05)
 Debajo de los guiones va ahora el **pozo de letras** desordenadas; al revelar (flecha derecha, E o **M** para toda la palabra) la ficha vuela del pozo a su guion — mismo `layoutId` de `motion` en los dos sitios, así que el vuelo lo calcula solo. El desorden usa la misma permutación sembrada que Arma la Oración, que por eso subió a `kit/shuffle.ts`.
 Los fondos dejaron de ser oscuros: `backdrop` arranca en blanco con halos pastel y viñeta suave, y las fichas se invirtieron a tarjeta blanca con texto pizarra (la armada sigue en violeta, la colocada en verde azulado). **El fondo del juego no depende del tema claro/oscuro de la app** — el Stage pinta su propia gráfica; lo único que sigue negro es la caja alrededor del 16:9 en la vista en ventana.
