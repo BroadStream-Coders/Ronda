@@ -1,8 +1,7 @@
 # Migración QGEM Games → Ronda
 
-Guía operativa para traer a Ronda los juegos que ya corren en el proyecto
-**TvPeru-QGEM-Games** (repo hermano, `../TvPeru-QGEM-Games`). Documenta el proceso
-probado con **Deletreo**, el primer juego portado completo.
+Guía operativa para traer a Ronda un juego que ya corre en el proyecto
+**TvPeru-QGEM-Games** (repo hermano, `../TvPeru-QGEM-Games`).
 
 Para juegos que **solo existen en Unity** y nunca pasaron por Games, la guía es
 [`migracion-unity.md`](migracion-unity.md). Las dos comparten el destino: un
@@ -74,32 +73,33 @@ src/game/
 │   ├── session.ts                       #   useGameSession
 │   ├── game.ts                          #   el contrato GameType
 │   ├── media.ts                         #   playSound + preloadMedia
+│   ├── shuffle.ts                       #   shuffledOrder: permutación sembrada
 │   ├── use-game-keys.ts                 #   mapa de teclas
 │   ├── use-game-setting.ts              #   preferencias en localStorage
-│   ├── parts/                           #   parts nativas: color, image, text
+│   ├── parts/                           #   parts nativas (ver §9)
 │   └── animations/                      #   context + parts + use-layer-animations
-├── fonts/                               # tipografías COMPARTIDAS, woff2
-│   ├── genius-techno.ts + .woff2        #   un módulo por tipografía (local)
-│   └── poppins.ts                       #   de Google: sin archivo en el repo
+├── fonts/                               # tipografías COMPARTIDAS
+│   ├── <tipografia>.ts + .woff2         #   un módulo por tipografía (local)
+│   └── <tipografia>.ts                  #   de Google: sin archivo en el repo
 └── catalog/
     ├── metas.ts                         #   id → GameMeta (plano, sin la ficha)
     ├── assignments.ts                   #   qué juegos ve cada programa
     ├── GameMount.tsx                    #   puente servidor → cliente + import() por juego
-    └── deletreo/                        #   ← el juego de referencia
+    └── <juego>/
         ├── meta.ts                      #   nombre, descripción, ícono
         ├── index.ts                     #   la ficha
         ├── layout.json                  #   los layers
         ├── assets.ts                    #   rutas de imágenes y sonidos
         ├── session.ts                   #   tipo + type-guard del JSON
         ├── Logic.tsx                    #   la lógica de show
-        └── parts/spelling.tsx           #   parts propias del juego
+        └── parts/                       #   parts propias del juego
 ```
 
 La ficha que declara un juego (`kit/game.ts`):
 
 ```ts
 interface GameType {
-  meta: { id, name, description?, icon }   // espeja CollectorMeta
+  meta: GameMeta                           // espeja CollectorMeta
   layout: Layer[]                          // el layout.json importado
   parts?: PartRegistry                     // las parts propias del juego
   fonts?: FontRegistry                     // clave → fuente, para la part `text`
@@ -109,6 +109,9 @@ interface GameType {
   load: (file: File) => Promise<void>      // parsea, valida y hace setSession
 }
 ```
+
+`chromaLayerId` es **opcional a propósito**: un juego que se emite con fondo propio
+(la part `backdrop`) no lo declara, y entonces no aparece el panel de color.
 
 ---
 
@@ -122,18 +125,18 @@ interface GameType {
 3. **Traer los assets** (§5) y ajustar las rutas del layout.
 4. **Traer las parts propias** del juego a `catalog/<juego>/parts/`, **sin sus
    Inspectors**. Una part es `{ modelo, vista }`; si no dibuja, no lleva vista.
+   Si la part sirve a más de un juego, va al `kit/` y no a la carpeta del juego.
 5. **Portar el behavior → `Logic.tsx`** (§6).
 6. **Registrar y asignar**: el `meta` en `catalog/metas.ts`, el `import()` del juego
-   en `catalog/GameMount.tsx`, y el programa en `catalog/assignments.ts`. **El meta
-   va en su propio módulo** (`<juego>/meta.ts`), separado de la ficha: la barra
-   lateral y la lista solo importan metas, así que meterlo en `index.ts` arrastraría
-   el `layout.json` y las fuentes a todas las rutas del workspace (fue TD-021).
-7. **Validar**: `pnpm build` (nunca `pnpm dev` — lo levanta Esteban), `pnpm lint`,
-   `pnpm check`. Extender `scripts/check-game.ts` con lo que el juego nuevo pueda
-   romper en silencio.
-8. **Logbook**: cada juego tiene **su propia tarea** en `roadmap.md` (RM-064 a
-   RM-071, más RM-073); al terminar se mueve al `changelog.md`. RM-038 es el paraguas.
-   Deuda nueva en `technical-debt.md`.
+   en `catalog/GameMount.tsx`, y el programa en `catalog/assignments.ts`.
+   **El meta va en su propio módulo** (`<juego>/meta.ts`), separado de la ficha: la
+   barra lateral y la lista solo importan metas, y meterlo en `index.ts` arrastraría
+   el `layout.json` y las fuentes de todos los juegos a todas las rutas del
+   workspace.
+7. **Validar**: `pnpm build` (nunca `pnpm dev` — el servidor lo levanta Esteban),
+   `pnpm lint`, `pnpm check`. Extender `scripts/check-game.ts` con lo que el juego
+   nuevo pueda romper en silencio: rutas de assets que no existen, parts que la
+   lógica pisa y el layout no tiene, jerarquías que las animaciones necesitan.
 
 ---
 
@@ -146,26 +149,27 @@ cada día. Son dos cosas y van a dos lugares.
 - **Imágenes y audio** → `public/games/<juego>/` y `public/games/shared/`. Los sirve
   el CDN de Vercel sin configurar nada. **Nunca a Supabase Storage** — ese bucket es
   para el colector.
-- **Fuentes** → `src/game/fonts/`, **compartidas**, un módulo por tipografía, en
-  **woff2**. Van en `src/` y no en `public/` porque `next/font/local` necesita
-  importarlas, y a cambio emite el `<link rel="preload">` y el hash solo.
-  **Nunca una copia por juego**: son 4 tipografías para 9 juegos y GeniusTechno sola
-  va en 7.
+- **Fuentes** → `src/game/fonts/`, **compartidas**, un módulo por tipografía. Van en
+  `src/` y no en `public/` porque `next/font` necesita importarlas, y a cambio emite
+  el `<link rel="preload">` y el hash solo. **Nunca una copia por juego**: una misma
+  tipografía puede ir en la mayoría del catálogo, y duplicarla son N lugares para
+  actualizar y N oportunidades de que uno quede viejo.
+- **Un módulo por tipografía, nunca un barril con todas.** `next/font` atribuye la
+  fuente por **grafo de módulos**, no por uso real: un barril que instancie varias
+  las precarga todas en cualquier ruta que lo toque.
 - **Los originales están en el proyecto Unity**, no en el repo de Games:
   `../TvPeru-QGEM-ManagedGames/Assets/_Project/` — `Games/<Juego>/Graphics/`,
   `MediaLibrary/Sounds/`, `MediaLibrary/Fonts/Originals/`. Games los servía desde un
   bucket público de Supabase; esa vía queda retirada.
-- **Antes de convertir un TTF, mirar si la tipografía es de Google.** Si lo es
-  —Poppins lo es, y es la de Cálculo Mental— va con `next/font/google` y no hay
-  nada que convertir ni ningún binario que entre al repo: Next la descarga en el
-  build, la autohospeda en woff2, la subseteliza y emite el preload igual que con
-  `local`. Mismo resultado, sin el archivo. El módulo por tipografía en
-  `src/game/fonts/` se mantiene (ver `poppins.ts`); lo único que cambia es de dónde
-  sale el archivo.
-- **Convertir TTF a woff2** — solo para las que no están en Google, como
-  GeniusTechno: `pnpm dlx ttf2woff2 < fuente.ttf > fuente.woff2` (lee stdin, no
-  acepta `--help`). Ahorra ~70%. Verificar la firma del resultado: los primeros 4
-  bytes deben ser `wOF2`.
+- **Antes de convertir un TTF, mirar si la tipografía es de Google.** Si lo es, va
+  con `next/font/google` y no hay nada que convertir ni ningún binario que entre al
+  repo: Next la descarga en el build, la autohospeda en woff2, la subseteliza y
+  emite el preload igual que con `local`. El módulo por tipografía se mantiene; lo
+  único que cambia es de dónde sale el archivo.
+- **Convertir TTF a woff2** — solo para las que no están en Google:
+  `pnpm dlx ttf2woff2 < fuente.ttf > fuente.woff2` (lee stdin, no acepta `--help`).
+  Ahorra ~70%. Verificar la firma del resultado: los primeros 4 bytes deben ser
+  `wOF2`.
 - Todo lo que la lógica intercambia en vivo (marco normal↔error) va en `preload`,
   o la primera vez que aparece parpadea **al aire**.
 
@@ -190,9 +194,13 @@ Devuelve `null` y opera por hooks. Reglas:
   Los reset que dependen de una acción van **en el handler**, no en un efecto.
 - **Depender de `loadedAt`, nunca de `fileName`**: recargar el mismo archivo tiene
   que reiniciar el juego.
-- Los efectos que quedan solo **escriben al store** (`patch`, `setPosition`), que es
-  para lo que sirven.
+- Los efectos que quedan solo **escriben al store** (`patch`, `setPosition`,
+  `setVisible`), que es para lo que sirven.
 - Sonidos y animaciones se disparan **en los handlers de tecla**, no en efectos.
+- **Lo aleatorio se siembra.** Para barajar (opciones, fichas, posiciones) usar
+  `shuffledOrder(count, seed)` con una semilla derivada de los índices de la ronda,
+  no `Math.random()`: si no, la baraja cambia en cada render y el resultado puede
+  salir ya ordenado.
 
 Teclas convenidas (`use-game-keys.ts`): `0-9` índice directo (Shift +10, Alt +20),
 numpad `0-9` → `onNavigate`, `N`/`B` siguiente/anterior, `Q/W/E/R` → `onOption(0-3)`,
@@ -205,10 +213,8 @@ numpad `0-9` → `onNavigate`, `N`/`B` siguiente/anterior, `Q/W/E/R` → `onOpti
 
 Son **parts sin vista**: el layer las declara como data y no dibujan nada.
 `useLayerAnimations` las lee del propio layer, registra un trigger por
-`(layerId, tipo)` y la lógica las dispara con `play(layerId, "pop")`.
-
-Portadas: **pop, shake, bounce, slide**. Faltan flip, float, blink, sparkles,
-shimmer y holo — cada una llega con el juego que la pida.
+`(layerId, tipo)` y la lógica las dispara con `play(layerId, "pop")`. Para animar
+varios layers en cascada hay `playStagger(ids, tipo, stepMs)`.
 
 **`bounce` y `slide` mueven la posición LOCAL**, relativa al padre. Los `target` se
 copian tal cual desde Games/Unity: son posiciones absolutas en coordenadas del padre,
@@ -217,18 +223,19 @@ que le fija el origen; aplanar esa jerarquía manda el objeto al centro de la pa
 
 **Techo conocido:** `bounce` y `slide` escriben la posición en `useGameState` en cada
 frame, así que hay un re-render de React por frame. Con pocos layers no se nota (y en
-Games era igual), pero Busca Logo tiene 202 layers. Si ahí se arrastra, la salida es
-animar el transform del DOM en vez de la posición del estado.
+Games era igual), pero hay juegos con cientos de layers — Busca Logo pasa de 200. Si
+ahí se arrastra, la salida es animar el transform del DOM en vez de la posición del
+estado.
 
 ---
 
-## 8. Trampas que ya nos costaron — leer antes de portar
+## 8. Trampas que ya costaron caro — leer antes de portar
 
 - **La compuerta del viewMode.** En Games, `useGameObjectAnimations` registra sus
   triggers solo si `useSceneViewMode() === "game"`; existía para que el panel Scene
   del editor no pisara al panel Game. En Ronda no hay viewMode: **hay que quitarla**.
   Copiada tal cual, no se registra nada — el juego se ve perfecto y no anima jamás,
-  sin un error en consola. Aplica a las 6 animaciones que faltan.
+  sin un error en consola. Aplica a cada animación que se traiga.
 - **`"use client"` y el grafo del servidor.** Una función llamada en el ámbito de
   módulo (como `partView`) no puede vivir en un archivo `"use client"`: la ruta
   servidor que arma la lista de juegos lo evalúa y el build falla. Los tipos y las
@@ -236,65 +243,58 @@ animar el transform del DOM en vez de la posición del estado.
 - **Escribir un ref durante el render** está prohibido por el linter (Games lo hace
   en `useGameObjectAnimations`). Pasarlo a un efecto sin deps, como ya hace
   `useGameKeys` con sus handlers.
-- **`next/font` atribuye la fuente por grafo de módulos, no por uso real.** Un barril
-  que instancie varias tipografías las precarga todas en cualquier ruta que lo toque.
-  Por eso: **un módulo por tipografía**. (Efecto lateral conocido: la ruta que lista
-  los juegos importa el catálogo entero — ver TD-021.)
 - **Un input controlado de texto no se puede escribir** si el valor solo se comitea
   cuando es válido (un hex a medio teclear se revierte). Usar no controlado con
   `key={valor}`.
+- **El juego se carga con `import()` dinámico**, así que entre el clic y el primer
+  render hay un hueco sin nada en pantalla. Si el juego que estás portando pesa
+  (layouts grandes, muchos assets), el hueco se nota.
 - **El Stage es un container-query context.** Todo lo que se dibuja adentro se mide
   en `cqw`/`cqh`/`cqi`, **nunca** en `vw`/`rem`/`px`. Es lo único que hace que la
   vista en ventana y en pantalla completa sean idénticas.
 
 ---
 
-## 9. Lo que el kit todavía NO tiene
+## 9. Qué tiene el kit y qué no
 
-Antes de portar un juego, verificar si necesita algo de esto — si sí, **entra con ese
-juego**:
+**Ya está, no lo reconstruyas:**
+
+| Pieza | Qué cubre |
+|---|---|
+| Parts `color`, `image`, `text`, `backdrop` | `text` trae auto-size; `backdrop` es un fondo propio (degradado + halos) para juegos que no salen sobre croma |
+| Animaciones `pop`, `shake`, `bounce`, `slide` | más `play` y `playStagger` para dispararlas |
+| `useGameState` | pisa parts, `position` y `visible` |
+| `shuffledOrder` | permutación sembrada y determinista |
+| Fuentes | `FontRegistry` en la ficha; `next/font` local o de Google |
+| `playSound` / `preloadMedia` | audio e imágenes calentadas al montar |
+| `Stage` | 16:9, fullscreen, container-query |
+| `GameConfig` | panel plegable; hoy solo el color del croma |
+| `useGameKeys` / `useGameSetting` | teclas de show; preferencias en localStorage |
+
+**Todavía no está.** Cada pieza entra con el primer juego que la pida, pero **se
+escribe en `kit/`, no en la carpeta del juego**:
 
 | Falta | Lo necesita |
 |---|---|
-| Parts `video`, `videoControl`, `mask` | mask lo usa Intruso |
-| Animaciones flip, float, blink, sparkles, shimmer, holo | Busca Logo y De Par en Par (flip), Álbum, Cronos |
-| Sesión **ZIP** + ciclo de vida de blobs (`dispose`) | Álbum, Cronos, Intruso, De Par en Par, Galería de Fotos |
-| Presupuesto de memoria (`useMemoryBudget`) | diagnóstico; puede no volver nunca (WL-011) |
-| Carga desde la nube (`downloadCollectorData`) | engancha sin rediseño: devuelve un `File`, igual que el input (RM-062) |
-| Texto con formato (superíndices, fracciones) | notación matemática real; hoy la part `text` es una cadena plana (WL-012) |
-
-**Ya entraron** (con Cálculo Mental, RM-063): la part `text` con auto-size, el
-override de `visible` en `useGameState` y `playStagger`.
+| Parts `video`, `videoControl`, `mask` | `mask`, para los juegos que en Unity recortan con Mask |
+| Animaciones `flip`, `float`, `blink`, `sparkles`, `shimmer`, `holo` | `flip` para los juegos de cartas que se voltean; el resto, para el gamefeel de cada juego |
+| Sesión **ZIP** + ciclo de vida de blobs (`dispose`) | todo juego cuya sesión traiga imágenes y no solo texto |
+| Presupuesto de memoria | diagnóstico; puede no volver nunca |
+| Carga desde la nube | engancha sin rediseño: `downloadCollectorData` devuelve un `File`, igual que el input de archivo |
+| Texto con formato (superíndices, fracciones) | notación matemática real; hoy la part `text` es una cadena plana |
+| Cursor visible en pantalla completa | hoy se oculta siempre; los juegos que se operan con mouse lo necesitan |
 
 ---
 
-## 10. Estado
+## 10. Qué guía usar
 
-**Portado:** Deletreo (layout, teclas, carga local, croma configurable, gráfica,
-sonidos, animaciones) y Cálculo Mental, que estrenó la part `text` con auto-size, el
-override de `visible` y `playStagger`.
-
-**Inventario de Games (10 juegos + sandbox):** deletreo ✅, cálculo mental ✅, intruso,
-álbum, la sabes o no, al vuelo, busca logo, mi libro favorito, cronos, operaciones
-combinadas (prototipo).
+- **El juego existe en Games** → esta guía. Es el camino corto: la conversión del
+  prefab, el horneado de los layouts y la conversión de texto ya están hechas del
+  otro lado.
+- **El juego solo existe en Unity** → [`migracion-unity.md`](migracion-unity.md).
+- **El juego no existe en ninguno de los dos** → no es una migración: es un juego
+  nuevo. Igual se construye sobre el mismo kit y con las mismas reglas de §5 a §9.
 
 **Ojo con los nombres:** el colector `si-o-no` alimenta al juego **Al Vuelo**. No
-todos los pares comparten slug — por eso la ficha puede declarar su colector en vez
-de asumir que coincide.
-
-**Sin juego en Games:** `de-par-en-par` tiene colector en Ronda pero no existe acá —
-se migra **desde Unity** (RM-073), con la otra guía.
-
-**Colector en Ronda, juego fuera de Ronda:** `reto-cruzado`, `galeria-fotos` y
-`tres-en-raya` **se quedan en Unity a propósito** — no se pueden llevar a web. Su
-colector acá sigue sirviendo porque alimenta al juego de Unity. No son un pendiente
-de migración y no hay que buscarles juego.
-
-**Una tarea por juego** en `docs/logbook/roadmap.md`: RM-063 a RM-071 para los que se
-portan desde acá, RM-073 para De Par en Par. RM-038 quedó como paraguas con lo
-transversal.
-
-**Lo que le falta al kit no se hace por adelantado:** cada pieza entra con el primer
-juego que la pida, pero escrita en `kit/` y no en la carpeta del juego (§9). Empieza
-por **Cálculo Mental (RM-063)**, que trae la part `text` — sin ella ningún otro juego
-puede escribir una letra.
+todos los pares comparten slug, así que no asumir que el id del colector es el del
+juego.

@@ -1,9 +1,7 @@
 # Migración Unity → Ronda
 
 Guía operativa para replicar en Ronda un juego que existe en **Unity**
-(`../TvPeru-QGEM-ManagedGames`). Adaptada de la guía equivalente del proyecto Games,
-donde el proceso se probó con Cálculo Mental, Intruso, La Sabes o No, Al Vuelo,
-Álbum, Mi Libro Favorito y Busca Logo.
+(`../TvPeru-QGEM-ManagedGames`).
 
 > **Antes de empezar: ¿el juego ya existe en Games?** Si sí, **no uses esta guía** —
 > el trabajo pesado (conversión de prefab, horneado de layouts, conversión de texto)
@@ -34,9 +32,6 @@ jerarquía, ni modo play**. Son juegos en navegador.
 4. Validar con `pnpm build` (**nunca** `pnpm dev`) y esperar el visto bueno visual de
    Esteban comparando contra Unity.
 5. Cablear la funcionalidad: `Logic.tsx` + carga de sesión.
-6. Logbook: cada juego tiene su propia tarea en `roadmap.md`. Desde Unity hoy hay
-   una sola: **De Par en Par (RM-073)**, el único juego con colector en Ronda que no
-   existe en Games. RM-038 es el paraguas. Deuda nueva en `technical-debt.md`.
 
 ---
 
@@ -80,7 +75,7 @@ pivots 0.5, tamaños en px de diseño. El campo es `rect`, no `transform`.
 
 ## HorizontalLayoutGroup
 
-Unity lo resuelve en runtime; acá se hornea. Caso usado en Intruso
+Unity lo resuelve en runtime; acá se hornea. Caso probado
 (`ChildControlWidth: 0`, `ChildForceExpandWidth: 1`, padding 0):
 
 ```
@@ -91,19 +86,16 @@ izquierda_i   = i·(celda + spacing) + offsetEnCelda
 centro_i (rel. al centro del padre) = izquierda_i + anchoHijo/2 − anchoContenedor/2
 ```
 
-Ej. Intruso: contenedor 1617, 4 hijos de 392, spacing 10 → centros en
-x = ±610.125 y ±203.375.
+Ej.: contenedor 1617, 4 hijos de 392, spacing 10 → centros en x = ±610.125 y
+±203.375.
 
 ---
 
 ## TextMeshPro → part `text`
 
-> ⚠️ **La part `text` todavía no existe en el kit de Ronda.** El primer juego con
-> texto libre tiene que crearla en `kit/parts/text.tsx`, portándola desde
-> `../TvPeru-QGEM-Games/src/components/shared/engine/components/text/` **sin su
-> Inspector**. Esta tabla es el mapeo que esa part tiene que respetar.
-
-Conversión de px a cqh: **`cqh = px ÷ 10.8`** (1080 px de alto = 100 cqh).
+La part `text` del kit ya trae auto-size. Esta tabla es el mapeo que hay que
+respetar al convertir; conversión de px a cqh: **`cqh = px ÷ 10.8`** (1080 px de alto
+= 100 cqh).
 
 | TMP | Ronda |
 |---|---|
@@ -117,12 +109,11 @@ Conversión de px a cqh: **`cqh = px ÷ 10.8`** (1080 px de alto = 100 cqh).
 Horneado de margins: `size = rect − (izq+der, arriba+abajo)`;
 `offset extra = ((izq−der)/2, (abajo−arriba)/2)`. El `m_fontSize` guardado es el
 *resultado* del auto-size para el contenido de muestra — no usarlo, se re-ajusta por
-contenido. La vista tiene que usar `lineHeight: "normal"` para leer las mismas
-métricas de fuente que TMP (no tocar; era la causa de textos más grandes que en
-Unity).
+contenido. La vista usa `lineHeight: "normal"` para leer las mismas métricas de
+fuente que TMP (no tocar; era la causa de textos más grandes que en Unity).
 
 Diferencias tipográficas residuales = archivo de fuente distinto entre el font asset
-de TMP y el woff2 del catálogo, no un error de conversión.
+de TMP y el del catálogo, no un error de conversión.
 
 ---
 
@@ -137,22 +128,20 @@ de TMP y el woff2 del catálogo, no un error de conversión.
   `bounce`/`slide`: son posiciones absolutas en coordenadas **locales del padre**
   (tras la conversión de anclas), no offsets, y no hay "home" implícito.
 - **Frames de estado** (normal/correcto/incorrecto): en Unity son GameObjects
-  hermanos que se prenden y apagan.
-  > ⚠️ **`useGameState` todavía no soporta pisar `visible`.** Hoy solo pisa parts y
-  > posición. Para el primer juego con frames de estado hay dos caminos: (a) agregar
-  > el override de `visible` a `LayerOverride` y `applyState` — son pocas líneas y es
-  > lo fiel a Unity; o (b) si son dos estados de una misma imagen, intercambiar el
-  > `src` de la part `image`, que es lo que hace Deletreo con el marco normal↔error y
-  > no necesitó nada nuevo.
-- **Mask de Unity** (Mask + `m_ShowMaskGraphic: 0`): en Games es la part nativa
-  `mask` + una `image` con el sprite en el **mismo** layer, `showImage: false`.
-  **Tampoco existe todavía en Ronda**; la trae el primer juego que la necesite
-  (Intruso). Si la Image de Unity no tiene sprite, alcanza con recortar al rect
+  hermanos que se prenden y apagan. En Ronda hay dos caminos, y conviene el segundo
+  cuando aplica: (a) layers hermanos con `visible`, que `useGameState` sabe pisar con
+  `setVisible` — es lo fiel a Unity; o (b) si son dos estados de una misma imagen,
+  un solo layer y la lógica intercambia el `src` de la part `image`, que es menos
+  layers y menos estado.
+- **Mask de Unity** (Mask + `m_ShowMaskGraphic: 0`): recorta a los hijos con la
+  forma del sprite. **La part `mask` todavía no existe en el kit** — la trae el
+  primer juego que la necesite, escrita en `kit/parts/`, no en la carpeta del juego.
+  Si la Image de Unity no tiene sprite, alcanza con recortar al rect
   (`overflow: hidden`).
 - **Nivel como grupo**: el GameObject que en Unity tenía el script del nivel (p. ej.
-  "Level 1") se convierte en un layer contenedor sin parts. En Games llevaba una part
-  `controller` con el estado del juego; **en Ronda eso no hace falta** — el estado que
-  no se dibuja vive en la lógica (`useState`), no en el layout.
+  "Level 1") se convierte en un layer contenedor sin parts. No hace falta una part
+  que guarde el estado del nivel: lo que no se dibuja vive en la lógica (`useState`),
+  no en el layout.
 - Objetos vacíos e inactivos sin hijos (p. ej. "Void") se omiten.
 
 ---
@@ -161,15 +150,15 @@ de TMP y el woff2 del catálogo, no un error de conversión.
 
 Los scripts de Unity mapean así:
 
-| Unity | Ronda | ¿Existe ya? |
+| Unity | Ronda | ¿Está en el kit? |
 |---|---|---|
-| `UIBounceMove` | part `bounce` | ✅ |
-| `UISlide` | part `slide` | ✅ |
-| pop / escala al revelar | part `pop` | ✅ |
-| shake al error | part `shake` | ✅ |
-| `UIBlinkPulse` | part `blink` (triggers `blink` + `blinkSettle`) | ❌ |
-| flip de cartas | part `flip` (triggers `flipHide` + `flipShow`) | ❌ |
-| float / shimmer / holo / sparkles | parts homónimas | ❌ |
+| `UIBounceMove` | part `bounce` | sí |
+| `UISlide` | part `slide` | sí |
+| pop / escala al revelar | part `pop` | sí |
+| shake al error | part `shake` | sí |
+| `UIBlinkPulse` | part `blink` (triggers `blink` + `blinkSettle`) | no |
+| flip de cartas | part `flip` (triggers `flipHide` + `flipShow`) | no |
+| float / shimmer / holo / sparkles | parts homónimas | no |
 
 Las que faltan se portan desde
 `../TvPeru-QGEM-Games/src/components/shared/engine/animations/useGameObjectAnimations.ts`
@@ -186,23 +175,34 @@ animación.
 
 ## Funcionalidad
 
-Espejo de `src/game/catalog/deletreo/`:
+Misma forma que cualquier juego del catálogo (§3 y §4 de
+[`migracion-games.md`](migracion-games.md)):
 
-- `layout.json` — los layers. `assets.ts` — las rutas. `session.ts` — el tipo del
-  JSON + su type-guard. `Logic.tsx` — la lógica. `parts/` — las parts propias.
-  `index.ts` — la ficha `GameType`.
+- `meta.ts` — nombre, descripción e ícono, **en su propio módulo**, separado de la
+  ficha. `index.ts` — la ficha `GameType`. `layout.json` — los layers. `assets.ts` —
+  las rutas. `session.ts` — el tipo del archivo + su type-guard. `Logic.tsx` — la
+  lógica. `parts/` — las parts propias.
 - **No hay `page.tsx` por juego**: la ruta es genérica
-  (`programs/[slug]/games/[gameId]`) y monta el juego desde el registro.
+  (`programs/[slug]/games/[gameId]`). El `meta` se registra en `catalog/metas.ts` y
+  el juego se carga con un `import()` dinámico desde `catalog/GameMount.tsx`.
 - Las reglas de la lógica (estado local vs compartido, nada de `setState` en efectos,
-  depender de `loadedAt`) están en §6 de
+  depender de `loadedAt`, sembrar lo aleatorio) están en §6 de
   [`migracion-games.md`](migracion-games.md). **Leerlas antes de escribir el
   `Logic.tsx`**: el linter de React rechaza los patrones que Games usaba.
 
+### El cursor en pantalla completa
+
+`Stage` **oculta el cursor** al entrar en pantalla completa. Un juego que se opera
+con mouse —voltear cartas, arrastrar— lo necesita visible, y hoy no hay forma de
+pedirlo desde la ficha: `Stage` ya acepta `hideCursorOnFullscreen`, pero `GameShell`
+no se lo pasa. Si el juego que estás migrando usa mouse, esto se resuelve primero o
+el juego no se puede operar.
+
 ### Sesión ZIP
 
-> ⚠️ **Todavía no existe en Ronda.** `useGameSession` guarda un JSON y no maneja el
-> ciclo de vida de blobs. El primer juego con imágenes de sesión (Álbum, Cronos,
-> Intruso, De Par en Par, Galería de Fotos) tiene que agregarle un `dispose`.
+> **Todavía no existe en el kit.** `useGameSession` guarda un JSON y no maneja el
+> ciclo de vida de blobs. El primer juego cuya sesión traiga imágenes tiene que
+> agregarle un `dispose`.
 
 El patrón probado en Games, para cuando toque:
 
@@ -226,24 +226,9 @@ el input de archivo. La carga desde la nube engancha sin rediseñar nada.
 ## Gotchas conocidos
 
 - **Recargar la sesión con el mismo nombre de archivo** no dispara nada si dependés
-  de `fileName`. Depender siempre de `loadedAt` (era TD-060 en Games; en Ronda,
-  Deletreo ya lo hace bien).
+  de `fileName`. Depender siempre de `loadedAt`.
 - **El `m_fontSize` del prefab es resultado del auto-size**, no la fuente base.
 - **Prefabs con `m_IsActive: 0`** guardan la posición *oculta*: eso es el diseño
   correcto, no un error a corregir.
 - Todo lo que se dibuja dentro del Stage se mide en `cqw`/`cqh`/`cqi`, **nunca** en
   `vw`/`rem`/`px`.
-
----
-
-## Estado
-
-Ningún juego se migró todavía **directo desde Unity a Ronda**: Deletreo entró vía
-Games. Los que ya pasaron por Games (cálculo mental, intruso, la sabes o no, al
-vuelo, álbum, mi libro favorito, busca logo, cronos) conviene traerlos con
-[`migracion-games.md`](migracion-games.md), no con esta guía.
-
-Esta guía aplica a los juegos que tienen colector en Ronda pero **no existen en
-Games**: `de-par-en-par`, `reto-cruzado`, `galeria-fotos`, `tres-en-raya` — y a los
-niveles que en Games quedaron fuera de alcance (Intruso Nivel 2, Busca Logo Niveles 1
-y 3).

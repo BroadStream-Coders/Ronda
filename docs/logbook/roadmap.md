@@ -126,11 +126,7 @@ cualquiera de estas tareas, no se repite acá.
      de assets que no existen, layers referenciados por la lógica que el layout no
      tiene, parts sin vista registrada.
   4. **Fuera del inventario de Games hay uno solo: De Par en Par** ([[RM-073]]), que
-     se migra desde Unity. `reto-cruzado`, `galeria-fotos` y `tres-en-raya`
-     **se quedan en Unity a propósito**: se siguen emitiendo desde ahí porque no se
-     pueden llevar a web. Su colector en Ronda sí sirve —alimenta al juego de
-     Unity—, así que no sobra ni se retira. No son un pendiente: son el caso de
-     "colector en Ronda, juego fuera de Ronda".
+     se migra desde Unity con la guía correspondiente.
 - **Hecho cuando:** cierran las tareas por juego y las tres piezas de arriba están
   hechas; los 10 juegos de Games más De Par en Par corren dentro de un programa y
   son asignables.
