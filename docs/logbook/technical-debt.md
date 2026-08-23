@@ -16,6 +16,23 @@ reutiliza). Al resolverse se mueve al `changelog.md` conservando su código.
 
 ---
 
+## [TD-084] El README describe una plataforma de un solo servicio
+- **Ubicación:** `README.md:24-44`
+- **Riesgo:** 3/10
+- **Problema:** la sección "Servicios" solo documenta el Colector y dice que su
+  guardado es un archivo local, con la nube "evaluada, no comprometida"; el guardado
+  en storage ya corre (RM-040), el servicio de Juegos existe y no aparece, y "apoyo a
+  conductores" sigue listado como "más adelante, no comprometido" cuando ya está en
+  pie ([[RM-041]]). Tampoco menciona que qué servicios ve cada programa se declara en
+  `src/data/program-services.ts` ([[RM-055]]).
+- **Impacto futuro:** es la puerta de entrada del repo y hoy describe un producto más
+  chico del que hay; quien llegue nuevo va a buscar en el lugar equivocado, y el
+  criterio de que un programa no se entera de los servicios que no tiene no está
+  escrito en ningún lado que se lea antes del código.
+- **Fecha:** 2026-08-23 · **Estado:** Abierto
+
+---
+
 ## [TD-022] El juego no avisa nada mientras carga su chunk
 - **Ubicación:** `apps/web/src/game/catalog/GameMount.tsx`
 - **Riesgo:** 3/10

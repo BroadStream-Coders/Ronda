@@ -257,8 +257,8 @@ cualquiera de estas tareas, no se repite acá.
 - **Por qué importa:** en el tier gratuito lo que se acaba primero no es el
   almacenamiento sino la **transferencia**, y hoy cada apertura del colector baja
   el paquete completo de imágenes. Cuando entren los juegos con imágenes
-  ([[RM-067]], [[RM-068]], [[RM-069]]) y la tablet ([[RM-041]]) el mismo paquete se
-  baja varias veces más por emisión.
+  ([[RM-067]], [[RM-068]], [[RM-069]]) el mismo paquete se baja varias veces más por
+  emisión. La vista del conductor no suma a esto: consume solo el `session.json`.
 - **Dónde engancha:** el recorte ya pasa por canvas (`kit/images/crop-image.ts`),
   así que hay dónde redimensionar sin agregar dependencias; y la subida es un solo
   punto (`data/collector-storage.ts`), no cinco.
@@ -266,28 +266,43 @@ cualquiera de estas tareas, no se repite acá.
   cuando una imagen no entra, y una medición de cuánto pesa hoy una sesión típica.
 - **Fecha:** 2026-08-16 · **Estado:** Abierto
 
-## [RM-041] Host: la vista del conductor
-- **Objetivo:** un tercer servicio del programa, junto a colectores y juegos: que el
-  conductor abra Ronda en su tablet durante el programa y consulte los datos que se
-  cargaron por el colector (leer, no editar). Tiene lógica propia — vista pensada
-  para pantalla táctil, acceso por rol dentro del programa y qué se muestra de cada
-  juego — que se desmenuza cuando toque la tarea.
-- **Nombre y rutas (decidido en [[RM-055]], no se rediscute):** el servicio se llama
-  `host` en código (el conductor es el *host* del programa; `tablet` mentiría el día
-  que lo abran desde un celular) y **"Vista del conductor"** en pantalla. Las rutas
-  siguen el mismo patrón que los otros dos servicios:
-  `/programs/<slug>/host/<gameId>`. La carpeta va en `app/programs/[slug]/host/`,
-  **fuera** del route group `(workspace)`: misma URL, pero layout propio, sin sidebar
-  y sin salida a colectores ni juegos — el conductor entra, navega sus juegos y no
-  tiene puerta de vuelta.
-- **Habilitación:** la clave `host` en `src/data/program-services.ts`; sin esa clave
-  el servicio no existe para el programa (no se ve, y la ruta responde 404).
-- **Ojo — son dos compuertas distintas:** que el *programa* tenga el servicio
-  (resuelto) y que el *usuario* sea conductor (no resuelto: `memberships` no tiene
-  columna `role`). El rol entra con esta tarea.
-- **Hecho cuando:** un conductor con acceso al programa entra desde una tablet y ve
-  los datos del juego cargado, legibles en pantalla táctil.
-- **Fecha:** 2026-08-13 · **Estado:** Abierto
+## [RM-082] El rol de conductor dentro del programa
+- **Objetivo:** distinguir *productor* de *conductor* dentro de un mismo programa.
+  Hoy `memberships` solo dice quién entra, no en calidad de qué: cualquier miembro
+  de un programa con el servicio `host` puede abrir la vista del conductor, y un
+  conductor puede abrir el colector y los juegos.
+- **Por qué quedó fuera de [[RM-041]]:** el servicio host no lo necesita para
+  funcionar (la compuerta del *programa* ya está: la clave `host` en
+  `src/data/program-services.ts`). Esto es la otra compuerta, la del *usuario*, y
+  arrastra migración + panel de admin, que es trabajo de otra naturaleza.
+- **Qué toca:** migración que agrega `role` a `memberships` (`producer` | `host`,
+  default `producer`) y sus policies; el alta de miembros e invitaciones en el admin
+  (`src/app/admin/users`, `src/app/admin/invitations`) para elegir rol; y el aterrizaje
+  al entrar: un conductor que abre `/programs/<slug>` va derecho a
+  `/programs/<slug>/host` en vez de ver el espacio de trabajo.
+- **Hecho cuando:** un conductor solo puede llegar a su vista, y un productor sigue
+  viendo todo lo suyo.
+- **Fecha:** 2026-08-23 · **Estado:** Abierto
+
+---
+
+## [RM-083] Las vistas por juego de la vista del conductor
+- **Objetivo:** el paraguas de las vistas del servicio `host`. El servicio ya corre
+  ([[RM-041]]) pero su catálogo (`src/host/catalog/views.ts`) está vacío: entra
+  **una vista por juego**, a pedido, no todas de golpe.
+- **Cómo entra cada una:** un archivo en `src/host/catalog/<juego>/View.tsx` que
+  recibe `{ session: unknown }`, lo valida con el guard `isData` que **ya existe** en
+  `src/collector/catalog/<juego>/schema.ts` (no se duplica el tipo: el contrato es del
+  colector, que es quien produce el archivo) y lo pinta en lectura. Después se registra
+  en `views.ts` y se agrega el id a la lista `host` del programa.
+- **Sin imágenes:** el host consume solo el `session.json` del storage. Un juego con
+  fotos necesita antes decidir cómo se sirven (URLs firmadas) — no está resuelto y no
+  se resuelve por adelantado.
+- **Hecho cuando:** no aplica de golpe; se cierra cuando el conductor tenga las vistas
+  que pida el programa.
+- **Fecha:** 2026-08-23 · **Estado:** Abierto
+
+---
 
 ## [RM-042] Centralizar la limpieza de datos (trim)
 - **Objetivo:** que todos los colectores apliquen trim (espacios accidentales al

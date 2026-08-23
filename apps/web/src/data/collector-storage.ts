@@ -76,6 +76,19 @@ export async function uploadCollectorData(
   if (stale.length > 0) await storage.remove(stale);
 }
 
+export async function loadCollectorSession(
+  programId: string,
+  collectorId: string,
+): Promise<unknown | null> {
+  const supabase = createClient();
+  const { data, error } = await supabase.storage
+    .from(BUCKET)
+    .download(`${prefix(programId, collectorId)}/${REMOTE_JSON}`);
+
+  if (error || !data) return null;
+  return JSON.parse(await data.text());
+}
+
 export async function downloadCollectorData(
   programId: string,
   collectorId: string,

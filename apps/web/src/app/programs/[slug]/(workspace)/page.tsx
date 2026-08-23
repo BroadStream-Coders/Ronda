@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
-import { ArrowRight, ClipboardList, Gamepad2 } from "lucide-react";
+import { ArrowRight, ClipboardList, Gamepad2, Tv } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
 import { createClient } from "@/data/supabase/server";
@@ -8,10 +8,12 @@ import { getProgramBySlug } from "@/data/programs";
 import {
   getProgramCollectors,
   getProgramGames,
+  getProgramHostGames,
   hasService,
 } from "@/data/program-services";
 import { registry } from "@/collector/catalog/registry";
 import { metas as gameMetas } from "@/game/catalog/metas";
+import { views as hostViews } from "@/host/catalog/views";
 
 function ServiceCard({
   href,
@@ -70,6 +72,9 @@ export default async function DashboardPage({
   const games = hasService(program.id, "games")
     ? getProgramGames(program.id).filter((id) => gameMetas[id]).length
     : null;
+  const host = hasService(program.id, "host")
+    ? getProgramHostGames(program.id).filter((id) => hostViews[id]).length
+    : null;
 
   return (
     <div className="mx-auto w-full max-w-6xl px-6 py-10 sm:px-8">
@@ -100,6 +105,16 @@ export default async function DashboardPage({
             title="Juegos"
             description="Emite los juegos en pantalla durante la transmisión, con lo que tu equipo cargó en el colector."
             count={games}
+          />
+        )}
+
+        {host !== null && (
+          <ServiceCard
+            href={`/programs/${slug}/host`}
+            icon={Tv}
+            title="Vista del conductor"
+            description="La consulta en tablet durante el aire: los datos del colector, en modo lectura."
+            count={host}
           />
         )}
       </div>

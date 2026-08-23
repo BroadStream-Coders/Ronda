@@ -78,6 +78,13 @@ Ver [README.md](README.md) para el panorama y `docs/logbook/` para el estado.
   Ahí están el procedimiento, las trampas que ya costaron caro y la lista de lo que el
   kit todavía no tiene.
 
+- **Host — la vista del conductor.** `src/host/` es el tercer servicio, con la misma
+  forma que los otros dos: `kit/` (`HostShell`, que carga y muestra estados) +
+  `catalog/` (`views.ts`, una vista por juego). Es **solo lectura y solo JSON**: lee
+  el `session.json` que dejó el colector en el bucket (`loadCollectorSession`) y no
+  baja imágenes. Cada vista valida con el guard `isData` del colector correspondiente
+  — el contrato del archivo es del colector, no se duplica el tipo. Corre fuera del
+  route group `(workspace)`: sin sidebar y sin vuelta al espacio de trabajo.
 - **Assets de juego = código, datos de sesión = archivo/storage.** Marcos, fuentes y
   sonidos son parte del juego: viven en `public/games/<juego>/` (o `public/games/shared/`
   lo compartido), los sirve el CDN de Vercel y cambian con un deploy. **No van a Supabase

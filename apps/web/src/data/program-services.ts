@@ -26,6 +26,7 @@ export const programServices: Record<string, ProgramServices> = {
       "tres-en-raya",
     ],
     games: ["deletreo", "calculo-mental"],
+    host: [],
   },
   "a379ba63-30eb-4acc-95b4-5080b02c7516": {
     name: "Más Conectados",
@@ -44,4 +45,8 @@ export function getProgramCollectors(programId: string): string[] {
 
 export function getProgramGames(programId: string): string[] {
   return programServices[programId]?.games ?? [];
+}
+
+export function getProgramHostGames(programId: string): string[] {
+  return programServices[programId]?.host ?? [];
 }

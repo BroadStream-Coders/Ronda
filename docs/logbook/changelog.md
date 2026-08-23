@@ -12,6 +12,10 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [RM-041] Host: el servicio de consulta del conductor (2026-08-23 14:55)
+Tercer servicio en pie: `src/host/` (`kit/` con `HostShell` + `catalog/` con el registro de vistas), rutas `/programs/<slug>/host[/<gameId>]` fuera del route group `(workspace)` — misma forma de URL que los otros dos, pero layout propio de tablet, sin sidebar y sin puerta de vuelta al espacio de trabajo.
+Lee el `session.json` que ya deja el colector en el bucket (`loadCollectorSession`, solo JSON, sin imágenes) y no necesitó migración: las policies de RM-040 ya dejan leer a cualquier miembro del programa. Queda habilitado y vacío para Que Gane El Mejor; las vistas por juego van en [[RM-083]] y el rol de conductor en [[RM-082]].
+
 ## [RM-055] Un solo lugar declara qué servicios tiene cada programa (2026-08-23 14:33)
 Se eligió la opción (1): `src/data/program-services.ts` reemplaza los dos `catalog/assignments.ts`, con la clave del servicio presente = contratado y ausente = inexistente (`hasService`), lo que separa "contratado y vacío" de "no lo tiene".
 El sidebar y el dashboard ya no muestran el teaser "Pronto" de un servicio no contratado, y cada segmento (`collectors/layout.tsx`, `games/layout.tsx`) responde 404 si el programa no tiene el servicio: antes `/games` se abría para cualquiera con un estado vacío.
