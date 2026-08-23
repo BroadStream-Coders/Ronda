@@ -61,30 +61,6 @@ Al terminar una tarea se mueve al changelog y se borra de aquí.
 
 ---
 
-## [RM-055] Cómo se declara qué servicios tiene cada programa
-- **Objetivo:** un solo lugar donde se declara qué servicios tiene contratado un
-  programa y qué le toca de cada uno, en vez de una lista por sistema. Hoy
-  `collector/catalog/assignments.ts` y `game/catalog/assignments.ts` repiten el uuid
-  y el nombre del programa; con la tablet ([[RM-041]]) serían tres archivos y tres
-  lugares donde olvidarse de uno.
-- **Por qué es RM y no deuda:** lo de hoy funciona y es coherente — cada sistema
-  autocontenido con su propia asignación. Lo que falta no es corregir un error, es
-  **tomar una decisión de modelo** que recién se puede tomar bien con el tercer
-  servicio a la vista: Más Conectados tiene colector y juegos; Que Gane El Mejor va
-  a tener además el display en tablet.
-- **Decisión abierta (elegir al construir el tercer servicio):** (1) un archivo por
-  programa con `{ collectors, games, tablet }` y un getter por servicio — lo más
-  corto, pero el archivo crece con cada servicio; (2) un registro de servicios donde
-  cada servicio declara su catálogo y el programa solo lista qué servicios tiene más
-  su selección — más indirecto, pero sumar un servicio no toca a los otros; (3)
-  llevarlo a la base (`program_services`), que es donde termina cuando la asignación
-  deje de estar hardcodeada y la maneje el panel de admin.
-- **Hecho cuando:** dar de alta un programa o habilitarle un servicio se hace en un
-  solo lugar, y los tres servicios leen de ahí.
-- **Fecha:** 2026-08-20 · **Estado:** Abierto
-
----
-
 # Juegos — el núcleo del negocio
 
 `RM-038` es el paraguas. Debajo va **un juego por tarea**: los que se portan desde
@@ -290,12 +266,25 @@ cualquiera de estas tareas, no se repite acá.
   cuando una imagen no entra, y una medición de cuánto pesa hoy una sesión típica.
 - **Fecha:** 2026-08-16 · **Estado:** Abierto
 
-## [RM-041] Servicio de consulta en tablet para conductores
+## [RM-041] Host: la vista del conductor
 - **Objetivo:** un tercer servicio del programa, junto a colectores y juegos: que el
-  conductor abra Ronda en una tablet durante el programa y consulte los datos que se
+  conductor abra Ronda en su tablet durante el programa y consulte los datos que se
   cargaron por el colector (leer, no editar). Tiene lógica propia — vista pensada
-  para tablet, acceso por rol dentro del programa y qué se muestra de cada juego —
-  que se desmenuza cuando toque la tarea.
+  para pantalla táctil, acceso por rol dentro del programa y qué se muestra de cada
+  juego — que se desmenuza cuando toque la tarea.
+- **Nombre y rutas (decidido en [[RM-055]], no se rediscute):** el servicio se llama
+  `host` en código (el conductor es el *host* del programa; `tablet` mentiría el día
+  que lo abran desde un celular) y **"Vista del conductor"** en pantalla. Las rutas
+  siguen el mismo patrón que los otros dos servicios:
+  `/programs/<slug>/host/<gameId>`. La carpeta va en `app/programs/[slug]/host/`,
+  **fuera** del route group `(workspace)`: misma URL, pero layout propio, sin sidebar
+  y sin salida a colectores ni juegos — el conductor entra, navega sus juegos y no
+  tiene puerta de vuelta.
+- **Habilitación:** la clave `host` en `src/data/program-services.ts`; sin esa clave
+  el servicio no existe para el programa (no se ve, y la ruta responde 404).
+- **Ojo — son dos compuertas distintas:** que el *programa* tenga el servicio
+  (resuelto) y que el *usuario* sea conductor (no resuelto: `memberships` no tiene
+  columna `role`). El rol entra con esta tarea.
 - **Hecho cuando:** un conductor con acceso al programa entra desde una tablet y ve
   los datos del juego cargado, legibles en pantalla táctil.
 - **Fecha:** 2026-08-13 · **Estado:** Abierto

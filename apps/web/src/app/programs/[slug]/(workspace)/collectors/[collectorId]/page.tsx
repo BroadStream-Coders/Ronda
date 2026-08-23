@@ -3,7 +3,7 @@ import { notFound, redirect } from "next/navigation";
 import { CollectorTopbar, NoticeStack } from "@/collector/kit";
 import { createClient } from "@/data/supabase/server";
 import { getProgramBySlug } from "@/data/programs";
-import { getProgramCollectors } from "@/collector/catalog/assignments";
+import { getProgramCollectors } from "@/data/program-services";
 import { registry } from "@/collector/catalog/registry";
 
 export default async function CollectorPage({

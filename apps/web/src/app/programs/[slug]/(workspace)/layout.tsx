@@ -5,9 +5,12 @@ import { notFound, redirect } from "next/navigation";
 import { ProgramSidebar } from "@/components/program-sidebar";
 import { createClient } from "@/data/supabase/server";
 import { getProgramBySlug } from "@/data/programs";
-import { getProgramCollectors } from "@/collector/catalog/assignments";
+import {
+  getProgramCollectors,
+  getProgramGames,
+  hasService,
+} from "@/data/program-services";
 import { registry } from "@/collector/catalog/registry";
-import { getProgramGames } from "@/game/catalog/assignments";
 import { metas as gameMetas } from "@/game/catalog/metas";
 
 export default async function WorkspaceLayout({
@@ -28,21 +31,25 @@ export default async function WorkspaceLayout({
   const program = await getProgramBySlug(slug);
   if (!program) notFound();
 
-  const collectors = getProgramCollectors(program.id)
-    .filter((id) => registry[id])
-    .map((id) => {
-      const { meta } = registry[id];
-      const Icon = meta.icon;
-      return { id, name: meta.name, icon: <Icon /> };
-    });
+  const collectors = hasService(program.id, "collectors")
+    ? getProgramCollectors(program.id)
+        .filter((id) => registry[id])
+        .map((id) => {
+          const { meta } = registry[id];
+          const Icon = meta.icon;
+          return { id, name: meta.name, icon: <Icon /> };
+        })
+    : null;
 
-  const games = getProgramGames(program.id)
-    .filter((id) => gameMetas[id])
-    .map((id) => {
-      const meta = gameMetas[id];
-      const Icon = meta.icon;
-      return { id, name: meta.name, icon: <Icon /> };
-    });
+  const games = hasService(program.id, "games")
+    ? getProgramGames(program.id)
+        .filter((id) => gameMetas[id])
+        .map((id) => {
+          const meta = gameMetas[id];
+          const Icon = meta.icon;
+          return { id, name: meta.name, icon: <Icon /> };
+        })
+    : null;
 
   const name = (user.user_metadata.full_name ?? user.user_metadata.name) as
     | string

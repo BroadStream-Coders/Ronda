@@ -12,6 +12,10 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [RM-055] Un solo lugar declara qué servicios tiene cada programa (2026-08-23 14:33)
+Se eligió la opción (1): `src/data/program-services.ts` reemplaza los dos `catalog/assignments.ts`, con la clave del servicio presente = contratado y ausente = inexistente (`hasService`), lo que separa "contratado y vacío" de "no lo tiene".
+El sidebar y el dashboard ya no muestran el teaser "Pronto" de un servicio no contratado, y cada segmento (`collectors/layout.tsx`, `games/layout.tsx`) responde 404 si el programa no tiene el servicio: antes `/games` se abría para cualquiera con un estado vacío.
+
 ## [TD-083] Las tarjetas de programas recortaban el arte del landing (2026-08-21 12:10)
 La caja de la imagen era `h-[150px]` fija contra archivos de 400x460: con `object-cover` se veía una franja del centro. Ahora la caja lleva `aspect-[20/23]`, la proporción real de los archivos, así que la tarjeta crece y el arte entra completo, sin franjas ni recorte.
 

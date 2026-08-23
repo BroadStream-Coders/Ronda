@@ -42,6 +42,16 @@ Ver [README.md](README.md) para el panorama y `docs/logbook/` para el estado.
   no en infraestructura separada. Modelo: `programs → memberships → games → sessions`.
   (El *tenant* es el programa; en código usamos siempre `program`, nunca `tenant` ni
   `project`.)
+- **Servicios por programa:** qué servicios tiene contratado cada programa se declara
+  **solo** en `src/data/program-services.ts` (`collectors`, `games`, `host`). Regla:
+  **clave presente = contratado** (aunque la lista esté vacía → estado vacío legítimo);
+  **clave ausente = el servicio no existe para ese programa** — no se pinta en el
+  sidebar ni en el dashboard, y su segmento de ruta responde 404 (`hasService` en el
+  `layout.tsx` del servicio). Nada de teasers tipo "Pronto": un programa no se entera
+  de los servicios que no tiene. El mapa va indexado por uuid del programa (no por
+  slug: el slug se recalcula al renombrar); el campo `name` es solo para leerlo a ojo.
+  Cuando la asignación la maneje el panel de admin, este módulo pasa a leer una tabla
+  `program_services` sin mover los call sites.
 - **Juegos — no es Unity.** `src/game/` es el segundo servicio, con la misma forma
   que `src/collector/`: `kit/` (el sistema) + `catalog/` (un juego por carpeta con
   su ficha `GameType`). Vino del proyecto **Games**, que sí era un mini-editor estilo

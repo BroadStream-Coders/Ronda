@@ -30,8 +30,8 @@ interface ProgramSidebarProps {
   slug: string;
   programName: string;
   user: SidebarUser;
-  collectors: SidebarItem[];
-  games: SidebarItem[];
+  collectors: SidebarItem[] | null;
+  games: SidebarItem[] | null;
   defaultCollapsed?: boolean;
 }
 
@@ -259,18 +259,20 @@ export function ProgramSidebar({
           {!collapsed && <span className="truncate">Inicio</span>}
         </Link>
 
-        <ServiceBranch
-          label="Colectores"
-          icon={<ClipboardList className="size-4 shrink-0" />}
-          href={collectorsHref}
-          items={collectors}
-          collapsed={collapsed}
-          open={open === "collectors"}
-          onToggle={() => toggleBranch("collectors")}
-          active={pathname === collectorsHref}
-        />
+        {collectors && (
+          <ServiceBranch
+            label="Colectores"
+            icon={<ClipboardList className="size-4 shrink-0" />}
+            href={collectorsHref}
+            items={collectors}
+            collapsed={collapsed}
+            open={open === "collectors"}
+            onToggle={() => toggleBranch("collectors")}
+            active={pathname === collectorsHref}
+          />
+        )}
 
-        {games.length > 0 ? (
+        {games && (
           <ServiceBranch
             label="Juegos"
             icon={<Gamepad2 className="size-4 shrink-0" />}
@@ -282,24 +284,6 @@ export function ProgramSidebar({
             active={pathname === gamesHref}
             className="mt-1"
           />
-        ) : (
-          <span
-            title={collapsed ? "Juegos - Pronto" : undefined}
-            className={cn(
-              navRow(collapsed),
-              "mt-1 cursor-default text-muted-foreground/50",
-            )}
-          >
-            <Gamepad2 className="size-4 shrink-0" />
-            {!collapsed && (
-              <>
-                <span className="truncate">Juegos</span>
-                <span className="ml-auto rounded-full bg-muted px-2 py-0.5 text-xs text-muted-foreground">
-                  Pronto
-                </span>
-              </>
-            )}
-          </span>
         )}
       </nav>
 

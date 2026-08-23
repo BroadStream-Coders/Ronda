@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { ArrowUpRight, Gamepad2 } from "lucide-react";
 
-import { getProgramGames } from "@/game/catalog/assignments";
+import { getProgramGames } from "@/data/program-services";
 import { metas } from "@/game/catalog/metas";
 import { getProgramBySlug } from "@/data/programs";
 import { createClient } from "@/data/supabase/server";

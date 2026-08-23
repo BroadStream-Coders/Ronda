@@ -1,6 +1,6 @@
 import { notFound, redirect } from "next/navigation";
 
-import { getProgramGames } from "@/game/catalog/assignments";
+import { getProgramGames } from "@/data/program-services";
 import { GameMount } from "@/game/catalog/GameMount";
 import { metas } from "@/game/catalog/metas";
 import { getProgramBySlug } from "@/data/programs";
