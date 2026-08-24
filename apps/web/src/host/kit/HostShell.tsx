@@ -25,28 +25,38 @@ export function HostShell({
   backHref: string;
   View: HostView;
 }) {
-  const [session, setSession] = useState<unknown>(null);
-  const [status, setStatus] = useState<Status>("loading");
   const [reload, setReload] = useState(0);
+  const [loaded, setLoaded] = useState<{
+    key: string;
+    status: Status;
+    session: unknown;
+  }>({ key: "", status: "loading", session: null });
+
+  const key = `${programId}|${gameId}|${reload}`;
+  const fresh = loaded.key === key;
+  const status = fresh ? loaded.status : "loading";
+  const session = fresh ? loaded.session : null;
 
   useEffect(() => {
     let alive = true;
-    setStatus("loading");
 
     loadCollectorSession(programId, gameId)
       .then((data) => {
         if (!alive) return;
-        setSession(data);
-        setStatus(data == null ? "empty" : "ready");
+        setLoaded({
+          key,
+          status: data == null ? "empty" : "ready",
+          session: data,
+        });
       })
       .catch(() => {
-        if (alive) setStatus("error");
+        if (alive) setLoaded({ key, status: "error", session: null });
       });
 
     return () => {
       alive = false;
     };
-  }, [programId, gameId, reload]);
+  }, [programId, gameId, key]);
 
   return (
     <div className="flex h-full min-h-0 flex-col">
