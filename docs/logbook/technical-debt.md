@@ -16,18 +16,19 @@ reutiliza). Al resolverse se mueve al `changelog.md` conservando su código.
 
 ---
 
-## [TD-085] El middleware corre entero para pedir un .mp3
+## [TD-085] El middleware corre entero para servir un asset estático
 - **Ubicación:** `apps/web/middleware.ts:11`
-- **Riesgo:** 5/10
-- **Problema:** el matcher excluye `svg|png|jpg|jpeg|gif|webp` pero **no `mp3`**, así
-  que cada sonido de juego entra a `updateSession` y dispara `getClaims()` +
-  `getUser()` + un `select` a `programs` contra Supabase. Los juegos precargan sus
-  sonidos al montar (`preloadMedia`), o sea varias rondas de red por partida solo para
-  servir un archivo estático que ni siquiera necesita sesión.
-- **Impacto futuro:** latencia extra al entrar a cada juego y carga innecesaria en
-  Supabase, que crece con cada juego y cada sonido nuevo. Si algún día un juego se
-  emite desde una ruta sin sesión, el audio se redirige en vez de sonar. El arreglo es
-  una línea: agregar `mp3|wav|ogg|woff2?` a la alternancia de extensiones del matcher.
+- **Riesgo:** 7/10
+- **Problema:** el matcher excluye `svg|png|jpg|jpeg|gif|webp` pero **no `mp3` ni
+  `mp4`**, así que cada sonido y cada video entra a `updateSession` y dispara
+  `getClaims()` + `getUser()` + un `select` a `programs` contra Supabase, solo para
+  servir un archivo estático que ni siquiera necesita sesión. Con video es peor: el
+  navegador lo pide por trozos (Range requests), o sea varias rondas por reproducción.
+- **Impacto futuro:** con `background-blue.mp4` (13,9 MB) ya en el repo, esto se mete
+  en el camino de la carga de un juego **que se emite en vivo**. El arreglo es una
+  línea: agregar `mp3|mp4|webm|wav|ogg|woff2?` a la alternancia de extensiones. Va
+  **antes** de que el video se cablee a un juego, no después.
+- **Bloquea a:** [[RM-086]].
 - **Fecha:** 2026-08-24 · **Estado:** Abierto
 
 ---

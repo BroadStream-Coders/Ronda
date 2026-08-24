@@ -93,7 +93,8 @@ Ver [README.md](README.md) para el panorama y `docs/logbook/` para el estado.
 
 - **Los assets se agrupan por programa, no por juego.** Imágenes y audio viven en
   `public/programs/<programa>/games/<juego>/`, y lo que comparten varios juegos **del
-  mismo programa** en `public/programs/<programa>/shared/`. Las fuentes son la excepción
+  mismo programa** en `public/programs/<programa>/shared/`, separado por medio:
+  `shared/audio/` y `shared/video/`. Las fuentes son la excepción
   de ubicación: van en `src/programs/<programa>/fonts/`, un módulo por tipografía, porque
   `next/font/local` necesita importarlas y así emite el preload y el hash solo; se guardan
   en **woff2**, no ttf (pesa un 70% menos). **Nada cruza programas**: si dos programas
@@ -104,6 +105,17 @@ Ver [README.md](README.md) para el panorama y `docs/logbook/` para el estado.
   cambian con un deploy, así que renombrar el programa no mueve carpetas.
   `public/clients/` queda fuera de esto — es marketing de la landing, propiedad de la
   plataforma.
+
+- **Video: H.264 en `.mp4`, y no se busca el archivo más chico.** Los juegos precargan
+  sus assets antes de salir al aire, así que el peso deja de ser la restricción; lo que
+  importa es que **ningún frame falle en vivo**. Por eso H.264 y no VP9/AV1: es el único
+  con decodificación por hardware garantizada en cualquier máquina, y el programa puede
+  emitirse desde un equipo que hoy no conocemos. Receta: `libx264 -crf 18 -preset slow
+  -profile:v high -level 4.0 -pix_fmt yuv420p -movflags +faststart -an`, a la resolución
+  exacta de emisión (1080p) y **sin pista de audio** — un fondo no la necesita y el
+  navegador exige `muted` para autoplay igual. CRF 18 y no más alto porque estos fondos
+  son degradados suaves, donde el riesgo real es el **banding**, que ninguna métrica
+  automática detecta: se valida a ojo en el monitor de emisión.
 
 - **Las animaciones son parts sin vista.** Un layer declara `pop`, `shake`, `bounce` o
   `slide` en sus `parts[]` como data; no dibujan nada. `useLayerAnimations` las lee del

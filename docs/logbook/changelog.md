@@ -12,6 +12,10 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [RM-085] Video de fondo de Que Gane El Mejor, comprimido y ubicado (2026-08-24 13:05)
+`shared/` se separa por medio (`audio/`, `video/`); los dos mp3 bajan a `shared/audio/` y entra `shared/video/background-blue.mp4`. Se descartó `backgroundLilac`.
+El original venía a 18.6 Mbps (43 MB); queda en H.264 CRF 18 a 13.3 MB (69% menos, SSIM 0.9949). Se eligió H.264 sobre VP9/AV1 a propósito: con precarga el peso deja de mandar y manda la decodificación por hardware garantizada, porque el equipo de emisión puede cambiar. Receta en `CLAUDE.md`; la precarga bloqueante es [[RM-086]].
+
 ## [RM-084] Assets separados por programa (2026-08-24 12:26)
 `public/programs/<programa>/games/<juego>/` + `.../shared/` y `src/programs/<programa>/fonts/` reemplazan a `public/games/` y `src/game/fonts/`: nada cruza programas, y lo que dos comparten (los dos sonidos, GeniusTechno, Poppins) se duplica a propósito.
 `public/clientes/` → `public/clients/` por la regla de idioma; el catálogo (`src/game/catalog/`, `src/collector/catalog/`) queda indexado por slug global a propósito, esperando a que evolucione a algo genérico.

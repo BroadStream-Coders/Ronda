@@ -10,6 +10,28 @@ Al terminar una tarea se mueve al changelog y se borra de aquí.
 
 ---
 
+## [RM-086] Los assets se cargan enteros antes de que el juego arranque
+- **Objetivo:** que un juego no pueda empezar hasta tener **todos** sus assets en
+  memoria. Se emite en vivo: que un fondo se corte a mitad de programa porque el
+  internet parpadeó es inaceptable. Que la carga inicial demore no es problema.
+- **Lo que está mal hoy:** `preloadMedia` (`src/game/kit/media.ts`) dispara las cargas
+  y no espera a nadie — no devuelve promesa, no avisa cuándo terminó y nadie bloquea
+  el arranque con eso. Además solo distingue audio de imagen: un `.mp4` cae en la rama
+  de imagen (`new Image().src = "…mp4"`) y falla en silencio.
+- **Lo que hace falta:** que `preloadMedia` devuelva una promesa que resuelva cuando
+  todo esté realmente listo (`canplaythrough` para audio y video, `decode()` para
+  imágenes), una rama para video, y que `GameShell` no monte la lógica hasta que
+  resuelva. Con una pantalla de carga, que puede tardar lo que sea.
+- **Ojo — precargar resuelve la red, no la decodificación.** Aunque el archivo esté
+  entero en memoria, cada frame se decodifica en tiempo real durante la reproducción.
+  Por eso el video va en H.264 (ver `CLAUDE.md`): esto y la elección de códec son dos
+  mitades del mismo requisito, no se cubre una sola.
+- **Hecho cuando:** un juego con video y sonidos no muestra nada hasta tenerlo todo
+  cargado, y cortar la red después de que arrancó no lo afecta.
+- **Fecha:** 2026-08-24 · **Estado:** Abierto
+
+---
+
 ## [RM-081] El cursor en pantalla completa lo decide cada juego
 - **Objetivo:** que la ficha del juego declare si el cursor se oculta al entrar en
   pantalla completa. Hoy se oculta siempre, y **De Par en Par necesita el mouse**

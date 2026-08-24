@@ -147,10 +147,13 @@ cada día. Son dos cosas y van a dos lugares.
 desde otro: si dos programas usan el mismo archivo, **se duplica a propósito**. Es lo
 que permite borrar todo lo de un programa sin tocar a los demás.
 
-- **Imágenes y audio** → `public/programs/<programa>/games/<juego>/`, y lo que comparten
-  varios juegos **del mismo programa** en `public/programs/<programa>/shared/`. Los sirve
-  el CDN de Vercel sin configurar nada. **Nunca a Supabase Storage** — ese bucket es
-  para el colector.
+- **Imágenes, audio y video** → `public/programs/<programa>/games/<juego>/`, y lo que
+  comparten varios juegos **del mismo programa** en `public/programs/<programa>/shared/`,
+  separado por medio (`shared/audio/`, `shared/video/`). Los sirve el CDN de Vercel sin
+  configurar nada. **Nunca a Supabase Storage** — ese bucket es para el colector.
+- **El video va en H.264/`.mp4`**, no en VP9 ni AV1: la receta y el porqué están en
+  `CLAUDE.md`. Resumen: se emite en vivo desde una máquina que puede cambiar, así que
+  manda la decodificación por hardware garantizada, no el tamaño del archivo.
 - **Fuentes** → `src/programs/<programa>/fonts/`, un módulo por tipografía. Van en
   `src/` y no en `public/` porque `next/font` necesita importarlas, y a cambio emite
   el `<link rel="preload">` y el hash solo. Una tipografía que usen dos programas se

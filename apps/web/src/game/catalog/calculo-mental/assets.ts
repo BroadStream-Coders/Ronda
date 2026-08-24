@@ -8,8 +8,8 @@ export const FRAMES = {
 };
 
 export const SOUNDS = {
-  correct: "/programs/que-gane-el-mejor/shared/correct.mp3",
-  incorrect: "/programs/que-gane-el-mejor/shared/incorrect.mp3",
+  correct: "/programs/que-gane-el-mejor/shared/audio/correct.mp3",
+  incorrect: "/programs/que-gane-el-mejor/shared/audio/incorrect.mp3",
 };
 
 export const PRELOAD = [
