@@ -4,20 +4,13 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowLeft, RefreshCw } from "lucide-react";
 
+import { ThemeToggle } from "@/components/theme-toggle";
 import { loadCollectorSession } from "@/data/collector-storage";
 import { cn } from "@/lib/utils";
+import { HostMessage } from "./HostMessage";
 import type { HostView } from "./host";
 
 type Status = "loading" | "ready" | "empty" | "error";
-
-function Message({ title, detail }: { title: string; detail: string }) {
-  return (
-    <div className="flex flex-col items-center gap-2 px-6 py-20 text-center">
-      <p className="text-lg font-medium">{title}</p>
-      <p className="max-w-md text-base text-muted-foreground">{detail}</p>
-    </div>
-  );
-}
 
 export function HostShell({
   programId,
@@ -78,20 +71,21 @@ export function HostShell({
           />
           Actualizar
         </button>
+        <ThemeToggle className="size-11 shrink-0 rounded-xl" />
       </header>
 
-      <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain">
+      <div className="flex min-h-0 flex-1 flex-col">
         {status === "loading" && (
-          <Message title="Cargando" detail="Buscando los datos del programa." />
+          <HostMessage title="Cargando" detail="Buscando los datos del programa." />
         )}
         {status === "empty" && (
-          <Message
+          <HostMessage
             title="Todavía no hay datos"
             detail="Cuando el equipo guarde este juego en el colector, aparecerá acá."
           />
         )}
         {status === "error" && (
-          <Message
+          <HostMessage
             title="No se pudieron cargar los datos"
             detail="Revisa la conexión y toca Actualizar."
           />

@@ -3,6 +3,7 @@ import { notFound, redirect } from "next/navigation";
 import { ChevronRight, Tv } from "lucide-react";
 
 import { AccountMenu } from "@/components/account-menu";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { createClient } from "@/data/supabase/server";
 import { getProgramBySlug } from "@/data/programs";
 import { getProgramHostGames } from "@/data/program-services";
@@ -49,6 +50,7 @@ export default async function HostIndexPage({
             Vista del conductor
           </span>
         </span>
+        <ThemeToggle className="size-11 shrink-0 rounded-xl" />
         <span className="size-11 shrink-0">
           <AccountMenu
             user={{

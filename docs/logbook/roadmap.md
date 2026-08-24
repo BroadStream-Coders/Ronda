@@ -298,9 +298,17 @@ cualquiera de estas tareas, no se repite acá.
 - **Sin imágenes:** el host consume solo el `session.json` del storage. Un juego con
   fotos necesita antes decidir cómo se sirven (URLs firmadas) — no está resuelto y no
   se resuelve por adelantado.
+- **Ya entraron:** Deletreo (`src/host/catalog/deletreo/View.tsx`), que trajo al kit
+  `HostTable` (la grilla: columnas declarativas, numeración y las bandas escalonadas
+  que evitan saltarse una fila), `HostSwitch` (alternar entre dos armados de la misma
+  data), `RoundTabs` (pestañas de ronda al pie) y `HostMessage`.
+- **La grilla es por juego:** cada vista declara sus columnas; `HostTable` no sabe de
+  palabras ni de preguntas. Un juego con pregunta + opciones + respuesta correcta
+  declara cuatro columnas y no toca el kit — salvo que pida algo que el kit no tiene
+  todavía, y entonces esa pieza se escribe en `kit/`, no en la carpeta del juego.
 - **Hecho cuando:** no aplica de golpe; se cierra cuando el conductor tenga las vistas
   que pida el programa.
-- **Fecha:** 2026-08-23 · **Estado:** Abierto
+- **Fecha:** 2026-08-23 · **Estado:** En progreso (2026-08-23)
 
 ---
 
