@@ -12,6 +12,10 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [TD-087] El middleware ya no consulta la base en cada navegación (2026-08-24 13:34)
+`updateSession` corría `getUser()` + un `select` a `programs` en toda ruta que no fuera `/`, `/auth` o `/api`, solo para mandar al inicio a un usuario logueado sin ningún programa. Se eliminó: `/programs` ya hace ese chequeo con `listPrograms()` y `/programs/[slug]/**` lo cubre vía RLS (`getProgramBySlug` devuelve null → 404), y ambos layouts además redirigen al anónimo, cosa que el middleware no hacía.
+Cada navegación de usuario logueado deja de costar un viaje a Auth más una query a Postgres; queda solo `getClaims()` para refrescar la sesión. La rama `/admin` no se tocó.
+
 ## [TD-085] Los assets estáticos ya no pasan por el middleware (2026-08-24 13:29)
 El matcher excluía imágenes pero no `mp3` ni `mp4`, así que cada sonido y cada trozo de video disparaba `getUser()` + un `select` a `programs` contra Supabase para servir un archivo que no necesita sesión. Se agregaron `avif|ico|mp3|mp4|webm|wav|ogg`.
 No se pierde ninguna protección: el middleware ya dejaba pasar a los anónimos (el redirect solo corre `if (user)`), o sea que cobraba el viaje sin bloquear nada.

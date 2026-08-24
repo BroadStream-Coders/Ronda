@@ -45,22 +45,5 @@ export async function updateSession(request: NextRequest) {
     return response;
   }
 
-  if (pathname !== "/" && !pathname.startsWith("/auth") && !pathname.startsWith("/api")) {
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-
-    if (user) {
-      const { data: programs } = await supabase
-        .from("programs")
-        .select("id")
-        .limit(1);
-
-      if (!programs?.length) {
-        return NextResponse.redirect(new URL("/", request.url));
-      }
-    }
-  }
-
   return response;
 }
