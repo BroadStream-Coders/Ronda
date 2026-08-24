@@ -78,9 +78,6 @@ src/game/
 │   ├── use-game-setting.ts              #   preferencias en localStorage
 │   ├── parts/                           #   parts nativas (ver §9)
 │   └── animations/                      #   context + parts + use-layer-animations
-├── fonts/                               # tipografías COMPARTIDAS
-│   ├── <tipografia>.ts + .woff2         #   un módulo por tipografía (local)
-│   └── <tipografia>.ts                  #   de Google: sin archivo en el repo
 └── catalog/
     ├── metas.ts                         #   id → GameMeta (plano, sin la ficha)
     ├── assignments.ts                   #   qué juegos ve cada programa
@@ -146,14 +143,19 @@ interface GameType {
 sonidos son parte del juego: cambian con un deploy. Lo que produce el colector cambia
 cada día. Son dos cosas y van a dos lugares.
 
-- **Imágenes y audio** → `public/games/<juego>/` y `public/games/shared/`. Los sirve
+**Y todo se agrupa por programa, no por juego.** Nada de un programa es alcanzable
+desde otro: si dos programas usan el mismo archivo, **se duplica a propósito**. Es lo
+que permite borrar todo lo de un programa sin tocar a los demás.
+
+- **Imágenes y audio** → `public/programs/<programa>/games/<juego>/`, y lo que comparten
+  varios juegos **del mismo programa** en `public/programs/<programa>/shared/`. Los sirve
   el CDN de Vercel sin configurar nada. **Nunca a Supabase Storage** — ese bucket es
   para el colector.
-- **Fuentes** → `src/game/fonts/`, **compartidas**, un módulo por tipografía. Van en
+- **Fuentes** → `src/programs/<programa>/fonts/`, un módulo por tipografía. Van en
   `src/` y no en `public/` porque `next/font` necesita importarlas, y a cambio emite
-  el `<link rel="preload">` y el hash solo. **Nunca una copia por juego**: una misma
-  tipografía puede ir en la mayoría del catálogo, y duplicarla son N lugares para
-  actualizar y N oportunidades de que uno quede viejo.
+  el `<link rel="preload">` y el hash solo. Una tipografía que usen dos programas se
+  copia en los dos: son ~40 KB en el repo y cero en runtime, porque `next/font/local`
+  hashea por módulo y ningún programa carga la página del otro.
 - **Un módulo por tipografía, nunca un barril con todas.** `next/font` atribuye la
   fuente por **grafo de módulos**, no por uso real: un barril que instancie varias
   las precarga todas en cualquier ruta que lo toque.

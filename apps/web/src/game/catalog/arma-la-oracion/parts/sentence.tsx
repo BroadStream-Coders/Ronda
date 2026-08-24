@@ -2,7 +2,7 @@
 
 import { motion } from "motion/react";
 
-import { poppins } from "@/game/fonts/poppins";
+import { poppins } from "@/programs/mas-conectados/fonts/poppins";
 import { DESIGN_HEIGHT, type LayerPart } from "@/game/kit";
 
 export interface SentencePart extends LayerPart {

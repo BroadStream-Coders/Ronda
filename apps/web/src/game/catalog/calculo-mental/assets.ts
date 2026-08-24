@@ -1,4 +1,4 @@
-const BASE = "/games/calculo-mental";
+const BASE = "/programs/que-gane-el-mejor/games/calculo-mental";
 
 export const FRAMES = {
   blue: `${BASE}/blue-frame.png`,
@@ -8,8 +8,8 @@ export const FRAMES = {
 };
 
 export const SOUNDS = {
-  correct: "/games/shared/correct.mp3",
-  incorrect: "/games/shared/incorrect.mp3",
+  correct: "/programs/que-gane-el-mejor/shared/correct.mp3",
+  incorrect: "/programs/que-gane-el-mejor/shared/incorrect.mp3",
 };
 
 export const PRELOAD = [

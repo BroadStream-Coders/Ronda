@@ -1,11 +1,11 @@
 export const FRAMES = {
-  normal: "/games/deletreo/main-frame.png",
-  error: "/games/deletreo/error-frame.png",
+  normal: "/programs/que-gane-el-mejor/games/deletreo/main-frame.png",
+  error: "/programs/que-gane-el-mejor/games/deletreo/error-frame.png",
 } as const;
 
 export const SOUNDS = {
-  correct: "/games/shared/correct.mp3",
-  incorrect: "/games/shared/incorrect.mp3",
+  correct: "/programs/que-gane-el-mejor/shared/correct.mp3",
+  incorrect: "/programs/que-gane-el-mejor/shared/incorrect.mp3",
 } as const;
 
 export const PRELOAD = [

@@ -16,6 +16,22 @@ reutiliza). Al resolverse se mueve al `changelog.md` conservando su código.
 
 ---
 
+## [TD-085] El middleware corre entero para pedir un .mp3
+- **Ubicación:** `apps/web/middleware.ts:11`
+- **Riesgo:** 5/10
+- **Problema:** el matcher excluye `svg|png|jpg|jpeg|gif|webp` pero **no `mp3`**, así
+  que cada sonido de juego entra a `updateSession` y dispara `getClaims()` +
+  `getUser()` + un `select` a `programs` contra Supabase. Los juegos precargan sus
+  sonidos al montar (`preloadMedia`), o sea varias rondas de red por partida solo para
+  servir un archivo estático que ni siquiera necesita sesión.
+- **Impacto futuro:** latencia extra al entrar a cada juego y carga innecesaria en
+  Supabase, que crece con cada juego y cada sonido nuevo. Si algún día un juego se
+  emite desde una ruta sin sesión, el audio se redirige en vez de sonar. El arreglo es
+  una línea: agregar `mp3|wav|ogg|woff2?` a la alternancia de extensiones del matcher.
+- **Fecha:** 2026-08-24 · **Estado:** Abierto
+
+---
+
 ## [TD-084] El README describe una plataforma de un solo servicio
 - **Ubicación:** `README.md:24-44`
 - **Riesgo:** 3/10

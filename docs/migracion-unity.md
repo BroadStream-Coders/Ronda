@@ -46,7 +46,7 @@ jerarquía, ni modo play**. Son juegos en navegador.
 - Prefabs grandes (~3.000 líneas) exceden el límite de una lectura: leer por chunks
   (`limit`/`offset`); la estructura es muy regular entre opciones y slots.
 - Sprites: el GUID de `m_Sprite` se busca en los `.meta` subidos → nombre del PNG →
-  ruta en `public/games/<juego>/`.
+  ruta en `public/programs/<programa>/games/<juego>/`.
 
 ---
 

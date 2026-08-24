@@ -12,6 +12,10 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [RM-084] Assets separados por programa (2026-08-24 12:26)
+`public/programs/<programa>/games/<juego>/` + `.../shared/` y `src/programs/<programa>/fonts/` reemplazan a `public/games/` y `src/game/fonts/`: nada cruza programas, y lo que dos comparten (los dos sonidos, GeniusTechno, Poppins) se duplica a propósito.
+`public/clientes/` → `public/clients/` por la regla de idioma; el catálogo (`src/game/catalog/`, `src/collector/catalog/`) queda indexado por slug global a propósito, esperando a que evolucione a algo genérico.
+
 ## [RM-041] Host: el servicio de consulta del conductor (2026-08-23 14:55)
 Tercer servicio en pie: `src/host/` (`kit/` con `HostShell` + `catalog/` con el registro de vistas), rutas `/programs/<slug>/host[/<gameId>]` fuera del route group `(workspace)` — misma forma de URL que los otros dos, pero layout propio de tablet, sin sidebar y sin puerta de vuelta al espacio de trabajo.
 Lee el `session.json` que ya deja el colector en el bucket (`loadCollectorSession`, solo JSON, sin imágenes) y no necesitó migración: las policies de RM-040 ya dejan leer a cualquier miembro del programa. Queda habilitado y vacío para Que Gane El Mejor; las vistas por juego van en [[RM-083]] y el rol de conductor en [[RM-082]].

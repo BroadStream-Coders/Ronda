@@ -38,19 +38,19 @@ const clientes = [
   {
     nombre: "Pukllaspa Yachay",
     tipo: "TV Perú · Educativo",
-    img: "/clientes/pukllaspa-yachay.jpg",
+    img: "/clients/pukllaspa-yachay.jpg",
     url: "https://www.tvperu.gob.pe/programas/pukllaspa-yachay",
   },
   {
     nombre: "Que Gane El Mejor",
     tipo: "TV Perú · Concurso",
-    img: "/clientes/que-gane-el-mejor.jpg",
+    img: "/clients/que-gane-el-mejor.jpg",
     url: "https://www.tvperu.gob.pe/programas/que-gane-el-mejor",
   },
   {
     nombre: "Más Conectados",
     tipo: "TV Perú · Actualidad",
-    img: "/clientes/mas-conectados.jpg",
+    img: "/clients/mas-conectados.jpg",
     url: "https://www.tvperu.gob.pe/programas/mas-conectados",
   },
 ];

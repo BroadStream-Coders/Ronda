@@ -53,8 +53,8 @@ Al terminar una tarea se mueve al changelog y se borra de aquí.
 - **Lo que ya está resuelto y no hay que rehacer:** los dos estados, el vuelo de las
   fichas a su sitio (layout animation de `motion`), las teclas y la limpieza del
   texto ([[RM-075]]). Lo que cambia es solo cómo se pinta cada ficha.
-- **Ojo:** los assets van a `public/games/arma-la-oracion/` y las medidas dentro del
-  Stage en `cqw`/`cqh`, nunca `px`.
+- **Ojo:** los assets van a `public/programs/mas-conectados/games/arma-la-oracion/` y
+  las medidas dentro del Stage en `cqw`/`cqh`, nunca `px`.
 - **Hecho cuando:** la part dibuja con los assets entregados y no queda color
   hardcodeado de relleno.
 - **Fecha:** 2026-08-21 · **Estado:** Abierto

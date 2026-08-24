@@ -1,5 +1,5 @@
 import { partView, useGameSession, type GameType, type Layer } from "@/game/kit";
-import { poppins } from "@/game/fonts/poppins";
+import { poppins } from "@/programs/que-gane-el-mejor/fonts/poppins";
 import { loadJsonFile } from "@/helpers/persistence";
 import layout from "./layout.json";
 import { meta } from "./meta";

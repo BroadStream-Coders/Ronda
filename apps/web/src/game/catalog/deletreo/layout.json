@@ -32,7 +32,7 @@
       "pivot": { "x": 0.5, "y": 0.5 }
     },
     "parts": [
-      { "type": "image", "src": "/games/deletreo/main-frame.png", "fit": "fill" },
+      { "type": "image", "src": "/programs/que-gane-el-mejor/games/deletreo/main-frame.png", "fit": "fill" },
       { "type": "pop", "scale": 1.1, "duration": 0.3 },
       { "type": "shake", "amplitude": 2, "shakes": 3, "duration": 0.4 },
       {

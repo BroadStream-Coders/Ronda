@@ -2,7 +2,7 @@
 
 import { motion } from "motion/react";
 
-import { geniusTechno } from "@/game/fonts/genius-techno";
+import { geniusTechno } from "@/programs/mas-conectados/fonts/genius-techno";
 import { DESIGN_HEIGHT, type LayerPart } from "@/game/kit";
 
 export interface BlanksPart extends LayerPart {

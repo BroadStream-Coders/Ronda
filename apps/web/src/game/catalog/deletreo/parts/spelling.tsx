@@ -1,4 +1,4 @@
-import { geniusTechno } from "@/game/fonts/genius-techno";
+import { geniusTechno } from "@/programs/que-gane-el-mejor/fonts/genius-techno";
 import { DESIGN_WIDTH, type LayerPart } from "@/game/kit";
 
 export interface SpellingPart extends LayerPart {

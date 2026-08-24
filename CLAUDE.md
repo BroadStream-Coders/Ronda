@@ -86,14 +86,24 @@ Ver [README.md](README.md) para el panorama y `docs/logbook/` para el estado.
   — el contrato del archivo es del colector, no se duplica el tipo. Corre fuera del
   route group `(workspace)`: sin sidebar y sin vuelta al espacio de trabajo.
 - **Assets de juego = código, datos de sesión = archivo/storage.** Marcos, fuentes y
-  sonidos son parte del juego: viven en `public/games/<juego>/` (o `public/games/shared/`
-  lo compartido), los sirve el CDN de Vercel y cambian con un deploy. **No van a Supabase
-  Storage** — ese bucket es para lo que produce el colector y cambia cada día. Las fuentes
-  son la excepción de ubicación: van **compartidas** en `src/game/fonts/`, un módulo por
-  tipografía (`next/font/local` necesita importarlas, y así emite el preload y el hash
-  solo). Nunca una copia por juego: son 4 tipografías para 9 juegos y GeniusTechno sola va
-  en 7. Se guardan en **woff2**, no ttf (pesa un 70% menos). Los originales de los juegos portados están en el proyecto Unity
+  sonidos son parte del juego: los sirve el CDN de Vercel y cambian con un deploy. **No
+  van a Supabase Storage** — ese bucket es para lo que produce el colector y cambia cada
+  día. Los originales de los juegos portados están en el proyecto Unity
   (`TvPeru-QGEM-ManagedGames/Assets/_Project/`), no en el repo de Games.
+
+- **Los assets se agrupan por programa, no por juego.** Imágenes y audio viven en
+  `public/programs/<programa>/games/<juego>/`, y lo que comparten varios juegos **del
+  mismo programa** en `public/programs/<programa>/shared/`. Las fuentes son la excepción
+  de ubicación: van en `src/programs/<programa>/fonts/`, un módulo por tipografía, porque
+  `next/font/local` necesita importarlas y así emite el preload y el hash solo; se guardan
+  en **woff2**, no ttf (pesa un 70% menos). **Nada cruza programas**: si dos programas
+  usan la misma tipografía o el mismo sonido, **se duplica el archivo a propósito** — es
+  lo que permite borrar todo lo de un programa sin tocar a los demás, y no cuesta nada en
+  runtime porque nadie carga la página del otro. `<programa>` es un slug fijo en código
+  (`que-gane-el-mejor`, `mas-conectados`), no el uuid ni el slug de la BD: estos assets
+  cambian con un deploy, así que renombrar el programa no mueve carpetas.
+  `public/clients/` queda fuera de esto — es marketing de la landing, propiedad de la
+  plataforma.
 
 - **Las animaciones son parts sin vista.** Un layer declara `pop`, `shake`, `bounce` o
   `slide` en sus `parts[]` como data; no dibujan nada. `useLayerAnimations` las lee del
