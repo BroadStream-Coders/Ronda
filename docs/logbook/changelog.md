@@ -12,6 +12,10 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [TD-085] Los assets estáticos ya no pasan por el middleware (2026-08-24 13:29)
+El matcher excluía imágenes pero no `mp3` ni `mp4`, así que cada sonido y cada trozo de video disparaba `getUser()` + un `select` a `programs` contra Supabase para servir un archivo que no necesita sesión. Se agregaron `avif|ico|mp3|mp4|webm|wav|ogg`.
+No se pierde ninguna protección: el middleware ya dejaba pasar a los anónimos (el redirect solo corre `if (user)`), o sea que cobraba el viaje sin bloquear nada.
+
 ## [RM-085] Video de fondo de Que Gane El Mejor, comprimido y ubicado (2026-08-24 13:05)
 `shared/` se separa por medio (`audio/`, `video/`); los dos mp3 bajan a `shared/audio/` y entra `shared/video/background-blue.mp4`. Se descartó `backgroundLilac`.
 El original venía a 18.6 Mbps (43 MB); queda en H.264 CRF 18 a 13.3 MB (69% menos, SSIM 0.9949). Se eligió H.264 sobre VP9/AV1 a propósito: con precarga el peso deja de mandar y manda la decodificación por hardware garantizada, porque el equipo de emisión puede cambiar. Receta en `CLAUDE.md`; la precarga bloqueante es [[RM-086]].

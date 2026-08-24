@@ -16,19 +16,23 @@ reutiliza). Al resolverse se mueve al `changelog.md` conservando su código.
 
 ---
 
-## [TD-085] El middleware corre entero para servir un asset estático
-- **Ubicación:** `apps/web/middleware.ts:11`
-- **Riesgo:** 7/10
-- **Problema:** el matcher excluye `svg|png|jpg|jpeg|gif|webp` pero **no `mp3` ni
-  `mp4`**, así que cada sonido y cada video entra a `updateSession` y dispara
-  `getClaims()` + `getUser()` + un `select` a `programs` contra Supabase, solo para
-  servir un archivo estático que ni siquiera necesita sesión. Con video es peor: el
-  navegador lo pide por trozos (Range requests), o sea varias rondas por reproducción.
-- **Impacto futuro:** con `background-blue.mp4` (13,9 MB) ya en el repo, esto se mete
-  en el camino de la carga de un juego **que se emite en vivo**. El arreglo es una
-  línea: agregar `mp3|mp4|webm|wav|ogg|woff2?` a la alternancia de extensiones. Va
-  **antes** de que el video se cablee a un juego, no después.
-- **Bloquea a:** [[RM-086]].
+## [TD-086] La imagen que recorta el colector sale sin tope de tamaño ni de calidad
+- **Ubicación:** `apps/web/src/collector/kit/images/crop-image.ts:56`
+- **Riesgo:** 6/10
+- **Problema:** `canvas.toBlob(cb, fileType)` va **sin el tercer argumento de calidad**
+  (queda en el default del navegador, 0.92 en Chrome) y el lienzo se dimensiona con
+  `canvas.width = pixelCrop.width`, o sea **los pixeles del recorte en el original**.
+  Si el operador sube una foto de celular de 6000×4000 y recorta una zona grande, sale
+  un JPEG de varios miles de pixeles de ancho para algo que en el Stage se dibuja a
+  unos cientos.
+- **Impacto futuro:** ese archivo va a Supabase Storage y lo **descarga el juego en
+  vivo**. Es el único punto de todo el pipeline donde el peso de una imagen no lo
+  controlamos nosotros sino quien sube la foto. Con los juegos de foto portados
+  (`galeria-fotos`, `album`) esto pasa de latente a real. El arreglo son dos cosas:
+  pasar calidad explícita a `toBlob` y limitar el lado mayor a lo que el Stage
+  realmente dibuja.
+- **Ojo:** esto **no** aplica a los assets de juego que viven en `public/` — esos son
+  fijos, los controla el diseñador y hoy pesan 409 KB entre todos.
 - **Fecha:** 2026-08-24 · **Estado:** Abierto
 
 ---
