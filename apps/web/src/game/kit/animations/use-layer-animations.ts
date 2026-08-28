@@ -5,7 +5,13 @@ import { animate, type AnimationPlaybackControls } from "motion";
 
 import { partOf, type Layer, type Vec2 } from "../layer";
 import { useAnimations } from "./context";
-import type { BouncePart, PopPart, ShakePart, SlidePart } from "./parts";
+import type {
+  BlinkPart,
+  BouncePart,
+  PopPart,
+  ShakePart,
+  SlidePart,
+} from "./parts";
 
 const lerp = (from: Vec2, to: Vec2, t: number): Vec2 => ({
   x: from.x + (to.x - from.x) * t,
@@ -29,6 +35,7 @@ export function useLayerAnimations(
   const shake = partOf<ShakePart>(layer, "shake");
   const bounce = partOf<BouncePart>(layer, "bounce");
   const slide = partOf<SlidePart>(layer, "slide");
+  const blink = partOf<BlinkPart>(layer, "blink");
 
   const { register, unregister } = useAnimations();
   const id = layer.id;
@@ -54,9 +61,17 @@ export function useLayerAnimations(
   const slideX = slide?.target.x ?? 0;
   const slideY = slide?.target.y ?? 0;
 
+  const hasBlink = !!blink;
+  const blinkPulseScale = blink?.pulseScale ?? 1.25;
+  const blinkPulseDuration = blink?.pulseDuration ?? 0.12;
+  const blinkCount = blink?.blinkCount ?? 3;
+  const blinkDuration = blink?.blinkDuration ?? 0.08;
+
   const elRef = useRef<HTMLDivElement | null>(null);
   const popRef = useRef<AnimationPlaybackControls | null>(null);
   const shakeRef = useRef<AnimationPlaybackControls | null>(null);
+  const blinkRef = useRef<AnimationPlaybackControls | null>(null);
+  const blinkSeqRef = useRef(0);
   const moveRef = useRef<{
     seq: number;
     controls: AnimationPlaybackControls | null;
@@ -219,10 +234,78 @@ export function useLayerAnimations(
     unregister,
   ]);
 
+  useEffect(() => {
+    if (!hasBlink) return;
+    const wait = (ms: number) => new Promise<void>((r) => setTimeout(r, ms));
+
+    const run = async () => {
+      const element = elRef.current;
+      if (!element || blinkPulseDuration <= 0) return;
+      const seq = ++blinkSeqRef.current;
+      element.style.opacity = "";
+      const pulse = animate(
+        element,
+        { scale: [1, blinkPulseScale, 1] },
+        { duration: blinkPulseDuration * 2, ease: "easeInOut" },
+      );
+      blinkRef.current = pulse;
+      try {
+        await pulse;
+      } catch {
+        return;
+      }
+      for (let i = 0; i < blinkCount; i++) {
+        if (blinkSeqRef.current !== seq) return;
+        element.style.opacity = "0";
+        await wait(blinkDuration * 1000);
+        if (blinkSeqRef.current !== seq) return;
+        element.style.opacity = "";
+        await wait(blinkDuration * 1000);
+      }
+      if (blinkSeqRef.current === seq) element.style.transform = "";
+    };
+
+    const settle = async () => {
+      const element = elRef.current;
+      if (!element) return;
+      blinkRef.current?.cancel();
+      const controls = animate(
+        element,
+        { scale: [1, 0.9, 1] },
+        { duration: 0.16, ease: "easeInOut" },
+      );
+      blinkRef.current = controls;
+      try {
+        await controls;
+      } catch {
+        return;
+      }
+      if (blinkRef.current === controls) element.style.transform = "";
+    };
+
+    register(id, "blink", run);
+    register(id, "blinkSettle", settle);
+    return () => {
+      unregister(id, "blink");
+      unregister(id, "blinkSettle");
+    };
+  }, [
+    id,
+    hasBlink,
+    blinkPulseScale,
+    blinkPulseDuration,
+    blinkCount,
+    blinkDuration,
+    register,
+    unregister,
+  ]);
+
   useEffect(
     () => () => {
       popRef.current?.cancel();
       shakeRef.current?.cancel();
+      blinkSeqRef.current++;
+      blinkRef.current?.cancel();
       cancelMove();
     },
     [cancelMove],

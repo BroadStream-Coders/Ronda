@@ -1,0 +1,1071 @@
+[
+  {
+    "id": "background",
+    "name": "Background",
+    "visible": true,
+    "rect": {
+      "position": { "x": 0, "y": 0 },
+      "size": { "x": 1920, "y": 1080 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      { "type": "color", "value": "#01FF02" }
+    ]
+  },
+  {
+    "id": "question-container",
+    "name": "QuestionContainer",
+    "visible": true,
+    "rect": {
+      "position": { "x": -7.5, "y": -412 },
+      "size": { "x": 1368, "y": 185 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": []
+  },
+  {
+    "id": "question-frame",
+    "name": "QuestionFrame",
+    "visible": true,
+    "parentId": "question-container",
+    "rect": {
+      "position": { "x": 0, "y": -275 },
+      "size": { "x": 1368, "y": 185 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      {
+        "type": "image",
+        "fit": "fill",
+        "src": "/programs/que-gane-el-mejor/games/mi-libro-favorito/main-frame.png"
+      },
+      {
+        "type": "pop",
+        "scale": 1.1,
+        "duration": 0.3
+      },
+      {
+        "type": "shake",
+        "amplitude": 1.5,
+        "shakes": 3,
+        "duration": 0.4
+      },
+      {
+        "type": "bounce",
+        "travelSpeed": 1800,
+        "bounceAmplitude": 40,
+        "bounceDuration": 0.4,
+        "target": { "x": 0, "y": 0 }
+      },
+      {
+        "type": "slide",
+        "speed": 1800,
+        "target": { "x": 0, "y": -275 }
+      }
+    ]
+  },
+  {
+    "id": "question-text",
+    "name": "QuestionText",
+    "visible": true,
+    "parentId": "question-frame",
+    "rect": {
+      "position": { "x": 8.13, "y": -6.75 },
+      "size": { "x": 1293.65, "y": 112.13 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      {
+        "type": "text",
+        "text": "¿PREGUNTA?",
+        "fontSize": 2.96,
+        "autoSize": true,
+        "fontSizeMin": 1.67,
+        "fontSizeMax": 6.67,
+        "color": "#ffffff",
+        "bold": false,
+        "italic": false,
+        "underline": false,
+        "letterSpacing": 0,
+        "lineSpacing": 0,
+        "alignH": "center",
+        "alignV": "middle",
+        "overflow": "wrap",
+        "fontKey": "geniusTechno"
+      }
+    ]
+  },
+  {
+    "id": "player-banner-left",
+    "name": "PlayerBannerLeft",
+    "visible": true,
+    "rect": {
+      "position": { "x": -613, "y": -226 },
+      "size": { "x": 590.64, "y": 137.08 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": []
+  },
+  {
+    "id": "content-left",
+    "name": "ContentRoot",
+    "visible": true,
+    "parentId": "player-banner-left",
+    "rect": {
+      "position": { "x": -644, "y": 0 },
+      "size": { "x": 590.64, "y": 137.08 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      {
+        "type": "bounce",
+        "travelSpeed": 1656,
+        "bounceAmplitude": 36.8,
+        "bounceDuration": 0.4,
+        "target": { "x": 0, "y": 0 }
+      },
+      {
+        "type": "slide",
+        "speed": 1656,
+        "target": { "x": -644, "y": 0 }
+      }
+    ]
+  },
+  {
+    "id": "lives-left",
+    "name": "LivesContainer",
+    "visible": true,
+    "parentId": "content-left",
+    "rect": {
+      "position": { "x": 24.82, "y": 36.8 },
+      "size": { "x": 460, "y": 82.8 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      { "type": "mask", "showImage": false }
+    ]
+  },
+  {
+    "id": "heart-slot-left-0",
+    "name": "HeartSlot 0",
+    "visible": true,
+    "parentId": "lives-left",
+    "rect": {
+      "position": { "x": -83.72, "y": -7.36 },
+      "size": { "x": 75.44, "y": 68.08 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": []
+  },
+  {
+    "id": "heart-root-left-0",
+    "name": "HeartRoot",
+    "visible": true,
+    "parentId": "heart-slot-left-0",
+    "rect": {
+      "position": { "x": 0, "y": -68.08 },
+      "size": { "x": 75.44, "y": 68.08 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      {
+        "type": "bounce",
+        "travelSpeed": 552,
+        "bounceAmplitude": 4.6,
+        "bounceDuration": 0.7,
+        "target": { "x": 0, "y": 0 }
+      },
+      {
+        "type": "blink",
+        "pulseScale": 1.25,
+        "pulseDuration": 0.12,
+        "blinkCount": 3,
+        "blinkDuration": 0.08
+      }
+    ]
+  },
+  {
+    "id": "heart-full-left-0",
+    "name": "FullHeart",
+    "visible": true,
+    "parentId": "heart-root-left-0",
+    "rect": {
+      "position": { "x": 0, "y": 0 },
+      "size": { "x": 75.44, "y": 68.08 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      {
+        "type": "image",
+        "fit": "fill",
+        "src": "/programs/que-gane-el-mejor/games/mi-libro-favorito/full-heart.png"
+      }
+    ]
+  },
+  {
+    "id": "heart-broken-left-0",
+    "name": "BrokenHeart",
+    "visible": false,
+    "parentId": "heart-root-left-0",
+    "rect": {
+      "position": { "x": 0, "y": -4.6 },
+      "size": { "x": 75.44, "y": 58.88 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      {
+        "type": "image",
+        "fit": "fill",
+        "src": "/programs/que-gane-el-mejor/games/mi-libro-favorito/broken-heart.png"
+      }
+    ]
+  },
+  {
+    "id": "heart-slot-left-1",
+    "name": "HeartSlot 1",
+    "visible": true,
+    "parentId": "lives-left",
+    "rect": {
+      "position": { "x": 0, "y": -7.36 },
+      "size": { "x": 75.44, "y": 68.08 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": []
+  },
+  {
+    "id": "heart-root-left-1",
+    "name": "HeartRoot",
+    "visible": true,
+    "parentId": "heart-slot-left-1",
+    "rect": {
+      "position": { "x": 0, "y": -68.08 },
+      "size": { "x": 75.44, "y": 68.08 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      {
+        "type": "bounce",
+        "travelSpeed": 552,
+        "bounceAmplitude": 4.6,
+        "bounceDuration": 0.7,
+        "target": { "x": 0, "y": 0 }
+      },
+      {
+        "type": "blink",
+        "pulseScale": 1.25,
+        "pulseDuration": 0.12,
+        "blinkCount": 3,
+        "blinkDuration": 0.08
+      }
+    ]
+  },
+  {
+    "id": "heart-full-left-1",
+    "name": "FullHeart",
+    "visible": true,
+    "parentId": "heart-root-left-1",
+    "rect": {
+      "position": { "x": 0, "y": 0 },
+      "size": { "x": 75.44, "y": 68.08 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      {
+        "type": "image",
+        "fit": "fill",
+        "src": "/programs/que-gane-el-mejor/games/mi-libro-favorito/full-heart.png"
+      }
+    ]
+  },
+  {
+    "id": "heart-broken-left-1",
+    "name": "BrokenHeart",
+    "visible": false,
+    "parentId": "heart-root-left-1",
+    "rect": {
+      "position": { "x": 0, "y": -4.6 },
+      "size": { "x": 75.44, "y": 58.88 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      {
+        "type": "image",
+        "fit": "fill",
+        "src": "/programs/que-gane-el-mejor/games/mi-libro-favorito/broken-heart.png"
+      }
+    ]
+  },
+  {
+    "id": "heart-slot-left-2",
+    "name": "HeartSlot 2",
+    "visible": true,
+    "parentId": "lives-left",
+    "rect": {
+      "position": { "x": 83.72, "y": -7.36 },
+      "size": { "x": 75.44, "y": 68.08 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": []
+  },
+  {
+    "id": "heart-root-left-2",
+    "name": "HeartRoot",
+    "visible": true,
+    "parentId": "heart-slot-left-2",
+    "rect": {
+      "position": { "x": 0, "y": -68.08 },
+      "size": { "x": 75.44, "y": 68.08 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      {
+        "type": "bounce",
+        "travelSpeed": 552,
+        "bounceAmplitude": 4.6,
+        "bounceDuration": 0.7,
+        "target": { "x": 0, "y": 0 }
+      },
+      {
+        "type": "blink",
+        "pulseScale": 1.25,
+        "pulseDuration": 0.12,
+        "blinkCount": 3,
+        "blinkDuration": 0.08
+      }
+    ]
+  },
+  {
+    "id": "heart-full-left-2",
+    "name": "FullHeart",
+    "visible": true,
+    "parentId": "heart-root-left-2",
+    "rect": {
+      "position": { "x": 0, "y": 0 },
+      "size": { "x": 75.44, "y": 68.08 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      {
+        "type": "image",
+        "fit": "fill",
+        "src": "/programs/que-gane-el-mejor/games/mi-libro-favorito/full-heart.png"
+      }
+    ]
+  },
+  {
+    "id": "heart-broken-left-2",
+    "name": "BrokenHeart",
+    "visible": false,
+    "parentId": "heart-root-left-2",
+    "rect": {
+      "position": { "x": 0, "y": -4.6 },
+      "size": { "x": 75.44, "y": 58.88 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      {
+        "type": "image",
+        "fit": "fill",
+        "src": "/programs/que-gane-el-mejor/games/mi-libro-favorito/broken-heart.png"
+      }
+    ]
+  },
+  {
+    "id": "heart-slot-left-3",
+    "name": "HeartSlot 3",
+    "visible": false,
+    "parentId": "lives-left",
+    "rect": {
+      "position": { "x": 83.72, "y": -7.36 },
+      "size": { "x": 75.44, "y": 68.08 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": []
+  },
+  {
+    "id": "heart-root-left-3",
+    "name": "HeartRoot",
+    "visible": true,
+    "parentId": "heart-slot-left-3",
+    "rect": {
+      "position": { "x": 0, "y": -68.08 },
+      "size": { "x": 75.44, "y": 68.08 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      {
+        "type": "bounce",
+        "travelSpeed": 552,
+        "bounceAmplitude": 4.6,
+        "bounceDuration": 0.7,
+        "target": { "x": 0, "y": 0 }
+      },
+      {
+        "type": "blink",
+        "pulseScale": 1.25,
+        "pulseDuration": 0.12,
+        "blinkCount": 3,
+        "blinkDuration": 0.08
+      }
+    ]
+  },
+  {
+    "id": "heart-full-left-3",
+    "name": "FullHeart",
+    "visible": true,
+    "parentId": "heart-root-left-3",
+    "rect": {
+      "position": { "x": 0, "y": 0 },
+      "size": { "x": 75.44, "y": 68.08 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      {
+        "type": "image",
+        "fit": "fill",
+        "src": "/programs/que-gane-el-mejor/games/mi-libro-favorito/full-heart.png"
+      }
+    ]
+  },
+  {
+    "id": "heart-broken-left-3",
+    "name": "BrokenHeart",
+    "visible": false,
+    "parentId": "heart-root-left-3",
+    "rect": {
+      "position": { "x": 0, "y": -4.6 },
+      "size": { "x": 75.44, "y": 58.88 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      {
+        "type": "image",
+        "fit": "fill",
+        "src": "/programs/que-gane-el-mejor/games/mi-libro-favorito/broken-heart.png"
+      }
+    ]
+  },
+  {
+    "id": "heart-slot-left-4",
+    "name": "HeartSlot 4",
+    "visible": false,
+    "parentId": "lives-left",
+    "rect": {
+      "position": { "x": 167.44, "y": -7.36 },
+      "size": { "x": 75.44, "y": 68.08 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": []
+  },
+  {
+    "id": "heart-root-left-4",
+    "name": "HeartRoot",
+    "visible": true,
+    "parentId": "heart-slot-left-4",
+    "rect": {
+      "position": { "x": 0, "y": -68.08 },
+      "size": { "x": 75.44, "y": 68.08 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      {
+        "type": "bounce",
+        "travelSpeed": 552,
+        "bounceAmplitude": 4.6,
+        "bounceDuration": 0.7,
+        "target": { "x": 0, "y": 0 }
+      },
+      {
+        "type": "blink",
+        "pulseScale": 1.25,
+        "pulseDuration": 0.12,
+        "blinkCount": 3,
+        "blinkDuration": 0.08
+      }
+    ]
+  },
+  {
+    "id": "heart-full-left-4",
+    "name": "FullHeart",
+    "visible": true,
+    "parentId": "heart-root-left-4",
+    "rect": {
+      "position": { "x": 0, "y": 0 },
+      "size": { "x": 75.44, "y": 68.08 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      {
+        "type": "image",
+        "fit": "fill",
+        "src": "/programs/que-gane-el-mejor/games/mi-libro-favorito/full-heart.png"
+      }
+    ]
+  },
+  {
+    "id": "heart-broken-left-4",
+    "name": "BrokenHeart",
+    "visible": false,
+    "parentId": "heart-root-left-4",
+    "rect": {
+      "position": { "x": 0, "y": -4.6 },
+      "size": { "x": 75.44, "y": 58.88 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      {
+        "type": "image",
+        "fit": "fill",
+        "src": "/programs/que-gane-el-mejor/games/mi-libro-favorito/broken-heart.png"
+      }
+    ]
+  },
+  {
+    "id": "name-container-left",
+    "name": "NameContainer",
+    "visible": true,
+    "parentId": "content-left",
+    "rect": {
+      "position": { "x": 0, "y": -34.96 },
+      "size": { "x": 590.64, "y": 67.16 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": []
+  },
+  {
+    "id": "name-frame-left",
+    "name": "NameFrame",
+    "visible": true,
+    "parentId": "name-container-left",
+    "rect": {
+      "position": { "x": 0, "y": 0 },
+      "size": { "x": 590.64, "y": 67.16 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      {
+        "type": "image",
+        "fit": "fill",
+        "src": "/programs/que-gane-el-mejor/games/mi-libro-favorito/name-frame.png"
+      }
+    ]
+  },
+  {
+    "id": "name-text-left",
+    "name": "NameText",
+    "visible": true,
+    "parentId": "name-container-left",
+    "rect": {
+      "position": { "x": 64.63, "y": 2.07 },
+      "size": { "x": 442.98, "y": 52.9 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      {
+        "type": "text",
+        "text": "JUGADOR 1",
+        "fontSize": 3.41,
+        "autoSize": false,
+        "fontSizeMin": 1.67,
+        "fontSizeMax": 6.67,
+        "color": "#ffffff",
+        "bold": true,
+        "italic": false,
+        "underline": false,
+        "letterSpacing": 0,
+        "lineSpacing": 0,
+        "alignH": "center",
+        "alignV": "middle",
+        "overflow": "wrap",
+        "fontKey": "geniusTechno"
+      }
+    ]
+  },
+  {
+    "id": "player-banner-right",
+    "name": "PlayerBannerRight",
+    "visible": true,
+    "rect": {
+      "position": { "x": 613, "y": -226 },
+      "size": { "x": 590.64, "y": 137.08 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": []
+  },
+  {
+    "id": "content-right",
+    "name": "ContentRoot",
+    "visible": true,
+    "parentId": "player-banner-right",
+    "rect": {
+      "position": { "x": 644, "y": 0 },
+      "size": { "x": 590.64, "y": 137.08 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      {
+        "type": "bounce",
+        "travelSpeed": 1656,
+        "bounceAmplitude": 36.8,
+        "bounceDuration": 0.4,
+        "target": { "x": 0, "y": 0 }
+      },
+      {
+        "type": "slide",
+        "speed": 1656,
+        "target": { "x": 644, "y": 0 }
+      }
+    ]
+  },
+  {
+    "id": "lives-right",
+    "name": "LivesContainer",
+    "visible": true,
+    "parentId": "content-right",
+    "rect": {
+      "position": { "x": -24.82, "y": 36.8 },
+      "size": { "x": 460, "y": 82.8 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      { "type": "mask", "showImage": false }
+    ]
+  },
+  {
+    "id": "heart-slot-right-0",
+    "name": "HeartSlot 0",
+    "visible": true,
+    "parentId": "lives-right",
+    "rect": {
+      "position": { "x": -83.72, "y": -7.36 },
+      "size": { "x": 75.44, "y": 68.08 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": []
+  },
+  {
+    "id": "heart-root-right-0",
+    "name": "HeartRoot",
+    "visible": true,
+    "parentId": "heart-slot-right-0",
+    "rect": {
+      "position": { "x": 0, "y": -68.08 },
+      "size": { "x": 75.44, "y": 68.08 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      {
+        "type": "bounce",
+        "travelSpeed": 552,
+        "bounceAmplitude": 4.6,
+        "bounceDuration": 0.7,
+        "target": { "x": 0, "y": 0 }
+      },
+      {
+        "type": "blink",
+        "pulseScale": 1.25,
+        "pulseDuration": 0.12,
+        "blinkCount": 3,
+        "blinkDuration": 0.08
+      }
+    ]
+  },
+  {
+    "id": "heart-full-right-0",
+    "name": "FullHeart",
+    "visible": true,
+    "parentId": "heart-root-right-0",
+    "rect": {
+      "position": { "x": 0, "y": 0 },
+      "size": { "x": 75.44, "y": 68.08 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      {
+        "type": "image",
+        "fit": "fill",
+        "src": "/programs/que-gane-el-mejor/games/mi-libro-favorito/full-heart.png"
+      }
+    ]
+  },
+  {
+    "id": "heart-broken-right-0",
+    "name": "BrokenHeart",
+    "visible": false,
+    "parentId": "heart-root-right-0",
+    "rect": {
+      "position": { "x": 0, "y": -4.6 },
+      "size": { "x": 75.44, "y": 58.88 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      {
+        "type": "image",
+        "fit": "fill",
+        "src": "/programs/que-gane-el-mejor/games/mi-libro-favorito/broken-heart.png"
+      }
+    ]
+  },
+  {
+    "id": "heart-slot-right-1",
+    "name": "HeartSlot 1",
+    "visible": true,
+    "parentId": "lives-right",
+    "rect": {
+      "position": { "x": 0, "y": -7.36 },
+      "size": { "x": 75.44, "y": 68.08 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": []
+  },
+  {
+    "id": "heart-root-right-1",
+    "name": "HeartRoot",
+    "visible": true,
+    "parentId": "heart-slot-right-1",
+    "rect": {
+      "position": { "x": 0, "y": -68.08 },
+      "size": { "x": 75.44, "y": 68.08 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      {
+        "type": "bounce",
+        "travelSpeed": 552,
+        "bounceAmplitude": 4.6,
+        "bounceDuration": 0.7,
+        "target": { "x": 0, "y": 0 }
+      },
+      {
+        "type": "blink",
+        "pulseScale": 1.25,
+        "pulseDuration": 0.12,
+        "blinkCount": 3,
+        "blinkDuration": 0.08
+      }
+    ]
+  },
+  {
+    "id": "heart-full-right-1",
+    "name": "FullHeart",
+    "visible": true,
+    "parentId": "heart-root-right-1",
+    "rect": {
+      "position": { "x": 0, "y": 0 },
+      "size": { "x": 75.44, "y": 68.08 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      {
+        "type": "image",
+        "fit": "fill",
+        "src": "/programs/que-gane-el-mejor/games/mi-libro-favorito/full-heart.png"
+      }
+    ]
+  },
+  {
+    "id": "heart-broken-right-1",
+    "name": "BrokenHeart",
+    "visible": false,
+    "parentId": "heart-root-right-1",
+    "rect": {
+      "position": { "x": 0, "y": -4.6 },
+      "size": { "x": 75.44, "y": 58.88 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      {
+        "type": "image",
+        "fit": "fill",
+        "src": "/programs/que-gane-el-mejor/games/mi-libro-favorito/broken-heart.png"
+      }
+    ]
+  },
+  {
+    "id": "heart-slot-right-2",
+    "name": "HeartSlot 2",
+    "visible": true,
+    "parentId": "lives-right",
+    "rect": {
+      "position": { "x": 83.72, "y": -7.36 },
+      "size": { "x": 75.44, "y": 68.08 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": []
+  },
+  {
+    "id": "heart-root-right-2",
+    "name": "HeartRoot",
+    "visible": true,
+    "parentId": "heart-slot-right-2",
+    "rect": {
+      "position": { "x": 0, "y": -68.08 },
+      "size": { "x": 75.44, "y": 68.08 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      {
+        "type": "bounce",
+        "travelSpeed": 552,
+        "bounceAmplitude": 4.6,
+        "bounceDuration": 0.7,
+        "target": { "x": 0, "y": 0 }
+      },
+      {
+        "type": "blink",
+        "pulseScale": 1.25,
+        "pulseDuration": 0.12,
+        "blinkCount": 3,
+        "blinkDuration": 0.08
+      }
+    ]
+  },
+  {
+    "id": "heart-full-right-2",
+    "name": "FullHeart",
+    "visible": true,
+    "parentId": "heart-root-right-2",
+    "rect": {
+      "position": { "x": 0, "y": 0 },
+      "size": { "x": 75.44, "y": 68.08 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      {
+        "type": "image",
+        "fit": "fill",
+        "src": "/programs/que-gane-el-mejor/games/mi-libro-favorito/full-heart.png"
+      }
+    ]
+  },
+  {
+    "id": "heart-broken-right-2",
+    "name": "BrokenHeart",
+    "visible": false,
+    "parentId": "heart-root-right-2",
+    "rect": {
+      "position": { "x": 0, "y": -4.6 },
+      "size": { "x": 75.44, "y": 58.88 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      {
+        "type": "image",
+        "fit": "fill",
+        "src": "/programs/que-gane-el-mejor/games/mi-libro-favorito/broken-heart.png"
+      }
+    ]
+  },
+  {
+    "id": "heart-slot-right-3",
+    "name": "HeartSlot 3",
+    "visible": false,
+    "parentId": "lives-right",
+    "rect": {
+      "position": { "x": 83.72, "y": -7.36 },
+      "size": { "x": 75.44, "y": 68.08 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": []
+  },
+  {
+    "id": "heart-root-right-3",
+    "name": "HeartRoot",
+    "visible": true,
+    "parentId": "heart-slot-right-3",
+    "rect": {
+      "position": { "x": 0, "y": -68.08 },
+      "size": { "x": 75.44, "y": 68.08 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      {
+        "type": "bounce",
+        "travelSpeed": 552,
+        "bounceAmplitude": 4.6,
+        "bounceDuration": 0.7,
+        "target": { "x": 0, "y": 0 }
+      },
+      {
+        "type": "blink",
+        "pulseScale": 1.25,
+        "pulseDuration": 0.12,
+        "blinkCount": 3,
+        "blinkDuration": 0.08
+      }
+    ]
+  },
+  {
+    "id": "heart-full-right-3",
+    "name": "FullHeart",
+    "visible": true,
+    "parentId": "heart-root-right-3",
+    "rect": {
+      "position": { "x": 0, "y": 0 },
+      "size": { "x": 75.44, "y": 68.08 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      {
+        "type": "image",
+        "fit": "fill",
+        "src": "/programs/que-gane-el-mejor/games/mi-libro-favorito/full-heart.png"
+      }
+    ]
+  },
+  {
+    "id": "heart-broken-right-3",
+    "name": "BrokenHeart",
+    "visible": false,
+    "parentId": "heart-root-right-3",
+    "rect": {
+      "position": { "x": 0, "y": -4.6 },
+      "size": { "x": 75.44, "y": 58.88 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      {
+        "type": "image",
+        "fit": "fill",
+        "src": "/programs/que-gane-el-mejor/games/mi-libro-favorito/broken-heart.png"
+      }
+    ]
+  },
+  {
+    "id": "heart-slot-right-4",
+    "name": "HeartSlot 4",
+    "visible": false,
+    "parentId": "lives-right",
+    "rect": {
+      "position": { "x": 167.44, "y": -7.36 },
+      "size": { "x": 75.44, "y": 68.08 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": []
+  },
+  {
+    "id": "heart-root-right-4",
+    "name": "HeartRoot",
+    "visible": true,
+    "parentId": "heart-slot-right-4",
+    "rect": {
+      "position": { "x": 0, "y": -68.08 },
+      "size": { "x": 75.44, "y": 68.08 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      {
+        "type": "bounce",
+        "travelSpeed": 552,
+        "bounceAmplitude": 4.6,
+        "bounceDuration": 0.7,
+        "target": { "x": 0, "y": 0 }
+      },
+      {
+        "type": "blink",
+        "pulseScale": 1.25,
+        "pulseDuration": 0.12,
+        "blinkCount": 3,
+        "blinkDuration": 0.08
+      }
+    ]
+  },
+  {
+    "id": "heart-full-right-4",
+    "name": "FullHeart",
+    "visible": true,
+    "parentId": "heart-root-right-4",
+    "rect": {
+      "position": { "x": 0, "y": 0 },
+      "size": { "x": 75.44, "y": 68.08 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      {
+        "type": "image",
+        "fit": "fill",
+        "src": "/programs/que-gane-el-mejor/games/mi-libro-favorito/full-heart.png"
+      }
+    ]
+  },
+  {
+    "id": "heart-broken-right-4",
+    "name": "BrokenHeart",
+    "visible": false,
+    "parentId": "heart-root-right-4",
+    "rect": {
+      "position": { "x": 0, "y": -4.6 },
+      "size": { "x": 75.44, "y": 58.88 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      {
+        "type": "image",
+        "fit": "fill",
+        "src": "/programs/que-gane-el-mejor/games/mi-libro-favorito/broken-heart.png"
+      }
+    ]
+  },
+  {
+    "id": "name-container-right",
+    "name": "NameContainer",
+    "visible": true,
+    "parentId": "content-right",
+    "rect": {
+      "position": { "x": 0, "y": -34.96 },
+      "size": { "x": 590.64, "y": 67.16 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": []
+  },
+  {
+    "id": "name-frame-right",
+    "name": "NameFrame",
+    "visible": true,
+    "parentId": "name-container-right",
+    "rect": {
+      "position": { "x": 0, "y": 0 },
+      "size": { "x": 590.64, "y": 67.16 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      {
+        "type": "image",
+        "fit": "fill",
+        "flipX": true,
+        "src": "/programs/que-gane-el-mejor/games/mi-libro-favorito/name-frame.png"
+      }
+    ]
+  },
+  {
+    "id": "name-text-right",
+    "name": "NameText",
+    "visible": true,
+    "parentId": "name-container-right",
+    "rect": {
+      "position": { "x": -64.63, "y": 2.07 },
+      "size": { "x": 442.98, "y": 52.9 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      {
+        "type": "text",
+        "text": "JUGADOR 2",
+        "fontSize": 3.41,
+        "autoSize": false,
+        "fontSizeMin": 1.67,
+        "fontSizeMax": 6.67,
+        "color": "#ffffff",
+        "bold": true,
+        "italic": false,
+        "underline": false,
+        "letterSpacing": 0,
+        "lineSpacing": 0,
+        "alignH": "center",
+        "alignV": "middle",
+        "overflow": "wrap",
+        "fontKey": "geniusTechno"
+      }
+    ]
+  }
+]

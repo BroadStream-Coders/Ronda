@@ -267,8 +267,8 @@ estado.
 | Pieza | Qué cubre |
 |---|---|
 | Parts `color`, `image`, `text`, `backdrop`, `video` | `text` trae auto-size; `backdrop` es un fondo propio (degradado + halos) para juegos que no salen sobre croma; `video` se reproduce solo, en bucle y mudo |
-| Part `mask` | modificador a nivel de layer: recorta el layer entero (parts y descendientes) con la silueta del `src` de su part `image` hermana |
-| Animaciones `pop`, `shake`, `bounce`, `slide` | más `play` y `playStagger` para dispararlas |
+| Part `mask` | modificador a nivel de layer: recorta el layer entero (parts y descendientes) con la silueta del `src` de su part `image` hermana — y **sin** esa image recorta al rect, que es como se tapa lo que entra deslizándose desde fuera de una caja |
+| Animaciones `pop`, `shake`, `bounce`, `slide`, `blink` | más `play` y `playStagger` para dispararlas. `blink` registra dos triggers: `blink` (pulso + parpadeos) y `blinkSettle` (el golpecito de después del cambio) |
 | `useGameState` | pisa parts, `position` y `visible` |
 | `shuffledOrder` | permutación sembrada y determinista |
 | Fuentes | `FontRegistry` en la ficha; `next/font` local o de Google |
@@ -283,7 +283,7 @@ escribe en `kit/`, no en la carpeta del juego**:
 | Falta | Lo necesita |
 |---|---|
 | Part `videoControl` | pausar o reanudar un video desde la lógica |
-| Animaciones `flip`, `float`, `blink`, `sparkles`, `shimmer`, `holo` | `flip` para los juegos de cartas que se voltean; el resto, para el gamefeel de cada juego |
+| Animaciones `flip`, `float`, `sparkles`, `shimmer`, `holo` | `flip` para los juegos de cartas que se voltean; el resto, para el gamefeel de cada juego |
 | Sesión **ZIP** + ciclo de vida de blobs (`dispose`) | todo juego cuya sesión traiga imágenes y no solo texto |
 | Presupuesto de memoria | diagnóstico; puede no volver nunca |
 | Carga desde la nube | engancha sin rediseño: `downloadCollectorData` devuelve un `File`, igual que el input de archivo |

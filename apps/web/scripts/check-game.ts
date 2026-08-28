@@ -18,6 +18,10 @@ import { splitWords } from "../src/game/catalog/arma-la-oracion/words.ts";
 import { PRELOAD as PALABRA_PRELOAD } from "../src/game/catalog/arma-la-palabra/assets.ts";
 import { splitLetters } from "../src/game/catalog/arma-la-palabra/letters.ts";
 import { PRELOAD as SABES_PRELOAD } from "../src/game/catalog/la-sabes-o-no/assets.ts";
+import {
+  HEARTS,
+  PRELOAD as LIBRO_PRELOAD,
+} from "../src/game/catalog/mi-libro-favorito/assets.ts";
 
 // --- coordenadas ---
 
@@ -463,3 +467,132 @@ for (let option = 0; option < 2; option++) {
 }
 
 console.log("la sabes o no: checks ok");
+
+// --- el layout de mi libro favorito contra lo que la logica espera ---
+
+const libro = JSON.parse(
+  readFileSync("src/game/catalog/mi-libro-favorito/layout.json", "utf8"),
+) as Layer[];
+
+for (const src of LIBRO_PRELOAD) {
+  assert.ok(existsSync(`public${src}`), `asset declarado que no existe: ${src}`);
+}
+
+assert.ok(
+  findPart(libro, "background", "color"),
+  "el layer 'background' debe llevar una part 'color' (es el croma)",
+);
+
+// Logic escribe el texto y anima el marco por estos dos ids.
+assert.ok(
+  findPart(libro, "question-text", "text"),
+  "'question-text' debe llevar una part 'text' (la pisa Logic)",
+);
+const questionFrame = libro.find((layer) => layer.id === "question-frame");
+assert.ok(questionFrame, "falta el layer 'question-frame'");
+for (const type of ["pop", "shake", "bounce", "slide"]) {
+  assert.ok(
+    partOf(questionFrame, type),
+    `'question-frame' debe llevar la part '${type}'`,
+  );
+}
+// El marco arranca fuera de cuadro y entra con 'bounce' (target {0,0}); si el
+// layout lo pusiera en su sitio, el juego abriria con la pregunta al aire.
+assert.ok(
+  questionFrame.parentId,
+  "'question-frame' debe colgar de un padre: los target de bounce/slide son locales",
+);
+assert.deepEqual(
+  partOf<{ type: "bounce"; target: { x: number; y: number } }>(
+    questionFrame,
+    "bounce",
+  )?.target,
+  { x: 0, y: 0 },
+  "'question-frame' vuelve al origen de su padre cuando entra",
+);
+assert.deepEqual(
+  questionFrame.rect.position,
+  partOf<{ type: "slide"; target: { x: number; y: number } }>(
+    questionFrame,
+    "slide",
+  )?.target,
+  "'question-frame' arranca donde lo deja 'slide': fuera de cuadro",
+);
+
+for (let side = 0; side < 2; side++) {
+  const name = ["left", "right"][side];
+
+  const content = libro.find((layer) => layer.id === `content-${name}`);
+  assert.ok(content, `falta el layer 'content-${name}'`);
+  for (const type of ["bounce", "slide"]) {
+    assert.ok(
+      partOf(content, type),
+      `'content-${name}' debe llevar la part '${type}'`,
+    );
+  }
+  assert.ok(
+    findPart(libro, `name-text-${name}`, "text"),
+    `'name-text-${name}' debe llevar una part 'text' (la pisa Logic)`,
+  );
+
+  // Los corazones entran deslizandose desde fuera de su caja: sin la part
+  // 'mask' en el contenedor se los ve viajar por encima del banner.
+  const lives = libro.find((layer) => layer.id === `lives-${name}`);
+  assert.ok(lives, `falta el layer 'lives-${name}'`);
+  assert.ok(
+    partOf(lives, "mask"),
+    `'lives-${name}' debe llevar la part 'mask': es lo que recorta la entrada`,
+  );
+  assert.equal(
+    partOf<{ type: "image" }>(lives, "image"),
+    undefined,
+    `'lives-${name}' recorta a su rect, sin silueta: no lleva part 'image'`,
+  );
+
+  for (let i = 0; i < 5; i++) {
+    const slot = libro.find((layer) => layer.id === `heart-slot-${name}-${i}`);
+    assert.ok(slot, `falta el layer 'heart-slot-${name}-${i}'`);
+    assert.equal(
+      slot.parentId,
+      `lives-${name}`,
+      `'heart-slot-${name}-${i}' cuelga del contenedor que lo recorta`,
+    );
+
+    const rootId = `heart-root-${name}-${i}`;
+    const root = libro.find((layer) => layer.id === rootId);
+    assert.ok(root, `falta el layer '${rootId}'`);
+    assert.equal(root.parentId, slot.id, `'${rootId}' cuelga de su casilla`);
+    for (const type of ["bounce", "blink"]) {
+      assert.ok(partOf(root, type), `'${rootId}' debe llevar la part '${type}'`);
+    }
+    assert.ok(
+      root.rect.position.y < 0,
+      `'${rootId}' arranca fuera de la caja: Logic lo hace entrar con 'bounce'`,
+    );
+
+    // Logic intercambia estos dos al quitar una vida; los dos van en PRELOAD o
+    // el corazon roto parpadea la primera vez, al aire.
+    for (const [kind, src] of [
+      ["full", HEARTS.full],
+      ["broken", HEARTS.broken],
+    ] as const) {
+      const id = `heart-${kind}-${name}-${i}`;
+      const image = findPart<{ type: "image"; src: string }>(libro, id, "image");
+      assert.ok(image, `'${id}' debe llevar una part 'image'`);
+      assert.equal(image.src, src, `'${id}' debe usar el corazon ${kind}`);
+      const layer = libro.find((candidate) => candidate.id === id);
+      assert.equal(
+        layer?.parentId,
+        rootId,
+        `'${id}' cuelga del root que lo anima`,
+      );
+      assert.equal(
+        layer?.visible,
+        kind === "full",
+        `'${id}' arranca ${kind === "full" ? "prendido" : "apagado"}`,
+      );
+    }
+  }
+}
+
+console.log("mi libro favorito: checks ok");

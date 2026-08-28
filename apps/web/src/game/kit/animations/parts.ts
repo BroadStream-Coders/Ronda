@@ -26,3 +26,11 @@ export interface SlidePart extends LayerPart {
   speed?: number;
   target: Vec2;
 }
+
+export interface BlinkPart extends LayerPart {
+  type: "blink";
+  pulseScale?: number;
+  pulseDuration?: number;
+  blinkCount?: number;
+  blinkDuration?: number;
+}

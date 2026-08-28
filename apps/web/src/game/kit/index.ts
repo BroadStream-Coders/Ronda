@@ -19,6 +19,7 @@ export { playSound, preloadMedia } from "./media";
 export { AnimationsProvider, useAnimations } from "./animations/context";
 export { useLayerAnimations } from "./animations/use-layer-animations";
 export type {
+  BlinkPart,
   BouncePart,
   PopPart,
   ShakePart,

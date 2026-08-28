@@ -12,6 +12,10 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [RM-066] Portar Mi Libro Favorito (2026-08-28 09:56)
+El juego entra al catálogo de Que Gane El Mejor: 56 layers desde el `scene.json` de Games, los 4 PNG del proyecto Unity y GeniusTechno, que ya estaba en el programa. El `controller` desaparece como en los portados anteriores; ronda, casilla, jugador seleccionado y vidas viven en estado local, y lo único compartido es el texto del marco, que se deriva de un `revealed` en vez de escribirse a mano en cada handler.
+Trajo al kit las dos piezas que la estimación de la tarea no tenía: la animación **`blink`** (pulso, parpadeos y `blinkSettle`, el corazón que se rompe) y el **recorte sin silueta** — un layer con part `mask` y sin part `image` ahora recorta a su rect, que es lo que tapa a los corazones mientras entran deslizándose desde fuera del banner. `check-game.ts` cubre la jerarquía de los 20 corazones, sus dos imágenes y que el marco arranque fuera de cuadro.
+
 ## [RM-089] Vista de conductor de Cálculo Mental (2026-08-28 09:46)
 `src/host/catalog/calculo-mental/View.tsx`: una fila por tablero y cada casilla en su columna (A–D, como las etiqueta el colector), enunciado arriba y respuesta abajo a la derecha — la forma de la hoja de cálculo con la que el equipo arma el programa. Meter las cuatro casillas en una sola celda se probó primero y se leía mal.
 La columna de tablero numera desde **0**, igual que la hoja y que la tecla de dígito que saca ese tablero al aire; por eso es una columna propia y no el `numbered` de `HostTable`, que es un correlativo 1..N. Sin piezas nuevas del kit.

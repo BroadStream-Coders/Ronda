@@ -150,15 +150,6 @@ cualquiera de estas tareas, no se repite acá.
   que produce `si-o-no` sin un caso especial escrito a mano.
 - **Fecha:** 2026-08-20 · **Estado:** Abierto
 
-## [RM-066] Portar Mi Libro Favorito
-- **Objetivo:** traer el juego de Games. Colector: `mi-libro-favorito` (preguntas por
-  ronda para dos equipos).
-- **Depende de:** nada nuevo — la part `text` y el override de `visible` que pide el
-  marcador por equipo ya entraron con [[RM-063]].
-- **Hecho cuando:** corre dentro de un programa, es asignable y consume el archivo
-  que produce su colector.
-- **Fecha:** 2026-08-20 · **Estado:** Abierto
-
 ## [RM-067] Portar Intruso
 - **Objetivo:** traer el juego de Games. Colector: `intruso` (encontrar el elemento
   que no encaja).
@@ -171,7 +162,8 @@ cualquiera de estas tareas, no se repite acá.
 - **Objetivo:** traer el juego de Games. Colector: `album` (fotos con pregunta por
   columna).
 - **Depende de:** [[RM-061]]. Trae además animaciones que el kit no tiene (del grupo
-  float / blink / sparkles / shimmer / holo); entran las que este juego use, no todas.
+  float / sparkles / shimmer / holo); entran las que este juego use, no todas.
+  `blink` ya entró con [[RM-066]].
 - **Hecho cuando:** corre dentro de un programa, es asignable y consume la sesión que
   produce su colector, imágenes incluidas.
 - **Fecha:** 2026-08-20 · **Estado:** Abierto

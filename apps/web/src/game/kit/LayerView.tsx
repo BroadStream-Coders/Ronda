@@ -31,7 +31,11 @@ export function LayerView({
         ref={animationRef}
         className="absolute inset-0"
         style={
-          maskImage?.src ? maskStyle(maskImage.src, maskImage.fit) : undefined
+          mask
+            ? maskImage?.src
+              ? maskStyle(maskImage.src, maskImage.fit)
+              : { overflow: "hidden" }
+            : undefined
         }
       >
         {layer.parts.map((part, index) => {
