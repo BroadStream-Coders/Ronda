@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { AnimationsProvider } from "./animations/context";
 import { FontRegistryProvider } from "./font-context";
@@ -43,8 +43,16 @@ export function GameShell({
   }, []);
 
   const preload = game.preload;
+  const [ready, setReady] = useState(!preload?.length);
   useEffect(() => {
-    if (preload?.length) preloadMedia(preload);
+    if (!preload?.length) return;
+    let alive = true;
+    void preloadMedia(preload).then(() => {
+      if (alive) setReady(true);
+    });
+    return () => {
+      alive = false;
+    };
   }, [preload]);
 
   useEffect(
@@ -63,7 +71,7 @@ export function GameShell({
     <FontRegistryProvider value={fonts}>
       <PartRegistryProvider value={registry}>
         <AnimationsProvider>
-        {Logic && <Logic />}
+        {ready && Logic && <Logic />}
         <div className="flex h-full flex-col">
           <GameTopbar
             game={game}
@@ -71,16 +79,24 @@ export function GameShell({
           />
           <div className="flex min-h-0 flex-1">
             <Stage onReady={registerFullscreen}>
-              {layers
-                .filter((layer) => !layer.parentId && layer.visible)
-                .map((layer) => (
-                  <LayerView
-                    key={layer.id}
-                    layer={layer}
-                    all={layers}
-                    onPosition={setPosition}
-                  />
-                ))}
+              {ready ? (
+                layers
+                  .filter((layer) => !layer.parentId && layer.visible)
+                  .map((layer) => (
+                    <LayerView
+                      key={layer.id}
+                      layer={layer}
+                      all={layers}
+                      onPosition={setPosition}
+                    />
+                  ))
+              ) : (
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <span className="text-[3cqh] text-white/70">
+                    Cargando el juego
+                  </span>
+                </div>
+              )}
             </Stage>
             {game.chromaLayerId && (
               <GameConfig

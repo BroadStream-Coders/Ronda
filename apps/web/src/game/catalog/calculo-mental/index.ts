@@ -21,6 +21,6 @@ export const calculoMental: GameType = {
     if (!isCalculoSession(data)) {
       throw new Error("El archivo no tiene el formato de Cálculo Mental.");
     }
-    useGameSession.getState().setSession(data, file.name);
+    await useGameSession.getState().setSession(data, file.name);
   },
 };

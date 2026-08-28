@@ -19,6 +19,6 @@ export const miLibroFavorito: GameType = {
     if (!isMiLibroSession(data)) {
       throw new Error("El archivo no tiene el formato de Mi Libro Favorito.");
     }
-    useGameSession.getState().setSession(data, file.name);
+    await useGameSession.getState().setSession(data, file.name);
   },
 };

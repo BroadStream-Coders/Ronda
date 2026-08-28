@@ -12,6 +12,11 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [RM-086] Los assets se cargan enteros antes de que el juego arranque (2026-08-28 10:14)
+`preloadMedia` ahora devuelve una promesa que resuelve cuando todo está de verdad listo — `decode()` para imágenes, `canplaythrough` para audio y **video, que antes no tenía rama**: un `.mp4` caía en `new Image().src` y fallaba en silencio. `GameShell` no monta la lógica ni pinta un layer hasta que resuelve; mientras tanto muestra "Cargando el juego" dentro del Stage.
+Las imágenes de la sesión ZIP van por el mismo `decode()` pero en `setSession`, y **antes** de instalar la sesión nueva: cuando `loadedAt` cambia ya están decodificadas, y hasta entonces sigue en pantalla la sesión anterior, que es lo que se quiere en vivo. El topbar avisa "Cargando los datos…" y bloquea el botón mientras tanto. Un asset que falle no cuelga el juego (`allSettled`): la garantía de que las rutas existen la da `check-game.ts` en build, no el runtime.
+Es regla dura del proyecto y quedó escrita en `CLAUDE.md`: nada sale al aire sin estar precargado y decodificado. Lo que **no** cubre —y no puede— es la decodificación cuadro a cuadro del video en reproducción; de eso se ocupa la elección de H.264 ([[RM-085]]).
+
 ## [RM-061] Sesión ZIP y ciclo de vida de los blobs (2026-08-28 10:01)
 `readZipSession(file)` (`src/game/kit/zip.ts`) abre el paquete que arma el colector: saca el `sessionData.json` y devuelve las imágenes **como Blobs**, indexadas por la misma ruta que guarda el JSON. Las object URL las crea `setSession` y las revoca al reemplazar la sesión y al desmontar el juego, que ya llamaba a `clear()`.
 Devolver Blobs y no URLs es la decisión que hace el `dispose` innecesario del lado del juego: un paquete que no pase el type-guard nunca llegó a crear una URL, así que no hay nada que revocar en el camino de error. De paso es lo que lo vuelve testeable en node (`URL.createObjectURL` no existe ahí) y por eso `check-game.ts` arma un ZIP en memoria y lo lee de vuelta. También: el paquete se lee desde un `ArrayBuffer` en vez del `File`, que dependía de `FileReader`, y el selector de archivo acepta `.zip` además de `.json`. Desbloquea a [[RM-067]], [[RM-068]], [[RM-069]] y [[RM-073]].

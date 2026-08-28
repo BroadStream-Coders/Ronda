@@ -19,6 +19,6 @@ export const laSabesONo: GameType = {
     if (!isLaSabesSession(data)) {
       throw new Error("El archivo no tiene el formato de La Sabes o No.");
     }
-    useGameSession.getState().setSession(data, file.name);
+    await useGameSession.getState().setSession(data, file.name);
   },
 };

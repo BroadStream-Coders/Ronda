@@ -16,17 +16,21 @@ export function GameTopbar({ game, onFullscreen }: GameTopbarProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const fileName = useGameSession((s) => s.fileName);
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const Icon = game.meta.icon;
 
   async function handleFile(file: File) {
     setError(null);
+    setLoading(true);
     try {
       await game.load(file);
     } catch (cause) {
       setError(
         cause instanceof Error ? cause.message : "No se pudo leer el archivo.",
       );
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -45,6 +49,8 @@ export function GameTopbar({ game, onFullscreen }: GameTopbarProps) {
             <TriangleAlert className="size-3.5 shrink-0" />
             {error}
           </span>
+        ) : loading ? (
+          "Cargando los datos…"
         ) : (
           (fileName ?? "Sin datos cargados")
         )}
@@ -64,6 +70,7 @@ export function GameTopbar({ game, onFullscreen }: GameTopbarProps) {
       <Button
         variant="outline"
         size="sm"
+        disabled={loading}
         onClick={() => inputRef.current?.click()}
       >
         <Upload />

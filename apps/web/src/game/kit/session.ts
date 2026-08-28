@@ -2,6 +2,8 @@
 
 import { create } from "zustand";
 
+import { decodeImage } from "./media";
+
 interface GameSessionStore {
   session: unknown;
   images: Record<string, string>;
@@ -11,7 +13,7 @@ interface GameSessionStore {
     session: unknown,
     fileName: string,
     images?: Record<string, Blob>,
-  ) => void;
+  ) => Promise<void>;
   clear: () => void;
 }
 
@@ -33,16 +35,19 @@ export const useGameSession = create<GameSessionStore>((set) => ({
   images: {},
   fileName: null,
   loadedAt: 0,
-  setSession: (session, fileName, images) =>
+  setSession: async (session, fileName, images) => {
+    const published = images ? publish(images) : {};
+    await Promise.allSettled(Object.values(published).map(decodeImage));
     set((store) => {
       release(store.images);
       return {
         session,
         fileName,
         loadedAt: Date.now(),
-        images: images ? publish(images) : {},
+        images: published,
       };
-    }),
+    });
+  },
   clear: () =>
     set((store) => {
       release(store.images);

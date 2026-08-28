@@ -272,7 +272,7 @@ estado.
 | `useGameState` | pisa parts, `position` y `visible` |
 | `shuffledOrder` | permutación sembrada y determinista |
 | Fuentes | `FontRegistry` en la ficha; `next/font` local o de Google |
-| `playSound` / `preloadMedia` | audio e imágenes calentadas al montar |
+| `playSound` / `preloadMedia` | `preloadMedia` es **bloqueante**: devuelve una promesa que resuelve con todo decodificado (`decode()` para imágenes, `canplaythrough` para audio y video) y `GameShell` no monta la lógica hasta entonces. Declarar un asset en `preload` es lo que lo mete en esa espera |
 | Sesión **ZIP** | `readZipSession(file)` saca el `sessionData.json` y las imágenes del paquete que arma el colector. Devuelve **Blobs**, no URLs: las object URL las crea `setSession` y las revoca sola al reemplazar la sesión o desmontar el juego, así que un paquete que no pase el type-guard no deja nada colgando. El juego las lee de `useGameSession().images`, indexadas por la **misma ruta** que guarda el JSON (`images/T1.png`) |
 | `Stage` | 16:9, fullscreen, container-query |
 | `GameConfig` | panel plegable; hoy solo el color del croma |

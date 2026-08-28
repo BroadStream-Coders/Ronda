@@ -18,6 +18,6 @@ export const armaLaOracion: GameType = {
     if (!isArmaOracionSession(data)) {
       throw new Error("El archivo no tiene el formato de Arma la Oración.");
     }
-    useGameSession.getState().setSession(data, file.name);
+    await useGameSession.getState().setSession(data, file.name);
   },
 };

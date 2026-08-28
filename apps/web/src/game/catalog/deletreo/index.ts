@@ -19,6 +19,6 @@ export const deletreo: GameType = {
     if (!isDeletreoSession(data)) {
       throw new Error("El archivo no tiene el formato de Deletreo.");
     }
-    useGameSession.getState().setSession(data, file.name);
+    await useGameSession.getState().setSession(data, file.name);
   },
 };

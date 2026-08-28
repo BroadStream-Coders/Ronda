@@ -18,6 +18,6 @@ export const armaLaPalabra: GameType = {
     if (!isArmaPalabraSession(data)) {
       throw new Error("El archivo no tiene el formato de Arma la Palabra.");
     }
-    useGameSession.getState().setSession(data, file.name);
+    await useGameSession.getState().setSession(data, file.name);
   },
 };

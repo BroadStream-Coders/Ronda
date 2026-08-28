@@ -3,6 +3,7 @@ import { existsSync, readFileSync } from "node:fs";
 import JSZip from "jszip";
 
 import { readZipSession, ZIP_SESSION_JSON } from "../src/game/kit/zip.ts";
+import { mediaKind } from "../src/game/kit/media.ts";
 
 import {
   DESIGN_SIZE,
@@ -644,3 +645,33 @@ console.log("mi libro favorito: checks ok");
 }
 
 console.log("sesion zip: checks ok");
+
+// --- a que rama de precarga va cada asset ---
+
+// El bug que motivo [[RM-086]]: un .mp4 caia en la rama de imagen
+// (new Image().src = "…mp4"), fallaba en silencio y nadie esperaba nada.
+assert.equal(mediaKind("/x/background-blue.mp4"), "video");
+assert.equal(mediaKind("/x/clip.webm"), "video");
+assert.equal(mediaKind("/x/correct.mp3"), "audio");
+assert.equal(mediaKind("/x/correct.WAV"), "audio", "la extension no distingue mayusculas");
+assert.equal(mediaKind("/x/main-frame.png"), "image");
+// Las imagenes de la sesion llegan como blob: y no tienen extension: van a
+// decode(), que es la rama correcta.
+assert.equal(mediaKind("blob:http://localhost/9f2c-1"), "image");
+
+// Todo lo que declara un juego en PRELOAD tiene que caer en una rama que exista.
+for (const src of [
+  ...PRELOAD,
+  ...CALCULO_PRELOAD,
+  ...ORACION_PRELOAD,
+  ...PALABRA_PRELOAD,
+  ...SABES_PRELOAD,
+  ...LIBRO_PRELOAD,
+]) {
+  assert.ok(
+    ["audio", "video", "image"].includes(mediaKind(src)),
+    `asset sin rama de precarga: ${src}`,
+  );
+}
+
+console.log("precarga: checks ok");
