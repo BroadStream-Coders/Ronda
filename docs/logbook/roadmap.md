@@ -314,10 +314,14 @@ cualquiera de estas tareas, no se repite acá.
 - **Ya entraron:** Deletreo (`src/host/catalog/deletreo/View.tsx`), que trajo al kit
   `HostTable` (la grilla: columnas declarativas, numeración y las bandas escalonadas
   que evitan saltarse una fila), `HostSwitch` (alternar entre dos armados de la misma
-  data), `RoundTabs` (pestañas de ronda al pie) y `HostMessage`.
+  data), `RoundTabs` (pestañas de ronda al pie) y `HostMessage`. Y La Sabes o No
+  (`src/host/catalog/la-sabes-o-no/View.tsx`), sin tocar el kit: tres columnas
+  (pregunta + las dos opciones) y la correcta marcada con un check en la celda, no
+  una cuarta columna que repita la respuesta. Sus pestañas usan el título del grupo
+  que carga el colector, con `Grupo N` de respaldo.
 - **La grilla es por juego:** cada vista declara sus columnas; `HostTable` no sabe de
   palabras ni de preguntas. Un juego con pregunta + opciones + respuesta correcta
-  declara cuatro columnas y no toca el kit — salvo que pida algo que el kit no tiene
+  declara tres columnas y no toca el kit — salvo que pida algo que el kit no tiene
   todavía, y entonces esa pieza se escribe en `kit/`, no en la carpeta del juego.
 - **Hecho cuando:** no aplica de golpe; se cierra cuando el conductor tenga las vistas
   que pida el programa.
