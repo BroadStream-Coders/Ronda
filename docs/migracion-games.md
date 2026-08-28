@@ -301,6 +301,8 @@ escribe en `kit/`, no en la carpeta del juego**:
 - **El juego no existe en ninguno de los dos** → no es una migración: es un juego
   nuevo. Igual se construye sobre el mismo kit y con las mismas reglas de §5 a §9.
 
-**Ojo con los nombres:** el colector `si-o-no` alimenta al juego **Al Vuelo**. No
-todos los pares comparten slug, así que no asumir que el id del colector es el del
-juego.
+**Los nombres alinean:** cada juego usa el colector con **su mismo slug**. Hubo una
+excepción —el colector `si-o-no` alimentando al juego **Al Vuelo**— y se cerró
+renombrándolo a `al-vuelo`, con migración de las rutas del bucket. Si alguna vez
+vuelve a aparecer un par desalineado, se resuelve con un campo en `GameType`, no con
+un caso especial escrito a mano en el juego.

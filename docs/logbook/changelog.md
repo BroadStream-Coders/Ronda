@@ -12,6 +12,15 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [TD-108] El colector `si-o-no` pasa a llamarse `al-vuelo`, con migración (2026-08-28 12:36)
+El colector se llamaba **Al Vuelo** en todo lo que el usuario ve, pero su id era `si-o-no` — y ese id es parte de la ruta del bucket, así que el nombre viejo seguía vivo donde más costaba verlo. Se renombraron la carpeta, el id del `meta`, el export (`siONo` → `alVuelo`), el registro y la lista de servicios del programa.
+Va con `supabase/migrations/0012_rename_si_o_no_to_al_vuelo.sql`, que mueve los objetos ya subidos de `<program_id>/si-o-no/…` a `<program_id>/al-vuelo/…`. **Sin renombrar en la base, el host y el juego seguirían buscando en la carpeta vieja.** Las policies de [[RM-040]] no se tocan: miran solo la primera carpeta de la ruta (el uuid del programa), no el colector. La migración es idempotente y contempla que `path_tokens` pueda no ser columna generada.
+**Consecuencia:** hoy todos los pares juego↔colector comparten slug, así que el punto 2 de [[RM-038]] (que la ficha declare su colector) se queda sin caso que lo motive y [[RM-065]] deja de tener dependencias.
+
+## [TD-107] Al Vuelo exportaba con el nombre viejo del colector (2026-08-28 12:26)
+El archivo salía como `SiONo.json` y el aviso de carga decía "Archivo de Sí o No no válido", cuando el colector se llama **Al Vuelo** en todos lados que el usuario ve (su `meta.name` y el título del encabezado). Ahora exporta `AlVuelo.json`.
+Todos los demás exportan con el PascalCase de su carpeta y ahí carpeta y nombre coinciden; en este no, porque la carpeta conservaba el slug viejo (`si-o-no`). En su momento se decidió no renombrar la carpeta por las rutas del bucket; **eso se revirtió enseguida y el renombre completo entró con [[TD-108]]**, migración incluida.
+
 ## [TD-106] Las balizas de analytics ya no pasan por el middleware (2026-08-28 10:34)
 El matcher excluía estáticos ([[TD-085]]) pero no `/_vercel`, así que cada evento de Web Analytics y de Speed Insights (`/_vercel/insights/*`) disparaba `getClaims()` contra Supabase para un endpoint de plataforma que no necesita sesión — y son varios por navegación, más que los estáticos que ya se habían sacado.
 Mismo criterio que [[TD-085]] y [[TD-087]]: el middleware solo debe correr donde hay sesión que refrescar. No se pierde ninguna protección: `/_vercel` no es una ruta de la app.

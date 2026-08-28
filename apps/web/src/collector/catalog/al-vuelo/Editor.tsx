@@ -84,7 +84,7 @@ export function Editor() {
   const handleGetData = useCallback(() => buildData(columns), [columns]);
 
   const handleSave = useCallback(() => {
-    saveAsJson("SiONo.json", handleGetData());
+    saveAsJson("AlVuelo.json", handleGetData());
   }, [handleGetData]);
 
   const handleLoad = useCallback(async (file: File) => {
@@ -92,7 +92,7 @@ export function Editor() {
       const data = await loadJsonFile<Data>(file, isData);
       setColumns(fromData(data));
     } catch {
-      notifyError("Archivo de Sí o No no válido.");
+      notifyError("Archivo de Al Vuelo no válido.");
     }
   }, []);
 

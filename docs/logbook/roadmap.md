@@ -91,11 +91,12 @@ cualquiera de estas tareas, no se repite acá.
      por sesión (Intruso, Álbum, Cronos), ya desbloqueados por [[RM-061]]; Busca Logo
      al final, que es el que puede romper supuestos de rendimiento; Operaciones
      Combinadas aparte, porque del otro lado es un prototipo.
-  2. **La ficha debe declarar su colector.** Hoy se asume que el slug del juego y el
-     del colector coinciden, y no siempre pasa: el colector `si-o-no` es el que
-     alimenta al juego **Al Vuelo** (de hecho el colector ya se llama "Al Vuelo" en
-     su `meta`, solo la carpeta conserva el nombre viejo). Es un campo en `GameType`,
-     no un caso especial en cada juego.
+  2. **~~La ficha debe declarar su colector.~~ Ya no hace falta.** Existía por un
+     solo caso: el colector `si-o-no` alimentaba al juego **Al Vuelo**. Ese colector
+     se renombró a `al-vuelo` ([[TD-108]], con migración del bucket), así que **hoy
+     todos los pares comparten slug** y asumirlo es correcto. Si algún día vuelve a
+     aparecer un par desalineado, la salida es un campo en `GameType` — pero no se
+     construye por adelantado para nadie.
   3. **`scripts/check-game.ts` crece con el catálogo.** Hoy valida coordenadas,
      `applyState`, `settingKey` y los assets de Deletreo — o sea, solo el juego que
      ya está. Cada juego que entra deja acá lo que podría romperse en silencio: rutas
@@ -109,12 +110,12 @@ cualquiera de estas tareas, no se repite acá.
 - **Fecha:** 2026-08-13 · **Estado:** En progreso (2026-08-20)
 
 ## [RM-065] Portar Al Vuelo
-- **Objetivo:** traer el juego de Games. Colector: **`si-o-no`** — el slug no
-  coincide con el del juego, es el caso que motiva el punto 2 de [[RM-038]].
-- **Depende de:** el campo de colector en la ficha ([[RM-038]]); la part `text` ya
-  entró con [[RM-063]].
+- **Objetivo:** traer el juego de Games. Colector: `al-vuelo`.
+- **Depende de:** **nada.** Lo que lo frenaba era que el colector se llamara
+  `si-o-no`; se renombró con [[TD-108]] y el campo de colector en la ficha dejó de
+  hacer falta. La part `text` entró con [[RM-063]].
 - **Hecho cuando:** corre dentro de un programa, es asignable y consume el archivo
-  que produce `si-o-no` sin un caso especial escrito a mano.
+  que produce su colector.
 - **Fecha:** 2026-08-20 · **Estado:** Abierto
 
 ## [RM-104] Nivel 2 de Intruso: las rondas de fotos
@@ -300,7 +301,7 @@ que se decida cómo se sirven las fotos; la decisión es transversal y vive en
 - **Fecha:** 2026-08-23 · **Estado:** En progreso (2026-08-23)
 
 ## [RM-090] Vista de conductor de Al Vuelo
-- **Objetivo:** leer en el estudio lo que carga el colector `si-o-no` — el slug del colector no coincide con el del juego.
+- **Objetivo:** leer en el estudio lo que carga el colector `al-vuelo`.
 - **Hecho cuando:** la vista está registrada y el conductor lee con ella una
   sesión real del programa.
 - **Fecha:** 2026-08-28 · **Estado:** Abierto

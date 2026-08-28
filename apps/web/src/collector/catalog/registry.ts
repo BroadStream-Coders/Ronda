@@ -2,7 +2,7 @@ import type { ComponentType, ElementType } from "react";
 
 import { deletreo } from "./deletreo";
 import { calculoMental } from "./calculo-mental";
-import { siONo } from "./si-o-no";
+import { alVuelo } from "./al-vuelo";
 import { laSabesONo } from "./la-sabes-o-no";
 import { miLibroFavorito } from "./mi-libro-favorito";
 import { buscaLogo } from "./busca-logo";
@@ -32,7 +32,7 @@ export interface CollectorType {
 export const registry: Record<string, CollectorType> = {
   [deletreo.meta.id]: deletreo,
   [calculoMental.meta.id]: calculoMental,
-  [siONo.meta.id]: siONo,
+  [alVuelo.meta.id]: alVuelo,
   [laSabesONo.meta.id]: laSabesONo,
   [miLibroFavorito.meta.id]: miLibroFavorito,
   [buscaLogo.meta.id]: buscaLogo,

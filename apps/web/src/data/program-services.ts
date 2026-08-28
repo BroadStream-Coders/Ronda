@@ -13,7 +13,7 @@ export const programServices: Record<string, ProgramServices> = {
     collectors: [
       "deletreo",
       "calculo-mental",
-      "si-o-no",
+      "al-vuelo",
       "la-sabes-o-no",
       "mi-libro-favorito",
       "busca-logo",
