@@ -14,6 +14,7 @@ export interface GameMeta {
 export interface GameType {
   meta: GameMeta;
   layout: Layer[];
+  images?: boolean;
   chromaLayerId?: string;
   preload?: string[];
   parts?: PartRegistry;

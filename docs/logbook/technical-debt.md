@@ -16,6 +16,13 @@ reutiliza). Al resolverse se mueve al `changelog.md` conservando su código.
 
 ---
 
+## [TD-110] El formateo de fecha va copiado en cuatro archivos
+- **Ubicación:** `apps/web/src/game/kit/GameTopbar.tsx:41`, `apps/web/src/app/admin/inquiries/page.tsx:7`, `apps/web/src/app/admin/invitations/page.tsx:9`, `apps/web/src/app/admin/users/page.tsx:13`
+- **Riesgo:** 2/10
+- **Problema:** La misma función `formatDate` con `toLocaleString("es-PE", …)` está copiada cuatro veces. Ya eran tres en el admin; [[RM-062]] agregó la cuarta en el topbar del juego en vez de crear un helper, porque unificar significaba tocar tres archivos que no eran parte de la tarea.
+- **Impacto futuro:** Cambiar cómo se lee una fecha (o la zona horaria, que hoy es la del navegador y en cabina puede no ser la de emisión) obliga a acordarse de cuatro lugares. Es cosmético hasta que dos pantallas muestran la misma fecha distinta.
+- **Fecha:** 2026-08-28 · **Estado:** Abierto
+
 ## [TD-086] La imagen que recorta el colector sale sin tope de tamaño ni de calidad
 - **Ubicación:** `apps/web/src/collector/kit/images/crop-image.ts:56`
 - **Riesgo:** 6/10

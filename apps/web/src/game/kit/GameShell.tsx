@@ -75,6 +75,7 @@ export function GameShell({
         <div className="flex h-full flex-col">
           <GameTopbar
             game={game}
+            programId={programId}
             onFullscreen={() => fullscreenRef.current?.()}
           />
           <div className="flex min-h-0 flex-1">

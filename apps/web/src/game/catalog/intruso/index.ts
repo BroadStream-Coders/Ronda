@@ -14,6 +14,7 @@ import { isIntrusoSession } from "./session";
 export const intruso: GameType = {
   meta,
   layout: layout as Layer[],
+  images: true,
   preload: PRELOAD,
   fonts: { geniusTechno },
   logic: IntrusoLogic,

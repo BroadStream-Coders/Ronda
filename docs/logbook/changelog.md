@@ -12,6 +12,10 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [RM-062] El juego carga los datos que subió el colector (2026-08-28 14:31)
+El topbar del juego repite el patrón del colector ([[RM-105]]): botón "Cargar datos" con flechita **solo si hay algo en la nube**, y "Cargar de la nube" baja el `File` que `downloadCollectorData` ya devolvía — el `load` de cada ficha no cambió. Sin auto-carga (el operador decide cuándo) y sin confirmación (acá no hay trabajo en pantalla que perder).
+La ficha declara `images: true` cuando la sesión trae fotos (hoy solo Intruso): **el juego dice qué espera, no en qué formato viaja** — que se rearme un zip en memoria es asunto de la capa de datos. Un ícono de info al lado del nombre del archivo abre origen y fecha absoluta: la del bucket (`updated_at`) si vino de la nube, `lastModified` si es un archivo del equipo.
+
 ## [RM-105] El desplegable de nube solo aparece si hay algo en la nube (2026-08-28 14:24)
 `getCollectorSessionInfo` en `src/data/collector-storage.ts` resuelve con **un solo `list()`** si existe el `session.json` y de cuándo es; el `CollectorTopbar` la consulta al montar y esconde la flechita de **Cargar** cuando el bucket está vacío. Después de subir marca que ya hay nube, así que la flechita aparece sin recargar.
 El desplegable de **Guardar** queda siempre visible a propósito: si dependiera de que ya exista algo, no habría forma de subir la primera vez. La fecha que devuelve la consulta todavía no se pinta — la consume [[RM-062]].

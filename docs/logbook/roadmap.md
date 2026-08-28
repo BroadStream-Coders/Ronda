@@ -209,22 +209,6 @@ cualquiera de estas tareas, no se repite acá.
   colector y por su juego; ningún contrato está definido dos veces.
 - **Fecha:** 2026-08-13 · **Estado:** Abierto
 
-## [RM-062] El juego lee lo que cargó el colector, sin archivo a mano
-- **Objetivo:** que el operador entre al juego y los datos ya estén, en vez de tener
-  que elegir un archivo local que alguien le pasó. Es el punto entero de que colector
-  y juego vivan en la misma plataforma; hoy el circuito está cortado justo ahí.
-- **No bloquea la migración.** Estuvo un rato listada entre las tareas previas a
-  portar y no lo es: cada juego funciona con el archivo local, igual que Deletreo hoy.
-  Esto es producto, no prerequisito — puede entrar antes o después de los nueve juegos
-  sin frenar ninguno.
-- **Por qué no es difícil:** engancha sin rediseño — la carga desde la nube devuelve
-  un `File`, igual que el input de archivo, así que el `load` de cada ficha no cambia.
-  Lo que falta es de dónde sacarlo: qué sesión del colector corresponde a este juego
-  en este programa, que es lo que [[RM-039]] deja tipado.
-- **Hecho cuando:** el juego abre con los datos de la última sesión del colector, y
-  la carga de archivo local queda como salida de emergencia, no como el camino normal.
-- **Fecha:** 2026-08-20 · **Estado:** Abierto
-
 ## [RM-047] Límite de peso de las imágenes antes de subir
 - **Objetivo:** que ninguna imagen entre al bucket sin pasar por un tope:
   redimensionar y/o comprimir del lado del cliente, y rechazar lo que se pase.
