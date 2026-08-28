@@ -294,12 +294,6 @@ que se decida cómo se sirven las fotos; la decisión es transversal y vive en
   llegar al host.
 - **Fecha:** 2026-08-23 · **Estado:** En progreso (2026-08-23)
 
-## [RM-090] Vista de conductor de Al Vuelo
-- **Objetivo:** leer en el estudio lo que carga el colector `al-vuelo`.
-- **Hecho cuando:** la vista está registrada y el conductor lee con ella una
-  sesión real del programa.
-- **Fecha:** 2026-08-28 · **Estado:** Abierto
-
 ## [RM-092] Vista de conductor de Mi Libro Favorito
 - **Objetivo:** leer en el estudio lo que carga el colector `mi-libro-favorito`.
 - **Hecho cuando:** la vista está registrada y el conductor lee con ella una

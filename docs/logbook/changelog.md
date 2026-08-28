@@ -12,6 +12,10 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [RM-090] Vista de conductor de Al Vuelo (2026-08-28 13:50)
+`src/host/catalog/al-vuelo/View.tsx`, sin tocar el kit: **dos columnas, enunciado y respuesta**. No se listan las opciones — siempre son SÍ y NO, así que repetirlas en cada fila sería ruido; el conductor solo necesita leer cuál es.
+Una pregunta sin respuesta marcada (`answer: null`, que el colector permite guardar) se muestra como "Sin marcar" en vez de inventar un valor. Es coherente con el juego, que en ese caso no marca ninguna opción ([[RM-065]]). Las pestañas al pie usan el título de grupo que sí captura este colector, con `Grupo N` de respaldo.
+
 ## [TD-109] El `image` del kit ignoraba `flipX` (2026-08-28 13:10)
 En Games el componente `image` tiene `flipX`, que espeja con `scaleX(-1)`: sirve para reutilizar un mismo asset dado vuelta en vez de guardar dos archivos. La conversión de layouts lo venía copiando bien, pero `ImageView` no lo leía — la data llegaba y se perdía en el último paso.
 Salía mal en el marco del **NO** de Al Vuelo ([[RM-065]]) y —sin que nadie lo hubiera notado todavía— en el marco del nombre del jugador derecho de **Mi Libro Favorito** ([[RM-066]]). `check-game.ts` ahora afirma qué layers van espejados y cuáles no en los dos juegos: es data que viaja callada y solo se nota mirándola.
