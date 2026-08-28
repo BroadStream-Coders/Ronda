@@ -7,6 +7,19 @@ export interface ZipSession {
   images: Record<string, Blob>;
 }
 
+const MIME: Record<string, string> = {
+  png: "image/png",
+  jpg: "image/jpeg",
+  jpeg: "image/jpeg",
+  webp: "image/webp",
+  gif: "image/gif",
+  avif: "image/avif",
+};
+
+function mimeOf(path: string): string {
+  return MIME[path.split(".").pop()?.toLowerCase() ?? ""] ?? "image/png";
+}
+
 export async function readZipSession(file: File): Promise<ZipSession> {
   let zip: JSZip;
   try {
@@ -29,7 +42,10 @@ export async function readZipSession(file: File): Promise<ZipSession> {
         (candidate) => !candidate.dir && candidate.name !== ZIP_SESSION_JSON,
       )
       .map(async (candidate) => {
-        images[candidate.name] = await candidate.async("blob");
+        const bytes = await candidate.async("arraybuffer");
+        images[candidate.name] = new Blob([bytes], {
+          type: mimeOf(candidate.name),
+        });
       }),
   );
 

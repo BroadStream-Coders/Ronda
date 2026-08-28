@@ -12,6 +12,15 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [TD-105] Un juego que no carga ya no deja la pantalla en blanco (2026-08-28 10:26)
+`GameMount` hacía `loaders[gameId]?.().then(...)` sin rama de error y devolvía `null` mientras tanto: si el `import()` dinámico fallaba —chunk viejo del dev server, módulo roto, id sin loader— la ruta quedaba **completamente vacía para siempre**, sin topbar, sin mensaje y sin nada que mirar salvo una promesa rechazada en consola.
+Ahora distingue los tres estados: muestra "Cargando el juego", o el mensaje del error con la causa loggeada, y avisa aparte si el id no tiene loader registrado (`metas` y `loaders` son dos mapas distintos y pueden desincronizarse: la ruta valida contra `metas`, así que un juego con meta y sin loader pasaba el 404 y moría en blanco).
+
+## [RM-067] Portar Intruso (2026-08-28 10:19)
+33 layers desde el `scene.json` de Games y los 9 PNG del proyecto Unity. **Es el primer juego que muestra imágenes de sesión**: la foto de cada ronda sale de `useGameSession().images` indexada por el `imagePath` que guarda el JSON, y se recorta con la silueta del marco (part `mask` con `showImage: false`). No lleva croma — el fondo es video y el hueco del marco lo llena la foto.
+Estrenar el ZIP destapó un bug de [[RM-061]] que solo aparecía con imágenes reales: `JSZip.async("blob")` devuelve el blob con `type: ""`, y una `blob:` URL sin MIME **no decodifica** — no hay sniffing de contenido, el tipo sale del Blob. `readZipSession` ahora arma el Blob desde el `arraybuffer` con el MIME sacado de la extensión. Sin eso, `decode()` fallaba y la foto no aparecía, al aire y sin error en consola.
+El nivel 2 del colector (`photoRounds`) **no se portó porque no existe en Games**: queda como [[RM-104]].
+
 ## [RM-086] Los assets se cargan enteros antes de que el juego arranque (2026-08-28 10:14)
 `preloadMedia` ahora devuelve una promesa que resuelve cuando todo está de verdad listo — `decode()` para imágenes, `canplaythrough` para audio y **video, que antes no tenía rama**: un `.mp4` caía en `new Image().src` y fallaba en silencio. `GameShell` no monta la lógica ni pinta un layer hasta que resuelve; mientras tanto muestra "Cargando el juego" dentro del Stage.
 Las imágenes de la sesión ZIP van por el mismo `decode()` pero en `setSession`, y **antes** de instalar la sesión nueva: cuando `loadedAt` cambia ya están decodificadas, y hasta entonces sigue en pantalla la sesión anterior, que es lo que se quiere en vivo. El topbar avisa "Cargando los datos…" y bloquea el botón mientras tanto. Un asset que falle no cuelga el juego (`allSettled`): la garantía de que las rutas existen la da `check-game.ts` en build, no el runtime.

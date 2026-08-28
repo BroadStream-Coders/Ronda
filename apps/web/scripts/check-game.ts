@@ -4,6 +4,7 @@ import JSZip from "jszip";
 
 import { readZipSession, ZIP_SESSION_JSON } from "../src/game/kit/zip.ts";
 import { mediaKind } from "../src/game/kit/media.ts";
+import { PRELOAD as INTRUSO_PRELOAD } from "../src/game/catalog/intruso/assets.ts";
 
 import {
   DESIGN_SIZE,
@@ -634,6 +635,12 @@ console.log("mi libro favorito: checks ok");
   );
   assert.equal(await images["images/T1.png"].arrayBuffer().then((b) => b.byteLength), 4);
 
+  // El blob que devuelve JSZip viene con type "" y una blob: URL sin MIME no
+  // decodifica: no hay sniffing de contenido, el tipo sale del Blob. Sin esto
+  // decode() falla y la foto no aparece, al aire.
+  assert.equal(images["images/T1.png"].type, "image/png");
+  assert.equal(images["images/T2.jpg"].type, "image/jpeg");
+
   const sinJson = new JSZip();
   sinJson.file("images/T1.png", Buffer.from([0x89]));
   const roto = new File([await sinJson.generateAsync({ type: "blob" })], "roto.zip");
@@ -667,6 +674,7 @@ for (const src of [
   ...PALABRA_PRELOAD,
   ...SABES_PRELOAD,
   ...LIBRO_PRELOAD,
+  ...INTRUSO_PRELOAD,
 ]) {
   assert.ok(
     ["audio", "video", "image"].includes(mediaKind(src)),
@@ -675,3 +683,75 @@ for (const src of [
 }
 
 console.log("precarga: checks ok");
+
+// --- el layout de intruso contra lo que la logica espera ---
+
+const intruso = JSON.parse(
+  readFileSync("src/game/catalog/intruso/layout.json", "utf8"),
+) as Layer[];
+
+for (const src of INTRUSO_PRELOAD) {
+  assert.ok(existsSync(`public${src}`), `asset declarado que no existe: ${src}`);
+}
+
+// Este juego no va sobre croma: el fondo es video y el hueco del marco lo llena
+// la foto de la sesion. Si el layout trajera un layer de color, la ficha
+// tendria que declarar chromaLayerId o el panel ofreceria un color que nadie
+// pinta.
+assert.equal(
+  intruso.find((layer) => layer.parts.some((part) => part.type === "color")),
+  undefined,
+  "intruso no lleva croma: el fondo es video y el hueco lo llena la foto",
+);
+
+// El unico src vacio del layout: lo llena Logic con la imagen de la sesion.
+const picture = findPart<{ type: "image"; src: string }>(
+  intruso,
+  "picture",
+  "image",
+);
+assert.ok(picture, "'picture' debe llevar una part 'image' (la pisa Logic)");
+assert.equal(
+  picture.src,
+  "",
+  "'picture' arranca vacia: la foto llega con la sesion, no con el deploy",
+);
+
+// La foto se recorta con la silueta del marco, que no se dibuja.
+const intrusoMask = intruso.find((layer) => layer.id === "mask");
+assert.ok(intrusoMask, "falta el layer 'mask'");
+assert.ok(partOf(intrusoMask, "mask"), "'mask' debe llevar la part 'mask'");
+assert.ok(
+  partOf<{ type: "image"; src: string }>(intrusoMask, "image")?.src,
+  "'mask' debe llevar una part 'image': es la que da la forma del recorte",
+);
+assert.equal(
+  intruso.find((layer) => layer.id === "picture")?.parentId,
+  "mask",
+  "'picture' cuelga de 'mask': es lo que la recorta",
+);
+
+for (let option = 0; option < 4; option++) {
+  assert.ok(
+    findPart(intruso, `option-${option}-text`, "text"),
+    `'option-${option}-text' debe llevar una part 'text' (la pisa Logic)`,
+  );
+  for (const mark of ["normal", "correct", "incorrect"]) {
+    const id = `option-${option}-frame-${mark}`;
+    const layer = intruso.find((candidate) => candidate.id === id);
+    assert.ok(layer, `falta el layer '${id}' (lo prende/apaga Logic)`);
+    const image = partOf<{ type: "image"; src: string }>(layer, "image");
+    assert.ok(image, `'${id}' debe llevar una part 'image'`);
+    assert.ok(
+      INTRUSO_PRELOAD.includes(image.src),
+      `'${id}' se intercambia en vivo: su marco debe estar en PRELOAD`,
+    );
+    assert.equal(
+      layer.visible,
+      mark === "normal",
+      `'${id}' arranca ${mark === "normal" ? "prendido" : "apagado"}`,
+    );
+  }
+}
+
+console.log("intruso: checks ok");

@@ -6,12 +6,14 @@ import { meta as armaLaOracion } from "./arma-la-oracion/meta";
 import { meta as armaLaPalabra } from "./arma-la-palabra/meta";
 import { meta as laSabesONo } from "./la-sabes-o-no/meta";
 import { meta as miLibroFavorito } from "./mi-libro-favorito/meta";
+import { meta as intruso } from "./intruso/meta";
 
 export const metas: Record<string, GameMeta> = {
   [deletreo.id]: deletreo,
   [calculoMental.id]: calculoMental,
   [laSabesONo.id]: laSabesONo,
   [miLibroFavorito.id]: miLibroFavorito,
+  [intruso.id]: intruso,
   [armaLaOracion.id]: armaLaOracion,
   [armaLaPalabra.id]: armaLaPalabra,
 };
