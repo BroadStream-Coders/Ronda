@@ -117,6 +117,21 @@ Ver [README.md](README.md) para el panorama y `docs/logbook/` para el estado.
   son degradados suaves, donde el riesgo real es el **banding**, que ninguna métrica
   automática detecta: se valida a ojo en el monitor de emisión.
 
+- **Nada sale al aire sin estar precargado — regla dura del servicio de juegos.**
+  Un juego no arranca hasta tener **todos** sus assets en RAM y **decodificados**:
+  marcos, sonidos, video y las imágenes que trae la sesión ZIP. Que la entrada demore
+  y muestre una pantalla de carga no es problema; que a mitad del programa una imagen
+  "todavía esté cargando" o falle, sí — se emite en vivo y no hay segunda toma. Esto
+  aplica al servicio de **juegos**; el colector y el host tienen otras exigencias y no
+  se rigen por esto.
+  - **Estar en RAM no alcanza: hay que decodificar.** Una imagen de la sesión ZIP ya
+    vive en memoria como Blob y su `blob:` URL no toca la red — pero el navegador
+    recién la decodifica en el primer pintado, y eso es un tirón en el peor momento.
+    Se precarga con `decode()`, no con asignar el `src` y seguir de largo.
+  - **Precargar no cubre la reproducción de video.** Cada frame se decodifica en
+    tiempo real mientras corre; por eso el video va en H.264 (ver abajo). Son dos
+    mitades del mismo requisito y no se cubre una sola.
+
 - **Las animaciones son parts sin vista.** Un layer declara `pop`, `shake`, `bounce` o
   `slide` en sus `parts[]` como data; no dibujan nada. `useLayerAnimations` las lee del
   propio layer, registra un trigger por `(layerId, tipo)` y la lógica del juego las

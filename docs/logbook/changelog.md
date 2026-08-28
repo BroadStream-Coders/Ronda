@@ -12,6 +12,10 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [RM-061] Sesión ZIP y ciclo de vida de los blobs (2026-08-28 10:01)
+`readZipSession(file)` (`src/game/kit/zip.ts`) abre el paquete que arma el colector: saca el `sessionData.json` y devuelve las imágenes **como Blobs**, indexadas por la misma ruta que guarda el JSON. Las object URL las crea `setSession` y las revoca al reemplazar la sesión y al desmontar el juego, que ya llamaba a `clear()`.
+Devolver Blobs y no URLs es la decisión que hace el `dispose` innecesario del lado del juego: un paquete que no pase el type-guard nunca llegó a crear una URL, así que no hay nada que revocar en el camino de error. De paso es lo que lo vuelve testeable en node (`URL.createObjectURL` no existe ahí) y por eso `check-game.ts` arma un ZIP en memoria y lo lee de vuelta. También: el paquete se lee desde un `ArrayBuffer` en vez del `File`, que dependía de `FileReader`, y el selector de archivo acepta `.zip` además de `.json`. Desbloquea a [[RM-067]], [[RM-068]], [[RM-069]] y [[RM-073]].
+
 ## [RM-066] Portar Mi Libro Favorito (2026-08-28 09:56)
 El juego entra al catálogo de Que Gane El Mejor: 56 layers desde el `scene.json` de Games, los 4 PNG del proyecto Unity y GeniusTechno, que ya estaba en el programa. El `controller` desaparece como en los portados anteriores; ronda, casilla, jugador seleccionado y vidas viven en estado local, y lo único compartido es el texto del marco, que se deriva de un `revealed` en vez de escribirse a mano en cada handler.
 Trajo al kit las dos piezas que la estimación de la tarea no tenía: la animación **`blink`** (pulso, parpadeos y `blinkSettle`, el corazón que se rompe) y el **recorte sin silueta** — un layer con part `mask` y sin part `image` ahora recorta a su rect, que es lo que tapa a los corazones mientras entran deslizándose desde fuera del banner. `check-game.ts` cubre la jerarquía de los 20 corazones, sus dos imágenes y que el marco arranque fuera de cuadro.

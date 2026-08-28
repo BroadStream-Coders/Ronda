@@ -22,12 +22,21 @@ Al terminar una tarea se mueve al changelog y se borra de aquí.
   todo esté realmente listo (`canplaythrough` para audio y video, `decode()` para
   imágenes), una rama para video, y que `GameShell` no monte la lógica hasta que
   resuelva. Con una pantalla de carga, que puede tardar lo que sea.
+- **Y las imágenes de la sesión ZIP, que entraron después ([[RM-061]]).** Hoy llegan
+  como Blob y su `blob:` URL no toca la red, así que el riesgo no es la descarga —
+  es la **decodificación**, que el navegador hace recién en el primer pintado. Un
+  tirón al cambiar de ronda, en vivo. Van por el mismo `decode()` que el resto, pero
+  no al montar el juego sino **al cargar la sesión**: son las únicas que llegan
+  después de que el juego ya arrancó, así que la espera es la de `load`, no la del
+  arranque.
 - **Ojo — precargar resuelve la red, no la decodificación.** Aunque el archivo esté
   entero en memoria, cada frame se decodifica en tiempo real durante la reproducción.
   Por eso el video va en H.264 (ver `CLAUDE.md`): esto y la elección de códec son dos
   mitades del mismo requisito, no se cubre una sola.
 - **Hecho cuando:** un juego con video y sonidos no muestra nada hasta tenerlo todo
-  cargado, y cortar la red después de que arrancó no lo afecta.
+  cargado, cortar la red después de que arrancó no lo afecta, y una sesión ZIP no
+  queda disponible hasta que sus imágenes estén decodificadas.
+- **Es regla dura del proyecto**, no una mejora: está escrita en `CLAUDE.md`.
 - **Fecha:** 2026-08-24 · **Estado:** Abierto
 
 ---
@@ -93,9 +102,9 @@ se migra desde Unity.
 juego que la pida, escrita en `kit/` y no en la carpeta del juego — el mismo criterio
 que ya se aplicó con las animaciones, de las que entraron 4 de 10. Hacerlas sueltas
 significa construirlas sin nadie que las use y sin forma de validarlas: `pnpm build`
-no avisa si un texto desborda su rect. La única anotada aparte es [[RM-061]],
-porque la piden **varios** juegos y conviene que el primero que la traiga sepa que no
-es suya.
+no avisa si un texto desborda su rect. La única que se anotó aparte fue la sesión ZIP
+([[RM-061]], ya cerrada), porque la pedían **varios** juegos y no le pertenecía a
+ninguno.
 
 El procedimiento, las trampas y la tabla de lo que el kit no tiene viven en
 [`docs/migracion-games.md`](../migracion-games.md) — se lee antes de empezar
@@ -106,11 +115,11 @@ cualquiera de estas tareas, no se repite acá.
   eso se repartió en una tarea por juego. Lo que queda acá es lo **transversal**:
   las decisiones y las piezas que no le pertenecen a ningún juego en particular.
 - **Qué queda adentro:**
-  1. **El orden de portado.** Cálculo Mental ya cerró ([[RM-063]]) y con él entraron
-     la part `text`, el override de `visible` y `playStagger`, que era lo que
-     bloqueaba al resto. Siguen los de solo texto (La Sabes o No, Al Vuelo, Mi Libro
-     Favorito), que ya los encuentran hechos; luego los que traen imágenes por
-     sesión (Intruso, Álbum, Cronos), que dependen del ZIP ([[RM-061]]); Busca Logo
+  1. **El orden de portado.** Cerraron los de solo texto — Cálculo Mental
+     ([[RM-063]]), La Sabes o No ([[RM-064]]) y Mi Libro Favorito ([[RM-066]]) — y
+     con ellos entró casi todo lo que bloqueaba al resto; queda Al Vuelo
+     ([[RM-065]]), que espera el punto 2 de acá abajo. Siguen los que traen imágenes
+     por sesión (Intruso, Álbum, Cronos), ya desbloqueados por [[RM-061]]; Busca Logo
      al final, que es el que puede romper supuestos de rendimiento; Operaciones
      Combinadas aparte, porque del otro lado es un prototipo.
   2. **La ficha debe declarar su colector.** Hoy se asume que el slug del juego y el
@@ -130,30 +139,12 @@ cualquiera de estas tareas, no se repite acá.
   son asignables.
 - **Fecha:** 2026-08-13 · **Estado:** En progreso (2026-08-20)
 
-## [RM-061] Sesión ZIP y ciclo de vida de los blobs
-- **Objetivo:** que un juego pueda cargar una sesión que trae imágenes, no solo JSON:
-  leer el ZIP, crear las URLs de objeto y **liberarlas** al cambiar de sesión o
-  desmontar. Sin el `dispose`, cada carga durante una emisión larga deja los blobs
-  vivos.
-- **Lo necesitan:** Intruso ([[RM-067]]), Álbum ([[RM-068]]), Cronos ([[RM-069]]) y
-  De Par en Par ([[RM-073]]).
-- **Hecho cuando:** `useGameSession` acepta un ZIP, expone las imágenes al juego y
-  revoca las URLs al reemplazar o desmontar la sesión.
-- **Fecha:** 2026-08-20 · **Estado:** Abierto
-
-## [RM-065] Portar Al Vuelo
-- **Objetivo:** traer el juego de Games. Colector: **`si-o-no`** — el slug no
-  coincide con el del juego, es el caso que motiva el punto 2 de [[RM-038]].
-- **Depende de:** el campo de colector en la ficha ([[RM-038]]); la part `text` ya
-  entró con [[RM-063]].
-- **Hecho cuando:** corre dentro de un programa, es asignable y consume el archivo
-  que produce `si-o-no` sin un caso especial escrito a mano.
-- **Fecha:** 2026-08-20 · **Estado:** Abierto
-
 ## [RM-067] Portar Intruso
 - **Objetivo:** traer el juego de Games. Colector: `intruso` (encontrar el elemento
   que no encaja).
-- **Depende de:** [[RM-061]] (trae imágenes). La part `mask` ya entró con [[RM-064]].
+- **Depende de:** nada — el ZIP y los blobs entraron con [[RM-061]] y la part `mask`
+  con [[RM-064]]. **Es el primer juego que consume imágenes de sesión**, así que es
+  el que estrena `useGameSession().images`.
 - **Hecho cuando:** corre dentro de un programa, es asignable y consume la sesión que
   produce su colector, imágenes incluidas.
 - **Fecha:** 2026-08-20 · **Estado:** Abierto
@@ -161,9 +152,9 @@ cualquiera de estas tareas, no se repite acá.
 ## [RM-068] Portar Álbum
 - **Objetivo:** traer el juego de Games. Colector: `album` (fotos con pregunta por
   columna).
-- **Depende de:** [[RM-061]]. Trae además animaciones que el kit no tiene (del grupo
+- **Depende de:** las animaciones que el kit no tiene (del grupo
   float / sparkles / shimmer / holo); entran las que este juego use, no todas.
-  `blink` ya entró con [[RM-066]].
+  `blink` ya entró con [[RM-066]] y el ZIP con [[RM-061]].
 - **Hecho cuando:** corre dentro de un programa, es asignable y consume la sesión que
   produce su colector, imágenes incluidas.
 - **Fecha:** 2026-08-20 · **Estado:** Abierto
@@ -171,8 +162,8 @@ cualquiera de estas tareas, no se repite acá.
 ## [RM-069] Portar Cronos
 - **Objetivo:** traer el juego de Games. Colector: `cronos` (eventos con fecha,
   título e imagen).
-- **Depende de:** [[RM-061]]. Mismo grupo de animaciones que
-  [[RM-068]]; si Álbum va primero, acá ya están.
+- **Depende de:** el mismo grupo de animaciones que [[RM-068]]; si Álbum va primero,
+  acá ya están. El ZIP entró con [[RM-061]].
 - **Hecho cuando:** corre dentro de un programa, es asignable y consume la sesión que
   produce su colector, imágenes incluidas.
 - **Fecha:** 2026-08-20 · **Estado:** Abierto
@@ -212,11 +203,10 @@ cualquiera de estas tareas, no se repite acá.
   (`CardMode`), y la sesión trae las imágenes por nombre de archivo
   (`pictureFile`) más el orden del tablero (`answer`) — o sea, sesión ZIP, no JSON
   suelto.
-- **Depende de:** [[RM-061]] (ZIP y blobs). La part `text` que usan las cartas de
-  texto ya entró con [[RM-063]]. Necesita además la animación **flip** para voltear
-  la carta, que el kit
-  no tiene; es la misma que pide Busca Logo ([[RM-070]]), así que la trae el primero
-  de los dos que se haga.
+- **Depende de:** la animación **flip** para voltear la carta, que el kit no tiene;
+  es la misma que pide Busca Logo ([[RM-070]]), así que la trae el primero de los dos
+  que se haga. Y [[RM-081]], el cursor visible. El ZIP y los blobs entraron con
+  [[RM-061]]; la part `text` de las cartas de texto, con [[RM-063]].
 - **Ojo:** [[TD-013]] es del **colector** (anchos fijos por cantidad de pares), no
   del juego — no se cierra con esta tarea.
 - **Hecho cuando:** corre dentro de Más Conectados, es asignable y consume la sesión

@@ -273,6 +273,7 @@ estado.
 | `shuffledOrder` | permutación sembrada y determinista |
 | Fuentes | `FontRegistry` en la ficha; `next/font` local o de Google |
 | `playSound` / `preloadMedia` | audio e imágenes calentadas al montar |
+| Sesión **ZIP** | `readZipSession(file)` saca el `sessionData.json` y las imágenes del paquete que arma el colector. Devuelve **Blobs**, no URLs: las object URL las crea `setSession` y las revoca sola al reemplazar la sesión o desmontar el juego, así que un paquete que no pase el type-guard no deja nada colgando. El juego las lee de `useGameSession().images`, indexadas por la **misma ruta** que guarda el JSON (`images/T1.png`) |
 | `Stage` | 16:9, fullscreen, container-query |
 | `GameConfig` | panel plegable; hoy solo el color del croma |
 | `useGameKeys` / `useGameSetting` | teclas de show; preferencias en localStorage |
@@ -284,7 +285,6 @@ escribe en `kit/`, no en la carpeta del juego**:
 |---|---|
 | Part `videoControl` | pausar o reanudar un video desde la lógica |
 | Animaciones `flip`, `float`, `sparkles`, `shimmer`, `holo` | `flip` para los juegos de cartas que se voltean; el resto, para el gamefeel de cada juego |
-| Sesión **ZIP** + ciclo de vida de blobs (`dispose`) | todo juego cuya sesión traiga imágenes y no solo texto |
 | Presupuesto de memoria | diagnóstico; puede no volver nunca |
 | Carga desde la nube | engancha sin rediseño: `downloadCollectorData` devuelve un `File`, igual que el input de archivo |
 | Texto con formato (superíndices, fracciones) | notación matemática real; hoy la part `text` es una cadena plana |

@@ -53,7 +53,7 @@ export function GameTopbar({ game, onFullscreen }: GameTopbarProps) {
       <input
         ref={inputRef}
         type="file"
-        accept=".json"
+        accept=".json,.zip"
         hidden
         onChange={(event) => {
           const file = event.target.files?.[0];

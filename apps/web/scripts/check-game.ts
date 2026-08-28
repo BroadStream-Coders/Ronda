@@ -1,5 +1,8 @@
 import assert from "node:assert/strict";
 import { existsSync, readFileSync } from "node:fs";
+import JSZip from "jszip";
+
+import { readZipSession, ZIP_SESSION_JSON } from "../src/game/kit/zip.ts";
 
 import {
   DESIGN_SIZE,
@@ -596,3 +599,48 @@ for (let side = 0; side < 2; side++) {
 }
 
 console.log("mi libro favorito: checks ok");
+
+// --- la sesion ZIP ---
+
+// readZipSession devuelve Blobs y NO object URLs a proposito: la sesion es la
+// unica que crea las URLs, asi que un paquete que no pase el type-guard del
+// juego no deja nada que revocar. Es tambien lo que lo hace testeable en node,
+// donde URL.createObjectURL no existe.
+{
+  const zip = new JSZip();
+  zip.file(ZIP_SESSION_JSON, JSON.stringify({ rounds: [{ imagePath: "images/T1.png" }] }));
+  zip.file("images/T1.png", Buffer.from([0x89, 0x50, 0x4e, 0x47]));
+  zip.file("images/T2.jpg", Buffer.from([0xff, 0xd8, 0xff]));
+
+  const bundle = await zip.generateAsync({ type: "blob" });
+  const file = new File([bundle], "session.zip", { type: "application/zip" });
+
+  const { data, images } = await readZipSession(file);
+  assert.deepEqual(
+    (data as { rounds: { imagePath: string }[] }).rounds[0].imagePath,
+    "images/T1.png",
+    "el JSON del paquete sale parseado",
+  );
+  assert.deepEqual(
+    Object.keys(images).sort(),
+    ["images/T1.png", "images/T2.jpg"],
+    "las imagenes se indexan por la misma ruta que guarda el JSON",
+  );
+  assert.equal(
+    images[ZIP_SESSION_JSON],
+    undefined,
+    "el propio sessionData.json no entra como imagen",
+  );
+  assert.equal(await images["images/T1.png"].arrayBuffer().then((b) => b.byteLength), 4);
+
+  const sinJson = new JSZip();
+  sinJson.file("images/T1.png", Buffer.from([0x89]));
+  const roto = new File([await sinJson.generateAsync({ type: "blob" })], "roto.zip");
+  await assert.rejects(
+    () => readZipSession(roto),
+    /sessionData\.json/,
+    "un paquete sin sessionData.json falla con un mensaje que lo nombra",
+  );
+}
+
+console.log("sesion zip: checks ok");

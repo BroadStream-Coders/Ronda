@@ -28,6 +28,8 @@ export type {
 export { applyState, useGameState } from "./state";
 export type { GameState, LayerOverride, PartPatch } from "./state";
 export { useGameSession } from "./session";
+export { readZipSession, ZIP_SESSION_JSON } from "./zip";
+export type { ZipSession } from "./zip";
 export { shuffledOrder } from "./shuffle";
 export { settingKey, useGameSetting } from "./use-game-setting";
 export { GameConfig } from "./GameConfig";
