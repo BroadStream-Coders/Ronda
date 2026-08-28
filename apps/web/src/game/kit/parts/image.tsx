@@ -6,6 +6,7 @@ export interface ImagePart extends LayerPart {
   type: "image";
   src: string;
   fit?: ImageFit;
+  flipX?: boolean;
 }
 
 export function ImageView({ part }: { part: ImagePart }) {
@@ -17,6 +18,7 @@ export function ImageView({ part }: { part: ImagePart }) {
       style={{
         backgroundImage: `url(${part.src})`,
         backgroundSize: fit === "fill" ? "100% 100%" : fit,
+        transform: part.flipX ? "scaleX(-1)" : undefined,
       }}
     />
   );

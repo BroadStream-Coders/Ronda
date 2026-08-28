@@ -13,6 +13,7 @@ const loaders: Record<string, () => Promise<GameType>> = {
   "mi-libro-favorito": () =>
     import("./mi-libro-favorito").then((m) => m.miLibroFavorito),
   intruso: () => import("./intruso").then((m) => m.intruso),
+  "al-vuelo": () => import("./al-vuelo").then((m) => m.alVuelo),
   "arma-la-oracion": () =>
     import("./arma-la-oracion").then((m) => m.armaLaOracion),
   "arma-la-palabra": () =>

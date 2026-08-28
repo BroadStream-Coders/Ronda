@@ -84,13 +84,13 @@ cualquiera de estas tareas, no se repite acá.
   eso se repartió en una tarea por juego. Lo que queda acá es lo **transversal**:
   las decisiones y las piezas que no le pertenecen a ningún juego en particular.
 - **Qué queda adentro:**
-  1. **El orden de portado.** Cerraron los de solo texto — Cálculo Mental
-     ([[RM-063]]), La Sabes o No ([[RM-064]]) y Mi Libro Favorito ([[RM-066]]) — y
-     con ellos entró casi todo lo que bloqueaba al resto; queda Al Vuelo
-     ([[RM-065]]), que espera el punto 2 de acá abajo. Siguen los que traen imágenes
-     por sesión (Intruso, Álbum, Cronos), ya desbloqueados por [[RM-061]]; Busca Logo
-     al final, que es el que puede romper supuestos de rendimiento; Operaciones
-     Combinadas aparte, porque del otro lado es un prototipo.
+  1. **El orden de portado.** Cerraron todos los de solo texto — Cálculo Mental
+     ([[RM-063]]), La Sabes o No ([[RM-064]]), Mi Libro Favorito ([[RM-066]]) y Al
+     Vuelo ([[RM-065]]) — y con ellos entró casi todo lo que bloqueaba al resto.
+     También el primero con imágenes de sesión, Intruso ([[RM-067]]). Quedan Álbum y
+     Cronos, que comparten un grupo de animaciones; Busca Logo al final, que es el
+     que puede romper supuestos de rendimiento; y Operaciones Combinadas aparte,
+     porque del otro lado es un prototipo.
   2. **~~La ficha debe declarar su colector.~~ Ya no hace falta.** Existía por un
      solo caso: el colector `si-o-no` alimentaba al juego **Al Vuelo**. Ese colector
      se renombró a `al-vuelo` ([[TD-108]], con migración del bucket), así que **hoy
@@ -108,15 +108,6 @@ cualquiera de estas tareas, no se repite acá.
   hechas; los 10 juegos de Games más De Par en Par corren dentro de un programa y
   son asignables.
 - **Fecha:** 2026-08-13 · **Estado:** En progreso (2026-08-20)
-
-## [RM-065] Portar Al Vuelo
-- **Objetivo:** traer el juego de Games. Colector: `al-vuelo`.
-- **Depende de:** **nada.** Lo que lo frenaba era que el colector se llamara
-  `si-o-no`; se renombró con [[TD-108]] y el campo de colector en la ficha dejó de
-  hacer falta. La part `text` entró con [[RM-063]].
-- **Hecho cuando:** corre dentro de un programa, es asignable y consume el archivo
-  que produce su colector.
-- **Fecha:** 2026-08-20 · **Estado:** Abierto
 
 ## [RM-104] Nivel 2 de Intruso: las rondas de fotos
 - **Objetivo:** que el juego consuma los `photoRounds` que el colector ya recolecta
@@ -140,7 +131,10 @@ cualquiera de estas tareas, no se repite acá.
   columna).
 - **Depende de:** las animaciones que el kit no tiene (del grupo
   float / sparkles / shimmer / holo); entran las que este juego use, no todas.
-  `blink` ya entró con [[RM-066]] y el ZIP con [[RM-061]].
+  `blink` ya entró con [[RM-066]], el ZIP con [[RM-061]] y `flipX` con [[TD-109]].
+- **Ojo:** es el único que usa el campo **`filter`** del `image` de Games
+  (`brightness(48%)` en los temas bloqueados, `grayscale(1)` en las fotos). Es el
+  hermano de `flipX` y entra igual: una línea en `kit/parts/image.tsx`.
 - **Hecho cuando:** corre dentro de un programa, es asignable y consume la sesión que
   produce su colector, imágenes incluidas.
 - **Fecha:** 2026-08-20 · **Estado:** Abierto

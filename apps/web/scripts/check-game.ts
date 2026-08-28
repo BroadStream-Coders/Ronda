@@ -5,6 +5,8 @@ import JSZip from "jszip";
 import { readZipSession, ZIP_SESSION_JSON } from "../src/game/kit/zip.ts";
 import { mediaKind } from "../src/game/kit/media.ts";
 import { PRELOAD as INTRUSO_PRELOAD } from "../src/game/catalog/intruso/assets.ts";
+import { PRELOAD as VUELO_PRELOAD } from "../src/game/catalog/al-vuelo/assets.ts";
+import { correctOption } from "../src/game/catalog/al-vuelo/session.ts";
 
 import {
   DESIGN_SIZE,
@@ -675,6 +677,7 @@ for (const src of [
   ...SABES_PRELOAD,
   ...LIBRO_PRELOAD,
   ...INTRUSO_PRELOAD,
+  ...VUELO_PRELOAD,
 ]) {
   assert.ok(
     ["audio", "video", "image"].includes(mediaKind(src)),
@@ -755,3 +758,98 @@ for (let option = 0; option < 4; option++) {
 }
 
 console.log("intruso: checks ok");
+
+// --- el layout de al vuelo contra lo que la logica espera ---
+
+const vuelo = JSON.parse(
+  readFileSync("src/game/catalog/al-vuelo/layout.json", "utf8"),
+) as Layer[];
+
+for (const src of VUELO_PRELOAD) {
+  assert.ok(existsSync(`public${src}`), `asset declarado que no existe: ${src}`);
+}
+
+assert.ok(
+  findPart(vuelo, "background", "color"),
+  "el layer 'background' debe llevar una part 'color' (es el croma)",
+);
+assert.ok(
+  findPart(vuelo, "question-text", "text"),
+  "'question-text' debe llevar una part 'text' (la pisa Logic)",
+);
+
+// El colector permite guardar una pregunta sin respuesta marcada (answer: null).
+// Sin el -1, `answer ? 0 : 1` daria "No" por correcta y saldria asi al aire.
+assert.equal(correctOption({ question: "x", answer: true }), 0);
+assert.equal(correctOption({ question: "x", answer: false }), 1);
+assert.equal(
+  correctOption({ question: "x", answer: null }),
+  -1,
+  "sin respuesta marcada no hay opcion correcta: no se marca ninguna",
+);
+
+// Las dos opciones son fijas (SI / NO) y viven en el layout: Logic no las pisa,
+// asi que si alguna quedara vacia el juego saldria sin etiquetas.
+for (let option = 0; option < 2; option++) {
+  const label = findPart<{ type: "text"; text: string }>(
+    vuelo,
+    `option-${option}-text`,
+    "text",
+  );
+  assert.ok(label, `'option-${option}-text' debe llevar una part 'text'`);
+  assert.ok(
+    label.text.trim().length > 0,
+    `'option-${option}-text' es fija y debe traer su etiqueta en el layout`,
+  );
+
+  for (const mark of ["normal", "correct", "incorrect"]) {
+    const id = `option-${option}-frame-${mark}`;
+    const layer = vuelo.find((candidate) => candidate.id === id);
+    assert.ok(layer, `falta el layer '${id}' (lo prende/apaga Logic)`);
+    const image = partOf<{ type: "image"; src: string }>(layer, "image");
+    assert.ok(image, `'${id}' debe llevar una part 'image'`);
+    assert.ok(
+      VUELO_PRELOAD.includes(image.src),
+      `'${id}' se intercambia en vivo: su marco debe estar en PRELOAD`,
+    );
+    assert.equal(
+      layer.visible,
+      mark === "normal",
+      `'${id}' arranca ${mark === "normal" ? "prendido" : "apagado"}`,
+    );
+  }
+}
+
+console.log("al vuelo: checks ok");
+
+// --- imagenes espejadas ---
+
+// El layout trae `flipX` desde Games y la vista lo aplica con scaleX(-1). Es
+// data que viaja callada: si una conversion la pierde o la vista deja de
+// leerla, el marco sale al derecho y solo se nota mirandolo.
+const flipped: [Layer[], string, boolean][] = [
+  [vuelo, "option-0-frame-normal", false],
+  [vuelo, "option-1-frame-normal", true],
+  [vuelo, "option-1-frame-correct", true],
+  [vuelo, "option-1-frame-incorrect", true],
+  [libro, "name-frame-left", false],
+  [libro, "name-frame-right", true],
+];
+
+for (const [layout, id, expected] of flipped) {
+  const image = findPart<{ type: "image"; flipX?: boolean }>(
+    layout,
+    id,
+    "image",
+  );
+  assert.ok(image, `falta la part 'image' de '${id}'`);
+  assert.equal(
+    image.flipX === true,
+    expected,
+    expected
+      ? `'${id}' va espejado: es el mismo asset que su par, dado vuelta`
+      : `'${id}' NO va espejado`,
+  );
+}
+
+console.log("espejado: checks ok");

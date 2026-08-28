@@ -12,6 +12,16 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [TD-109] El `image` del kit ignoraba `flipX` (2026-08-28 13:10)
+En Games el componente `image` tiene `flipX`, que espeja con `scaleX(-1)`: sirve para reutilizar un mismo asset dado vuelta en vez de guardar dos archivos. La conversión de layouts lo venía copiando bien, pero `ImageView` no lo leía — la data llegaba y se perdía en el último paso.
+Salía mal en el marco del **NO** de Al Vuelo ([[RM-065]]) y —sin que nadie lo hubiera notado todavía— en el marco del nombre del jugador derecho de **Mi Libro Favorito** ([[RM-066]]). `check-game.ts` ahora afirma qué layers van espejados y cuáles no en los dos juegos: es data que viaja callada y solo se nota mirándola.
+Queda fuera `filter`, el otro campo del `image` de Games; lo usa únicamente Álbum y entra con [[RM-068]].
+
+## [RM-065] Portar Al Vuelo (2026-08-28 12:45)
+16 layers desde el `scene.json` de Games y los 5 PNG del proyecto Unity, sobre croma. Las dos opciones son fijas (SÍ / NO) y viven en el layout — la lógica solo cambia el enunciado y prende el marco que corresponde. Además de validar la opción elegida, las flechas responden directo: izquierda contesta SÍ, derecha contesta NO.
+**Un bug del original que no se copió:** el colector deja guardar una pregunta sin respuesta marcada (`answer: null`), y Games calculaba la correcta con `answer ? 0 : 1` — o sea que una pregunta sin marcar daba **"No" por correcta y salía así al aire**. Acá `correctOption()` devuelve -1 en ese caso y no se marca ninguna; está en `session.ts` (no en la lógica) para que `check-game.ts` pueda afirmar los tres casos.
+Es el primer juego que entra después de [[TD-108]], así que ya nace con el slug alineado con su colector: sin campo de colector en la ficha ni caso especial.
+
 ## [TD-108] El colector `si-o-no` pasa a llamarse `al-vuelo`, con migración (2026-08-28 12:36)
 El colector se llamaba **Al Vuelo** en todo lo que el usuario ve, pero su id era `si-o-no` — y ese id es parte de la ruta del bucket, así que el nombre viejo seguía vivo donde más costaba verlo. Se renombraron la carpeta, el id del `meta`, el export (`siONo` → `alVuelo`), el registro y la lista de servicios del programa.
 Va con `supabase/migrations/0012_rename_si_o_no_to_al_vuelo.sql`, que mueve los objetos ya subidos de `<program_id>/si-o-no/…` a `<program_id>/al-vuelo/…`. **Sin renombrar en la base, el host y el juego seguirían buscando en la carpeta vieja.** Las policies de [[RM-040]] no se tocan: miran solo la primera carpeta de la ruta (el uuid del programa), no el colector. La migración es idempotente y contempla que `path_tokens` pueda no ser columna generada.

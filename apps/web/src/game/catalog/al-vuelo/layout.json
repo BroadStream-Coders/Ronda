@@ -1,0 +1,302 @@
+[
+  {
+    "id": "background",
+    "name": "Background",
+    "visible": true,
+    "rect": {
+      "position": { "x": 0, "y": 0 },
+      "size": { "x": 1920, "y": 1080 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      { "type": "color", "value": "#01FF02" }
+    ]
+  },
+  {
+    "id": "board",
+    "name": "Container",
+    "visible": true,
+    "rect": {
+      "position": { "x": 0, "y": -450 },
+      "size": { "x": 1920, "y": 171 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": []
+  },
+  {
+    "id": "main-banner",
+    "name": "MainBanner",
+    "visible": true,
+    "parentId": "board",
+    "rect": {
+      "position": { "x": 0, "y": 0 },
+      "size": { "x": 1302, "y": 171 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      {
+        "type": "image",
+        "fit": "fill",
+        "src": "/programs/que-gane-el-mejor/games/al-vuelo/main-banner.png"
+      }
+    ]
+  },
+  {
+    "id": "question-text",
+    "name": "QuestionText",
+    "visible": true,
+    "parentId": "main-banner",
+    "rect": {
+      "position": { "x": 0, "y": 5 },
+      "size": { "x": 1222, "y": 101 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      {
+        "type": "text",
+        "text": "¿PREGUNTA?",
+        "fontSize": 3.33,
+        "autoSize": true,
+        "fontSizeMin": 1.67,
+        "fontSizeMax": 7.41,
+        "color": "#ffffff",
+        "bold": false,
+        "italic": false,
+        "underline": false,
+        "alignH": "center",
+        "alignV": "middle",
+        "overflow": "wrap",
+        "fontKey": "geniusTechno"
+      }
+    ]
+  },
+  {
+    "id": "option-0",
+    "name": "Answer SI",
+    "visible": true,
+    "parentId": "board",
+    "rect": {
+      "position": { "x": -814, "y": 5.1 },
+      "size": { "x": 292, "y": 146 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": []
+  },
+  {
+    "id": "option-0-frame-normal",
+    "name": "Normal",
+    "visible": true,
+    "parentId": "option-0",
+    "rect": {
+      "position": { "x": 0, "y": 0 },
+      "size": { "x": 292, "y": 133 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      {
+        "type": "image",
+        "fit": "fill",
+        "src": "/programs/que-gane-el-mejor/games/al-vuelo/answer-banner.png"
+      }
+    ]
+  },
+  {
+    "id": "option-0-frame-correct",
+    "name": "Correct",
+    "visible": false,
+    "parentId": "option-0",
+    "rect": {
+      "position": { "x": 0, "y": 0 },
+      "size": { "x": 292, "y": 133 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      {
+        "type": "image",
+        "fit": "fill",
+        "src": "/programs/que-gane-el-mejor/games/al-vuelo/correct-frame.png"
+      }
+    ]
+  },
+  {
+    "id": "option-0-frame-incorrect",
+    "name": "Incorrect",
+    "visible": false,
+    "parentId": "option-0",
+    "rect": {
+      "position": { "x": 0, "y": 0 },
+      "size": { "x": 291, "y": 133 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      {
+        "type": "image",
+        "fit": "fill",
+        "src": "/programs/que-gane-el-mejor/games/al-vuelo/incorrect-frame.png"
+      }
+    ]
+  },
+  {
+    "id": "option-0-selection",
+    "name": "Selection",
+    "visible": true,
+    "parentId": "option-0",
+    "rect": {
+      "position": { "x": 17.5, "y": 0 },
+      "size": { "x": 131, "y": 146 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      {
+        "type": "image",
+        "fit": "fill",
+        "src": "/programs/que-gane-el-mejor/games/al-vuelo/selection.png"
+      }
+    ]
+  },
+  {
+    "id": "option-0-text",
+    "name": "Text SI",
+    "visible": true,
+    "parentId": "option-0",
+    "rect": {
+      "position": { "x": 17, "y": 4 },
+      "size": { "x": 200, "y": 110 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      {
+        "type": "text",
+        "text": "SI",
+        "fontSize": 9.26,
+        "autoSize": false,
+        "fontSizeMin": 1.67,
+        "fontSizeMax": 6.67,
+        "color": "#ffffff",
+        "bold": false,
+        "italic": false,
+        "underline": false,
+        "alignH": "center",
+        "alignV": "middle",
+        "overflow": "wrap",
+        "fontKey": "geniusTechno"
+      }
+    ]
+  },
+  {
+    "id": "option-1",
+    "name": "Answer NO",
+    "visible": true,
+    "parentId": "board",
+    "rect": {
+      "position": { "x": 814, "y": 5.1 },
+      "size": { "x": 292, "y": 146 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": []
+  },
+  {
+    "id": "option-1-frame-normal",
+    "name": "Normal",
+    "visible": true,
+    "parentId": "option-1",
+    "rect": {
+      "position": { "x": 0, "y": 0 },
+      "size": { "x": 292, "y": 133 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      {
+        "type": "image",
+        "fit": "fill",
+        "flipX": true,
+        "src": "/programs/que-gane-el-mejor/games/al-vuelo/answer-banner.png"
+      }
+    ]
+  },
+  {
+    "id": "option-1-frame-correct",
+    "name": "Correct",
+    "visible": false,
+    "parentId": "option-1",
+    "rect": {
+      "position": { "x": 0, "y": 0 },
+      "size": { "x": 292, "y": 133 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      {
+        "type": "image",
+        "fit": "fill",
+        "flipX": true,
+        "src": "/programs/que-gane-el-mejor/games/al-vuelo/correct-frame.png"
+      }
+    ]
+  },
+  {
+    "id": "option-1-frame-incorrect",
+    "name": "Incorrect",
+    "visible": false,
+    "parentId": "option-1",
+    "rect": {
+      "position": { "x": 0, "y": 0 },
+      "size": { "x": 291, "y": 133 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      {
+        "type": "image",
+        "fit": "fill",
+        "flipX": true,
+        "src": "/programs/que-gane-el-mejor/games/al-vuelo/incorrect-frame.png"
+      }
+    ]
+  },
+  {
+    "id": "option-1-selection",
+    "name": "Selection",
+    "visible": true,
+    "parentId": "option-1",
+    "rect": {
+      "position": { "x": -26, "y": 0 },
+      "size": { "x": 131, "y": 146 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      {
+        "type": "image",
+        "fit": "fill",
+        "src": "/programs/que-gane-el-mejor/games/al-vuelo/selection.png"
+      }
+    ]
+  },
+  {
+    "id": "option-1-text",
+    "name": "Text NO",
+    "visible": true,
+    "parentId": "option-1",
+    "rect": {
+      "position": { "x": -17, "y": 4 },
+      "size": { "x": 200, "y": 110 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      {
+        "type": "text",
+        "text": "NO",
+        "fontSize": 9.26,
+        "autoSize": false,
+        "fontSizeMin": 1.67,
+        "fontSizeMax": 6.67,
+        "color": "#ffffff",
+        "bold": false,
+        "italic": false,
+        "underline": false,
+        "alignH": "center",
+        "alignV": "middle",
+        "overflow": "wrap",
+        "fontKey": "geniusTechno"
+      }
+    ]
+  }
+]

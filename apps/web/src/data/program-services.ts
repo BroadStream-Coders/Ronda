@@ -31,6 +31,7 @@ export const programServices: Record<string, ProgramServices> = {
       "la-sabes-o-no",
       "mi-libro-favorito",
       "intruso",
+      "al-vuelo",
     ],
     host: ["deletreo", "calculo-mental", "la-sabes-o-no"],
   },

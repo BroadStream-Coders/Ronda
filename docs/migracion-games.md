@@ -266,7 +266,7 @@ estado.
 
 | Pieza | Qué cubre |
 |---|---|
-| Parts `color`, `image`, `text`, `backdrop`, `video` | `text` trae auto-size; `backdrop` es un fondo propio (degradado + halos) para juegos que no salen sobre croma; `video` se reproduce solo, en bucle y mudo |
+| Parts `color`, `image`, `text`, `backdrop`, `video` | `image` soporta `flipX` (espeja con `scaleX(-1)`, para el asset que se reusa dado vuelta); `text` trae auto-size; `backdrop` es un fondo propio (degradado + halos) para juegos que no salen sobre croma; `video` se reproduce solo, en bucle y mudo |
 | Part `mask` | modificador a nivel de layer: recorta el layer entero (parts y descendientes) con la silueta del `src` de su part `image` hermana — y **sin** esa image recorta al rect, que es como se tapa lo que entra deslizándose desde fuera de una caja |
 | Animaciones `pop`, `shake`, `bounce`, `slide`, `blink` | más `play` y `playStagger` para dispararlas. `blink` registra dos triggers: `blink` (pulso + parpadeos) y `blinkSettle` (el golpecito de después del cambio) |
 | `useGameState` | pisa parts, `position` y `visible` |
