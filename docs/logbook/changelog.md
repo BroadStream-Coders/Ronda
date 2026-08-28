@@ -12,6 +12,10 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [TD-106] Las balizas de analytics ya no pasan por el middleware (2026-08-28 10:34)
+El matcher excluía estáticos ([[TD-085]]) pero no `/_vercel`, así que cada evento de Web Analytics y de Speed Insights (`/_vercel/insights/*`) disparaba `getClaims()` contra Supabase para un endpoint de plataforma que no necesita sesión — y son varios por navegación, más que los estáticos que ya se habían sacado.
+Mismo criterio que [[TD-085]] y [[TD-087]]: el middleware solo debe correr donde hay sesión que refrescar. No se pierde ninguna protección: `/_vercel` no es una ruta de la app.
+
 ## [TD-105] Un juego que no carga ya no deja la pantalla en blanco (2026-08-28 10:26)
 `GameMount` hacía `loaders[gameId]?.().then(...)` sin rama de error y devolvía `null` mientras tanto: si el `import()` dinámico fallaba —chunk viejo del dev server, módulo roto, id sin loader— la ruta quedaba **completamente vacía para siempre**, sin topbar, sin mensaje y sin nada que mirar salvo una promesa rechazada en consola.
 Ahora distingue los tres estados: muestra "Cargando el juego", o el mensaje del error con la causa loggeada, y avisa aparte si el id no tiene loader registrado (`metas` y `loaders` son dos mapas distintos y pueden desincronizarse: la ruta valida contra `metas`, así que un juego con meta y sin loader pasaba el 404 y moría en blanco).
