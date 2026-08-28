@@ -141,14 +141,6 @@ cualquiera de estas tareas, no se repite acá.
   revoca las URLs al reemplazar o desmontar la sesión.
 - **Fecha:** 2026-08-20 · **Estado:** Abierto
 
-## [RM-064] Portar La Sabes o No
-- **Objetivo:** traer el juego de Games. Colector: `la-sabes-o-no` (elegir la
-  respuesta correcta entre dos).
-- **Depende de:** nada nuevo — la part `text` ya entró con [[RM-063]].
-- **Hecho cuando:** corre dentro de un programa, es asignable y consume el archivo
-  que produce su colector.
-- **Fecha:** 2026-08-20 · **Estado:** Abierto
-
 ## [RM-065] Portar Al Vuelo
 - **Objetivo:** traer el juego de Games. Colector: **`si-o-no`** — el slug no
   coincide con el del juego, es el caso que motiva el punto 2 de [[RM-038]].
@@ -170,8 +162,7 @@ cualquiera de estas tareas, no se repite acá.
 ## [RM-067] Portar Intruso
 - **Objetivo:** traer el juego de Games. Colector: `intruso` (encontrar el elemento
   que no encaja).
-- **Depende de:** [[RM-061]] (trae imágenes) y la part `mask`, que el kit no tiene y
-  entra con este juego.
+- **Depende de:** [[RM-061]] (trae imágenes). La part `mask` ya entró con [[RM-064]].
 - **Hecho cuando:** corre dentro de un programa, es asignable y consume la sesión que
   produce su colector, imágenes incluidas.
 - **Fecha:** 2026-08-20 · **Estado:** Abierto

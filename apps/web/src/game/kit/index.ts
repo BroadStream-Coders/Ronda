@@ -5,7 +5,14 @@ export { partView } from "./registry";
 export type { PartRegistry, PartView } from "./registry";
 export { PartRegistryProvider, usePartRegistry } from "./part-context";
 export { NATIVE_PARTS } from "./parts";
-export type { BackdropPart, ColorPart, ImagePart, TextPart } from "./parts";
+export type {
+  BackdropPart,
+  ColorPart,
+  ImagePart,
+  MaskPart,
+  TextPart,
+  VideoPart,
+} from "./parts";
 export { FontRegistryProvider, useFontRegistry } from "./font-context";
 export type { FontRegistry, GameFont } from "./font-context";
 export { playSound, preloadMedia } from "./media";

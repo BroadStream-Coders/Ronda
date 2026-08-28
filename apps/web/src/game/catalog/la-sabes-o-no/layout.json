@@ -1,0 +1,507 @@
+[
+  {
+    "id": "background",
+    "name": "Background",
+    "visible": true,
+    "rect": {
+      "position": { "x": 0, "y": 0 },
+      "size": { "x": 1920, "y": 1080 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      {
+        "type": "video",
+        "fit": "fill",
+        "muted": true,
+        "loop": true,
+        "src": "/programs/que-gane-el-mejor/shared/video/background-blue.mp4"
+      }
+    ]
+  },
+  {
+    "id": "frames",
+    "name": "Frames",
+    "visible": true,
+    "rect": {
+      "position": { "x": 0, "y": 133.5 },
+      "size": { "x": 1723, "y": 707 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": []
+  },
+  {
+    "id": "mask",
+    "name": "Mask",
+    "visible": true,
+    "parentId": "frames",
+    "rect": {
+      "position": { "x": 0, "y": 0 },
+      "size": { "x": 1711, "y": 694 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      {
+        "type": "image",
+        "fit": "fill",
+        "src": "/programs/que-gane-el-mejor/games/la-sabes-o-no/mask.png"
+      },
+      { "type": "mask", "showImage": true }
+    ]
+  },
+  {
+    "id": "border",
+    "name": "border",
+    "visible": true,
+    "parentId": "frames",
+    "rect": {
+      "position": { "x": 0, "y": 0 },
+      "size": { "x": 1723, "y": 707 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      {
+        "type": "image",
+        "fit": "fill",
+        "src": "/programs/que-gane-el-mejor/games/la-sabes-o-no/border.png"
+      }
+    ]
+  },
+  {
+    "id": "container-quiz",
+    "name": "ContainerQuiz",
+    "visible": true,
+    "rect": {
+      "position": { "x": 0, "y": -355 },
+      "size": { "x": 1711, "y": 283 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": []
+  },
+  {
+    "id": "question-frame",
+    "name": "QuestionFrame",
+    "visible": true,
+    "parentId": "container-quiz",
+    "rect": {
+      "position": { "x": 0, "y": 42.5 },
+      "size": { "x": 1650, "y": 198 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": []
+  },
+  {
+    "id": "question-bg",
+    "name": "questionFrame",
+    "visible": true,
+    "parentId": "question-frame",
+    "rect": {
+      "position": { "x": 0, "y": 0 },
+      "size": { "x": 1307, "y": 153 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      {
+        "type": "image",
+        "fit": "fill",
+        "src": "/programs/que-gane-el-mejor/games/la-sabes-o-no/question-frame.png"
+      }
+    ]
+  },
+  {
+    "id": "question-text",
+    "name": "Text",
+    "visible": true,
+    "parentId": "question-bg",
+    "rect": {
+      "position": { "x": 5, "y": 0 },
+      "size": { "x": 1257, "y": 93 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      {
+        "type": "text",
+        "text": "¿PREGUNTA?",
+        "fontSize": 2.78,
+        "autoSize": true,
+        "fontSizeMin": 2.78,
+        "fontSizeMax": 4.63,
+        "color": "#ffffff",
+        "bold": true,
+        "italic": false,
+        "underline": false,
+        "alignH": "center",
+        "alignV": "middle",
+        "overflow": "wrap",
+        "fontKey": "jetBrainsMono"
+      }
+    ]
+  },
+  {
+    "id": "book-left",
+    "name": "bookLeft",
+    "visible": true,
+    "parentId": "question-frame",
+    "rect": {
+      "position": { "x": -718.9, "y": -14.3 },
+      "size": { "x": 198, "y": 144 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      {
+        "type": "image",
+        "fit": "fill",
+        "src": "/programs/que-gane-el-mejor/games/la-sabes-o-no/book-left.png"
+      }
+    ]
+  },
+  {
+    "id": "book-right",
+    "name": "bookRight",
+    "visible": true,
+    "parentId": "question-frame",
+    "rect": {
+      "position": { "x": 721.9, "y": -10.8 },
+      "size": { "x": 198, "y": 144 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      {
+        "type": "image",
+        "fit": "fill",
+        "src": "/programs/que-gane-el-mejor/games/la-sabes-o-no/book-right.png"
+      }
+    ]
+  },
+  {
+    "id": "options",
+    "name": "Answers",
+    "visible": true,
+    "parentId": "container-quiz",
+    "rect": {
+      "position": { "x": 0, "y": -83.3 },
+      "size": { "x": 1650, "y": 90 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": []
+  },
+  {
+    "id": "option-0",
+    "name": "Option 1",
+    "visible": true,
+    "parentId": "options",
+    "rect": {
+      "position": { "x": -335, "y": 0 },
+      "size": { "x": 640, "y": 89 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": []
+  },
+  {
+    "id": "option-0-frame-normal",
+    "name": "normalFrame",
+    "visible": true,
+    "parentId": "option-0",
+    "rect": {
+      "position": { "x": 0, "y": 0 },
+      "size": { "x": 640, "y": 89 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      {
+        "type": "image",
+        "fit": "fill",
+        "src": "/programs/que-gane-el-mejor/games/la-sabes-o-no/normal-frame.png"
+      }
+    ]
+  },
+  {
+    "id": "option-0-text-normal",
+    "name": "Text",
+    "visible": true,
+    "parentId": "option-0-frame-normal",
+    "rect": {
+      "position": { "x": 0, "y": 5 },
+      "size": { "x": 616, "y": 69 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      {
+        "type": "text",
+        "text": "OPCIÓN 1",
+        "fontSize": 2.78,
+        "autoSize": true,
+        "fontSizeMin": 1.67,
+        "fontSizeMax": 4.63,
+        "color": "#691d00",
+        "bold": true,
+        "italic": false,
+        "underline": false,
+        "alignH": "center",
+        "alignV": "middle",
+        "overflow": "wrap",
+        "fontKey": "jetBrainsMono"
+      }
+    ]
+  },
+  {
+    "id": "option-0-frame-correct",
+    "name": "correctFrame",
+    "visible": false,
+    "parentId": "option-0",
+    "rect": {
+      "position": { "x": 0, "y": 0 },
+      "size": { "x": 640, "y": 89 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      {
+        "type": "image",
+        "fit": "fill",
+        "src": "/programs/que-gane-el-mejor/games/la-sabes-o-no/correct-frame.png"
+      }
+    ]
+  },
+  {
+    "id": "option-0-text-correct",
+    "name": "Text",
+    "visible": true,
+    "parentId": "option-0-frame-correct",
+    "rect": {
+      "position": { "x": 0, "y": 5 },
+      "size": { "x": 616, "y": 69 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      {
+        "type": "text",
+        "text": "OPCIÓN 1",
+        "fontSize": 2.78,
+        "autoSize": true,
+        "fontSizeMin": 1.67,
+        "fontSizeMax": 4.63,
+        "color": "#ffffff",
+        "bold": true,
+        "italic": false,
+        "underline": false,
+        "alignH": "center",
+        "alignV": "middle",
+        "overflow": "wrap",
+        "fontKey": "jetBrainsMono"
+      }
+    ]
+  },
+  {
+    "id": "option-0-frame-incorrect",
+    "name": "incorrectFrame",
+    "visible": false,
+    "parentId": "option-0",
+    "rect": {
+      "position": { "x": 0, "y": 0 },
+      "size": { "x": 640, "y": 89 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      {
+        "type": "image",
+        "fit": "fill",
+        "src": "/programs/que-gane-el-mejor/games/la-sabes-o-no/incorrect-frame.png"
+      }
+    ]
+  },
+  {
+    "id": "option-0-text-incorrect",
+    "name": "Text",
+    "visible": true,
+    "parentId": "option-0-frame-incorrect",
+    "rect": {
+      "position": { "x": 0, "y": 5 },
+      "size": { "x": 616, "y": 69 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      {
+        "type": "text",
+        "text": "OPCIÓN 1",
+        "fontSize": 2.78,
+        "autoSize": true,
+        "fontSizeMin": 1.67,
+        "fontSizeMax": 4.63,
+        "color": "#ffffff",
+        "bold": true,
+        "italic": false,
+        "underline": false,
+        "alignH": "center",
+        "alignV": "middle",
+        "overflow": "wrap",
+        "fontKey": "jetBrainsMono"
+      }
+    ]
+  },
+  {
+    "id": "option-1",
+    "name": "Option 2",
+    "visible": true,
+    "parentId": "options",
+    "rect": {
+      "position": { "x": 335, "y": 0 },
+      "size": { "x": 640, "y": 89 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": []
+  },
+  {
+    "id": "option-1-frame-normal",
+    "name": "normalFrame",
+    "visible": true,
+    "parentId": "option-1",
+    "rect": {
+      "position": { "x": 0, "y": 0 },
+      "size": { "x": 640, "y": 89 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      {
+        "type": "image",
+        "fit": "fill",
+        "src": "/programs/que-gane-el-mejor/games/la-sabes-o-no/normal-frame.png"
+      }
+    ]
+  },
+  {
+    "id": "option-1-text-normal",
+    "name": "Text",
+    "visible": true,
+    "parentId": "option-1-frame-normal",
+    "rect": {
+      "position": { "x": 0, "y": 5 },
+      "size": { "x": 616, "y": 69 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      {
+        "type": "text",
+        "text": "OPCIÓN 2",
+        "fontSize": 2.78,
+        "autoSize": true,
+        "fontSizeMin": 1.67,
+        "fontSizeMax": 4.63,
+        "color": "#691d00",
+        "bold": true,
+        "italic": false,
+        "underline": false,
+        "alignH": "center",
+        "alignV": "middle",
+        "overflow": "wrap",
+        "fontKey": "jetBrainsMono"
+      }
+    ]
+  },
+  {
+    "id": "option-1-frame-correct",
+    "name": "correctFrame",
+    "visible": false,
+    "parentId": "option-1",
+    "rect": {
+      "position": { "x": 0, "y": 0 },
+      "size": { "x": 640, "y": 89 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      {
+        "type": "image",
+        "fit": "fill",
+        "src": "/programs/que-gane-el-mejor/games/la-sabes-o-no/correct-frame.png"
+      }
+    ]
+  },
+  {
+    "id": "option-1-text-correct",
+    "name": "Text",
+    "visible": true,
+    "parentId": "option-1-frame-correct",
+    "rect": {
+      "position": { "x": 0, "y": 5 },
+      "size": { "x": 616, "y": 69 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      {
+        "type": "text",
+        "text": "OPCIÓN 2",
+        "fontSize": 2.78,
+        "autoSize": true,
+        "fontSizeMin": 1.67,
+        "fontSizeMax": 4.63,
+        "color": "#ffffff",
+        "bold": true,
+        "italic": false,
+        "underline": false,
+        "alignH": "center",
+        "alignV": "middle",
+        "overflow": "wrap",
+        "fontKey": "jetBrainsMono"
+      }
+    ]
+  },
+  {
+    "id": "option-1-frame-incorrect",
+    "name": "incorrectFrame",
+    "visible": false,
+    "parentId": "option-1",
+    "rect": {
+      "position": { "x": 0, "y": 0 },
+      "size": { "x": 640, "y": 89 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      {
+        "type": "image",
+        "fit": "fill",
+        "src": "/programs/que-gane-el-mejor/games/la-sabes-o-no/incorrect-frame.png"
+      }
+    ]
+  },
+  {
+    "id": "option-1-text-incorrect",
+    "name": "Text",
+    "visible": true,
+    "parentId": "option-1-frame-incorrect",
+    "rect": {
+      "position": { "x": 0, "y": 5 },
+      "size": { "x": 616, "y": 69 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      {
+        "type": "text",
+        "text": "OPCIÓN 2",
+        "fontSize": 2.78,
+        "autoSize": true,
+        "fontSizeMin": 1.67,
+        "fontSizeMax": 4.63,
+        "color": "#ffffff",
+        "bold": true,
+        "italic": false,
+        "underline": false,
+        "alignH": "center",
+        "alignV": "middle",
+        "overflow": "wrap",
+        "fontKey": "jetBrainsMono"
+      }
+    ]
+  },
+  {
+    "id": "croma",
+    "name": "Croma",
+    "visible": true,
+    "parentId": "mask",
+    "rect": {
+      "position": { "x": 0, "y": 0 },
+      "size": { "x": 1711, "y": 694 },
+      "pivot": { "x": 0.5, "y": 0.5 }
+    },
+    "parts": [
+      { "type": "color", "value": "#01FF02" }
+    ]
+  }
+]

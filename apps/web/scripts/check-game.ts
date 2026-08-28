@@ -17,6 +17,7 @@ import { shuffledOrder } from "../src/game/kit/shuffle.ts";
 import { splitWords } from "../src/game/catalog/arma-la-oracion/words.ts";
 import { PRELOAD as PALABRA_PRELOAD } from "../src/game/catalog/arma-la-palabra/assets.ts";
 import { splitLetters } from "../src/game/catalog/arma-la-palabra/letters.ts";
+import { PRELOAD as SABES_PRELOAD } from "../src/game/catalog/la-sabes-o-no/assets.ts";
 
 // --- coordenadas ---
 
@@ -381,3 +382,84 @@ assert.deepEqual(
   { x: 0, y: 0 },
   "'board' arranca en el origen de su padre: es el 'home' al que vuelve bounce",
 );
+
+// --- el layout de la sabes o no contra lo que la logica espera ---
+
+const sabes = JSON.parse(
+  readFileSync("src/game/catalog/la-sabes-o-no/layout.json", "utf8"),
+) as Layer[];
+
+for (const src of SABES_PRELOAD) {
+  assert.ok(existsSync(`public${src}`), `asset declarado que no existe: ${src}`);
+}
+
+// El fondo es video, no croma: preloadMedia no lo calienta, asi que el unico
+// aviso de que la ruta esta rota seria un rectangulo negro al aire.
+const sabesVideo = findPart<{ type: "video"; src: string }>(
+  sabes,
+  "background",
+  "video",
+);
+assert.ok(sabesVideo, "'background' debe llevar una part 'video'");
+assert.ok(
+  existsSync(`public${sabesVideo.src}`),
+  `el video de fondo no existe: ${sabesVideo.src}`,
+);
+
+// La part 'mask' recorta usando el src de la part 'image' del mismo layer: sin
+// esa image no recorta nada y el croma desborda el marco, sin error en consola.
+const sabesMask = sabes.find((layer) => layer.id === "mask");
+assert.ok(sabesMask, "falta el layer 'mask'");
+assert.ok(partOf(sabesMask, "mask"), "'mask' debe llevar la part 'mask'");
+assert.ok(
+  partOf<{ type: "image"; src: string }>(sabesMask, "image")?.src,
+  "'mask' debe llevar una part 'image': es la que da la forma del recorte",
+);
+
+const sabesCroma = sabes.find((layer) => layer.id === "croma");
+assert.ok(sabesCroma, "falta el layer 'croma'");
+assert.ok(partOf(sabesCroma, "color"), "'croma' debe llevar una part 'color'");
+assert.equal(
+  sabesCroma.parentId,
+  "mask",
+  "'croma' cuelga de 'mask': es lo que lo recorta a la forma del marco",
+);
+
+assert.ok(
+  findPart(sabes, "question-text", "text"),
+  "'question-text' debe llevar una part 'text' (la pisa Logic)",
+);
+
+for (let option = 0; option < 2; option++) {
+  for (const mark of ["normal", "correct", "incorrect"]) {
+    const frameId = `option-${option}-frame-${mark}`;
+    const frameLayer = sabes.find((layer) => layer.id === frameId);
+    assert.ok(frameLayer, `falta el layer '${frameId}' (lo prende/apaga Logic)`);
+    const marco = partOf<{ type: "image"; src: string }>(frameLayer, "image");
+    assert.ok(marco, `'${frameId}' debe llevar una part 'image'`);
+    assert.ok(
+      SABES_PRELOAD.includes(marco.src),
+      `'${frameId}' se intercambia en vivo: su marco debe estar en PRELOAD`,
+    );
+    assert.equal(
+      frameLayer.visible,
+      mark === "normal",
+      `'${frameId}' arranca ${mark === "normal" ? "prendido" : "apagado"}`,
+    );
+
+    const textoId = `option-${option}-text-${mark}`;
+    const texto = findPart<{ type: "text"; fontKey?: string }>(
+      sabes,
+      textoId,
+      "text",
+    );
+    assert.ok(texto, `'${textoId}' debe llevar una part 'text' (la pisa Logic)`);
+    assert.equal(
+      texto.fontKey,
+      "jetBrainsMono",
+      `'${textoId}' debe usar la fuente declarada en la ficha`,
+    );
+  }
+}
+
+console.log("la sabes o no: checks ok");

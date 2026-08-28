@@ -3,12 +3,15 @@ import { BackdropView, type BackdropPart } from "./backdrop";
 import { ColorView, type ColorPart } from "./color";
 import { ImageView, type ImagePart } from "./image";
 import { TextView, type TextPart } from "./text";
+import { VideoView, type VideoPart } from "./video";
 
-export type { BackdropPart, ColorPart, ImagePart, TextPart };
+export type { BackdropPart, ColorPart, ImagePart, TextPart, VideoPart };
+export { maskStyle, type MaskPart } from "./mask";
 
 export const NATIVE_PARTS: PartRegistry = {
   backdrop: partView<BackdropPart>(BackdropView),
   color: partView<ColorPart>(ColorView),
   image: partView<ImagePart>(ImageView),
   text: partView<TextPart>(TextView),
+  video: partView<VideoPart>(VideoView),
 };

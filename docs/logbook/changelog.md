@@ -12,6 +12,10 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [RM-064] Portar La Sabes o No (2026-08-25 12:21)
+El juego entra al catálogo de Que Gane El Mejor: 26 layers convertidos desde el `scene.json` de Games, los 8 PNG traídos del proyecto Unity, JetBrains Mono por `next/font/google` y el fondo sobre `shared/video/background-blue.mp4`. El `controller` de Games desaparece: los índices de grupo/pregunta y la marca de cada opción viven en estado local de React.
+Con él entran al kit las dos parts que faltaban de [[RM-067]]: `video` y `mask` (modificador a nivel de layer, recorta con el `src` de la part `image` hermana). `check-game.ts` cubre el video, el recorte y los seis marcos de opción.
+
 ## [TD-087] El middleware ya no consulta la base en cada navegación (2026-08-24 13:34)
 `updateSession` corría `getUser()` + un `select` a `programs` en toda ruta que no fuera `/`, `/auth` o `/api`, solo para mandar al inicio a un usuario logueado sin ningún programa. Se eliminó: `/programs` ya hace ese chequeo con `listPrograms()` y `/programs/[slug]/**` lo cubre vía RLS (`getProgramBySlug` devuelve null → 404), y ambos layouts además redirigen al anónimo, cosa que el middleware no hacía.
 Cada navegación de usuario logueado deja de costar un viaje a Auth más una query a Postgres; queda solo `getClaims()` para refrescar la sesión. La rama `/admin` no se tocó.

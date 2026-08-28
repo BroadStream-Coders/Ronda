@@ -266,7 +266,8 @@ estado.
 
 | Pieza | Qué cubre |
 |---|---|
-| Parts `color`, `image`, `text`, `backdrop` | `text` trae auto-size; `backdrop` es un fondo propio (degradado + halos) para juegos que no salen sobre croma |
+| Parts `color`, `image`, `text`, `backdrop`, `video` | `text` trae auto-size; `backdrop` es un fondo propio (degradado + halos) para juegos que no salen sobre croma; `video` se reproduce solo, en bucle y mudo |
+| Part `mask` | modificador a nivel de layer: recorta el layer entero (parts y descendientes) con la silueta del `src` de su part `image` hermana |
 | Animaciones `pop`, `shake`, `bounce`, `slide` | más `play` y `playStagger` para dispararlas |
 | `useGameState` | pisa parts, `position` y `visible` |
 | `shuffledOrder` | permutación sembrada y determinista |
@@ -281,7 +282,7 @@ escribe en `kit/`, no en la carpeta del juego**:
 
 | Falta | Lo necesita |
 |---|---|
-| Parts `video`, `videoControl`, `mask` | `mask`, para los juegos que en Unity recortan con Mask |
+| Part `videoControl` | pausar o reanudar un video desde la lógica |
 | Animaciones `flip`, `float`, `blink`, `sparkles`, `shimmer`, `holo` | `flip` para los juegos de cartas que se voltean; el resto, para el gamefeel de cada juego |
 | Sesión **ZIP** + ciclo de vida de blobs (`dispose`) | todo juego cuya sesión traiga imágenes y no solo texto |
 | Presupuesto de memoria | diagnóstico; puede no volver nunca |

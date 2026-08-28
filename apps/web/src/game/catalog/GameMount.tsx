@@ -8,6 +8,8 @@ const loaders: Record<string, () => Promise<GameType>> = {
   deletreo: () => import("./deletreo").then((m) => m.deletreo),
   "calculo-mental": () =>
     import("./calculo-mental").then((m) => m.calculoMental),
+  "la-sabes-o-no": () =>
+    import("./la-sabes-o-no").then((m) => m.laSabesONo),
   "arma-la-oracion": () =>
     import("./arma-la-oracion").then((m) => m.armaLaOracion),
   "arma-la-palabra": () =>

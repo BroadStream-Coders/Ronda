@@ -1,8 +1,9 @@
 "use client";
 
 import { useLayerAnimations } from "./animations/use-layer-animations";
-import { DESIGN_SIZE, layerStyle, type Layer, type Vec2 } from "./layer";
+import { DESIGN_SIZE, layerStyle, partOf, type Layer, type Vec2 } from "./layer";
 import { usePartRegistry } from "./part-context";
+import { maskStyle, type ImagePart, type MaskPart } from "./parts";
 
 interface LayerViewProps {
   layer: Layer;
@@ -21,10 +22,20 @@ export function LayerView({
   const animationRef = useLayerAnimations(layer, onPosition);
   const children = all.filter((candidate) => candidate.parentId === layer.id);
 
+  const mask = partOf<MaskPart>(layer, "mask");
+  const maskImage = mask ? partOf<ImagePart>(layer, "image") : undefined;
+
   return (
     <div className="absolute" style={layerStyle(layer.rect, parentSize)}>
-      <div ref={animationRef} className="absolute inset-0">
+      <div
+        ref={animationRef}
+        className="absolute inset-0"
+        style={
+          maskImage?.src ? maskStyle(maskImage.src, maskImage.fit) : undefined
+        }
+      >
         {layer.parts.map((part, index) => {
+          if (part === maskImage && mask?.showImage === false) return null;
           const View = registry[part.type];
           return View ? <View key={index} part={part} /> : null;
         })}
