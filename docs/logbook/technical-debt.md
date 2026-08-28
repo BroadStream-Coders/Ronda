@@ -94,9 +94,11 @@ reutiliza). Al resolverse se mueve al `changelog.md` conservando su código.
 
 ## [TD-015] El platform admin no tiene bypass en el storage del colector
 - **Ubicación:** `apps/web/supabase/migrations/0011_collector_storage.sql` (las cuatro policies) + `apps/web/src/app/programs/[slug]/collectors/[collectorId]/page.tsx`
-- **Riesgo:** 5/10
+- **Riesgo:** 7/10 (subido desde 5/10 el 2026-08-28)
 - **Problema:** El admin de plataforma **ve** todos los programas (bypass de RLS en `programs`, RM-011) y puede entrar a cualquier colector, porque la pantalla no exige membresía: le alcanza con poder leer el programa. Pero las policies del storage preguntan `is_member()`, que para un admin sin fila en `memberships` es `false`. Resultado: entra, llena el colector, y recién al subir se topa con `new row violates row-level security policy` — el error crudo de Postgres, sin traducir. Salió a la luz al estrenar RM-040; se destrabó agregando la membresía a mano, que es justo lo que el admin no debería tener que hacer.
+- **Hoy está tapado, no resuelto:** el único admin de la plataforma se dio de alta como miembro de los programas, así que pasa las policies y nada falla en su pantalla. El hueco sigue entero para el segundo admin, y el parche a mano no escala.
 - **Impacto futuro:** El admin no tiene el acceso irrestricto que se supone que tiene, y el desajuste es silencioso hasta que alguien pierde trabajo al guardar. Cada capa nueva con RLS por membresía (juegos, la vista de conductores) repite el mismo hueco si no se resuelve de raíz.
+- **Empeora con la consulta de existencia ([[RM-062]]):** el desplegable de nube pasa a pintarse solo si el `list()` del bucket devuelve algo, y ese `list()` lo filtra la misma policy. Para un admin sin membresía deja de haber error: la pantalla le dice que no hay datos en la nube cuando sí los hay. El síntoma se degrada de "revienta y me entero" a "miente en silencio".
 - **Cómo cerrarlo:** dos caminos coherentes, hay que elegir uno. (1) Dar el bypass al admin también en el storage: `or public.is_platform_admin()` en las cuatro policies — mantiene la promesa de "el admin ve y hace todo" y es una migración corta. (2) Que la pantalla del colector exija membresía y no lo deje entrar, en vez de dejarlo trabajar y fallar al final. Lo que no puede quedar es lo de hoy: entra pero no puede escribir. Ver también [[TD-005]], que es el otro lado de la misma inconsistencia.
 - **Fecha:** 2026-08-16 · **Estado:** Abierto
 

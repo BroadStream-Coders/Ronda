@@ -28,6 +28,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import {
   downloadCollectorData,
+  getCollectorSessionInfo,
   uploadCollectorData,
 } from "@/data/collector-storage";
 import { notifyError, notifySuccess } from "../notices/use-notices";
@@ -63,6 +64,18 @@ export function CollectorTopbar({
   const [busy, setBusy] = useState<string | null>(null);
   const [stage, setStage] = useState<SaveStage>({ kind: "pristine" });
   const [confirmation, setConfirmation] = useState<Confirmation | null>(null);
+  const [hasCloudData, setHasCloudData] = useState(false);
+
+  useEffect(() => {
+    if (!programId || !collectorId) return;
+    let alive = true;
+    void getCollectorSessionInfo(programId, collectorId).then((info) => {
+      if (alive) setHasCloudData(info !== null);
+    });
+    return () => {
+      alive = false;
+    };
+  }, [programId, collectorId]);
 
   const firstDataRef = useRef(true);
   useEffect(() => {
@@ -77,6 +90,7 @@ export function CollectorTopbar({
   if (!title) return null;
 
   const cloudEnabled = Boolean(programId && collectorId && getData);
+  const cloudLoadEnabled = Boolean(programId && collectorId && hasCloudData);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -110,6 +124,7 @@ export function CollectorTopbar({
         getFiles?.() ?? [],
       );
       setStage({ kind: "uploaded", at: Date.now() });
+      setHasCloudData(true);
       notifySuccess("Los datos quedaron guardados en la nube.");
     } catch (error) {
       notifyError(
@@ -174,13 +189,13 @@ export function CollectorTopbar({
               variant="outline"
               onClick={() => fileInputRef.current?.click()}
               disabled={busy !== null}
-              className={`h-9 gap-1.5 ${cloudEnabled ? "rounded-r-none border-r-0" : ""}`}
+              className={`h-9 gap-1.5 ${cloudLoadEnabled ? "rounded-r-none border-r-0" : ""}`}
             >
               <Upload />
               <span className="hidden sm:inline">Cargar</span>
             </Button>
 
-            {cloudEnabled && (
+            {cloudLoadEnabled && (
               <DropdownMenu>
                 <DropdownMenuTrigger
                   disabled={busy !== null}

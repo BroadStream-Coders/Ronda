@@ -12,6 +12,10 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [RM-105] El desplegable de nube solo aparece si hay algo en la nube (2026-08-28 14:24)
+`getCollectorSessionInfo` en `src/data/collector-storage.ts` resuelve con **un solo `list()`** si existe el `session.json` y de cuándo es; el `CollectorTopbar` la consulta al montar y esconde la flechita de **Cargar** cuando el bucket está vacío. Después de subir marca que ya hay nube, así que la flechita aparece sin recargar.
+El desplegable de **Guardar** queda siempre visible a propósito: si dependiera de que ya exista algo, no habría forma de subir la primera vez. La fecha que devuelve la consulta todavía no se pinta — la consume [[RM-062]].
+
 ## [RM-090] Vista de conductor de Al Vuelo (2026-08-28 13:50)
 `src/host/catalog/al-vuelo/View.tsx`, sin tocar el kit: **dos columnas, enunciado y respuesta**. No se listan las opciones — siempre son SÍ y NO, así que repetirlas en cada fila sería ruido; el conductor solo necesita leer cuál es.
 Una pregunta sin respuesta marcada (`answer: null`, que el colector permite guardar) se muestra como "Sin marcar" en vez de inventar un valor. Es coherente con el juego, que en ese caso no marca ninguna opción ([[RM-065]]). Las pestañas al pie usan el título de grupo que sí captura este colector, con `Grupo N` de respaldo.
