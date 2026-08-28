@@ -12,9 +12,17 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [RM-089] Vista de conductor de Cálculo Mental (2026-08-28 09:46)
+`src/host/catalog/calculo-mental/View.tsx`: una fila por tablero y cada casilla en su columna (A–D, como las etiqueta el colector), enunciado arriba y respuesta abajo a la derecha — la forma de la hoja de cálculo con la que el equipo arma el programa. Meter las cuatro casillas en una sola celda se probó primero y se leía mal.
+La columna de tablero numera desde **0**, igual que la hoja y que la tecla de dígito que saca ese tablero al aire; por eso es una columna propia y no el `numbered` de `HostTable`, que es un correlativo 1..N. Sin piezas nuevas del kit.
+
+## [RM-091] Vista de conductor de La Sabes o No (2026-08-28 09:23)
+`src/host/catalog/la-sabes-o-no/View.tsx`: tres columnas (pregunta + las dos opciones) con la correcta marcada con un check dentro de su celda, en vez de una cuarta columna que repita la respuesta. Un slot de icono invisible en la celda incorrecta evita que el texto baile entre filas.
+Las pestañas al pie usan el título de grupo que sí captura este colector, con `Grupo N` de respaldo. Sin piezas nuevas del kit.
+
 ## [RM-064] Portar La Sabes o No (2026-08-25 12:21)
 El juego entra al catálogo de Que Gane El Mejor: 26 layers convertidos desde el `scene.json` de Games, los 8 PNG traídos del proyecto Unity, JetBrains Mono por `next/font/google` y el fondo sobre `shared/video/background-blue.mp4`. El `controller` de Games desaparece: los índices de grupo/pregunta y la marca de cada opción viven en estado local de React.
-Con él entran al kit las dos parts que faltaban de [[RM-067]]: `video` y `mask` (modificador a nivel de layer, recorta con el `src` de la part `image` hermana). `check-game.ts` cubre el video, el recorte y los seis marcos de opción. Entró además su vista de conductor bajo [[RM-083]], que no necesitó piezas nuevas del kit.
+Con él entran al kit las dos parts que faltaban de [[RM-067]]: `video` y `mask` (modificador a nivel de layer, recorta con el `src` de la part `image` hermana). `check-game.ts` cubre el video, el recorte y los seis marcos de opción.
 
 ## [TD-087] El middleware ya no consulta la base en cada navegación (2026-08-24 13:34)
 `updateSession` corría `getUser()` + un `select` a `programs` en toda ruta que no fuera `/`, `/auth` o `/api`, solo para mandar al inicio a un usuario logueado sin ningún programa. Se eliminó: `/programs` ya hace ese chequeo con `listPrograms()` y `/programs/[slug]/**` lo cubre vía RLS (`getProgramBySlug` devuelve null → 404), y ambos layouts además redirigen al anónimo, cosa que el middleware no hacía.
@@ -31,6 +39,10 @@ El original venía a 18.6 Mbps (43 MB); queda en H.264 CRF 18 a 13.3 MB (69% men
 ## [RM-084] Assets separados por programa (2026-08-24 12:26)
 `public/programs/<programa>/games/<juego>/` + `.../shared/` y `src/programs/<programa>/fonts/` reemplazan a `public/games/` y `src/game/fonts/`: nada cruza programas, y lo que dos comparten (los dos sonidos, GeniusTechno, Poppins) se duplica a propósito.
 `public/clientes/` → `public/clients/` por la regla de idioma; el catálogo (`src/game/catalog/`, `src/collector/catalog/`) queda indexado por slug global a propósito, esperando a que evolucione a algo genérico.
+
+## [RM-088] Vista de conductor de Deletreo (2026-08-23 15:00)
+`src/host/catalog/deletreo/View.tsx`, la primera vista del servicio: alterna entre ver solo la palabra o palabra + deletreo, con las rondas en pestañas al pie.
+Trajo al kit las cuatro piezas que usan todas las demás: `HostTable` (columnas declarativas, numeración y bandas escalonadas que evitan saltarse una fila), `HostSwitch`, `RoundTabs` y `HostMessage`. La hora es aproximada: entró el mismo día que [[RM-041]], cuando las vistas todavía no tenían código propio.
 
 ## [RM-041] Host: el servicio de consulta del conductor (2026-08-23 14:55)
 Tercer servicio en pie: `src/host/` (`kit/` con `HostShell` + `catalog/` con el registro de vistas), rutas `/programs/<slug>/host[/<gameId>]` fuera del route group `(workspace)` — misma forma de URL que los otros dos, pero layout propio de tablet, sin sidebar y sin puerta de vuelta al espacio de trabajo.

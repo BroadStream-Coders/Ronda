@@ -299,33 +299,128 @@ cualquiera de estas tareas, no se repite acá.
 
 ---
 
-## [RM-083] Las vistas por juego de la vista del conductor
-- **Objetivo:** el paraguas de las vistas del servicio `host`. El servicio ya corre
-  ([[RM-041]]) pero su catálogo (`src/host/catalog/views.ts`) está vacío: entra
-  **una vista por juego**, a pedido, no todas de golpe.
-- **Cómo entra cada una:** un archivo en `src/host/catalog/<juego>/View.tsx` que
+# Vista del conductor — una vista por colector
+
+`RM-083` es el paraguas. Debajo va **un colector por tarea** ([[RM-088]]–[[RM-103]]):
+**todos los colectores llevan su vista**, porque todo lo que el equipo carga alguien
+lo tiene que poder leer en el estudio. Entran a pedido, una por una, no todas de
+golpe.
+
+**Seis traen imágenes** — Busca el Logo, Álbum, Cronos, Intruso, Galería de Fotos y
+De Par en Par. El host hoy solo lee el `session.json`, así que esas seis esperan a
+que se decida cómo se sirven las fotos; la decisión es transversal y vive en
+[[RM-083]], no en cada tarea.
+
+## [RM-083] Las vistas del conductor — lo transversal
+- **Objetivo:** el paraguas del catálogo del servicio `host`. Ya no contiene el
+  trabajo de escribir vistas — eso se repartió en una tarea por colector. Lo que
+  queda acá es lo que no le pertenece a ninguna vista en particular.
+- **Cómo entra cada una:** un archivo en `src/host/catalog/<colector>/View.tsx` que
   recibe `{ session: unknown }`, lo valida con el guard `isData` que **ya existe** en
-  `src/collector/catalog/<juego>/schema.ts` (no se duplica el tipo: el contrato es del
-  colector, que es quien produce el archivo) y lo pinta en lectura. Después se registra
-  en `views.ts` y se agrega el id a la lista `host` del programa.
-- **Sin imágenes:** el host consume solo el `session.json` del storage. Un juego con
-  fotos necesita antes decidir cómo se sirven (URLs firmadas) — no está resuelto y no
-  se resuelve por adelantado.
-- **Ya entraron:** Deletreo (`src/host/catalog/deletreo/View.tsx`), que trajo al kit
-  `HostTable` (la grilla: columnas declarativas, numeración y las bandas escalonadas
-  que evitan saltarse una fila), `HostSwitch` (alternar entre dos armados de la misma
-  data), `RoundTabs` (pestañas de ronda al pie) y `HostMessage`. Y La Sabes o No
-  (`src/host/catalog/la-sabes-o-no/View.tsx`), sin tocar el kit: tres columnas
-  (pregunta + las dos opciones) y la correcta marcada con un check en la celda, no
-  una cuarta columna que repita la respuesta. Sus pestañas usan el título del grupo
-  que carga el colector, con `Grupo N` de respaldo.
+  `src/collector/catalog/<colector>/schema.ts` (no se duplica el tipo: el contrato es
+  del colector, que es quien produce el archivo) y lo pinta en lectura. Después se
+  registra en `views.ts` y se agrega el id a la lista `host` del programa.
+- **Sin imágenes, y eso bloquea a seis:** el host consume solo el `session.json` del
+  storage. Un colector con fotos necesita antes decidir cómo se sirven (URLs
+  firmadas) — no está resuelto y no se resuelve por adelantado, pero es **esta**
+  tarea la que lo decide, no la del primer juego con fotos que toque.
 - **La grilla es por juego:** cada vista declara sus columnas; `HostTable` no sabe de
-  palabras ni de preguntas. Un juego con pregunta + opciones + respuesta correcta
-  declara tres columnas y no toca el kit — salvo que pida algo que el kit no tiene
-  todavía, y entonces esa pieza se escribe en `kit/`, no en la carpeta del juego.
-- **Hecho cuando:** no aplica de golpe; se cierra cuando el conductor tenga las vistas
-  que pida el programa.
+  palabras ni de preguntas. Lo que el kit no tenga se escribe en `kit/` y no en la
+  carpeta de la vista, igual que con los juegos — pero recién cuando una vista lo
+  pida.
+- **Hecho cuando:** cierran las tareas por colector y las fotos tienen forma de
+  llegar al host.
 - **Fecha:** 2026-08-23 · **Estado:** En progreso (2026-08-23)
+
+## [RM-090] Vista de conductor de Al Vuelo
+- **Objetivo:** leer en el estudio lo que carga el colector `si-o-no` — el slug del colector no coincide con el del juego.
+- **Hecho cuando:** la vista está registrada y el conductor lee con ella una
+  sesión real del programa.
+- **Fecha:** 2026-08-28 · **Estado:** Abierto
+
+## [RM-092] Vista de conductor de Mi Libro Favorito
+- **Objetivo:** leer en el estudio lo que carga el colector `mi-libro-favorito`.
+- **Hecho cuando:** la vista está registrada y el conductor lee con ella una
+  sesión real del programa.
+- **Fecha:** 2026-08-28 · **Estado:** Abierto
+
+## [RM-093] Vista de conductor de Busca el Logo
+- **Objetivo:** leer en el estudio lo que carga el colector `busca-logo`.
+- **Depende de:** cómo llegan las imágenes al host — sin resolver, vive en
+  [[RM-083]].
+- **Hecho cuando:** la vista está registrada y el conductor lee con ella una
+  sesión real del programa.
+- **Fecha:** 2026-08-28 · **Estado:** Abierto
+
+## [RM-094] Vista de conductor de Álbum
+- **Objetivo:** leer en el estudio lo que carga el colector `album`.
+- **Depende de:** cómo llegan las imágenes al host — sin resolver, vive en
+  [[RM-083]].
+- **Hecho cuando:** la vista está registrada y el conductor lee con ella una
+  sesión real del programa.
+- **Fecha:** 2026-08-28 · **Estado:** Abierto
+
+## [RM-095] Vista de conductor de Cronos
+- **Objetivo:** leer en el estudio lo que carga el colector `cronos`.
+- **Depende de:** cómo llegan las imágenes al host — sin resolver, vive en
+  [[RM-083]].
+- **Hecho cuando:** la vista está registrada y el conductor lee con ella una
+  sesión real del programa.
+- **Fecha:** 2026-08-28 · **Estado:** Abierto
+
+## [RM-096] Vista de conductor de Operaciones Combinadas
+- **Objetivo:** leer en el estudio lo que carga el colector `operaciones-combinadas`.
+- **Hecho cuando:** la vista está registrada y el conductor lee con ella una
+  sesión real del programa.
+- **Fecha:** 2026-08-28 · **Estado:** Abierto
+
+## [RM-097] Vista de conductor de Reto Cruzado
+- **Objetivo:** leer en el estudio lo que carga el colector `reto-cruzado`.
+- **Hecho cuando:** la vista está registrada y el conductor lee con ella una
+  sesión real del programa.
+- **Fecha:** 2026-08-28 · **Estado:** Abierto
+
+## [RM-098] Vista de conductor de Intruso
+- **Objetivo:** leer en el estudio lo que carga el colector `intruso`.
+- **Depende de:** cómo llegan las imágenes al host — sin resolver, vive en
+  [[RM-083]].
+- **Hecho cuando:** la vista está registrada y el conductor lee con ella una
+  sesión real del programa.
+- **Fecha:** 2026-08-28 · **Estado:** Abierto
+
+## [RM-099] Vista de conductor de Galería de Fotos
+- **Objetivo:** leer en el estudio lo que carga el colector `galeria-fotos`.
+- **Depende de:** cómo llegan las imágenes al host — sin resolver, vive en
+  [[RM-083]].
+- **Hecho cuando:** la vista está registrada y el conductor lee con ella una
+  sesión real del programa.
+- **Fecha:** 2026-08-28 · **Estado:** Abierto
+
+## [RM-100] Vista de conductor de Tres en Raya
+- **Objetivo:** leer en el estudio lo que carga el colector `tres-en-raya`.
+- **Hecho cuando:** la vista está registrada y el conductor lee con ella una
+  sesión real del programa.
+- **Fecha:** 2026-08-28 · **Estado:** Abierto
+
+## [RM-101] Vista de conductor de De Par en Par
+- **Objetivo:** leer en el estudio lo que carga el colector `de-par-en-par`.
+- **Depende de:** cómo llegan las imágenes al host — sin resolver, vive en
+  [[RM-083]].
+- **Hecho cuando:** la vista está registrada y el conductor lee con ella una
+  sesión real del programa.
+- **Fecha:** 2026-08-28 · **Estado:** Abierto
+
+## [RM-102] Vista de conductor de Arma la Palabra
+- **Objetivo:** leer en el estudio lo que carga el colector `arma-la-palabra`.
+- **Hecho cuando:** la vista está registrada y el conductor lee con ella una
+  sesión real del programa.
+- **Fecha:** 2026-08-28 · **Estado:** Abierto
+
+## [RM-103] Vista de conductor de Arma la Oración
+- **Objetivo:** leer en el estudio lo que carga el colector `arma-la-oracion`.
+- **Hecho cuando:** la vista está registrada y el conductor lee con ella una
+  sesión real del programa.
+- **Fecha:** 2026-08-28 · **Estado:** Abierto
 
 ---
 
