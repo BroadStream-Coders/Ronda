@@ -1,0 +1,2557 @@
+[
+ {
+  "id": "background",
+  "name": "Background",
+  "visible": true,
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 1920,
+    "y": 1080
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "video",
+    "fit": "fill",
+    "muted": true,
+    "loop": true,
+    "src": "/programs/que-gane-el-mejor/shared/video/background-blue.mp4"
+   }
+  ]
+ },
+ {
+  "id": "board",
+  "name": "Cronos",
+  "visible": true,
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 1920,
+    "y": 1080
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "lines",
+  "name": "Lines",
+  "visible": true,
+  "parentId": "board",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 370
+   },
+   "size": {
+    "x": 1920,
+    "y": 194
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/cronos/lines.png"
+   }
+  ]
+ },
+ {
+  "id": "title-frame",
+  "name": "Title Frame",
+  "visible": true,
+  "parentId": "board",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 430
+   },
+   "size": {
+    "x": 938.4,
+    "y": 137.6
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/cronos/title-frame.png"
+   }
+  ]
+ },
+ {
+  "id": "title",
+  "name": "Title",
+  "visible": true,
+  "parentId": "title-frame",
+  "rect": {
+   "position": {
+    "x": -15,
+    "y": 0
+   },
+   "size": {
+    "x": 720,
+    "y": 103.2
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "Enunciado texto de dos lineas para que alcance",
+    "fontSize": 8,
+    "autoSize": true,
+    "fontSizeMin": 1,
+    "fontSizeMax": 5.5,
+    "color": "#ffffff",
+    "bold": false,
+    "italic": false,
+    "underline": false,
+    "letterSpacing": 5,
+    "lineSpacing": 0,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "geniusTechno"
+   }
+  ]
+ },
+ {
+  "id": "zones",
+  "name": "Container DropZone",
+  "visible": true,
+  "parentId": "board",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 100
+   },
+   "size": {
+    "x": 1920,
+    "y": 450
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "slots",
+  "name": "Container Draggables",
+  "visible": true,
+  "parentId": "board",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": -315
+   },
+   "size": {
+    "x": 1920,
+    "y": 400
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "zone-0",
+  "name": "Droppeable 0",
+  "visible": true,
+  "parentId": "zones",
+  "rect": {
+   "position": {
+    "x": -660,
+    "y": 0
+   },
+   "size": {
+    "x": 319,
+    "y": 450
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "zone-1",
+  "name": "Droppeable 1",
+  "visible": true,
+  "parentId": "zones",
+  "rect": {
+   "position": {
+    "x": -330,
+    "y": 0
+   },
+   "size": {
+    "x": 319,
+    "y": 450
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "zone-2",
+  "name": "Droppeable 2",
+  "visible": true,
+  "parentId": "zones",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 319,
+    "y": 450
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "zone-2-points",
+  "name": "Points",
+  "visible": true,
+  "parentId": "zone-2",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 184
+   },
+   "size": {
+    "x": 52,
+    "y": 52
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "zone-2-date",
+  "name": "Date",
+  "visible": true,
+  "parentId": "zone-2",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 131.5
+   },
+   "size": {
+    "x": 319,
+    "y": 60
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "1910\n",
+    "fontSize": 5,
+    "autoSize": false,
+    "fontSizeMin": 1,
+    "fontSizeMax": 20,
+    "color": "#ffffff",
+    "bold": false,
+    "italic": false,
+    "underline": false,
+    "letterSpacing": 5,
+    "lineSpacing": 0,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "geniusTechno"
+   }
+  ]
+ },
+ {
+  "id": "zone-2-target",
+  "name": "DropZone",
+  "visible": true,
+  "parentId": "zone-2",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": -58
+   },
+   "size": {
+    "x": 304,
+    "y": 313
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/cronos/drop-zone.png"
+   }
+  ]
+ },
+ {
+  "id": "zone-2-point-normal",
+  "name": "Normal",
+  "visible": true,
+  "parentId": "zone-2-points",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 52,
+    "y": 52
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/cronos/points/normal.png"
+   }
+  ]
+ },
+ {
+  "id": "zone-2-point-correct",
+  "name": "Correct",
+  "visible": false,
+  "parentId": "zone-2-points",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 52,
+    "y": 52
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/cronos/points/correct.png"
+   }
+  ]
+ },
+ {
+  "id": "zone-2-point-incorrect",
+  "name": "Incorrect",
+  "visible": false,
+  "parentId": "zone-2-points",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 52,
+    "y": 52
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/cronos/points/incorrect.png"
+   }
+  ]
+ },
+ {
+  "id": "zone-1-points",
+  "name": "Points",
+  "visible": true,
+  "parentId": "zone-1",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 184
+   },
+   "size": {
+    "x": 52,
+    "y": 52
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "zone-1-date",
+  "name": "Date",
+  "visible": true,
+  "parentId": "zone-1",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 131.5
+   },
+   "size": {
+    "x": 319,
+    "y": 60
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "1910\n",
+    "fontSize": 5,
+    "autoSize": false,
+    "fontSizeMin": 1,
+    "fontSizeMax": 20,
+    "color": "#ffffff",
+    "bold": false,
+    "italic": false,
+    "underline": false,
+    "letterSpacing": 5,
+    "lineSpacing": 0,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "geniusTechno"
+   }
+  ]
+ },
+ {
+  "id": "zone-1-target",
+  "name": "DropZone",
+  "visible": true,
+  "parentId": "zone-1",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": -58
+   },
+   "size": {
+    "x": 304,
+    "y": 313
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/cronos/drop-zone.png"
+   }
+  ]
+ },
+ {
+  "id": "zone-1-point-normal",
+  "name": "Normal",
+  "visible": true,
+  "parentId": "zone-1-points",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 52,
+    "y": 52
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/cronos/points/normal.png"
+   }
+  ]
+ },
+ {
+  "id": "zone-1-point-correct",
+  "name": "Correct",
+  "visible": false,
+  "parentId": "zone-1-points",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 52,
+    "y": 52
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/cronos/points/correct.png"
+   }
+  ]
+ },
+ {
+  "id": "zone-1-point-incorrect",
+  "name": "Incorrect",
+  "visible": false,
+  "parentId": "zone-1-points",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 52,
+    "y": 52
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/cronos/points/incorrect.png"
+   }
+  ]
+ },
+ {
+  "id": "zone-0-points",
+  "name": "Points",
+  "visible": true,
+  "parentId": "zone-0",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 184
+   },
+   "size": {
+    "x": 52,
+    "y": 52
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "zone-0-date",
+  "name": "Date",
+  "visible": true,
+  "parentId": "zone-0",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 131.5
+   },
+   "size": {
+    "x": 319,
+    "y": 60
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "1910\n",
+    "fontSize": 5,
+    "autoSize": false,
+    "fontSizeMin": 1,
+    "fontSizeMax": 20,
+    "color": "#ffffff",
+    "bold": false,
+    "italic": false,
+    "underline": false,
+    "letterSpacing": 5,
+    "lineSpacing": 0,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "geniusTechno"
+   }
+  ]
+ },
+ {
+  "id": "zone-0-target",
+  "name": "DropZone",
+  "visible": true,
+  "parentId": "zone-0",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": -58
+   },
+   "size": {
+    "x": 304,
+    "y": 313
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/cronos/drop-zone.png"
+   }
+  ]
+ },
+ {
+  "id": "zone-0-point-normal",
+  "name": "Normal",
+  "visible": true,
+  "parentId": "zone-0-points",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 52,
+    "y": 52
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/cronos/points/normal.png"
+   }
+  ]
+ },
+ {
+  "id": "zone-0-point-correct",
+  "name": "Correct",
+  "visible": false,
+  "parentId": "zone-0-points",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 52,
+    "y": 52
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/cronos/points/correct.png"
+   }
+  ]
+ },
+ {
+  "id": "zone-0-point-incorrect",
+  "name": "Incorrect",
+  "visible": false,
+  "parentId": "zone-0-points",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 52,
+    "y": 52
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/cronos/points/incorrect.png"
+   }
+  ]
+ },
+ {
+  "id": "zone-3",
+  "name": "Droppeable 3",
+  "visible": true,
+  "parentId": "zones",
+  "rect": {
+   "position": {
+    "x": 330,
+    "y": 0
+   },
+   "size": {
+    "x": 319,
+    "y": 450
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "zone-3-points",
+  "name": "Points",
+  "visible": true,
+  "parentId": "zone-3",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 184
+   },
+   "size": {
+    "x": 52,
+    "y": 52
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "zone-3-date",
+  "name": "Date",
+  "visible": true,
+  "parentId": "zone-3",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 131.5
+   },
+   "size": {
+    "x": 319,
+    "y": 60
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "1910\n",
+    "fontSize": 5,
+    "autoSize": false,
+    "fontSizeMin": 1,
+    "fontSizeMax": 20,
+    "color": "#ffffff",
+    "bold": false,
+    "italic": false,
+    "underline": false,
+    "letterSpacing": 5,
+    "lineSpacing": 0,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "geniusTechno"
+   }
+  ]
+ },
+ {
+  "id": "zone-3-target",
+  "name": "DropZone",
+  "visible": true,
+  "parentId": "zone-3",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": -58
+   },
+   "size": {
+    "x": 304,
+    "y": 313
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/cronos/drop-zone.png"
+   }
+  ]
+ },
+ {
+  "id": "zone-3-point-normal",
+  "name": "Normal",
+  "visible": true,
+  "parentId": "zone-3-points",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 52,
+    "y": 52
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/cronos/points/normal.png"
+   }
+  ]
+ },
+ {
+  "id": "zone-3-point-correct",
+  "name": "Correct",
+  "visible": false,
+  "parentId": "zone-3-points",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 52,
+    "y": 52
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/cronos/points/correct.png"
+   }
+  ]
+ },
+ {
+  "id": "zone-3-point-incorrect",
+  "name": "Incorrect",
+  "visible": false,
+  "parentId": "zone-3-points",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 52,
+    "y": 52
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/cronos/points/incorrect.png"
+   }
+  ]
+ },
+ {
+  "id": "zone-4",
+  "name": "Droppeable 4",
+  "visible": true,
+  "parentId": "zones",
+  "rect": {
+   "position": {
+    "x": 660,
+    "y": 0
+   },
+   "size": {
+    "x": 319,
+    "y": 450
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "zone-4-points",
+  "name": "Points",
+  "visible": true,
+  "parentId": "zone-4",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 184
+   },
+   "size": {
+    "x": 52,
+    "y": 52
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "zone-4-date",
+  "name": "Date",
+  "visible": true,
+  "parentId": "zone-4",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 131.5
+   },
+   "size": {
+    "x": 319,
+    "y": 60
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "1910\n",
+    "fontSize": 5,
+    "autoSize": false,
+    "fontSizeMin": 1,
+    "fontSizeMax": 20,
+    "color": "#ffffff",
+    "bold": false,
+    "italic": false,
+    "underline": false,
+    "letterSpacing": 5,
+    "lineSpacing": 0,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "geniusTechno"
+   }
+  ]
+ },
+ {
+  "id": "zone-4-target",
+  "name": "DropZone",
+  "visible": true,
+  "parentId": "zone-4",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": -58
+   },
+   "size": {
+    "x": 304,
+    "y": 313
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/cronos/drop-zone.png"
+   }
+  ]
+ },
+ {
+  "id": "zone-4-point-normal",
+  "name": "Normal",
+  "visible": true,
+  "parentId": "zone-4-points",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 52,
+    "y": 52
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/cronos/points/normal.png"
+   }
+  ]
+ },
+ {
+  "id": "zone-4-point-correct",
+  "name": "Correct",
+  "visible": false,
+  "parentId": "zone-4-points",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 52,
+    "y": 52
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/cronos/points/correct.png"
+   }
+  ]
+ },
+ {
+  "id": "zone-4-point-incorrect",
+  "name": "Incorrect",
+  "visible": false,
+  "parentId": "zone-4-points",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 52,
+    "y": 52
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/cronos/points/incorrect.png"
+   }
+  ]
+ },
+ {
+  "id": "slot-0",
+  "name": "Slot 0",
+  "visible": true,
+  "parentId": "slots",
+  "rect": {
+   "position": {
+    "x": -660,
+    "y": 0
+   },
+   "size": {
+    "x": 319,
+    "y": 400
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "slot-1",
+  "name": "Slot 1",
+  "visible": true,
+  "parentId": "slots",
+  "rect": {
+   "position": {
+    "x": -330,
+    "y": 0
+   },
+   "size": {
+    "x": 319,
+    "y": 400
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "slot-2",
+  "name": "Slot 2",
+  "visible": true,
+  "parentId": "slots",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 319,
+    "y": 400
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "slot-2-letter-frame",
+  "name": "LetterFrame",
+  "visible": true,
+  "parentId": "slot-2",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 170
+   },
+   "size": {
+    "x": 116,
+    "y": 32
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/cronos/letter.png"
+   }
+  ]
+ },
+ {
+  "id": "slot-2-back",
+  "name": "background",
+  "visible": true,
+  "parentId": "slot-2",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": -1
+   },
+   "size": {
+    "x": 304,
+    "y": 313
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/cronos/background.png"
+   }
+  ]
+ },
+ {
+  "id": "slot-2-letter",
+  "name": "Letter",
+  "visible": true,
+  "parentId": "slot-2-letter-frame",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 100,
+    "y": 30
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "C",
+    "fontSize": 3,
+    "autoSize": false,
+    "fontSizeMin": 1,
+    "fontSizeMax": 20,
+    "color": "#ffffff",
+    "bold": false,
+    "italic": false,
+    "underline": false,
+    "letterSpacing": 5,
+    "lineSpacing": 0,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "geniusTechno"
+   }
+  ]
+ },
+ {
+  "id": "card-2",
+  "name": "Draggable",
+  "visible": false,
+  "parentId": "slot-2",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": -1
+   },
+   "size": {
+    "x": 304,
+    "y": 313
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/cronos/background.png"
+   },
+   {
+    "type": "drag"
+   }
+  ]
+ },
+ {
+  "id": "card-2-mask",
+  "name": "Mask",
+  "visible": true,
+  "parentId": "card-2",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0.8
+   },
+   "size": {
+    "x": 292,
+    "y": 303
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/cronos/mask.png"
+   },
+   {
+    "type": "mask",
+    "showImage": false
+   }
+  ]
+ },
+ {
+  "id": "card-2-photo",
+  "name": "ImageData",
+  "visible": true,
+  "parentId": "card-2-mask",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 292,
+    "y": 303
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": ""
+   }
+  ]
+ },
+ {
+  "id": "card-2-banner",
+  "name": "Banner",
+  "visible": true,
+  "parentId": "card-2-mask",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": -109
+   },
+   "size": {
+    "x": 292,
+    "y": 83
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/cronos/banner.png"
+   }
+  ]
+ },
+ {
+  "id": "card-2-title",
+  "name": "GameObject",
+  "visible": true,
+  "parentId": "card-2-banner",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 280,
+    "y": 70
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "Texto",
+    "fontSize": 8,
+    "autoSize": true,
+    "fontSizeMin": 1,
+    "fontSizeMax": 4.5,
+    "color": "#ffffff",
+    "bold": false,
+    "italic": false,
+    "underline": false,
+    "letterSpacing": 5,
+    "lineSpacing": 0,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "geniusTechno"
+   }
+  ]
+ },
+ {
+  "id": "slot-0-letter-frame",
+  "name": "LetterFrame",
+  "visible": true,
+  "parentId": "slot-0",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 170
+   },
+   "size": {
+    "x": 116,
+    "y": 32
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/cronos/letter.png"
+   }
+  ]
+ },
+ {
+  "id": "slot-0-back",
+  "name": "background",
+  "visible": true,
+  "parentId": "slot-0",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": -1
+   },
+   "size": {
+    "x": 304,
+    "y": 313
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/cronos/background.png"
+   }
+  ]
+ },
+ {
+  "id": "slot-0-letter",
+  "name": "Letter",
+  "visible": true,
+  "parentId": "slot-0-letter-frame",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 100,
+    "y": 30
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "A",
+    "fontSize": 3,
+    "autoSize": false,
+    "fontSizeMin": 1,
+    "fontSizeMax": 20,
+    "color": "#ffffff",
+    "bold": false,
+    "italic": false,
+    "underline": false,
+    "letterSpacing": 5,
+    "lineSpacing": 0,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "geniusTechno"
+   }
+  ]
+ },
+ {
+  "id": "card-0",
+  "name": "Draggable",
+  "visible": false,
+  "parentId": "slot-0",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": -1
+   },
+   "size": {
+    "x": 304,
+    "y": 313
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/cronos/background.png"
+   },
+   {
+    "type": "drag"
+   }
+  ]
+ },
+ {
+  "id": "card-0-mask",
+  "name": "Mask",
+  "visible": true,
+  "parentId": "card-0",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0.8
+   },
+   "size": {
+    "x": 292,
+    "y": 303
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/cronos/mask.png"
+   },
+   {
+    "type": "mask",
+    "showImage": false
+   }
+  ]
+ },
+ {
+  "id": "card-0-photo",
+  "name": "ImageData",
+  "visible": true,
+  "parentId": "card-0-mask",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 292,
+    "y": 303
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": ""
+   }
+  ]
+ },
+ {
+  "id": "card-0-banner",
+  "name": "Banner",
+  "visible": true,
+  "parentId": "card-0-mask",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": -109
+   },
+   "size": {
+    "x": 292,
+    "y": 83
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/cronos/banner.png"
+   }
+  ]
+ },
+ {
+  "id": "card-0-title",
+  "name": "GameObject",
+  "visible": true,
+  "parentId": "card-0-banner",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 280,
+    "y": 70
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "Texto",
+    "fontSize": 8,
+    "autoSize": true,
+    "fontSizeMin": 1,
+    "fontSizeMax": 4.5,
+    "color": "#ffffff",
+    "bold": false,
+    "italic": false,
+    "underline": false,
+    "letterSpacing": 5,
+    "lineSpacing": 0,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "geniusTechno"
+   }
+  ]
+ },
+ {
+  "id": "slot-1-letter-frame",
+  "name": "LetterFrame",
+  "visible": true,
+  "parentId": "slot-1",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 170
+   },
+   "size": {
+    "x": 116,
+    "y": 32
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/cronos/letter.png"
+   }
+  ]
+ },
+ {
+  "id": "slot-1-back",
+  "name": "background",
+  "visible": true,
+  "parentId": "slot-1",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": -1
+   },
+   "size": {
+    "x": 304,
+    "y": 313
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/cronos/background.png"
+   }
+  ]
+ },
+ {
+  "id": "slot-1-letter",
+  "name": "Letter",
+  "visible": true,
+  "parentId": "slot-1-letter-frame",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 100,
+    "y": 30
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "B",
+    "fontSize": 3,
+    "autoSize": false,
+    "fontSizeMin": 1,
+    "fontSizeMax": 20,
+    "color": "#ffffff",
+    "bold": false,
+    "italic": false,
+    "underline": false,
+    "letterSpacing": 5,
+    "lineSpacing": 0,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "geniusTechno"
+   }
+  ]
+ },
+ {
+  "id": "card-1",
+  "name": "Draggable",
+  "visible": false,
+  "parentId": "slot-1",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": -1
+   },
+   "size": {
+    "x": 304,
+    "y": 313
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/cronos/background.png"
+   },
+   {
+    "type": "drag"
+   }
+  ]
+ },
+ {
+  "id": "card-1-mask",
+  "name": "Mask",
+  "visible": true,
+  "parentId": "card-1",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0.8
+   },
+   "size": {
+    "x": 292,
+    "y": 303
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/cronos/mask.png"
+   },
+   {
+    "type": "mask",
+    "showImage": false
+   }
+  ]
+ },
+ {
+  "id": "card-1-photo",
+  "name": "ImageData",
+  "visible": true,
+  "parentId": "card-1-mask",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 292,
+    "y": 303
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": ""
+   }
+  ]
+ },
+ {
+  "id": "card-1-banner",
+  "name": "Banner",
+  "visible": true,
+  "parentId": "card-1-mask",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": -109
+   },
+   "size": {
+    "x": 292,
+    "y": 83
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/cronos/banner.png"
+   }
+  ]
+ },
+ {
+  "id": "card-1-title",
+  "name": "GameObject",
+  "visible": true,
+  "parentId": "card-1-banner",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 280,
+    "y": 70
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "Texto",
+    "fontSize": 8,
+    "autoSize": true,
+    "fontSizeMin": 1,
+    "fontSizeMax": 4.5,
+    "color": "#ffffff",
+    "bold": false,
+    "italic": false,
+    "underline": false,
+    "letterSpacing": 5,
+    "lineSpacing": 0,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "geniusTechno"
+   }
+  ]
+ },
+ {
+  "id": "slot-3",
+  "name": "Slot 3",
+  "visible": true,
+  "parentId": "slots",
+  "rect": {
+   "position": {
+    "x": 330,
+    "y": 0
+   },
+   "size": {
+    "x": 319,
+    "y": 400
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "slot-3-letter-frame",
+  "name": "LetterFrame",
+  "visible": true,
+  "parentId": "slot-3",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 170
+   },
+   "size": {
+    "x": 116,
+    "y": 32
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/cronos/letter.png"
+   }
+  ]
+ },
+ {
+  "id": "slot-3-back",
+  "name": "background",
+  "visible": true,
+  "parentId": "slot-3",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": -1
+   },
+   "size": {
+    "x": 304,
+    "y": 313
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/cronos/background.png"
+   }
+  ]
+ },
+ {
+  "id": "slot-3-letter",
+  "name": "Letter",
+  "visible": true,
+  "parentId": "slot-3-letter-frame",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 100,
+    "y": 30
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "D",
+    "fontSize": 3,
+    "autoSize": false,
+    "fontSizeMin": 1,
+    "fontSizeMax": 20,
+    "color": "#ffffff",
+    "bold": false,
+    "italic": false,
+    "underline": false,
+    "letterSpacing": 5,
+    "lineSpacing": 0,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "geniusTechno"
+   }
+  ]
+ },
+ {
+  "id": "card-3",
+  "name": "Draggable",
+  "visible": false,
+  "parentId": "slot-3",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": -1
+   },
+   "size": {
+    "x": 304,
+    "y": 313
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/cronos/background.png"
+   },
+   {
+    "type": "drag"
+   }
+  ]
+ },
+ {
+  "id": "card-3-mask",
+  "name": "Mask",
+  "visible": true,
+  "parentId": "card-3",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0.8
+   },
+   "size": {
+    "x": 292,
+    "y": 303
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/cronos/mask.png"
+   },
+   {
+    "type": "mask",
+    "showImage": false
+   }
+  ]
+ },
+ {
+  "id": "card-3-photo",
+  "name": "ImageData",
+  "visible": true,
+  "parentId": "card-3-mask",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 292,
+    "y": 303
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": ""
+   }
+  ]
+ },
+ {
+  "id": "card-3-banner",
+  "name": "Banner",
+  "visible": true,
+  "parentId": "card-3-mask",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": -109
+   },
+   "size": {
+    "x": 292,
+    "y": 83
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/cronos/banner.png"
+   }
+  ]
+ },
+ {
+  "id": "card-3-title",
+  "name": "GameObject",
+  "visible": true,
+  "parentId": "card-3-banner",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 280,
+    "y": 70
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "Texto",
+    "fontSize": 8,
+    "autoSize": true,
+    "fontSizeMin": 1,
+    "fontSizeMax": 4.5,
+    "color": "#ffffff",
+    "bold": false,
+    "italic": false,
+    "underline": false,
+    "letterSpacing": 5,
+    "lineSpacing": 0,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "geniusTechno"
+   }
+  ]
+ },
+ {
+  "id": "slot-4",
+  "name": "Slot 4",
+  "visible": true,
+  "parentId": "slots",
+  "rect": {
+   "position": {
+    "x": 660,
+    "y": 0
+   },
+   "size": {
+    "x": 319,
+    "y": 400
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "slot-4-letter-frame",
+  "name": "LetterFrame",
+  "visible": true,
+  "parentId": "slot-4",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 170
+   },
+   "size": {
+    "x": 116,
+    "y": 32
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/cronos/letter.png"
+   }
+  ]
+ },
+ {
+  "id": "slot-4-back",
+  "name": "background",
+  "visible": true,
+  "parentId": "slot-4",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": -1
+   },
+   "size": {
+    "x": 304,
+    "y": 313
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/cronos/background.png"
+   }
+  ]
+ },
+ {
+  "id": "slot-4-letter",
+  "name": "Letter",
+  "visible": true,
+  "parentId": "slot-4-letter-frame",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 100,
+    "y": 30
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "E",
+    "fontSize": 3,
+    "autoSize": false,
+    "fontSizeMin": 1,
+    "fontSizeMax": 20,
+    "color": "#ffffff",
+    "bold": false,
+    "italic": false,
+    "underline": false,
+    "letterSpacing": 5,
+    "lineSpacing": 0,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "geniusTechno"
+   }
+  ]
+ },
+ {
+  "id": "card-4",
+  "name": "Draggable",
+  "visible": false,
+  "parentId": "slot-4",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": -1
+   },
+   "size": {
+    "x": 304,
+    "y": 313
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/cronos/background.png"
+   },
+   {
+    "type": "drag"
+   }
+  ]
+ },
+ {
+  "id": "card-4-mask",
+  "name": "Mask",
+  "visible": true,
+  "parentId": "card-4",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0.8
+   },
+   "size": {
+    "x": 292,
+    "y": 303
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/cronos/mask.png"
+   },
+   {
+    "type": "mask",
+    "showImage": false
+   }
+  ]
+ },
+ {
+  "id": "card-4-photo",
+  "name": "ImageData",
+  "visible": true,
+  "parentId": "card-4-mask",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 292,
+    "y": 303
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": ""
+   }
+  ]
+ },
+ {
+  "id": "card-4-banner",
+  "name": "Banner",
+  "visible": true,
+  "parentId": "card-4-mask",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": -109
+   },
+   "size": {
+    "x": 292,
+    "y": 83
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/cronos/banner.png"
+   }
+  ]
+ },
+ {
+  "id": "card-4-title",
+  "name": "GameObject",
+  "visible": true,
+  "parentId": "card-4-banner",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 280,
+    "y": 70
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "Texto",
+    "fontSize": 8,
+    "autoSize": true,
+    "fontSizeMin": 1,
+    "fontSizeMax": 4.5,
+    "color": "#ffffff",
+    "bold": false,
+    "italic": false,
+    "underline": false,
+    "letterSpacing": 5,
+    "lineSpacing": 0,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "geniusTechno"
+   }
+  ]
+ },
+ {
+  "id": "stopwatch",
+  "name": "Cronometro",
+  "visible": true,
+  "parentId": "board",
+  "rect": {
+   "position": {
+    "x": -780,
+    "y": 380
+   },
+   "size": {
+    "x": 240,
+    "y": 240
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/cronos/stopwatch.png"
+   }
+  ]
+ },
+ {
+  "id": "timer",
+  "name": "Time",
+  "visible": true,
+  "parentId": "stopwatch",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": -15
+   },
+   "size": {
+    "x": 170,
+    "y": 120
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "30",
+    "fontSize": 8,
+    "autoSize": false,
+    "fontSizeMin": 1,
+    "fontSizeMax": 20,
+    "color": "#ffffff",
+    "bold": false,
+    "italic": false,
+    "underline": false,
+    "letterSpacing": 0,
+    "lineSpacing": 0,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "geniusTechno"
+   },
+   {
+    "type": "timer",
+    "duration": 30
+   }
+  ]
+ }
+]

@@ -19,6 +19,7 @@ const loaders: Record<string, () => Promise<GameType>> = {
   "arma-la-palabra": () =>
     import("./arma-la-palabra").then((m) => m.armaLaPalabra),
   album: () => import("./album").then((m) => m.album),
+  cronos: () => import("./cronos").then((m) => m.cronos),
 };
 
 interface Mounted {
