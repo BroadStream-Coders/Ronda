@@ -50,10 +50,17 @@ function audioFor(src: string): HTMLAudioElement {
   return audio;
 }
 
-export function playSound(src: string) {
+export function playSound(src: string, offset = 0) {
   const audio = audioFor(src);
-  audio.currentTime = 0;
+  audio.currentTime = Math.max(0, offset);
   void audio.play().catch(() => {});
+}
+
+export function stopSound(src: string) {
+  const audio = audioCache.get(resolveMedia(src));
+  if (!audio) return;
+  audio.pause();
+  audio.currentTime = 0;
 }
 
 function whenPlayable(element: HTMLMediaElement): Promise<void> {

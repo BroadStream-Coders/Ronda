@@ -23,6 +23,7 @@ export {
   playSound,
   preloadMedia,
   resolveMedia,
+  stopSound,
 } from "./media";
 export type { MediaKind } from "./media";
 export { AnimationsProvider, useAnimations } from "./animations/context";
