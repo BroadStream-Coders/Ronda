@@ -8,6 +8,7 @@ import {
 import { geniusTechno } from "@/programs/que-gane-el-mejor/fonts/genius-techno";
 import layout from "./layout.json";
 import { meta } from "./meta";
+import { CronosLogic } from "./Logic";
 import { PRELOAD } from "./assets";
 import { DragView, type DragPart } from "./parts/drag";
 import { isCronosSession } from "./session";
@@ -20,6 +21,7 @@ export const cronos: GameType = {
   preload: PRELOAD,
   fonts: { geniusTechno },
   parts: { drag: partView<DragPart>(DragView) },
+  logic: CronosLogic,
   load: async (file) => {
     const { data, images } = await readZipSession(file);
     if (!isCronosSession(data)) {

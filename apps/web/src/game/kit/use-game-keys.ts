@@ -25,6 +25,10 @@ export interface GameKeyHandlers {
   onClear?: () => void;
   /** Tecla L. */
   onLock?: () => void;
+  /** Tecla A: revela y arranca la ronda. */
+  onStart?: () => void;
+  /** Tecla T: pausa o reanuda el cronómetro. */
+  onTimer?: () => void;
   /** Shift + U: la versión en masa de onInteract. */
   onInteractAll?: () => void;
   /** Shift + I: la versión en masa de onShowAnswer. */
@@ -66,6 +70,8 @@ const KEY_MAP: Record<string, keyof GameKeyHandlers> = {
   KeyE: "onInteract",
   KeyC: "onClear",
   KeyL: "onLock",
+  KeyA: "onStart",
+  KeyT: "onTimer",
   Insert: "onInsert",
   Home: "onHome",
   PageUp: "onPageUp",
