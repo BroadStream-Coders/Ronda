@@ -10,6 +10,7 @@ import {
   CARD_CROMA,
   PRELOAD as ALBUM_PRELOAD,
 } from "../src/game/catalog/album/assets.ts";
+import { PRELOAD as CRONOS_PRELOAD } from "../src/game/catalog/cronos/assets.ts";
 import { PRELOAD as VUELO_PRELOAD } from "../src/game/catalog/al-vuelo/assets.ts";
 import { correctOption } from "../src/game/catalog/al-vuelo/session.ts";
 
@@ -1030,3 +1031,144 @@ assert.deepEqual(
 );
 
 console.log("album: checks ok");
+
+// --- el layout de cronos contra lo que la logica y el drag esperan ---
+
+const cronos = JSON.parse(
+  readFileSync("src/game/catalog/cronos/layout.json", "utf8"),
+) as Layer[];
+
+const cronosLayer = (id: string) => cronos.find((layer) => layer.id === id);
+
+for (const src of CRONOS_PRELOAD) {
+  assert.ok(existsSync(`public${src}`), `asset declarado que no existe: ${src}`);
+}
+
+const cronosVideo = findPart<{ type: "video"; src: string }>(
+  cronos,
+  "background",
+  "video",
+);
+assert.ok(cronosVideo, "'background' debe llevar una part 'video'");
+assert.ok(
+  existsSync(`public${cronosVideo.src}`),
+  `el video de fondo no existe: ${cronosVideo.src}`,
+);
+
+assert.ok(
+  findPart(cronos, "title", "text"),
+  "'title' debe llevar una part 'text' (la pisa Logic)",
+);
+
+// El cronometro lee su duracion del layout. Sin la part, Logic cae al default de
+// 30 s y el reloj sale con un tiempo que nadie configuro.
+const cronosTimer = findPart<{ type: "timer"; duration: number }>(
+  cronos,
+  "timer",
+  "timer",
+);
+assert.ok(cronosTimer, "'timer' debe llevar una part 'timer' con su duracion");
+assert.ok(
+  cronosTimer.duration > 0,
+  "la duracion del cronometro debe ser mayor que cero",
+);
+assert.ok(
+  findPart(cronos, "timer", "text"),
+  "'timer' debe llevar tambien una part 'text': es donde se pinta la cuenta",
+);
+
+for (let slot = 0; slot < 5; slot++) {
+  // --- la zona de soltado ---
+  const zoneId = `zone-${slot}-target`;
+  const zone = cronosLayer(zoneId);
+  // El drag encuentra la zona por este id exacto (/^zone-\d+-target$/) via
+  // elementsFromPoint. Si el layout la renombrara, soltar devolveria la carta a
+  // casa siempre, sin un error en consola.
+  assert.ok(zone, `falta el layer '${zoneId}' (lo busca la part 'drag')`);
+  assert.ok(partOf(zone, "image"), `'${zoneId}' debe llevar una part 'image'`);
+
+  assert.ok(
+    findPart(cronos, `zone-${slot}-date`, "text"),
+    `'zone-${slot}-date' debe llevar una part 'text' (la pisa Logic)`,
+  );
+
+  for (const mark of ["normal", "correct", "incorrect"]) {
+    const id = `zone-${slot}-point-${mark}`;
+    const layer = cronosLayer(id);
+    assert.ok(layer, `falta el layer '${id}' (lo prende/apaga Logic)`);
+    const image = partOf<{ type: "image"; src: string }>(layer, "image");
+    assert.ok(image, `'${id}' debe llevar una part 'image'`);
+    assert.ok(
+      CRONOS_PRELOAD.includes(image.src),
+      `'${id}' se intercambia en vivo al validar: debe estar en PRELOAD`,
+    );
+    assert.equal(
+      layer.visible,
+      mark === "normal",
+      `'${id}' arranca ${mark === "normal" ? "prendido" : "apagado"}`,
+    );
+  }
+
+  // --- la carta ---
+  const cardId = `card-${slot}`;
+  const card = cronosLayer(cardId);
+  assert.ok(card, `falta el layer '${cardId}'`);
+  // Sin la part 'drag' la carta se ve perfecta y no se puede arrastrar.
+  assert.ok(partOf(card, "drag"), `'${cardId}' debe llevar la part 'drag'`);
+  assert.equal(
+    card.visible,
+    false,
+    `'${cardId}' arranca apagado: lo revela la tecla A`,
+  );
+  // El drag devuelve la carta a `rect.position`, que es LOCAL a su padre. Si la
+  // jerarquia se aplanara, soltar fuera de una zona la mandaria al centro de la
+  // pantalla en vez de a su hueco.
+  assert.equal(
+    card.parentId,
+    `slot-${slot}`,
+    `'${cardId}' cuelga de 'slot-${slot}': su casa es una posicion local`,
+  );
+
+  // La part 'mask' recorta con el src de la part 'image' hermana; sin esa image
+  // la foto de la sesion desborda la carta.
+  const mask = cronosLayer(`${cardId}-mask`);
+  assert.ok(mask, `falta el layer '${cardId}-mask'`);
+  assert.ok(partOf(mask, "mask"), `'${cardId}-mask' debe llevar la part 'mask'`);
+  assert.ok(
+    partOf<{ type: "image"; src: string }>(mask, "image")?.src,
+    `'${cardId}-mask' debe llevar una part 'image': es la forma del recorte`,
+  );
+
+  assert.ok(
+    findPart(cronos, `${cardId}-photo`, "image"),
+    `'${cardId}-photo' debe llevar una part 'image' (la pisa Logic)`,
+  );
+  assert.ok(
+    findPart(cronos, `${cardId}-title`, "text"),
+    `'${cardId}-title' debe llevar una part 'text' (la pisa Logic)`,
+  );
+}
+
+// Ningun id quedo en UUID tras la conversion: los slugs son lo que hace legibles
+// a Logic y a estos checks.
+for (const layer of cronos) {
+  assert.ok(
+    !/^[0-9a-f]{8}-[0-9a-f]{4}-/.test(layer.id),
+    `'${layer.id}' sigue siendo un UUID de Games`,
+  );
+}
+
+const cronosFonts = new Set(
+  cronos.flatMap((layer) =>
+    layer.parts
+      .map((part) => (part as { fontKey?: string }).fontKey)
+      .filter((key): key is string => Boolean(key)),
+  ),
+);
+assert.deepEqual(
+  [...cronosFonts],
+  ["geniusTechno"],
+  "las claves de fuente del layout son las que declara la ficha",
+);
+
+console.log("cronos: checks ok");

@@ -12,6 +12,12 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [RM-069] Portar Cronos (2026-08-29 17:29)
+Juego de línea de tiempo: se arrastran cinco cartas a su fecha y se valida todo-o-nada contra el reloj. **No llevaba animaciones** — la entrada del roadmap decía que compartía un grupo con Álbum y era falso. Lo que sí trajo: la part `drag` (drag & drop con snap a zona, apoyada en el `data-layer-id` nuevo de `LayerView`), el cronómetro con pausa y conteo de los últimos 5 s (`playSound` con offset + `stopSound`), y las teclas `A` y `T`. Los 89 layers pasaron de id UUID a slugs. **Las gráficas salieron del bucket de Games, no de Unity**, que tenía una versión vieja; se corrigieron los dos documentos que decían lo contrario.
+
+## [RM-081] El cursor en pantalla completa lo decide cada juego (2026-08-29 17:29)
+Campo `pointer` en `GameType` que `GameShell` traduce a `Stage`: la ficha declara si el juego se opera con mouse, y los demás siguen ocultando el cursor sin tocar nada. Además la tecla **P** lo alterna en cualquier juego desde `Stage`, sin que la ficha ni la lógica participen — el seguro de cabina. Centrar el cursor al mostrarlo, como hacía Unity, **no es posible en web**: no hay API para posicionar el puntero.
+
 ## [RM-068] Portar Álbum (2026-08-29 16:33)
 El juego de Games completo: 86 layers convertidos, 15 gráficas traídas desde Unity y la fuente Retro Gaming en woff2. Al kit entraron las parts `holo` y `shimmer`, el campo `filter` de `image`, la animación `flip` —que desbloquea [[RM-070]] y [[RM-073]]— y las dos primeras animaciones **ambiente** (`float`, `sparkles`), que corren sin que nadie las dispare. Tres teclas de show nuevas en `useGameKeys`: `L` bloquear tema, `Shift+U` voltear todas, `Shift+I` todas a color.
 

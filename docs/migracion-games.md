@@ -293,6 +293,9 @@ estado.
 | `Stage` | 16:9, fullscreen, container-query |
 | `GameConfig` | panel plegable; hoy solo el color del croma |
 | `useGameKeys` / `useGameSetting` | teclas de show; preferencias en localStorage. El mapa distingue Shift para las acciones en masa (`Shift+U` → `onInteractAll`, `Shift+I` → `onShowAnswerAll`), que es el seguro contra el dedo gordo en vivo |
+| Puntero | la ficha declara `pointer: true` si el juego se opera con mouse; `Stage` lo respeta en pantalla completa y la tecla **P** lo alterna en cualquier juego, sin que la ficha ni la lógica participen. **No se puede centrar el cursor**: la web no tiene API para posicionarlo |
+| `data-layer-id` en el DOM | cada layer expone su id, que es lo que permite hit-test con `elementsFromPoint` (lo usa el drag de Cronos) |
+| `playSound` / `stopSound` | `playSound(src, offset)` entra por el medio de un clip — lo pide un conteo que se pausa y reanuda; `stopSound` lo corta |
 
 **Todavía no está.** Cada pieza entra con el primer juego que la pida, pero **se
 escribe en `kit/`, no en la carpeta del juego**:
@@ -303,7 +306,7 @@ escribe en `kit/`, no en la carpeta del juego**:
 | Presupuesto de memoria | diagnóstico; puede no volver nunca |
 | Carga desde la nube | engancha sin rediseño: `downloadCollectorData` devuelve un `File`, igual que el input de archivo |
 | Texto con formato (superíndices, fracciones) | notación matemática real; hoy la part `text` es una cadena plana |
-| Cursor visible en pantalla completa | hoy se oculta siempre; los juegos que se operan con mouse lo necesitan |
+| Drag & drop en el kit | hoy vive en `catalog/cronos/parts/drag.tsx` porque solo lo usa un juego. Si De Par en Par ([[RM-073]]) lo necesita, sube a `kit/` |
 
 ---
 
