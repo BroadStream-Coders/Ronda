@@ -1,4 +1,5 @@
 import type { LayerPart } from "../layer";
+import { resolveMedia } from "../media";
 import type { ImageFit } from "./image";
 
 export interface VideoPart extends LayerPart {
@@ -11,10 +12,11 @@ export interface VideoPart extends LayerPart {
 
 export function VideoView({ part }: { part: VideoPart }) {
   if (!part.src) return null;
+  const src = resolveMedia(part.src);
   return (
     <video
-      key={part.src}
-      src={part.src}
+      key={src}
+      src={src}
       autoPlay
       playsInline
       loop={part.loop ?? true}

@@ -11,14 +11,41 @@ export function mediaKind(src: string): MediaKind {
   return "image";
 }
 
+const objectUrls = new Map<string, string>();
+const inflight = new Map<string, Promise<string>>();
 const audioCache = new Map<string, HTMLAudioElement>();
 
+export function resolveMedia(src: string): string {
+  return objectUrls.get(src) ?? src;
+}
+
+async function fetchBlobUrl(src: string): Promise<string> {
+  const response = await fetch(src);
+  if (!response.ok) {
+    throw new Error(`No se pudo descargar ${src} (${response.status})`);
+  }
+  const url = URL.createObjectURL(await response.blob());
+  objectUrls.set(src, url);
+  return url;
+}
+
+function blobUrl(src: string): Promise<string> {
+  let pending = inflight.get(src);
+  if (!pending) {
+    pending = fetchBlobUrl(src);
+    pending.catch(() => inflight.delete(src));
+    inflight.set(src, pending);
+  }
+  return pending;
+}
+
 function audioFor(src: string): HTMLAudioElement {
-  let audio = audioCache.get(src);
+  const url = resolveMedia(src);
+  let audio = audioCache.get(url);
   if (!audio) {
-    audio = new Audio(src);
+    audio = new Audio(url);
     audio.preload = "auto";
-    audioCache.set(src, audio);
+    audioCache.set(url, audio);
   }
   return audio;
 }
@@ -48,7 +75,8 @@ export function decodeImage(src: string): Promise<void> {
   return image.decode();
 }
 
-function load(src: string): Promise<void> {
+async function load(src: string): Promise<void> {
+  const url = await blobUrl(src);
   switch (mediaKind(src)) {
     case "audio":
       return whenPlayable(audioFor(src));
@@ -56,14 +84,18 @@ function load(src: string): Promise<void> {
       const video = document.createElement("video");
       video.preload = "auto";
       video.muted = true;
-      video.src = src;
+      video.src = url;
       return whenPlayable(video);
     }
     default:
-      return decodeImage(src);
+      return decodeImage(url);
   }
 }
 
 export async function preloadMedia(sources: string[]): Promise<void> {
-  await Promise.allSettled(sources.map(load));
+  const results = await Promise.allSettled(sources.map(load));
+  const failed = sources.filter((_, index) => results[index].status === "rejected");
+  if (failed.length > 0) {
+    console.warn("[game] assets sin precargar, dependen de la red:", failed);
+  }
 }

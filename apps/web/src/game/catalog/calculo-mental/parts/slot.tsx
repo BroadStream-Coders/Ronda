@@ -1,4 +1,4 @@
-import type { LayerPart } from "@/game/kit";
+import { resolveMedia, type LayerPart } from "@/game/kit";
 import { FRAMES } from "../assets";
 
 export type SlotStatus = "none" | "correct" | "incorrect";
@@ -21,7 +21,7 @@ function frameStyle(
     top: `calc(${centerTop} - ${height} / 2)`,
     width,
     height,
-    backgroundImage: `url(${src})`,
+    backgroundImage: `url("${resolveMedia(src)}")`,
     backgroundSize: "100% 100%",
     backgroundRepeat: "no-repeat" as const,
   };

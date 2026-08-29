@@ -15,7 +15,13 @@ export type {
 } from "./parts";
 export { FontRegistryProvider, useFontRegistry } from "./font-context";
 export type { FontRegistry, GameFont } from "./font-context";
-export { decodeImage, mediaKind, playSound, preloadMedia } from "./media";
+export {
+  decodeImage,
+  mediaKind,
+  playSound,
+  preloadMedia,
+  resolveMedia,
+} from "./media";
 export type { MediaKind } from "./media";
 export { AnimationsProvider, useAnimations } from "./animations/context";
 export { useLayerAnimations } from "./animations/use-layer-animations";

@@ -42,10 +42,18 @@ export function GameShell({
     fullscreenRef.current = toggle;
   }, []);
 
-  const preload = game.preload;
-  const [ready, setReady] = useState(!preload?.length);
+  const preload = useMemo(() => {
+    const fromLayout = game.layout.flatMap((layer) =>
+      layer.parts
+        .filter((part) => part.type === "image" || part.type === "video")
+        .map((part) => (part as { src?: string }).src)
+        .filter((src): src is string => Boolean(src)),
+    );
+    return [...new Set([...fromLayout, ...(game.preload ?? [])])];
+  }, [game.layout, game.preload]);
+  const [ready, setReady] = useState(!preload.length);
   useEffect(() => {
-    if (!preload?.length) return;
+    if (!preload.length) return;
     let alive = true;
     void preloadMedia(preload).then(() => {
       if (alive) setReady(true);

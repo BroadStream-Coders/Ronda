@@ -11,6 +11,25 @@ se retira de aquí.
 
 ---
 
+## [WL-013] Los layers apagados dejan de desmontarse (el `SetActive` de Unity)
+- **Idea:** que `LayerView` no borre del DOM un layer con `visible: false`, sino que lo
+  deje montado y solo lo vuelva transparente. Hoy hace `child.visible ? <LayerView/> : null`
+  (`apps/web/src/game/kit/LayerView.tsx:52`), así que prender un marco **crea el nodo por
+  primera vez** y el navegador lo pinta recién en ese momento.
+- **Por qué / valor:** es como funcionaba el original en Unity —el objeto siempre existía y
+  `SetActive` solo lo mostraba— y es la única forma de que prender un marco cueste
+  literalmente cero. Con [[TD-111]] el costo ya bajó de ~500 ms (ida a la red) a un frame
+  (~16 ms); esto se llevaría ese frame que queda.
+- **Por qué no ahora:** el frame que queda no se nota en pantalla, y el cambio toca
+  `LayerView`, que usan **todos** los juegos. A cambio, cada layer oculto pasaría a costarle
+  layout y paint al navegador de forma permanente — hoy los layouts son chicos, pero es una
+  carga que crece con cada juego portado y no la pide ningún síntoma. La máquina del estudio
+  la aguantaría; no es razón suficiente para pagarla.
+- **Si alguna vez entra:** hay que decidir qué pasa con los layers ocultos que tienen `video`
+  o animaciones dentro, que seguirían vivos y corriendo. No es un `? :` cambiado por un
+  `opacity`, y por eso no es tan barato como parece.
+- **Fecha:** 2026-08-29.
+
 ## [WL-012] Notación matemática real en los enunciados
 - **Idea:** que un enunciado pueda mostrarse como notación —`5²`, una fracción, una
   raíz— en vez de deletrearse en palabras. Hoy, con [[RM-063]] al aire, "5 elevado al

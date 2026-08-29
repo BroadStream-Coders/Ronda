@@ -1,4 +1,5 @@
 import type { LayerPart } from "../layer";
+import { resolveMedia } from "../media";
 
 export type ImageFit = "contain" | "cover" | "fill";
 
@@ -16,7 +17,7 @@ export function ImageView({ part }: { part: ImagePart }) {
     <div
       className="h-full w-full bg-center bg-no-repeat"
       style={{
-        backgroundImage: `url(${part.src})`,
+        backgroundImage: `url("${resolveMedia(part.src)}")`,
         backgroundSize: fit === "fill" ? "100% 100%" : fit,
         transform: part.flipX ? "scaleX(-1)" : undefined,
       }}
