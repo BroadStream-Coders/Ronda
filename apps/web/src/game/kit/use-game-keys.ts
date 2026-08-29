@@ -23,6 +23,12 @@ export interface GameKeyHandlers {
   onInteract?: () => void;
   /** Tecla C. */
   onClear?: () => void;
+  /** Tecla L. */
+  onLock?: () => void;
+  /** Shift + U: la versión en masa de onInteract. */
+  onInteractAll?: () => void;
+  /** Shift + I: la versión en masa de onShowAnswer. */
+  onShowAnswerAll?: () => void;
   onInsert?: () => void;
   onHome?: () => void;
   onPageUp?: () => void;
@@ -46,6 +52,11 @@ const OPTION_KEYS: Record<string, number> = {
   KeyR: 3,
 };
 
+const SHIFT_KEY_MAP: Record<string, keyof GameKeyHandlers> = {
+  KeyU: "onInteractAll",
+  KeyI: "onShowAnswerAll",
+};
+
 const KEY_MAP: Record<string, keyof GameKeyHandlers> = {
   KeyN: "onNext",
   KeyV: "onValidate",
@@ -54,6 +65,7 @@ const KEY_MAP: Record<string, keyof GameKeyHandlers> = {
   KeyF: "onMarkError",
   KeyE: "onInteract",
   KeyC: "onClear",
+  KeyL: "onLock",
   Insert: "onInsert",
   Home: "onHome",
   PageUp: "onPageUp",
@@ -107,7 +119,8 @@ export function useGameKeys(handlers: GameKeyHandlers) {
         return;
       }
 
-      const key = KEY_MAP[code];
+      const shifted = event.shiftKey ? SHIFT_KEY_MAP[code] : undefined;
+      const key = shifted ?? KEY_MAP[code];
       if (!key) return;
       const handler = current[key] as (() => void) | undefined;
       if (!handler) return;

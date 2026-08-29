@@ -7,17 +7,17 @@ export const SOUNDS = {
   incorrect: "/programs/que-gane-el-mejor/shared/audio/incorrect.mp3",
 } as const;
 
-export const CARDS = {
-  croma: `${BASE}/cards/croma.png`,
-  ...Object.fromEntries(COLORS.map((c) => [c, `${BASE}/cards/${c}.png`])),
-} as Record<"croma" | (typeof COLORS)[number], string>;
+export const CARD_CROMA = `${BASE}/cards/croma.png`;
 
-export const THEMES = COLORS.map((c) => `${BASE}/themes/${c}.png`);
+export const CARD_COLORS = COLORS.map((color) => `${BASE}/cards/${color}.png`);
+
+export const THEMES = COLORS.map((color) => `${BASE}/themes/${color}.png`);
 
 export const PRELOAD = [
   `${BASE}/logo.png`,
   `${BASE}/mask.png`,
-  ...Object.values(CARDS),
+  CARD_CROMA,
+  ...CARD_COLORS,
   ...THEMES,
   "/programs/que-gane-el-mejor/shared/video/background-blue.mp4",
   SOUNDS.correct,

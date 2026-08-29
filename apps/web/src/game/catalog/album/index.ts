@@ -9,6 +9,7 @@ import { jetBrainsMono } from "@/programs/que-gane-el-mejor/fonts/jetbrains-mono
 import { retroGaming } from "@/programs/que-gane-el-mejor/fonts/retro-gaming";
 import layout from "./layout.json";
 import { meta } from "./meta";
+import { AlbumLogic } from "./Logic";
 import { PRELOAD } from "./assets";
 import { isAlbumSession } from "./session";
 
@@ -18,6 +19,7 @@ export const album: GameType = {
   images: true,
   preload: PRELOAD,
   fonts: { geniusTechno, jetBrainsMono, retroGaming },
+  logic: AlbumLogic,
   load: async (file) => {
     const { data, images } = await readZipSession(file);
     if (!isAlbumSession(data)) {
