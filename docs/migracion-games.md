@@ -266,9 +266,11 @@ estado.
 
 | Pieza | Qué cubre |
 |---|---|
-| Parts `color`, `image`, `text`, `backdrop`, `video` | `image` soporta `flipX` (espeja con `scaleX(-1)`, para el asset que se reusa dado vuelta); `text` trae auto-size; `backdrop` es un fondo propio (degradado + halos) para juegos que no salen sobre croma; `video` se reproduce solo, en bucle y mudo |
+| Parts `color`, `image`, `text`, `backdrop`, `video` | `image` soporta `flipX` (espeja con `scaleX(-1)`, para el asset que se reusa dado vuelta) y `filter` (cualquier filtro CSS: `grayscale(1)`, `brightness(48%)`, para el mismo asset en otro estado); `text` trae auto-size; `backdrop` es un fondo propio (degradado + halos) para juegos que no salen sobre croma; `video` se reproduce solo, en bucle y mudo |
 | Part `mask` | modificador a nivel de layer: recorta el layer entero (parts y descendientes) con la silueta del `src` de su part `image` hermana — y **sin** esa image recorta al rect, que es como se tapa lo que entra deslizándose desde fuera de una caja |
-| Animaciones `pop`, `shake`, `bounce`, `slide`, `blink` | más `play` y `playStagger` para dispararlas. `blink` registra dos triggers: `blink` (pulso + parpadeos) y `blinkSettle` (el golpecito de después del cambio) |
+| Animaciones por trigger: `pop`, `shake`, `bounce`, `slide`, `blink`, `flip` | más `play` y `playStagger` para dispararlas. `blink` registra dos triggers: `blink` (pulso + parpadeos) y `blinkSettle` (el golpecito de después del cambio); `flip` registra `flipHide` (0→90°) y `flipShow` (90°→0), y la lógica cambia de cara entre los dos |
+| Animaciones **ambiente**: `float`, `sparkles` | no se disparan: arrancan al montar y se limpian al desmontar, así que **no llaman a `register`**. `float` va en bucle infinito y desincroniza con `phase`; `sparkles` se prende y apaga por `enabled`, que la lógica escribe con `patch` — el efecto se reinicia solo porque `applyState` devuelve una part nueva |
+| Parts `holo` y `shimmer` | **no son animaciones**: son parts con vista que dibujan un overlay en CSS. `holo` se apaga con `enabled`; `shimmer` genera su `@keyframes` porque los porcentajes dependen de `sweep`/`period` |
 | `useGameState` | pisa parts, `position` y `visible` |
 | `shuffledOrder` | permutación sembrada y determinista |
 | Fuentes | `FontRegistry` en la ficha; `next/font` local o de Google |
@@ -276,7 +278,7 @@ estado.
 | Sesión **ZIP** | `readZipSession(file)` saca el `sessionData.json` y las imágenes del paquete que arma el colector. Devuelve **Blobs**, no URLs: las object URL las crea `setSession` y las revoca sola al reemplazar la sesión o desmontar el juego, así que un paquete que no pase el type-guard no deja nada colgando. El juego las lee de `useGameSession().images`, indexadas por la **misma ruta** que guarda el JSON (`images/T1.png`) |
 | `Stage` | 16:9, fullscreen, container-query |
 | `GameConfig` | panel plegable; hoy solo el color del croma |
-| `useGameKeys` / `useGameSetting` | teclas de show; preferencias en localStorage |
+| `useGameKeys` / `useGameSetting` | teclas de show; preferencias en localStorage. El mapa distingue Shift para las acciones en masa (`Shift+U` → `onInteractAll`, `Shift+I` → `onShowAnswerAll`), que es el seguro contra el dedo gordo en vivo |
 
 **Todavía no está.** Cada pieza entra con el primer juego que la pida, pero **se
 escribe en `kit/`, no en la carpeta del juego**:
@@ -284,7 +286,6 @@ escribe en `kit/`, no en la carpeta del juego**:
 | Falta | Lo necesita |
 |---|---|
 | Part `videoControl` | pausar o reanudar un video desde la lógica |
-| Animaciones `flip`, `float`, `sparkles`, `shimmer`, `holo` | `flip` para los juegos de cartas que se voltean; el resto, para el gamefeel de cada juego |
 | Presupuesto de memoria | diagnóstico; puede no volver nunca |
 | Carga desde la nube | engancha sin rediseño: `downloadCollectorData` devuelve un `File`, igual que el input de archivo |
 | Texto con formato (superíndices, fracciones) | notación matemática real; hoy la part `text` es una cadena plana |

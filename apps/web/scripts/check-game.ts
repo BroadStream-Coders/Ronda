@@ -5,6 +5,11 @@ import JSZip from "jszip";
 import { readZipSession, ZIP_SESSION_JSON } from "../src/game/kit/zip.ts";
 import { mediaKind } from "../src/game/kit/media.ts";
 import { PRELOAD as INTRUSO_PRELOAD } from "../src/game/catalog/intruso/assets.ts";
+import {
+  CARD_COLORS,
+  CARD_CROMA,
+  PRELOAD as ALBUM_PRELOAD,
+} from "../src/game/catalog/album/assets.ts";
 import { PRELOAD as VUELO_PRELOAD } from "../src/game/catalog/al-vuelo/assets.ts";
 import { correctOption } from "../src/game/catalog/al-vuelo/session.ts";
 
@@ -853,3 +858,175 @@ for (const [layout, id, expected] of flipped) {
 }
 
 console.log("espejado: checks ok");
+
+// --- el layout de album contra lo que la logica espera ---
+
+const album = JSON.parse(
+  readFileSync("src/game/catalog/album/layout.json", "utf8"),
+) as Layer[];
+
+const albumLayer = (id: string) => album.find((layer) => layer.id === id);
+
+for (const src of ALBUM_PRELOAD) {
+  assert.ok(existsSync(`public${src}`), `asset declarado que no existe: ${src}`);
+}
+
+// El fondo es video, no croma: si la ruta se rompe el aviso es un rectangulo
+// negro al aire, sin error en consola.
+const albumVideo = findPart<{ type: "video"; src: string }>(
+  album,
+  "background",
+  "video",
+);
+assert.ok(albumVideo, "'background' debe llevar una part 'video'");
+assert.ok(
+  existsSync(`public${albumVideo.src}`),
+  `el video de fondo no existe: ${albumVideo.src}`,
+);
+
+// Logic arranca en la pantalla de temas y enciende 'gameplay' al entrar a las
+// cartas. Si el layout arrancara al reves, el juego abriria con las cartas.
+assert.equal(albumLayer("themes")?.visible, true, "'themes' arranca prendido");
+assert.equal(
+  albumLayer("gameplay")?.visible,
+  false,
+  "'gameplay' arranca apagado: lo enciende Logic",
+);
+
+assert.ok(
+  findPart(album, "round-title", "text"),
+  "'round-title' debe llevar una part 'text' (la pisa Logic)",
+);
+
+for (let theme = 0; theme < 6; theme++) {
+  for (const state of ["normal", "locked"]) {
+    const id = `theme-${theme}-${state}`;
+    const layer = albumLayer(id);
+    assert.ok(layer, `falta el layer '${id}' (lo prende/apaga Logic)`);
+    const image = partOf<{ type: "image"; src: string; filter?: string }>(
+      layer,
+      "image",
+    );
+    assert.ok(image, `'${id}' debe llevar una part 'image'`);
+    assert.ok(
+      ALBUM_PRELOAD.includes(image.src),
+      `'${id}' sale al aire: su grafica debe estar en PRELOAD`,
+    );
+    // El tema bloqueado es el MISMO asset atenuado con `filter`. Si el campo se
+    // pierde en una conversion, bloquear un tema no se nota en pantalla.
+    assert.equal(
+      image.filter,
+      state === "locked" ? "brightness(48%)" : undefined,
+      `'${id}' ${state === "locked" ? "va atenuado con filter" : "no lleva filter"}`,
+    );
+    assert.ok(
+      findPart(album, `${id}-title`, "text"),
+      `'${id}-title' debe llevar una part 'text' (la pisa Logic)`,
+    );
+  }
+  // Solo el tema normal flota; el bloqueado se queda quieto.
+  assert.ok(
+    partOf(albumLayer(`theme-${theme}-normal`), "float"),
+    `'theme-${theme}-normal' debe llevar la part 'float'`,
+  );
+}
+
+for (let card = 0; card < 5; card++) {
+  const id = `card-${card}`;
+  const layer = albumLayer(id);
+  assert.ok(layer, `falta el layer '${id}'`);
+  // El volteo anima la carta entera: 'flip' va en el padre, no en cada cara.
+  // Puesto en una cara, la otra no gira y el cambio se ve de golpe.
+  for (const type of ["flip", "float", "holo"]) {
+    assert.ok(partOf(layer, type), `'${id}' debe llevar la part '${type}'`);
+  }
+
+  for (const face of ["back", "front"]) {
+    const faceId = `${id}-${face}`;
+    const faceLayer = albumLayer(faceId);
+    assert.ok(faceLayer, `falta el layer '${faceId}' (lo prende/apaga Logic)`);
+    assert.equal(
+      faceLayer.parentId,
+      id,
+      `'${faceId}' cuelga de '${id}': es lo que hace que 'flip' las voltee juntas`,
+    );
+    assert.equal(
+      faceLayer.visible,
+      face === "back",
+      `'${faceId}' arranca ${face === "back" ? "prendido" : "apagado"}`,
+    );
+
+    const bg = findPart<{ type: "image"; src: string }>(
+      album,
+      `${faceId}-bg`,
+      "image",
+    );
+    assert.ok(bg, `'${faceId}-bg' debe llevar una part 'image'`);
+    // Logic cambia este fondo por ronda (un color por tema) y por la carta
+    // croma: los 7 se intercambian en vivo y tienen que estar precargados.
+    assert.ok(
+      [...CARD_COLORS, CARD_CROMA].includes(bg.src),
+      `'${faceId}-bg' debe arrancar con una de las cartas del juego`,
+    );
+  }
+
+  assert.ok(
+    findPart(album, `${id}-question`, "text"),
+    `'${id}-question' debe llevar una part 'text' (la pisa Logic)`,
+  );
+
+  // La part 'mask' recorta con el src de la part 'image' hermana: sin esa
+  // image la foto desborda la carta, sin error en consola.
+  const photo = albumLayer(`${id}-photo`);
+  assert.ok(photo, `falta el layer '${id}-photo'`);
+  assert.ok(partOf(photo, "mask"), `'${id}-photo' debe llevar la part 'mask'`);
+  assert.ok(
+    partOf<{ type: "image"; src: string }>(photo, "image")?.src,
+    `'${id}-photo' debe llevar una part 'image': es la forma del recorte`,
+  );
+  assert.equal(
+    photo.visible,
+    false,
+    `'${id}-photo' arranca apagado: la carta abre con la pregunta`,
+  );
+
+  const color = albumLayer(`${id}-photo-color`);
+  assert.ok(color, `falta el layer '${id}-photo-color'`);
+  assert.ok(partOf(color, "image"), `'${id}-photo-color' debe llevar 'image'`);
+  // Los destellos los enciende Logic solo en la carta croma.
+  assert.ok(
+    partOf(color, "sparkles"),
+    `'${id}-photo-color' debe llevar la part 'sparkles'`,
+  );
+
+  // Es la MISMA foto que la de color, en gris por `filter`. Si el campo se
+  // pierde, marcar error muestra la foto a color y parece que acerto.
+  const gray = findPart<{ type: "image"; filter?: string }>(
+    album,
+    `${id}-photo-gray`,
+    "image",
+  );
+  assert.ok(gray, `'${id}-photo-gray' debe llevar una part 'image'`);
+  assert.equal(
+    gray.filter,
+    "grayscale(1)",
+    `'${id}-photo-gray' va en gris con filter`,
+  );
+}
+
+// Las fuentes se resuelven por clave contra el FontRegistry de la ficha: una
+// clave que la ficha no declare cae al font por defecto, sin error.
+const albumFonts = new Set(
+  album.flatMap((layer) =>
+    layer.parts
+      .map((part) => (part as { fontKey?: string }).fontKey)
+      .filter((key): key is string => Boolean(key)),
+  ),
+);
+assert.deepEqual(
+  [...albumFonts].sort(),
+  ["geniusTechno", "jetBrainsMono", "retroGaming"],
+  "las claves de fuente del layout son las que declara la ficha",
+);
+
+console.log("album: checks ok");

@@ -69,7 +69,8 @@ se migra desde Unity.
 
 **Lo que le falta al kit no se hace por adelantado.** Cada pieza entra con el primer
 juego que la pida, escrita en `kit/` y no en la carpeta del juego — el mismo criterio
-que ya se aplicó con las animaciones, de las que entraron 4 de 10. Hacerlas sueltas
+que ya se aplicó con las animaciones, que entraron de a una con el juego que las
+pedía. Hacerlas sueltas
 significa construirlas sin nadie que las use y sin forma de validarlas: `pnpm build`
 no avisa si un texto desborda su rect. La única que se anotó aparte fue la sesión ZIP
 ([[RM-061]], ya cerrada), porque la pedían **varios** juegos y no le pertenecía a
@@ -87,10 +88,11 @@ cualquiera de estas tareas, no se repite acá.
   1. **El orden de portado.** Cerraron todos los de solo texto — Cálculo Mental
      ([[RM-063]]), La Sabes o No ([[RM-064]]), Mi Libro Favorito ([[RM-066]]) y Al
      Vuelo ([[RM-065]]) — y con ellos entró casi todo lo que bloqueaba al resto.
-     También el primero con imágenes de sesión, Intruso ([[RM-067]]). Quedan Álbum y
-     Cronos, que comparten un grupo de animaciones; Busca Logo al final, que es el
-     que puede romper supuestos de rendimiento; y Operaciones Combinadas aparte,
-     porque del otro lado es un prototipo.
+     También el primero con imágenes de sesión, Intruso ([[RM-067]]), y Álbum
+     ([[RM-068]]), que trajo el grupo de animaciones que compartía con Cronos y el
+     `flip` que esperaban Busca Logo y De Par en Par. Queda Cronos; Busca Logo al
+     final, que es el que puede romper supuestos de rendimiento; y Operaciones
+     Combinadas aparte, porque del otro lado es un prototipo.
   2. **~~La ficha debe declarar su colector.~~ Ya no hace falta.** Existía por un
      solo caso: el colector `si-o-no` alimentaba al juego **Al Vuelo**. Ese colector
      se renombró a `al-vuelo` ([[TD-108]], con migración del bucket), así que **hoy
@@ -126,24 +128,12 @@ cualquiera de estas tareas, no se repite acá.
   juego y las cuatro fotos salen al aire con su marco.
 - **Fecha:** 2026-08-28 · **Estado:** Abierto
 
-## [RM-068] Portar Álbum
-- **Objetivo:** traer el juego de Games. Colector: `album` (fotos con pregunta por
-  columna).
-- **Depende de:** las animaciones que el kit no tiene (del grupo
-  float / sparkles / shimmer / holo); entran las que este juego use, no todas.
-  `blink` ya entró con [[RM-066]], el ZIP con [[RM-061]] y `flipX` con [[TD-109]].
-- **Ojo:** es el único que usa el campo **`filter`** del `image` de Games
-  (`brightness(48%)` en los temas bloqueados, `grayscale(1)` en las fotos). Es el
-  hermano de `flipX` y entra igual: una línea en `kit/parts/image.tsx`.
-- **Hecho cuando:** corre dentro de un programa, es asignable y consume la sesión que
-  produce su colector, imágenes incluidas.
-- **Fecha:** 2026-08-20 · **Estado:** Abierto
-
 ## [RM-069] Portar Cronos
 - **Objetivo:** traer el juego de Games. Colector: `cronos` (eventos con fecha,
   título e imagen).
-- **Depende de:** el mismo grupo de animaciones que [[RM-068]]; si Álbum va primero,
-  acá ya están. El ZIP entró con [[RM-061]].
+- **Depende de:** nada nuevo. El grupo de animaciones que compartía con Álbum
+  (`float`, `sparkles`, `shimmer`, `holo`, `flip`) entró con [[RM-068]], y el ZIP con
+  [[RM-061]].
 - **Hecho cuando:** corre dentro de un programa, es asignable y consume la sesión que
   produce su colector, imágenes incluidas.
 - **Fecha:** 2026-08-20 · **Estado:** Abierto
@@ -152,8 +142,8 @@ cualquiera de estas tareas, no se repite acá.
 - **Objetivo:** traer el juego de Games. Colector: `busca-logo` (marcar dónde van los
   logos en cada tablero). **Va último a propósito:** es el que puede romper supuestos
   que hoy no molestan.
-- **Depende de:** la animación `flip`, que el kit no tiene. La part `text` y
-  `playStagger` ya entraron con [[RM-063]].
+- **Depende de:** nada nuevo. `flip` entró con [[RM-068]]; la part `text` y
+  `playStagger`, con [[RM-063]].
 - **El riesgo real — 202 layers.** `bounce` y `slide` animan la posición escribiendo
   en `useGameState` en cada frame, o sea un re-render de React por frame. Con los 4
   layers de Deletreo no se nota y en Games funcionaba igual, pero acá son 202. Si se
@@ -183,9 +173,8 @@ cualquiera de estas tareas, no se repite acá.
   (`CardMode`), y la sesión trae las imágenes por nombre de archivo
   (`pictureFile`) más el orden del tablero (`answer`) — o sea, sesión ZIP, no JSON
   suelto.
-- **Depende de:** la animación **flip** para voltear la carta, que el kit no tiene;
-  es la misma que pide Busca Logo ([[RM-070]]), así que la trae el primero de los dos
-  que se haga. Y [[RM-081]], el cursor visible. El ZIP y los blobs entraron con
+- **Depende de:** [[RM-081]], el cursor visible. La animación **flip** ya entró con
+  [[RM-068]]. El ZIP y los blobs entraron con
   [[RM-061]]; la part `text` de las cartas de texto, con [[RM-063]].
 - **Ojo:** [[TD-013]] es del **colector** (anchos fijos por cantidad de pares), no
   del juego — no se cierra con esta tarea.

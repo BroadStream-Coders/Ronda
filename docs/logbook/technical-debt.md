@@ -16,6 +16,20 @@ reutiliza). Al resolverse se mueve al `changelog.md` conservando su código.
 
 ---
 
+## [TD-112] `pop` y `shake` borran el transform que `float` está animando
+- **Ubicación:** `apps/web/src/game/kit/animations/use-layer-animations.ts:131`, `:160`
+- **Riesgo:** 4/10
+- **Problema:** Al terminar, `pop` y `shake` hacen `element.style.transform = ""` para no dejar residuo. `float` (y `blink`) escriben un transform en bucle infinito sobre **ese mismo elemento**. En un layer que declare `float` junto a `pop` o `shake`, el primer disparo deja la flotación congelada donde estaba.
+- **Impacto futuro:** El juego que los combine se ve perfecto al portarlo y pierde la flotación después de la primera animación, sin nada en consola. Hoy no pasa: verificado que ningún layer de Álbum ([[RM-068]]) junta `float` con `pop`/`shake`/`blink`. La salida es limpiar solo lo que cada animación escribió, en vez de vaciar el transform entero.
+- **Fecha:** 2026-08-29 · **Estado:** Abierto
+
+## [TD-113] El colector de Álbum no limita columnas y el juego solo pinta 6
+- **Ubicación:** `apps/web/src/collector/catalog/album/Editor.tsx:34`, `apps/web/src/game/catalog/album/Logic.tsx:16`
+- **Riesgo:** 5/10
+- **Problema:** `addRound` no tiene tope, y el layout del juego trae 6 temas fijos (`THEME_COUNT`); `onNavigate` descarta los índices que se pasan. Un productor puede cargar 8 columnas, guardarlas y pasar la validación sin un solo aviso: las dos últimas no existen al aire.
+- **Impacto futuro:** Se descubre en vivo, que es el peor momento. Viene así desde Games, no lo introdujo el port ([[RM-068]]). Lo barato es el tope en el colector; la alternativa cara es un layout de temas dinámico.
+- **Fecha:** 2026-08-29 · **Estado:** Abierto
+
 ## [TD-110] El formateo de fecha va copiado en cuatro archivos
 - **Ubicación:** `apps/web/src/game/kit/GameTopbar.tsx:41`, `apps/web/src/app/admin/inquiries/page.tsx:7`, `apps/web/src/app/admin/invitations/page.tsx:9`, `apps/web/src/app/admin/users/page.tsx:13`
 - **Riesgo:** 2/10
