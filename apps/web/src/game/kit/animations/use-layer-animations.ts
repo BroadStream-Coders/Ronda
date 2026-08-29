@@ -8,6 +8,7 @@ import { useAnimations } from "./context";
 import type {
   BlinkPart,
   BouncePart,
+  FlipPart,
   PopPart,
   ShakePart,
   SlidePart,
@@ -36,6 +37,7 @@ export function useLayerAnimations(
   const bounce = partOf<BouncePart>(layer, "bounce");
   const slide = partOf<SlidePart>(layer, "slide");
   const blink = partOf<BlinkPart>(layer, "blink");
+  const flip = partOf<FlipPart>(layer, "flip");
 
   const { register, unregister } = useAnimations();
   const id = layer.id;
@@ -67,11 +69,17 @@ export function useLayerAnimations(
   const blinkCount = blink?.blinkCount ?? 3;
   const blinkDuration = blink?.blinkDuration ?? 0.08;
 
+  const hasFlip = !!flip;
+  const flipHideDuration = flip?.hideDuration ?? 0.25;
+  const flipShowDuration = flip?.showDuration ?? 0.45;
+  const flipPerspective = flip?.perspective ?? 6;
+
   const elRef = useRef<HTMLDivElement | null>(null);
   const popRef = useRef<AnimationPlaybackControls | null>(null);
   const shakeRef = useRef<AnimationPlaybackControls | null>(null);
   const blinkRef = useRef<AnimationPlaybackControls | null>(null);
   const blinkSeqRef = useRef(0);
+  const flipRef = useRef<AnimationPlaybackControls | null>(null);
   const moveRef = useRef<{
     seq: number;
     controls: AnimationPlaybackControls | null;
@@ -300,12 +308,72 @@ export function useLayerAnimations(
     unregister,
   ]);
 
+  useEffect(() => {
+    if (!hasFlip) return;
+
+    const hide = async () => {
+      const element = elRef.current;
+      if (!element || flipHideDuration <= 0) return;
+      flipRef.current?.stop();
+      const controls = animate(
+        element,
+        {
+          transformPerspective: element.offsetWidth * flipPerspective,
+          rotateY: [0, 90],
+        },
+        { duration: flipHideDuration, ease: "easeIn" },
+      );
+      flipRef.current = controls;
+      try {
+        await controls;
+      } catch {
+        return;
+      }
+    };
+
+    const show = async () => {
+      const element = elRef.current;
+      if (!element) return;
+      flipRef.current?.stop();
+      const controls = animate(
+        element,
+        {
+          transformPerspective: element.offsetWidth * flipPerspective,
+          rotateY: [90, 0],
+        },
+        { duration: Math.max(flipShowDuration, 0.01), ease: "backOut" },
+      );
+      flipRef.current = controls;
+      try {
+        await controls;
+      } catch {
+        return;
+      }
+    };
+
+    register(id, "flipHide", hide);
+    register(id, "flipShow", show);
+    return () => {
+      unregister(id, "flipHide");
+      unregister(id, "flipShow");
+    };
+  }, [
+    id,
+    hasFlip,
+    flipHideDuration,
+    flipShowDuration,
+    flipPerspective,
+    register,
+    unregister,
+  ]);
+
   useEffect(
     () => () => {
       popRef.current?.cancel();
       shakeRef.current?.cancel();
       blinkSeqRef.current++;
       blinkRef.current?.cancel();
+      flipRef.current?.stop();
       cancelMove();
     },
     [cancelMove],

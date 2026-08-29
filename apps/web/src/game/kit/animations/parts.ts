@@ -34,3 +34,10 @@ export interface BlinkPart extends LayerPart {
   blinkCount?: number;
   blinkDuration?: number;
 }
+
+export interface FlipPart extends LayerPart {
+  type: "flip";
+  hideDuration?: number;
+  showDuration?: number;
+  perspective?: number;
+}

@@ -30,6 +30,7 @@ export { useLayerAnimations } from "./animations/use-layer-animations";
 export type {
   BlinkPart,
   BouncePart,
+  FlipPart,
   PopPart,
   ShakePart,
   SlidePart,
