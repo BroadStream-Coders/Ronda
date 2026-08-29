@@ -8,6 +8,7 @@ export interface ImagePart extends LayerPart {
   src: string;
   fit?: ImageFit;
   flipX?: boolean;
+  filter?: string;
 }
 
 export function ImageView({ part }: { part: ImagePart }) {
@@ -20,6 +21,7 @@ export function ImageView({ part }: { part: ImagePart }) {
         backgroundImage: `url("${resolveMedia(part.src)}")`,
         backgroundSize: fit === "fill" ? "100% 100%" : fit,
         transform: part.flipX ? "scaleX(-1)" : undefined,
+        filter: part.filter,
       }}
     />
   );
