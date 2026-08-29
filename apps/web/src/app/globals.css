@@ -139,3 +139,23 @@
     transform: rotate(360deg);
   }
 }
+@keyframes ronda-holo-pulse {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes ronda-holo-sweep {
+  0%,
+  55%,
+  100% {
+    transform: translateX(0) rotate(8deg);
+  }
+  75% {
+    transform: translateX(400%) rotate(8deg);
+  }
+}
