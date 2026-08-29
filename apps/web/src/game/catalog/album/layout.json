@@ -1,0 +1,2703 @@
+[
+ {
+  "id": "background",
+  "name": "Background",
+  "visible": true,
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 1920,
+    "y": 1080
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "video",
+    "fit": "fill",
+    "muted": true,
+    "loop": true,
+    "src": "/programs/que-gane-el-mejor/shared/video/background-blue.mp4"
+   }
+  ]
+ },
+ {
+  "id": "album",
+  "name": "Album",
+  "visible": true,
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 1920,
+    "y": 1080
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "themes",
+  "name": "Themes",
+  "visible": true,
+  "parentId": "album",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 1920,
+    "y": 1080
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "theme-0",
+  "name": "Theme 1",
+  "visible": true,
+  "parentId": "themes",
+  "rect": {
+   "position": {
+    "x": -522.2,
+    "y": 228.6
+   },
+   "size": {
+    "x": 426,
+    "y": 507
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "rotation": -6.18
+  },
+  "parts": []
+ },
+ {
+  "id": "theme-0-normal",
+  "name": "Normal",
+  "visible": true,
+  "parentId": "theme-0",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 426,
+    "y": 507
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/album/themes/red.png"
+   },
+   {
+    "type": "float",
+    "amplitude": 3,
+    "rotation": 0.6,
+    "period": 6,
+    "phase": 0.4
+   }
+  ]
+ },
+ {
+  "id": "theme-0-normal-title",
+  "name": "Title",
+  "visible": true,
+  "parentId": "theme-0-normal",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 90.37
+   },
+   "size": {
+    "x": 361,
+    "y": 176
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "TEMA",
+    "fontSize": 4.91,
+    "autoSize": true,
+    "fontSizeMin": 1.67,
+    "fontSizeMax": 4.91,
+    "color": "#ffffffd7",
+    "bold": true,
+    "italic": false,
+    "underline": false,
+    "letterSpacing": 5,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "geniusTechno"
+   }
+  ]
+ },
+ {
+  "id": "theme-0-locked",
+  "name": "Locked",
+  "visible": false,
+  "parentId": "theme-0",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 426,
+    "y": 507
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "filter": "brightness(48%)",
+    "src": "/programs/que-gane-el-mejor/games/album/themes/red.png"
+   }
+  ]
+ },
+ {
+  "id": "theme-0-locked-title",
+  "name": "Title",
+  "visible": true,
+  "parentId": "theme-0-locked",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 90.37
+   },
+   "size": {
+    "x": 361,
+    "y": 176
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "TEMA",
+    "fontSize": 4.91,
+    "autoSize": true,
+    "fontSizeMin": 1.67,
+    "fontSizeMax": 4.91,
+    "color": "#717171d7",
+    "bold": true,
+    "italic": false,
+    "underline": false,
+    "letterSpacing": 5,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "geniusTechno"
+   }
+  ]
+ },
+ {
+  "id": "theme-1",
+  "name": "Theme 2",
+  "visible": true,
+  "parentId": "themes",
+  "rect": {
+   "position": {
+    "x": -51.4,
+    "y": 244.8
+   },
+   "size": {
+    "x": 426,
+    "y": 507
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "rotation": 3.22
+  },
+  "parts": []
+ },
+ {
+  "id": "theme-1-normal",
+  "name": "Normal",
+  "visible": true,
+  "parentId": "theme-1",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 426,
+    "y": 507
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/album/themes/yellow.png"
+   },
+   {
+    "type": "float",
+    "amplitude": 3,
+    "rotation": 0.6,
+    "period": 6,
+    "phase": 1.4
+   }
+  ]
+ },
+ {
+  "id": "theme-1-normal-title",
+  "name": "Title",
+  "visible": true,
+  "parentId": "theme-1-normal",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 90.37
+   },
+   "size": {
+    "x": 361,
+    "y": 176
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "TEMA",
+    "fontSize": 4.91,
+    "autoSize": true,
+    "fontSizeMin": 1.67,
+    "fontSizeMax": 4.91,
+    "color": "#ffffffd7",
+    "bold": true,
+    "italic": false,
+    "underline": false,
+    "letterSpacing": 5,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "geniusTechno"
+   }
+  ]
+ },
+ {
+  "id": "theme-1-locked",
+  "name": "Locked",
+  "visible": false,
+  "parentId": "theme-1",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 426,
+    "y": 507
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "filter": "brightness(48%)",
+    "src": "/programs/que-gane-el-mejor/games/album/themes/yellow.png"
+   }
+  ]
+ },
+ {
+  "id": "theme-1-locked-title",
+  "name": "Title",
+  "visible": true,
+  "parentId": "theme-1-locked",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 90.37
+   },
+   "size": {
+    "x": 361,
+    "y": 176
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "TEMA",
+    "fontSize": 4.91,
+    "autoSize": true,
+    "fontSizeMin": 1.67,
+    "fontSizeMax": 4.91,
+    "color": "#717171d7",
+    "bold": true,
+    "italic": false,
+    "underline": false,
+    "letterSpacing": 5,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "geniusTechno"
+   }
+  ]
+ },
+ {
+  "id": "theme-2",
+  "name": "Theme 3",
+  "visible": true,
+  "parentId": "themes",
+  "rect": {
+   "position": {
+    "x": 415.5,
+    "y": 248.4
+   },
+   "size": {
+    "x": 426,
+    "y": 507
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "rotation": -3.44
+  },
+  "parts": []
+ },
+ {
+  "id": "theme-2-normal",
+  "name": "Normal",
+  "visible": true,
+  "parentId": "theme-2",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 426,
+    "y": 507
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/album/themes/blue.png"
+   },
+   {
+    "type": "float",
+    "amplitude": 3,
+    "rotation": 0.6,
+    "period": 6,
+    "phase": 2.5
+   }
+  ]
+ },
+ {
+  "id": "theme-2-normal-title",
+  "name": "Title",
+  "visible": true,
+  "parentId": "theme-2-normal",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 90.37
+   },
+   "size": {
+    "x": 361,
+    "y": 176
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "TEMA",
+    "fontSize": 4.91,
+    "autoSize": true,
+    "fontSizeMin": 1.67,
+    "fontSizeMax": 4.91,
+    "color": "#ffffffd7",
+    "bold": true,
+    "italic": false,
+    "underline": false,
+    "letterSpacing": 5,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "geniusTechno"
+   }
+  ]
+ },
+ {
+  "id": "theme-2-locked",
+  "name": "Locked",
+  "visible": false,
+  "parentId": "theme-2",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 426,
+    "y": 507
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "filter": "brightness(48%)",
+    "src": "/programs/que-gane-el-mejor/games/album/themes/blue.png"
+   }
+  ]
+ },
+ {
+  "id": "theme-2-locked-title",
+  "name": "Title",
+  "visible": true,
+  "parentId": "theme-2-locked",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 90.37
+   },
+   "size": {
+    "x": 361,
+    "y": 176
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "TEMA",
+    "fontSize": 4.91,
+    "autoSize": true,
+    "fontSizeMin": 1.67,
+    "fontSizeMax": 4.91,
+    "color": "#717171d7",
+    "bold": true,
+    "italic": false,
+    "underline": false,
+    "letterSpacing": 5,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "geniusTechno"
+   }
+  ]
+ },
+ {
+  "id": "theme-3",
+  "name": "Theme 4",
+  "visible": true,
+  "parentId": "themes",
+  "rect": {
+   "position": {
+    "x": -359,
+    "y": -247
+   },
+   "size": {
+    "x": 426,
+    "y": 507
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "rotation": 3.18
+  },
+  "parts": []
+ },
+ {
+  "id": "theme-3-normal",
+  "name": "Normal",
+  "visible": true,
+  "parentId": "theme-3",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 426,
+    "y": 507
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/album/themes/orange.png"
+   },
+   {
+    "type": "float",
+    "amplitude": 3,
+    "rotation": 0.6,
+    "period": 6,
+    "phase": 3.5
+   }
+  ]
+ },
+ {
+  "id": "theme-3-normal-title",
+  "name": "Title",
+  "visible": true,
+  "parentId": "theme-3-normal",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 90.37
+   },
+   "size": {
+    "x": 361,
+    "y": 176
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "TEMA",
+    "fontSize": 4.91,
+    "autoSize": true,
+    "fontSizeMin": 1.67,
+    "fontSizeMax": 4.91,
+    "color": "#ffffffd7",
+    "bold": true,
+    "italic": false,
+    "underline": false,
+    "letterSpacing": 5,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "geniusTechno"
+   }
+  ]
+ },
+ {
+  "id": "theme-3-locked",
+  "name": "Locked",
+  "visible": false,
+  "parentId": "theme-3",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 426,
+    "y": 507
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "filter": "brightness(48%)",
+    "src": "/programs/que-gane-el-mejor/games/album/themes/orange.png"
+   }
+  ]
+ },
+ {
+  "id": "theme-3-locked-title",
+  "name": "Title",
+  "visible": true,
+  "parentId": "theme-3-locked",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 90.37
+   },
+   "size": {
+    "x": 361,
+    "y": 176
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "TEMA",
+    "fontSize": 4.91,
+    "autoSize": true,
+    "fontSizeMin": 1.67,
+    "fontSizeMax": 4.91,
+    "color": "#717171d7",
+    "bold": true,
+    "italic": false,
+    "underline": false,
+    "letterSpacing": 5,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "geniusTechno"
+   }
+  ]
+ },
+ {
+  "id": "theme-4",
+  "name": "Theme 5",
+  "visible": true,
+  "parentId": "themes",
+  "rect": {
+   "position": {
+    "x": 110.3,
+    "y": -253.5
+   },
+   "size": {
+    "x": 426,
+    "y": 507
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "rotation": -0.64
+  },
+  "parts": []
+ },
+ {
+  "id": "theme-4-normal",
+  "name": "Normal",
+  "visible": true,
+  "parentId": "theme-4",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 426,
+    "y": 507
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/album/themes/green.png"
+   },
+   {
+    "type": "float",
+    "amplitude": 3,
+    "rotation": 0.6,
+    "period": 6,
+    "phase": 4.6
+   }
+  ]
+ },
+ {
+  "id": "theme-4-normal-title",
+  "name": "Title",
+  "visible": true,
+  "parentId": "theme-4-normal",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 90.37
+   },
+   "size": {
+    "x": 361,
+    "y": 176
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "TEMA",
+    "fontSize": 4.91,
+    "autoSize": true,
+    "fontSizeMin": 1.67,
+    "fontSizeMax": 4.91,
+    "color": "#ffffffd7",
+    "bold": true,
+    "italic": false,
+    "underline": false,
+    "letterSpacing": 5,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "geniusTechno"
+   }
+  ]
+ },
+ {
+  "id": "theme-4-locked",
+  "name": "Locked",
+  "visible": false,
+  "parentId": "theme-4",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 426,
+    "y": 507
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "filter": "brightness(48%)",
+    "src": "/programs/que-gane-el-mejor/games/album/themes/green.png"
+   }
+  ]
+ },
+ {
+  "id": "theme-4-locked-title",
+  "name": "Title",
+  "visible": true,
+  "parentId": "theme-4-locked",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 90.37
+   },
+   "size": {
+    "x": 361,
+    "y": 176
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "TEMA",
+    "fontSize": 4.91,
+    "autoSize": true,
+    "fontSizeMin": 1.67,
+    "fontSizeMax": 4.91,
+    "color": "#717171d7",
+    "bold": true,
+    "italic": false,
+    "underline": false,
+    "letterSpacing": 5,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "geniusTechno"
+   }
+  ]
+ },
+ {
+  "id": "theme-5",
+  "name": "Theme 6",
+  "visible": true,
+  "parentId": "themes",
+  "rect": {
+   "position": {
+    "x": 581.3,
+    "y": -242.8
+   },
+   "size": {
+    "x": 426,
+    "y": 507
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   },
+   "rotation": 6.19
+  },
+  "parts": []
+ },
+ {
+  "id": "theme-5-normal",
+  "name": "Normal",
+  "visible": true,
+  "parentId": "theme-5",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 426,
+    "y": 507
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/album/themes/purple.png"
+   },
+   {
+    "type": "float",
+    "amplitude": 3,
+    "rotation": 0.6,
+    "period": 6,
+    "phase": 5.3
+   }
+  ]
+ },
+ {
+  "id": "theme-5-normal-title",
+  "name": "Title",
+  "visible": true,
+  "parentId": "theme-5-normal",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 90.37
+   },
+   "size": {
+    "x": 361,
+    "y": 176
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "TEMA",
+    "fontSize": 4.91,
+    "autoSize": true,
+    "fontSizeMin": 1.67,
+    "fontSizeMax": 4.91,
+    "color": "#ffffffd7",
+    "bold": true,
+    "italic": false,
+    "underline": false,
+    "letterSpacing": 5,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "geniusTechno"
+   }
+  ]
+ },
+ {
+  "id": "theme-5-locked",
+  "name": "Locked",
+  "visible": false,
+  "parentId": "theme-5",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 426,
+    "y": 507
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "filter": "brightness(48%)",
+    "src": "/programs/que-gane-el-mejor/games/album/themes/purple.png"
+   }
+  ]
+ },
+ {
+  "id": "theme-5-locked-title",
+  "name": "Title",
+  "visible": true,
+  "parentId": "theme-5-locked",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 90.37
+   },
+   "size": {
+    "x": 361,
+    "y": 176
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "TEMA",
+    "fontSize": 4.91,
+    "autoSize": true,
+    "fontSizeMin": 1.67,
+    "fontSizeMax": 4.91,
+    "color": "#717171d7",
+    "bold": true,
+    "italic": false,
+    "underline": false,
+    "letterSpacing": 5,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "geniusTechno"
+   }
+  ]
+ },
+ {
+  "id": "gameplay",
+  "name": "Gameplay",
+  "visible": false,
+  "parentId": "album",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 1920,
+    "y": 1080
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "round-title",
+  "name": "Round Title",
+  "visible": true,
+  "parentId": "gameplay",
+  "rect": {
+   "position": {
+    "x": -468.5,
+    "y": -250.75
+   },
+   "size": {
+    "x": 456,
+    "y": 487
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "Tema",
+    "fontSize": 8.33,
+    "autoSize": true,
+    "fontSizeMin": 1.67,
+    "fontSizeMax": 8.33,
+    "color": "#ffffff",
+    "bold": true,
+    "italic": false,
+    "underline": false,
+    "alignH": "left",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "retroGaming"
+   }
+  ]
+ },
+ {
+  "id": "cards",
+  "name": "Cards",
+  "visible": true,
+  "parentId": "gameplay",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 1850,
+    "y": 1015
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "card-0",
+  "name": "Card 1",
+  "visible": true,
+  "parentId": "cards",
+  "rect": {
+   "position": {
+    "x": -468.5,
+    "y": 250.75
+   },
+   "size": {
+    "x": 456,
+    "y": 487
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "flip",
+    "hideDuration": 0.25,
+    "showDuration": 0.45,
+    "perspective": 6
+   },
+   {
+    "type": "float",
+    "amplitude": 1,
+    "rotation": 0.2,
+    "period": 6,
+    "phase": 0
+   },
+   {
+    "type": "holo",
+    "enabled": false,
+    "period": 4,
+    "intensity": 0.7,
+    "glow": 0.85,
+    "radius": 1
+   }
+  ]
+ },
+ {
+  "id": "card-0-back",
+  "name": "Back",
+  "visible": true,
+  "parentId": "card-0",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 456,
+    "y": 487
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "shimmer",
+    "period": 5.5,
+    "sweep": 1,
+    "phase": 0,
+    "intensity": 0.55,
+    "radius": 1
+   }
+  ]
+ },
+ {
+  "id": "card-0-back-bg",
+  "name": "Bg",
+  "visible": true,
+  "parentId": "card-0-back",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 456,
+    "y": 487
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/album/cards/red.png"
+   }
+  ]
+ },
+ {
+  "id": "card-0-back-logo",
+  "name": "Logo",
+  "visible": true,
+  "parentId": "card-0-back",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": -10
+   },
+   "size": {
+    "x": 329,
+    "y": 287
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/album/logo.png"
+   }
+  ]
+ },
+ {
+  "id": "card-0-front",
+  "name": "Front",
+  "visible": false,
+  "parentId": "card-0",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 456,
+    "y": 487
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "shimmer",
+    "period": 5.5,
+    "sweep": 1,
+    "phase": 0,
+    "intensity": 0.55,
+    "radius": 1
+   }
+  ]
+ },
+ {
+  "id": "card-0-front-bg",
+  "name": "Bg",
+  "visible": true,
+  "parentId": "card-0-front",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 456,
+    "y": 487
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "flipX": true,
+    "src": "/programs/que-gane-el-mejor/games/album/cards/red.png"
+   }
+  ]
+ },
+ {
+  "id": "card-0-question",
+  "name": "Question",
+  "visible": true,
+  "parentId": "card-0-front",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 386,
+    "y": 378
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "Pregunta",
+    "fontSize": 4.63,
+    "autoSize": true,
+    "fontSizeMin": 1.67,
+    "fontSizeMax": 4.63,
+    "color": "#ffffff",
+    "bold": false,
+    "italic": false,
+    "underline": false,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "jetBrainsMono"
+   }
+  ]
+ },
+ {
+  "id": "card-0-photo",
+  "name": "Photo Mask",
+  "visible": false,
+  "parentId": "card-0-front",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 429,
+    "y": 461
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "contain",
+    "src": "/programs/que-gane-el-mejor/games/album/mask.png"
+   },
+   {
+    "type": "mask",
+    "showImage": false
+   }
+  ]
+ },
+ {
+  "id": "card-0-photo-color",
+  "name": "Photo Color",
+  "visible": true,
+  "parentId": "card-0-photo",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 429,
+    "y": 461
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "contain",
+    "src": ""
+   },
+   {
+    "type": "sparkles",
+    "enabled": false,
+    "rate": 6,
+    "size": 5.5,
+    "duration": 0.7
+   }
+  ]
+ },
+ {
+  "id": "card-0-photo-gray",
+  "name": "Photo Gray",
+  "visible": false,
+  "parentId": "card-0-photo",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 429,
+    "y": 461
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "contain",
+    "filter": "grayscale(1)",
+    "src": ""
+   }
+  ]
+ },
+ {
+  "id": "card-1",
+  "name": "Card 2",
+  "visible": true,
+  "parentId": "cards",
+  "rect": {
+   "position": {
+    "x": 29.5,
+    "y": 250.75
+   },
+   "size": {
+    "x": 456,
+    "y": 487
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "flip",
+    "hideDuration": 0.25,
+    "showDuration": 0.45,
+    "perspective": 6
+   },
+   {
+    "type": "float",
+    "amplitude": 1,
+    "rotation": 0.2,
+    "period": 6,
+    "phase": 1.1
+   },
+   {
+    "type": "holo",
+    "enabled": false,
+    "period": 4,
+    "intensity": 0.7,
+    "glow": 0.85,
+    "radius": 1
+   }
+  ]
+ },
+ {
+  "id": "card-1-back",
+  "name": "Back",
+  "visible": true,
+  "parentId": "card-1",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 456,
+    "y": 487
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "shimmer",
+    "period": 5.5,
+    "sweep": 1,
+    "phase": 0.95,
+    "intensity": 0.55,
+    "radius": 1
+   }
+  ]
+ },
+ {
+  "id": "card-1-back-bg",
+  "name": "Bg",
+  "visible": true,
+  "parentId": "card-1-back",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 456,
+    "y": 487
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/album/cards/red.png"
+   }
+  ]
+ },
+ {
+  "id": "card-1-back-logo",
+  "name": "Logo",
+  "visible": true,
+  "parentId": "card-1-back",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": -10
+   },
+   "size": {
+    "x": 329,
+    "y": 287
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/album/logo.png"
+   }
+  ]
+ },
+ {
+  "id": "card-1-front",
+  "name": "Front",
+  "visible": false,
+  "parentId": "card-1",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 456,
+    "y": 487
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "shimmer",
+    "period": 5.5,
+    "sweep": 1,
+    "phase": 0.95,
+    "intensity": 0.55,
+    "radius": 1
+   }
+  ]
+ },
+ {
+  "id": "card-1-front-bg",
+  "name": "Bg",
+  "visible": true,
+  "parentId": "card-1-front",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 456,
+    "y": 487
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "flipX": true,
+    "src": "/programs/que-gane-el-mejor/games/album/cards/red.png"
+   }
+  ]
+ },
+ {
+  "id": "card-1-question",
+  "name": "Question",
+  "visible": true,
+  "parentId": "card-1-front",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 386,
+    "y": 378
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "Pregunta",
+    "fontSize": 4.63,
+    "autoSize": true,
+    "fontSizeMin": 1.67,
+    "fontSizeMax": 4.63,
+    "color": "#ffffff",
+    "bold": false,
+    "italic": false,
+    "underline": false,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "jetBrainsMono"
+   }
+  ]
+ },
+ {
+  "id": "card-1-photo",
+  "name": "Photo Mask",
+  "visible": false,
+  "parentId": "card-1-front",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 429,
+    "y": 461
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "contain",
+    "src": "/programs/que-gane-el-mejor/games/album/mask.png"
+   },
+   {
+    "type": "mask",
+    "showImage": false
+   }
+  ]
+ },
+ {
+  "id": "card-1-photo-color",
+  "name": "Photo Color",
+  "visible": true,
+  "parentId": "card-1-photo",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 429,
+    "y": 461
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "contain",
+    "src": ""
+   },
+   {
+    "type": "sparkles",
+    "enabled": false,
+    "rate": 6,
+    "size": 5.5,
+    "duration": 0.7
+   }
+  ]
+ },
+ {
+  "id": "card-1-photo-gray",
+  "name": "Photo Gray",
+  "visible": false,
+  "parentId": "card-1-photo",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 429,
+    "y": 461
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "contain",
+    "filter": "grayscale(1)",
+    "src": ""
+   }
+  ]
+ },
+ {
+  "id": "card-2",
+  "name": "Card 3",
+  "visible": true,
+  "parentId": "cards",
+  "rect": {
+   "position": {
+    "x": 527.5,
+    "y": 250.75
+   },
+   "size": {
+    "x": 456,
+    "y": 487
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "flip",
+    "hideDuration": 0.25,
+    "showDuration": 0.45,
+    "perspective": 6
+   },
+   {
+    "type": "float",
+    "amplitude": 1,
+    "rotation": 0.2,
+    "period": 6,
+    "phase": 2.3
+   },
+   {
+    "type": "holo",
+    "enabled": false,
+    "period": 4,
+    "intensity": 0.7,
+    "glow": 0.85,
+    "radius": 1
+   }
+  ]
+ },
+ {
+  "id": "card-2-back",
+  "name": "Back",
+  "visible": true,
+  "parentId": "card-2",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 456,
+    "y": 487
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "shimmer",
+    "period": 5.5,
+    "sweep": 1,
+    "phase": 1.9,
+    "intensity": 0.55,
+    "radius": 1
+   }
+  ]
+ },
+ {
+  "id": "card-2-back-bg",
+  "name": "Bg",
+  "visible": true,
+  "parentId": "card-2-back",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 456,
+    "y": 487
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/album/cards/red.png"
+   }
+  ]
+ },
+ {
+  "id": "card-2-back-logo",
+  "name": "Logo",
+  "visible": true,
+  "parentId": "card-2-back",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": -10
+   },
+   "size": {
+    "x": 329,
+    "y": 287
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/album/logo.png"
+   }
+  ]
+ },
+ {
+  "id": "card-2-front",
+  "name": "Front",
+  "visible": false,
+  "parentId": "card-2",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 456,
+    "y": 487
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "shimmer",
+    "period": 5.5,
+    "sweep": 1,
+    "phase": 1.9,
+    "intensity": 0.55,
+    "radius": 1
+   }
+  ]
+ },
+ {
+  "id": "card-2-front-bg",
+  "name": "Bg",
+  "visible": true,
+  "parentId": "card-2-front",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 456,
+    "y": 487
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "flipX": true,
+    "src": "/programs/que-gane-el-mejor/games/album/cards/red.png"
+   }
+  ]
+ },
+ {
+  "id": "card-2-question",
+  "name": "Question",
+  "visible": true,
+  "parentId": "card-2-front",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 386,
+    "y": 378
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "Pregunta",
+    "fontSize": 4.63,
+    "autoSize": true,
+    "fontSizeMin": 1.67,
+    "fontSizeMax": 4.63,
+    "color": "#ffffff",
+    "bold": false,
+    "italic": false,
+    "underline": false,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "jetBrainsMono"
+   }
+  ]
+ },
+ {
+  "id": "card-2-photo",
+  "name": "Photo Mask",
+  "visible": false,
+  "parentId": "card-2-front",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 429,
+    "y": 461
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "contain",
+    "src": "/programs/que-gane-el-mejor/games/album/mask.png"
+   },
+   {
+    "type": "mask",
+    "showImage": false
+   }
+  ]
+ },
+ {
+  "id": "card-2-photo-color",
+  "name": "Photo Color",
+  "visible": true,
+  "parentId": "card-2-photo",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 429,
+    "y": 461
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "contain",
+    "src": ""
+   },
+   {
+    "type": "sparkles",
+    "enabled": false,
+    "rate": 6,
+    "size": 5.5,
+    "duration": 0.7
+   }
+  ]
+ },
+ {
+  "id": "card-2-photo-gray",
+  "name": "Photo Gray",
+  "visible": false,
+  "parentId": "card-2-photo",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 429,
+    "y": 461
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "contain",
+    "filter": "grayscale(1)",
+    "src": ""
+   }
+  ]
+ },
+ {
+  "id": "card-3",
+  "name": "Card 4",
+  "visible": true,
+  "parentId": "cards",
+  "rect": {
+   "position": {
+    "x": 29.5,
+    "y": -250.75
+   },
+   "size": {
+    "x": 456,
+    "y": 487
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "flip",
+    "hideDuration": 0.25,
+    "showDuration": 0.45,
+    "perspective": 6
+   },
+   {
+    "type": "float",
+    "amplitude": 1,
+    "rotation": 0.2,
+    "period": 6,
+    "phase": 3.4
+   },
+   {
+    "type": "holo",
+    "enabled": false,
+    "period": 4,
+    "intensity": 0.7,
+    "glow": 0.85,
+    "radius": 1
+   }
+  ]
+ },
+ {
+  "id": "card-3-back",
+  "name": "Back",
+  "visible": true,
+  "parentId": "card-3",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 456,
+    "y": 487
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "shimmer",
+    "period": 5.5,
+    "sweep": 1,
+    "phase": 2.85,
+    "intensity": 0.55,
+    "radius": 1
+   }
+  ]
+ },
+ {
+  "id": "card-3-back-bg",
+  "name": "Bg",
+  "visible": true,
+  "parentId": "card-3-back",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 456,
+    "y": 487
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/album/cards/red.png"
+   }
+  ]
+ },
+ {
+  "id": "card-3-back-logo",
+  "name": "Logo",
+  "visible": true,
+  "parentId": "card-3-back",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": -10
+   },
+   "size": {
+    "x": 329,
+    "y": 287
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/album/logo.png"
+   }
+  ]
+ },
+ {
+  "id": "card-3-front",
+  "name": "Front",
+  "visible": false,
+  "parentId": "card-3",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 456,
+    "y": 487
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "shimmer",
+    "period": 5.5,
+    "sweep": 1,
+    "phase": 2.85,
+    "intensity": 0.55,
+    "radius": 1
+   }
+  ]
+ },
+ {
+  "id": "card-3-front-bg",
+  "name": "Bg",
+  "visible": true,
+  "parentId": "card-3-front",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 456,
+    "y": 487
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "flipX": true,
+    "src": "/programs/que-gane-el-mejor/games/album/cards/red.png"
+   }
+  ]
+ },
+ {
+  "id": "card-3-question",
+  "name": "Question",
+  "visible": true,
+  "parentId": "card-3-front",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 386,
+    "y": 378
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "Pregunta",
+    "fontSize": 4.63,
+    "autoSize": true,
+    "fontSizeMin": 1.67,
+    "fontSizeMax": 4.63,
+    "color": "#ffffff",
+    "bold": false,
+    "italic": false,
+    "underline": false,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "jetBrainsMono"
+   }
+  ]
+ },
+ {
+  "id": "card-3-photo",
+  "name": "Photo Mask",
+  "visible": false,
+  "parentId": "card-3-front",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 429,
+    "y": 461
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "contain",
+    "src": "/programs/que-gane-el-mejor/games/album/mask.png"
+   },
+   {
+    "type": "mask",
+    "showImage": false
+   }
+  ]
+ },
+ {
+  "id": "card-3-photo-color",
+  "name": "Photo Color",
+  "visible": true,
+  "parentId": "card-3-photo",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 429,
+    "y": 461
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "contain",
+    "src": ""
+   },
+   {
+    "type": "sparkles",
+    "enabled": false,
+    "rate": 6,
+    "size": 5.5,
+    "duration": 0.7
+   }
+  ]
+ },
+ {
+  "id": "card-3-photo-gray",
+  "name": "Photo Gray",
+  "visible": false,
+  "parentId": "card-3-photo",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 429,
+    "y": 461
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "contain",
+    "filter": "grayscale(1)",
+    "src": ""
+   }
+  ]
+ },
+ {
+  "id": "card-4",
+  "name": "Card 5",
+  "visible": true,
+  "parentId": "cards",
+  "rect": {
+   "position": {
+    "x": 527.5,
+    "y": -250.75
+   },
+   "size": {
+    "x": 456,
+    "y": 487
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "flip",
+    "hideDuration": 0.25,
+    "showDuration": 0.45,
+    "perspective": 6
+   },
+   {
+    "type": "float",
+    "amplitude": 1,
+    "rotation": 0.2,
+    "period": 6,
+    "phase": 4.6
+   },
+   {
+    "type": "holo",
+    "enabled": false,
+    "period": 4,
+    "intensity": 0.7,
+    "glow": 0.85,
+    "radius": 1
+   }
+  ]
+ },
+ {
+  "id": "card-4-back",
+  "name": "Back",
+  "visible": true,
+  "parentId": "card-4",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 456,
+    "y": 487
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "shimmer",
+    "period": 5.5,
+    "sweep": 1,
+    "phase": 3.8,
+    "intensity": 0.55,
+    "radius": 1
+   }
+  ]
+ },
+ {
+  "id": "card-4-back-bg",
+  "name": "Bg",
+  "visible": true,
+  "parentId": "card-4-back",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 456,
+    "y": 487
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/album/cards/red.png"
+   }
+  ]
+ },
+ {
+  "id": "card-4-back-logo",
+  "name": "Logo",
+  "visible": true,
+  "parentId": "card-4-back",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": -10
+   },
+   "size": {
+    "x": 329,
+    "y": 287
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/album/logo.png"
+   }
+  ]
+ },
+ {
+  "id": "card-4-front",
+  "name": "Front",
+  "visible": false,
+  "parentId": "card-4",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 456,
+    "y": 487
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "shimmer",
+    "period": 5.5,
+    "sweep": 1,
+    "phase": 3.8,
+    "intensity": 0.55,
+    "radius": 1
+   }
+  ]
+ },
+ {
+  "id": "card-4-front-bg",
+  "name": "Bg",
+  "visible": true,
+  "parentId": "card-4-front",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 456,
+    "y": 487
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "flipX": true,
+    "src": "/programs/que-gane-el-mejor/games/album/cards/red.png"
+   }
+  ]
+ },
+ {
+  "id": "card-4-question",
+  "name": "Question",
+  "visible": true,
+  "parentId": "card-4-front",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 386,
+    "y": 378
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "Pregunta",
+    "fontSize": 4.63,
+    "autoSize": true,
+    "fontSizeMin": 1.67,
+    "fontSizeMax": 4.63,
+    "color": "#ffffff",
+    "bold": false,
+    "italic": false,
+    "underline": false,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "jetBrainsMono"
+   }
+  ]
+ },
+ {
+  "id": "card-4-photo",
+  "name": "Photo Mask",
+  "visible": false,
+  "parentId": "card-4-front",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 429,
+    "y": 461
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "contain",
+    "src": "/programs/que-gane-el-mejor/games/album/mask.png"
+   },
+   {
+    "type": "mask",
+    "showImage": false
+   }
+  ]
+ },
+ {
+  "id": "card-4-photo-color",
+  "name": "Photo Color",
+  "visible": true,
+  "parentId": "card-4-photo",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 429,
+    "y": 461
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "contain",
+    "src": ""
+   },
+   {
+    "type": "sparkles",
+    "enabled": false,
+    "rate": 6,
+    "size": 5.5,
+    "duration": 0.7
+   }
+  ]
+ },
+ {
+  "id": "card-4-photo-gray",
+  "name": "Photo Gray",
+  "visible": false,
+  "parentId": "card-4-photo",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 429,
+    "y": 461
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "contain",
+    "filter": "grayscale(1)",
+    "src": ""
+   }
+  ]
+ }
+]

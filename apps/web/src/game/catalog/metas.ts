@@ -8,6 +8,7 @@ import { meta as laSabesONo } from "./la-sabes-o-no/meta";
 import { meta as miLibroFavorito } from "./mi-libro-favorito/meta";
 import { meta as intruso } from "./intruso/meta";
 import { meta as alVuelo } from "./al-vuelo/meta";
+import { meta as album } from "./album/meta";
 
 export const metas: Record<string, GameMeta> = {
   [deletreo.id]: deletreo,
@@ -18,4 +19,5 @@ export const metas: Record<string, GameMeta> = {
   [alVuelo.id]: alVuelo,
   [armaLaOracion.id]: armaLaOracion,
   [armaLaPalabra.id]: armaLaPalabra,
+  [album.id]: album,
 };
