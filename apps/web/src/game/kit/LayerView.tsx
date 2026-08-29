@@ -26,7 +26,11 @@ export function LayerView({
   const maskImage = mask ? partOf<ImagePart>(layer, "image") : undefined;
 
   return (
-    <div className="absolute" style={layerStyle(layer.rect, parentSize)}>
+    <div
+      data-layer-id={layer.id}
+      className="absolute"
+      style={layerStyle(layer.rect, parentSize)}
+    >
       <div
         ref={animationRef}
         className="absolute inset-0"

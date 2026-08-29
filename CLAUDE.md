@@ -88,8 +88,17 @@ Ver [README.md](README.md) para el panorama y `docs/logbook/` para el estado.
 - **Assets de juego = código, datos de sesión = archivo/storage.** Marcos, fuentes y
   sonidos son parte del juego: los sirve el CDN de Vercel y cambian con un deploy. **No
   van a Supabase Storage** — ese bucket es para lo que produce el colector y cambia cada
-  día. Los originales de los juegos portados están en el proyecto Unity
-  (`TvPeru-QGEM-ManagedGames/Assets/_Project/`), no en el repo de Games.
+  día. **De dónde salen los originales depende del juego, así que se pregunta antes de
+  copiar nada** — no hay una fuente única:
+  - **Pasó por Games** → el **bucket de Games**
+    (`https://spvkliavubwmkvjtpvod.supabase.co/storage/v1/object/public/assets/`).
+    Unity puede tener una versión vieja de la misma gráfica.
+  - **Solo existe en Unity**, aún sin migrar a Games (p. ej. Tres en Raya) →
+    `TvPeru-QGEM-ManagedGames/Assets/_Project/`.
+  - **Nació en Games** y nunca pasó por Unity → solo el bucket.
+
+  Si no está dicho en la tarea cuál es el caso, **se pregunta**; adivinar por el
+  nombre del archivo no funciona y ya costó una vez.
 
 - **Los assets se agrupan por programa, no por juego.** Imágenes y audio viven en
   `public/programs/<programa>/games/<juego>/`, y lo que comparten varios juegos **del

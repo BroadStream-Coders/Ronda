@@ -162,10 +162,24 @@ que permite borrar todo lo de un programa sin tocar a los demás.
 - **Un módulo por tipografía, nunca un barril con todas.** `next/font` atribuye la
   fuente por **grafo de módulos**, no por uso real: un barril que instancie varias
   las precarga todas en cualquier ruta que lo toque.
-- **Los originales están en el proyecto Unity**, no en el repo de Games:
-  `../TvPeru-QGEM-ManagedGames/Assets/_Project/` — `Games/<Juego>/Graphics/`,
-  `MediaLibrary/Sounds/`, `MediaLibrary/Fonts/Originals/`. Games los servía desde un
-  bucket público de Supabase; esa vía queda retirada.
+- **Los originales salen del bucket de Games, no de Unity.** Un juego que pasó por
+  Games trae sus gráficas ahí, en las rutas que ya declara su `assets.ts`:
+
+  ```
+  https://spvkliavubwmkvjtpvod.supabase.co/storage/v1/object/public/assets/<path>
+  ```
+
+  El repo de Games no las versiona (su `public/` solo tiene el favicon), así que se
+  bajan del bucket. **Unity puede tener una versión vieja de la misma gráfica** y no
+  hay forma de notarlo mirando los nombres: en Cronos, `block.png` y `frame.png` eran
+  446×310 apaisados contra un layer 304×313 vertical, y las letras 146×166 contra un
+  `letter` de 116×32. Las del bucket cuadran píxel a píxel con el rect de su layer —
+  **esa es la comprobación**: si el aspecto del archivo no coincide con el del layer,
+  la gráfica no es la que el juego usa.
+
+  Los **sonidos y las tipografías** están en el mismo bucket (`shared/audio/`,
+  `shared/fonts/`); los originales de las fuentes también en
+  `../TvPeru-QGEM-ManagedGames/Assets/_Project/MediaLibrary/Fonts/Originals/`.
 - **Antes de convertir un TTF, mirar si la tipografía es de Google.** Si lo es, va
   con `next/font/google` y no hay nada que convertir ni ningún binario que entre al
   repo: Next la descarga en el build, la autohospeda en woff2, la subseteliza y
