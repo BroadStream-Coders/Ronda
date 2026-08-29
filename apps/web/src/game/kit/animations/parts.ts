@@ -41,3 +41,19 @@ export interface FlipPart extends LayerPart {
   showDuration?: number;
   perspective?: number;
 }
+
+export interface FloatPart extends LayerPart {
+  type: "float";
+  amplitude?: number;
+  rotation?: number;
+  period?: number;
+  phase?: number;
+}
+
+export interface SparklesPart extends LayerPart {
+  type: "sparkles";
+  enabled?: boolean;
+  rate?: number;
+  size?: number;
+  duration?: number;
+}

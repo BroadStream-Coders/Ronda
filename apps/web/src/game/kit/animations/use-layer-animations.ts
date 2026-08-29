@@ -9,8 +9,10 @@ import type {
   BlinkPart,
   BouncePart,
   FlipPart,
+  FloatPart,
   PopPart,
   ShakePart,
+  SparklesPart,
   SlidePart,
 } from "./parts";
 
@@ -38,6 +40,8 @@ export function useLayerAnimations(
   const slide = partOf<SlidePart>(layer, "slide");
   const blink = partOf<BlinkPart>(layer, "blink");
   const flip = partOf<FlipPart>(layer, "flip");
+  const float = partOf<FloatPart>(layer, "float");
+  const sparkles = partOf<SparklesPart>(layer, "sparkles");
 
   const { register, unregister } = useAnimations();
   const id = layer.id;
@@ -73,6 +77,17 @@ export function useLayerAnimations(
   const flipHideDuration = flip?.hideDuration ?? 0.25;
   const flipShowDuration = flip?.showDuration ?? 0.45;
   const flipPerspective = flip?.perspective ?? 6;
+
+  const hasFloat = !!float;
+  const floatAmplitude = float?.amplitude ?? 3;
+  const floatRotation = float?.rotation ?? 0.6;
+  const floatPeriod = float?.period ?? 6;
+  const floatPhase = float?.phase ?? 0;
+
+  const hasSparkles = !!sparkles && sparkles.enabled !== false;
+  const sparklesRate = sparkles?.rate ?? 3;
+  const sparklesSize = sparkles?.size ?? 3.5;
+  const sparklesDuration = sparkles?.duration ?? 0.7;
 
   const elRef = useRef<HTMLDivElement | null>(null);
   const popRef = useRef<AnimationPlaybackControls | null>(null);
@@ -366,6 +381,91 @@ export function useLayerAnimations(
     register,
     unregister,
   ]);
+
+  useEffect(() => {
+    if (!hasFloat) return;
+    const element = elRef.current;
+    if (!element || floatPeriod <= 0) return;
+
+    const running: AnimationPlaybackControls[] = [];
+    if (floatAmplitude !== 0) {
+      const bob = animate(
+        element,
+        { y: ["0%", `${-floatAmplitude}%`, "0%"] },
+        { duration: floatPeriod, ease: "easeInOut", repeat: Infinity },
+      );
+      bob.time = floatPhase;
+      running.push(bob);
+    }
+    if (floatRotation !== 0) {
+      const sway = animate(
+        element,
+        { rotate: [-floatRotation, floatRotation] },
+        {
+          duration: floatPeriod * 0.65,
+          ease: "easeInOut",
+          repeat: Infinity,
+          repeatType: "mirror",
+        },
+      );
+      sway.time = floatPhase;
+      running.push(sway);
+    }
+    return () => running.forEach((controls) => controls.stop());
+  }, [hasFloat, floatAmplitude, floatRotation, floatPeriod, floatPhase]);
+
+  useEffect(() => {
+    if (!hasSparkles) return;
+    const element = elRef.current;
+    if (!element || sparklesRate <= 0 || sparklesDuration <= 0) return;
+
+    const container = document.createElement("div");
+    container.style.cssText =
+      "position:absolute;inset:0;pointer-events:none;z-index:30;";
+    element.appendChild(container);
+
+    const spawn = () => {
+      const size =
+        ((element.offsetWidth * sparklesSize) / 100) *
+        (0.6 + Math.random() * 0.8);
+      const particle = document.createElement("div");
+      const color = Math.random() < 0.35 ? "white" : "oklch(0.9 0.13 92)";
+      particle.style.cssText =
+        `position:absolute;left:${5 + Math.random() * 90}%;top:${5 + Math.random() * 90}%;` +
+        `width:${size}px;height:${size}px;margin:${-size / 2}px 0 0 ${-size / 2}px;` +
+        `background:${color};` +
+        "clip-path:polygon(50% 0%, 65% 35%, 100% 50%, 65% 65%, 50% 100%, 35% 65%, 0% 50%, 35% 35%);" +
+        `filter:drop-shadow(0 0 ${size / 3}px oklch(0.85 0.16 90 / 0.9));`;
+      container.appendChild(particle);
+      const twinkle = animate(
+        particle,
+        { scale: [0, 1, 0], rotate: [0, 90 + Math.random() * 90] },
+        {
+          duration: sparklesDuration * (0.7 + Math.random() * 0.6),
+          ease: "easeInOut",
+        },
+      );
+      twinkle.then(
+        () => particle.remove(),
+        () => particle.remove(),
+      );
+    };
+
+    let timer = 0;
+    const tick = () => {
+      spawn();
+      timer = window.setTimeout(
+        tick,
+        (1000 / sparklesRate) * (0.5 + Math.random()),
+      );
+    };
+    tick();
+
+    return () => {
+      window.clearTimeout(timer);
+      container.remove();
+    };
+  }, [hasSparkles, sparklesRate, sparklesSize, sparklesDuration]);
 
   useEffect(
     () => () => {

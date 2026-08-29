@@ -31,8 +31,10 @@ export type {
   BlinkPart,
   BouncePart,
   FlipPart,
+  FloatPart,
   PopPart,
   ShakePart,
+  SparklesPart,
   SlidePart,
 } from "./animations/parts";
 export { applyState, useGameState } from "./state";
