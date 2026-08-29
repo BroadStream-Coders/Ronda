@@ -12,17 +12,14 @@ import { cn } from "@/lib/utils";
 
 interface StageProps {
   children: ReactNode;
-  hideCursorOnFullscreen?: boolean;
+  pointer?: boolean;
   onReady?: (toggleFullscreen: () => void) => void;
 }
 
-export function Stage({
-  children,
-  hideCursorOnFullscreen = true,
-  onReady,
-}: StageProps) {
+export function Stage({ children, pointer = false, onReady }: StageProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [pointerVisible, setPointerVisible] = useState(pointer);
 
   useEffect(() => {
     const onChange = () => setIsFullscreen(!!document.fullscreenElement);
@@ -47,6 +44,19 @@ export function Stage({
     onReady?.(toggleFullscreen);
   }, [onReady, toggleFullscreen]);
 
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      const target = event.target as HTMLElement | null;
+      if (target && /^(INPUT|TEXTAREA|SELECT)$/.test(target.tagName)) return;
+      if (event.repeat || event.ctrlKey || event.metaKey || event.altKey) return;
+      if (event.code !== "KeyP") return;
+      event.preventDefault();
+      setPointerVisible((visible) => !visible);
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, []);
+
   return (
     <div
       ref={containerRef}
@@ -54,7 +64,7 @@ export function Stage({
       className={cn(
         "relative flex select-none items-center justify-center overflow-hidden bg-black outline-none [container-type:size]",
         isFullscreen ? "h-screen w-screen" : "min-h-0 w-full flex-1",
-        isFullscreen && hideCursorOnFullscreen && "cursor-none",
+        isFullscreen && !pointerVisible && "cursor-none",
       )}
     >
       <div

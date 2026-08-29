@@ -22,7 +22,11 @@ Al terminar una tarea se mueve al changelog y se borra de aquí.
   que ya corren.
 - **Hecho cuando:** un juego puede pedir cursor visible y los demás siguen
   ocultándolo sin tocar nada.
-- **Bloquea a:** [[RM-073]] (De Par en Par desde Unity).
+- **Y la otra mitad, interna:** la tecla **P** alterna el cursor en cualquier juego,
+  sin que la ficha ni la lógica hagan nada. Es el seguro de cabina para cuando el
+  cursor se pierde; viene del mismo atajo que existía en Unity.
+- **Bloquea a:** [[RM-069]] (Cronos) y [[RM-073]] (De Par en Par), los dos juegos que
+  se operan con el mouse.
 - **Fecha:** 2026-08-21 · **Estado:** Abierto
 
 ---
@@ -131,9 +135,26 @@ cualquiera de estas tareas, no se repite acá.
 ## [RM-069] Portar Cronos
 - **Objetivo:** traer el juego de Games. Colector: `cronos` (eventos con fecha,
   título e imagen).
-- **Depende de:** nada nuevo. El grupo de animaciones que compartía con Álbum
-  (`float`, `sparkles`, `shimmer`, `holo`, `flip`) entró con [[RM-068]], y el ZIP con
-  [[RM-061]].
+- **No lleva animaciones — ni una.** El `scene.json` declara `video`, `image`,
+  `text`, `mask` y dos parts propias (`cronosDrag`, `cronosTimer`), y nada más.
+  Esta entrada decía antes que compartía un grupo de animaciones con Álbum: era
+  **falso**. Hubo una animación en su día y se descartó por estar mal, antes de que
+  el juego saliera al aire.
+- **Lo que sí cuesta: es el primer juego que se opera con el mouse.**
+  1. **Drag & drop con snap a zona** (`cronosDrag`, 5 layers). El kit no tiene nada
+     parecido. Necesita además que `LayerView` emita un `data-layer-id`: el
+     hit-test de la zona de soltado va con `elementsFromPoint`.
+  2. **Cronómetro** (`cronosTimer`) con pausa/reanudar y el clip de conteo que entra
+     a falta de 5 s — y que al reanudar entra **por el medio**. `playSound` hoy no
+     acepta offset y no existe `stopSound`.
+  3. **Bloqueado por [[RM-081]]:** sin cursor visible no se arrastra nada.
+- **Ojo — los ids son UUID.** Los 89 layers traen id UUID y `name` legible; se
+  renombran a slug en la conversión, o `Logic.tsx` y `check-game` quedan ilegibles.
+- **Ojo — el video de fondo no tiene `src`.** El layer existe sin `assetKey`: nunca
+  se cableó en Games. Decidir si lleva `background-blue.mp4` como los otros tres o
+  va sin video.
+- **Ojo — el barajado usa `Math.random()`** dentro de un `useMemo` cuyas deps
+  incluyen un array recreado en cada render. Acá va con `shuffledOrder`.
 - **Hecho cuando:** corre dentro de un programa, es asignable y consume la sesión que
   produce su colector, imágenes incluidas.
 - **Fecha:** 2026-08-20 · **Estado:** Abierto

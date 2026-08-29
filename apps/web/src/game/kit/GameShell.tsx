@@ -87,7 +87,7 @@ export function GameShell({
             onFullscreen={() => fullscreenRef.current?.()}
           />
           <div className="flex min-h-0 flex-1">
-            <Stage onReady={registerFullscreen}>
+            <Stage pointer={game.pointer} onReady={registerFullscreen}>
               {ready ? (
                 layers
                   .filter((layer) => !layer.parentId && layer.visible)
