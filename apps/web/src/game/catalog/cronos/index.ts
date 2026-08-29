@@ -1,4 +1,5 @@
 import {
+  partView,
   readZipSession,
   useGameSession,
   type GameType,
@@ -8,6 +9,7 @@ import { geniusTechno } from "@/programs/que-gane-el-mejor/fonts/genius-techno";
 import layout from "./layout.json";
 import { meta } from "./meta";
 import { PRELOAD } from "./assets";
+import { DragView, type DragPart } from "./parts/drag";
 import { isCronosSession } from "./session";
 
 export const cronos: GameType = {
@@ -17,6 +19,7 @@ export const cronos: GameType = {
   pointer: true,
   preload: PRELOAD,
   fonts: { geniusTechno },
+  parts: { drag: partView<DragPart>(DragView) },
   load: async (file) => {
     const { data, images } = await readZipSession(file);
     if (!isCronosSession(data)) {
