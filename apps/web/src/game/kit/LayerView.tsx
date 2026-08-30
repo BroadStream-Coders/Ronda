@@ -29,7 +29,10 @@ export function LayerView({
     <div
       data-layer-id={layer.id}
       className="absolute"
-      style={layerStyle(layer.rect, parentSize)}
+      style={{
+        ...layerStyle(layer.rect, parentSize),
+        pointerEvents: layer.parts.length > 0 ? "auto" : "none",
+      }}
     >
       <div
         ref={animationRef}

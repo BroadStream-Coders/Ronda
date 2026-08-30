@@ -16,7 +16,14 @@ reutiliza). Al resolverse se mueve al `changelog.md` conservando su código.
 
 ---
 
-## [TD-112] `pop` y `shake` borran el transform que `float` está animando
+## [TD-114] Los colectores se tragan el error al cargar un archivo
+- **Ubicación:** `apps/web/src/collector/catalog/*/Editor.tsx` — **22 `catch {}` vacíos** repartidos por los 16 colectores; p. ej. `tres-en-raya/Editor.tsx:72`. Y los guards en `*/schema.ts`.
+- **Riesgo:** 7/10
+- **Problema:** Son dos fallos encadenados. (1) `loadJsonFile` **sí** lanza con mensaje ("Estructura de archivo no válida para este colector"), pero el `catch {}` vacío lo descarta sin mostrar nada. (2) Los `isData` son superficiales: el de Tres en Raya solo comprueba que `groups` sea un array, así que un archivo con la estructura vieja **pasa la validación**, `fromData` lee una clave que no existe, cae al `?? []` y el tablero queda en blanco.
+- **Impacto futuro:** Ya mordió. El contrato de un juego cambia a menudo —es la forma de trabajo, y la retrocompatibilidad se descarta a propósito—, así que cargar un archivo viejo es un caso normal, no raro. Hoy el productor lo carga, no ve ningún aviso, y el colector se abre vacío como si el archivo no tuviera nada. Se descubre cuando ya se rehízo el trabajo a mano. Los guards profundos se resuelven solos con [[RM-039]], que unifica el esquema de cada juego entre colector y juego; el `catch` vacío no.
+- **Fecha:** 2026-08-30 · **Estado:** Abierto
+
+ `pop` y `shake` borran el transform que `float` está animando
 - **Ubicación:** `apps/web/src/game/kit/animations/use-layer-animations.ts:131`, `:160`
 - **Riesgo:** 4/10
 - **Problema:** Al terminar, `pop` y `shake` hacen `element.style.transform = ""` para no dejar residuo. `float` (y `blink`) escriben un transform en bucle infinito sobre **ese mismo elemento**. En un layer que declare `float` junto a `pop` o `shake`, el primer disparo deja la flotación congelada donde estaba.

@@ -1,16 +1,10 @@
-import {
-  partView,
-  useGameSession,
-  type GameType,
-  type Layer,
-} from "@/game/kit";
+import { useGameSession, type GameType, type Layer } from "@/game/kit";
 import { loadJsonFile } from "@/helpers/persistence";
 import { jetBrainsMono } from "@/programs/que-gane-el-mejor/fonts/jetbrains-mono";
 import layout from "./layout.json";
 import { meta } from "./meta";
 import { TresEnRayaLogic } from "./Logic";
 import { PRELOAD } from "./assets";
-import { ClickView, type ClickPart } from "./parts/click";
 import { isTresEnRayaSession } from "./session";
 
 export const tresEnRaya: GameType = {
@@ -19,7 +13,6 @@ export const tresEnRaya: GameType = {
   pointer: true,
   preload: PRELOAD,
   fonts: { jetBrainsMono },
-  parts: { click: partView<ClickPart>(ClickView) },
   logic: TresEnRayaLogic,
   load: async (file) => {
     const data = await loadJsonFile<unknown>(file);

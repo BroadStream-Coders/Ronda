@@ -8,9 +8,10 @@ import {
   useGameKeys,
   useGameSession,
   useGameState,
+  type Layer,
 } from "@/game/kit";
 import { SOUNDS } from "./assets";
-import { clicks } from "./clicks";
+import layout from "./layout.json";
 import type { TresEnRayaSession } from "./session";
 
 const CARD_COUNT = 9;
@@ -24,8 +25,6 @@ const crossId = (i: number) => `card-${i}-cross`;
 const circleId = (i: number) => `card-${i}-circle`;
 const textId = (i: number) => `card-${i}-text`;
 
-// El orden es el de los hijos de "Lines" en Unity: filas 0-2, columnas 3-5,
-// diagonales 6 (0-4-8) y 7 (2-4-6). La validación indexa por esta posición.
 const LINE_IDS = [
   "line-row-0",
   "line-row-1",
@@ -36,6 +35,12 @@ const LINE_IDS = [
   "line-diagonal-0",
   "line-diagonal-1",
 ];
+
+const CLICKABLE = new Set(
+  (layout as Layer[])
+    .filter((layer) => layer.parts.some((part) => part.type === "click"))
+    .map((layer) => layer.id),
+);
 
 type Mark = "normal" | "cross" | "circle";
 
@@ -72,10 +77,10 @@ export function TresEnRayaLogic() {
   const flippingRef = useRef(new Set<number>());
   const currentRef = useRef(-1);
 
-  const showMark = (i: number, mark: Mark) => {
-    setVisible(numberId(i), mark === "normal");
-    setVisible(crossId(i), mark === "cross");
-    setVisible(circleId(i), mark === "circle");
+  const showMark = (i: number, value: Mark) => {
+    setVisible(numberId(i), value === "normal");
+    setVisible(crossId(i), value === "cross");
+    setVisible(circleId(i), value === "circle");
   };
 
   const { group } = cursor;
@@ -103,8 +108,6 @@ export function TresEnRayaLogic() {
     patch(textId(i), "text", { text: slot.question });
   };
 
-  // Fiel a Unity: cualquier SetStatus pone la respuesta en el texto, incluso al
-  // volver a "normal".
   const mark = (i: number, value: Mark) => {
     marksRef.current[i] = value;
     showMark(i, value);
@@ -128,23 +131,41 @@ export function TresEnRayaLogic() {
     }
   };
 
-  // El clic solo asigna la pregunta y toma el foco cuando la carta estaba boca
-  // abajo; si ya estaba arriba, únicamente la voltea. Es lo que hace `OnClick`.
   const onCardClick = (layerId: string) => {
-    const i = Number(layerId.slice("card-".length));
-    if (!Number.isInteger(i) || i < 0 || i >= CARD_COUNT) return;
+    const match = /^card-(\d+)$/.exec(layerId);
+    if (!match) return;
+    const i = Number(match[1]);
+    if (i >= CARD_COUNT) return;
+
+    currentRef.current = i;
     const up = faceUpRef.current[i];
-    if (!up) {
-      currentRef.current = i;
-      assign(i, selected);
-    }
+    if (!up) assign(i, selected);
     void flipCard(i, !up);
   };
 
+  const clickRef = useRef(onCardClick);
   useEffect(() => {
-    clicks.listen(onCardClick);
-    return () => clicks.listen(null);
+    clickRef.current = onCardClick;
   });
+
+  useEffect(() => {
+    const onPointerDown = (event: globalThis.PointerEvent) => {
+      if (event.button !== 0) return;
+      const target = event.target as HTMLElement | null;
+      let element = target?.closest<HTMLElement>("[data-layer-id]") ?? null;
+      while (element) {
+        const id = element.dataset.layerId;
+        if (id && CLICKABLE.has(id)) {
+          clickRef.current(id);
+          return;
+        }
+        element =
+          element.parentElement?.closest<HTMLElement>("[data-layer-id]") ?? null;
+      }
+    };
+    window.addEventListener("pointerdown", onPointerDown);
+    return () => window.removeEventListener("pointerdown", onPointerDown);
+  }, []);
 
   const goToGroup = (index: number) => {
     if (index < 0 || index >= groups.length) return;
@@ -168,8 +189,6 @@ export function TresEnRayaLogic() {
     const line = (a: number, b: number, c: number) =>
       marks[a] !== "normal" && marks[a] === marks[b] && marks[b] === marks[c];
 
-    // Unity usa ActivateOnlyChildAt, así que solo queda encendida la última
-    // línea que coincide, no todas.
     let winner = -1;
     for (let row = 0; row < 3; row++) {
       const start = row * 3;

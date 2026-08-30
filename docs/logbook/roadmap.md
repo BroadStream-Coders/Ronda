@@ -161,6 +161,24 @@ cualquiera de estas tareas, no se repite acá.
 
 ---
 
+## [RM-107] Avisar cuando un archivo no encaja, en juego y colector
+- **Objetivo:** que cargar un archivo con la estructura equivocada produzca un aviso
+  **explícito y legible** en los dos servicios, en vez de fallar en silencio.
+- **Hoy no es el mismo fallo en cada punta:**
+  - **Juego:** `GameTopbar` sí atrapa el error y lo pinta, pero en una línea de la
+    barra superior y con `truncate` — el mensaje se corta y pasa desapercibido.
+  - **Colector:** no muestra nada. Es [[TD-114]]: `catch {}` vacío y guards
+    superficiales que dejan pasar el archivo equivocado.
+- **Qué toca:** el `catch` de los 16 colectores, el aviso del `GameTopbar`, y decidir
+  dónde vive el aviso compartido. **Con el diálogo del proyecto**
+  (`src/components/confirm-dialog.tsx`, Base UI), nunca `alert()` nativo.
+- **Ojo:** el mensaje tiene que decir *qué* no encaja, no solo que algo falló. Un
+  "estructura no válida" a secas no le dice al productor que su archivo es de una
+  versión anterior del juego.
+- **Hecho cuando:** cargar un archivo del juego equivocado, o de una versión vieja,
+  lo dice claro en el colector y en el juego.
+- **Fecha:** 2026-08-30 · **Estado:** Abierto
+
 ## [RM-039] Esquemas de datos centralizados (colector ↔ juego)
 - **Objetivo:** que el contrato de datos de cada juego se defina **una sola vez** y
   lo compartan las dos puntas: el colector que lo produce y el juego que lo consume.
