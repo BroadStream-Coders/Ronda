@@ -8,6 +8,7 @@ import { loadJsonFile } from "@/helpers/persistence";
 import { jetBrainsMono } from "@/programs/que-gane-el-mejor/fonts/jetbrains-mono";
 import layout from "./layout.json";
 import { meta } from "./meta";
+import { TresEnRayaLogic } from "./Logic";
 import { PRELOAD } from "./assets";
 import { ClickView, type ClickPart } from "./parts/click";
 import { isTresEnRayaSession } from "./session";
@@ -19,6 +20,7 @@ export const tresEnRaya: GameType = {
   preload: PRELOAD,
   fonts: { jetBrainsMono },
   parts: { click: partView<ClickPart>(ClickView) },
+  logic: TresEnRayaLogic,
   load: async (file) => {
     const data = await loadJsonFile<unknown>(file);
     if (!isTresEnRayaSession(data)) {
