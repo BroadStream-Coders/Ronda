@@ -1,0 +1,38 @@
+[
+ {
+  "id": "background",
+  "name": "Background",
+  "visible": true,
+  "rect": {
+   "position": { "x": 0, "y": 0 },
+   "size": { "x": 1920, "y": 1080 },
+   "pivot": { "x": 0.5, "y": 0.5 }
+  },
+  "parts": [
+   {
+    "type": "video",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/shared/video/background-blue.mp4",
+    "muted": true,
+    "loop": true
+   }
+  ]
+ },
+ {
+  "id": "photo",
+  "name": "Photo",
+  "visible": true,
+  "rect": {
+   "position": { "x": 0, "y": 0 },
+   "size": { "x": 1920, "y": 1080 },
+   "pivot": { "x": 0.5, "y": 0.5 }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "contain",
+    "src": ""
+   }
+  ]
+ }
+]

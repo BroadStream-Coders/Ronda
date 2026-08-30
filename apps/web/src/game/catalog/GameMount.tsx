@@ -22,6 +22,8 @@ const loaders: Record<string, () => Promise<GameType>> = {
   cronos: () => import("./cronos").then((m) => m.cronos),
   "tres-en-raya": () =>
     import("./tres-en-raya").then((m) => m.tresEnRaya),
+  "galeria-fotos": () =>
+    import("./galeria-fotos").then((m) => m.galeriaFotos),
 };
 
 interface Mounted {

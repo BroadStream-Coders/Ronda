@@ -140,6 +140,29 @@ cualquiera de estas tareas, no se repite acá.
   que produce su colector.
 - **Fecha:** 2026-08-20 · **Estado:** Abierto
 
+## [RM-108] Migrar Galería de Fotos desde Unity
+- **Objetivo:** traer el visor de fotos. **No existe en Games** —el workspace no está
+  ahí—, así que la fuente es Unity (`Games/GaleriaFotos/`) y la guía es
+  [`docs/migracion-unity.md`](../migracion-unity.md). Colector: `galeria-fotos`.
+- **Es el port más chico del catálogo.** El prefab son dos layers: la raíz y una
+  `Image` a pantalla completa sin sprite, que la lógica rellena. **Cero assets** —no
+  hay carpeta `Graphic`—, sin sonidos, sin fuentes y sin animaciones. El kit no
+  necesita nada nuevo: la sesión ZIP con imágenes entró con [[RM-061]].
+- **Teclas:** numpad para el grupo (eran F1-F9), dígitos para ir directo a una foto,
+  y `N`/`B` para recorrerlas. El recorrido **no da la vuelta**:
+  `ITraversableElements` hace clamp en los extremos.
+- **Ojo — `fit: contain`.** El `Image` de Unity trae `m_PreserveAspect: 1`, así que
+  una foto que no sea 16:9 deja franjas y detrás no hay nada; queda el negro del
+  `Stage`, que es lo que hacía el prefab.
+- **Ojo — el `title` del grupo no se dibuja.** El colector lo pide y lo guarda, pero
+  Unity nunca lo muestra: es para que el productor se ubique al cargar.
+- **Ojo — 30 fotos por grupo**, el máximo del catálogo. Todo se precarga y decodifica
+  antes de salir al aire, así que es el juego con más papeletas de tocar el techo de
+  memoria de [[WL-011]].
+- **Hecho cuando:** corre dentro de Que Gane El Mejor, es asignable y consume la
+  sesión que produce su colector.
+- **Fecha:** 2026-08-30 · **Estado:** En progreso (2026-08-30)
+
 ## [RM-073] Migrar De Par en Par desde Unity
 - **Objetivo:** traer el juego de memoria con pares de cartas. **No existe en Games**,
   así que la fuente es el proyecto **Unity** (`TvPeru-QGEM-ManagedGames`) y la guía es
