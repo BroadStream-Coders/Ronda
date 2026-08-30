@@ -12,6 +12,9 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [RM-106] Migrar Tres en Raya desde Unity (2026-08-30 14:00)
+Tablero 3×3 armado desde el prefab: 77 layers, con las 9 cartas resueltas a partir de `Card.prefab` más las modificaciones de cada `PrefabInstance`. **El kit ya tenía casi todo** — `flip` de [[RM-068]], `pointer` de [[RM-081]], `flipX` para la diagonal espejada (el `eulerHint 180` del prefab) y sesión JSON plana. Lo único nuevo es la part `click`, que avisa a la lógica por callback y no por store, para no acabar con un `setState` dentro de un efecto. Se conservaron tres rarezas de Unity a propósito: el clic solo asigna al voltear hacia arriba, cualquier cambio de marca escribe la respuesta, y solo se enciende una línea ganadora (`ActivateOnlyChildAt`).
+
 ## [RM-069] Portar Cronos (2026-08-29 17:29)
 Juego de línea de tiempo: se arrastran cinco cartas a su fecha y se valida todo-o-nada contra el reloj. **No llevaba animaciones** — la entrada del roadmap decía que compartía un grupo con Álbum y era falso. Lo que sí trajo: la part `drag` (drag & drop con snap a zona, apoyada en el `data-layer-id` nuevo de `LayerView`), el cronómetro con pausa y conteo de los últimos 5 s (`playSound` con offset + `stopSound`), y las teclas `A` y `T`. Los 89 layers pasaron de id UUID a slugs. **Las gráficas salieron del bucket de Games, no de Unity**, que tenía una versión vieja; se corrigieron los dos documentos que decían lo contrario.
 

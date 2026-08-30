@@ -306,7 +306,7 @@ escribe en `kit/`, no en la carpeta del juego**:
 | Presupuesto de memoria | diagnóstico; puede no volver nunca |
 | Carga desde la nube | engancha sin rediseño: `downloadCollectorData` devuelve un `File`, igual que el input de archivo |
 | Texto con formato (superíndices, fracciones) | notación matemática real; hoy la part `text` es una cadena plana |
-| Drag & drop en el kit | hoy vive en `catalog/cronos/parts/drag.tsx` porque solo lo usa un juego. Si De Par en Par ([[RM-073]]) lo necesita, sube a `kit/` |
+| Interacción de puntero en el kit | `drag` vive en `catalog/cronos/parts/` y `click` en `catalog/tres-en-raya/parts/`, cada una con un juego que la usa. Las dos se apoyan en el `data-layer-id` del kit; suben a `kit/` cuando un segundo juego las pida — De Par en Par ([[RM-073]]) es candidato a las dos |
 
 ---
 

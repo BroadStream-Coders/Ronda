@@ -88,8 +88,10 @@ cualquiera de estas tareas, no se repite acá.
      ya está. Cada juego que entra deja acá lo que podría romperse en silencio: rutas
      de assets que no existen, layers referenciados por la lógica que el layout no
      tiene, parts sin vista registrada.
-  4. **Fuera del inventario de Games hay uno solo: De Par en Par** ([[RM-073]]), que
-     se migra desde Unity con la guía correspondiente.
+  4. **Fuera del inventario de Games quedan los que solo existen en Unity**, que se
+     migran con [`docs/migracion-unity.md`](../migracion-unity.md): De Par en Par
+     ([[RM-073]]) y Tres en Raya ([[RM-106]], ya cerrado). Unity tiene más juegos
+     sin migrar que ni Games ni este roadmap contemplan todavía.
 - **Hecho cuando:** cierran las tareas por juego y las tres piezas de arriba están
   hechas; los 10 juegos de Games más De Par en Par corren dentro de un programa y
   son asignables.
@@ -137,28 +139,6 @@ cualquiera de estas tareas, no se repite acá.
 - **Hecho cuando:** corre dentro de un programa, es asignable y consume el archivo
   que produce su colector.
 - **Fecha:** 2026-08-20 · **Estado:** Abierto
-
-## [RM-106] Migrar Tres en Raya desde Unity
-- **Objetivo:** traer el juego de tablero 3×3. **No existe en Games**, así que la
-  fuente es Unity (`Games/TresEnRaya/`) y la guía es
-  [`docs/migracion-unity.md`](../migracion-unity.md). Colector: `tres-en-raya`.
-- **El kit ya tiene casi todo:** `flip` (el `DoFlip` de Unity) entró con [[RM-068]];
-  `pointer: true` (el `SetActiveCursor` del `OnEnterGame`) con [[RM-081]]; `flipX`
-  sirve para la segunda diagonal, que reusa el mismo `diagonal.png`. La sesión es
-  JSON plano, sin ZIP ni imágenes, y JetBrains Mono ya está en el programa.
-- **Lo único que falta:** el **clic** sobre un layer. La part `drag` de Cronos
-  ([[RM-069]]) captura puntero para arrastrar; acá hace falta que una carta le avise
-  a la lógica. Empieza en `catalog/tres-en-raya/parts/`, no en el kit, hasta que un
-  segundo juego la pida.
-- **Ojo — las 9 cartas son `PrefabInstance`.** El prefab principal trae el marco
-  (Maya, 8 líneas, contenedor) más 9 bloques `!u!1001` con modificaciones sobre
-  `Card.prefab`. No hace falta un resolvedor general: se convierte la carta una vez
-  y se generan las 9 con script, que solo difieren en posición y número.
-- **Ojo — el contrato es del colector, no de Unity.** El colector produce
-  `groups[].questions[]`; el `SessionData.cs` de Unity decía `groups[].slots[]`.
-- **Hecho cuando:** corre dentro de Que Gane El Mejor, es asignable y consume el
-  archivo que produce su colector.
-- **Fecha:** 2026-08-29 · **Estado:** En progreso (2026-08-29)
 
 ## [RM-073] Migrar De Par en Par desde Unity
 - **Objetivo:** traer el juego de memoria con pares de cartas. **No existe en Games**,

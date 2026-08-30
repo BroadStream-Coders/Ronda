@@ -11,6 +11,7 @@ import {
   PRELOAD as ALBUM_PRELOAD,
 } from "../src/game/catalog/album/assets.ts";
 import { PRELOAD as CRONOS_PRELOAD } from "../src/game/catalog/cronos/assets.ts";
+import { PRELOAD as RAYA_PRELOAD } from "../src/game/catalog/tres-en-raya/assets.ts";
 import { PRELOAD as VUELO_PRELOAD } from "../src/game/catalog/al-vuelo/assets.ts";
 import { correctOption } from "../src/game/catalog/al-vuelo/session.ts";
 
@@ -1172,3 +1173,146 @@ assert.deepEqual(
 );
 
 console.log("cronos: checks ok");
+
+// --- el layout de tres en raya contra lo que la logica y el clic esperan ---
+
+const raya = JSON.parse(
+  readFileSync("src/game/catalog/tres-en-raya/layout.json", "utf8"),
+) as Layer[];
+
+const rayaLayer = (id: string) => raya.find((layer) => layer.id === id);
+
+for (const src of RAYA_PRELOAD) {
+  assert.ok(existsSync(`public${src}`), `asset declarado que no existe: ${src}`);
+}
+
+const rayaVideo = findPart<{ type: "video"; src: string }>(
+  raya,
+  "background",
+  "video",
+);
+assert.ok(rayaVideo, "'background' debe llevar una part 'video'");
+assert.ok(
+  existsSync(`public${rayaVideo.src}`),
+  `el video de fondo no existe: ${rayaVideo.src}`,
+);
+
+// El orden de esta lista ES el contrato: Logic indexa 0-2 filas, 3-5 columnas,
+// 6 la diagonal 0-4-8 y 7 la 2-4-6, igual que los hijos de "Lines" en Unity.
+// Reordenarlas enciende la linea equivocada, y en pantalla parece plausible.
+const RAYA_LINES = [
+  "line-row-0",
+  "line-row-1",
+  "line-row-2",
+  "line-column-0",
+  "line-column-1",
+  "line-column-2",
+  "line-diagonal-0",
+  "line-diagonal-1",
+];
+
+for (const id of RAYA_LINES) {
+  const layer = rayaLayer(id);
+  assert.ok(layer, `falta el layer '${id}' (lo enciende Logic al validar)`);
+  const image = partOf<{ type: "image"; src: string; flipX?: boolean }>(
+    layer,
+    "image",
+  );
+  assert.ok(image, `'${id}' debe llevar una part 'image'`);
+  assert.ok(
+    RAYA_PRELOAD.includes(image.src),
+    `'${id}' aparece en vivo al validar: debe estar en PRELOAD`,
+  );
+  assert.equal(layer.visible, false, `'${id}' arranca apagado`);
+}
+
+// Las dos diagonales comparten el mismo PNG; la 0-4-8 va espejada. Si se pierde
+// el flipX, las dos apuntan al mismo lado y una marca la casilla que no es.
+assert.equal(
+  findPart<{ type: "image"; flipX?: boolean }>(raya, "line-diagonal-0", "image")
+    ?.flipX,
+  true,
+  "'line-diagonal-0' va espejada (era el eulerHint 180 del prefab)",
+);
+assert.ok(
+  !findPart<{ type: "image"; flipX?: boolean }>(raya, "line-diagonal-1", "image")
+    ?.flipX,
+  "'line-diagonal-1' NO va espejada",
+);
+
+const RAYA_COLUMN_X = [-514, 0, 514];
+const RAYA_ROW_Y = [299, 0, -299];
+
+for (let i = 0; i < 9; i++) {
+  const id = `card-${i}`;
+  const card = rayaLayer(id);
+  assert.ok(card, `falta el layer '${id}'`);
+  // Sin 'click' la carta se ve perfecta y no responde; sin 'flip' no gira.
+  // Ninguna de las dos ausencias deja rastro en consola.
+  assert.ok(partOf(card, "click"), `'${id}' debe llevar la part 'click'`);
+  assert.ok(partOf(card, "flip"), `'${id}' debe llevar la part 'flip'`);
+  assert.deepEqual(
+    card.rect.position,
+    { x: RAYA_COLUMN_X[i % 3], y: RAYA_ROW_Y[Math.floor(i / 3)] },
+    `'${id}' va en la celda ${i} leyendo el tablero por filas`,
+  );
+
+  // La validacion asume que la casilla i muestra el numero i+1: es el mapa
+  // mental del operador cuando canta "la 5".
+  const number = findPart<{ type: "image"; src: string }>(
+    raya,
+    `${id}-number`,
+    "image",
+  );
+  assert.ok(number, `'${id}-number' debe llevar una part 'image'`);
+  assert.ok(
+    number.src.endsWith(`/numbers/${i + 1}.png`),
+    `'${id}-number' debe mostrar el ${i + 1}, no ${number.src.split("/").pop()}`,
+  );
+
+  for (const [suffix, visible] of [
+    ["back", true],
+    ["front", false],
+    ["number", true],
+    ["cross", false],
+    ["circle", false],
+  ] as const) {
+    const layer = rayaLayer(`${id}-${suffix}`);
+    assert.ok(layer, `falta el layer '${id}-${suffix}'`);
+    assert.equal(
+      layer.visible,
+      visible,
+      `'${id}-${suffix}' arranca ${visible ? "prendido" : "apagado"}`,
+    );
+  }
+
+  // 'flip' anima la carta entera: las dos caras cuelgan de ella. Aplanarlas
+  // dejaria una cara girando y la otra quieta.
+  for (const face of ["back", "front"]) {
+    assert.equal(
+      rayaLayer(`${id}-${face}`)?.parentId,
+      id,
+      `'${id}-${face}' cuelga de '${id}': es lo que hace que giren juntas`,
+    );
+  }
+
+  assert.ok(
+    findPart(raya, `${id}-text`, "text"),
+    `'${id}-text' debe llevar una part 'text' (la pisa Logic)`,
+  );
+}
+
+const rayaFonts = new Set(
+  raya.flatMap((layer) =>
+    layer.parts
+      .map((part) => (part as { fontKey?: string }).fontKey)
+      .filter((key): key is string => Boolean(key)),
+  ),
+);
+assert.deepEqual(
+  [...rayaFonts],
+  ["jetBrainsMono"],
+  "las claves de fuente del layout son las que declara la ficha",
+);
+
+console.log("tres en raya: checks ok");

@@ -202,6 +202,16 @@ Misma forma que cualquier juego del catálogo (§3 y §4 de
   [`migracion-games.md`](migracion-games.md). **Leerlas antes de escribir el
   `Logic.tsx`**: el linter de React rechaza los patrones que Games usaba.
 
+### Clic y arrastre
+
+Un juego de Unity que se opera con mouse necesita, además del cursor, una part que
+capture el puntero. Ya hay dos escritas de las que copiar:
+`catalog/tres-en-raya/parts/click.tsx` (avisa qué layer se clicó) y
+`catalog/cronos/parts/drag.tsx` (arrastre con snap a zona). Las dos se localizan con
+`closest("[data-layer-id]")` sobre el atributo que emite `LayerView`, y **le hablan a
+la lógica por callback, no por store**: un store obligaría a reaccionar con un
+`setState` dentro de un efecto, que es justo lo que el linter rechaza.
+
 ### El cursor en pantalla completa
 
 **Resuelto** ([[RM-081]]). Un juego que se opera con mouse declara `pointer: true` en
