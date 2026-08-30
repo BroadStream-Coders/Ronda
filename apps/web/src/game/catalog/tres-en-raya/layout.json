@@ -1,0 +1,2130 @@
+[
+ {
+  "id": "background",
+  "name": "Background",
+  "visible": true,
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 1920,
+    "y": 1080
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "video",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/shared/video/background-blue.mp4",
+    "muted": true,
+    "loop": true
+   }
+  ]
+ },
+ {
+  "id": "board",
+  "name": "Board",
+  "visible": true,
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 1920,
+    "y": 1080
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "grid",
+  "name": "Grid",
+  "visible": true,
+  "parentId": "board",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 1570,
+    "y": 957
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/tres-en-raya/grid.png"
+   }
+  ]
+ },
+ {
+  "id": "container",
+  "name": "Container",
+  "visible": true,
+  "parentId": "board",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 1750,
+    "y": 961
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "cards",
+  "name": "Cards",
+  "visible": true,
+  "parentId": "container",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 1750,
+    "y": 961
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "lines",
+  "name": "Lines",
+  "visible": true,
+  "parentId": "container",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 1750,
+    "y": 961
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "card-0",
+  "name": "Card 1",
+  "visible": true,
+  "parentId": "cards",
+  "rect": {
+   "position": {
+    "x": -514,
+    "y": 299
+   },
+   "size": {
+    "x": 474,
+    "y": 259
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "flip"
+   },
+   {
+    "type": "click"
+   }
+  ]
+ },
+ {
+  "id": "card-0-back",
+  "name": "Back",
+  "visible": true,
+  "parentId": "card-0",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 474,
+    "y": 259
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "card-0-number",
+  "name": "Number",
+  "visible": true,
+  "parentId": "card-0-back",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 51,
+    "y": 145
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/tres-en-raya/numbers/1.png"
+   }
+  ]
+ },
+ {
+  "id": "card-0-cross",
+  "name": "Cross",
+  "visible": false,
+  "parentId": "card-0-back",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 244,
+    "y": 244
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/tres-en-raya/cross.png"
+   }
+  ]
+ },
+ {
+  "id": "card-0-circle",
+  "name": "Circle",
+  "visible": false,
+  "parentId": "card-0-back",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 250,
+    "y": 250
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/tres-en-raya/circle.png"
+   }
+  ]
+ },
+ {
+  "id": "card-0-front",
+  "name": "Front",
+  "visible": false,
+  "parentId": "card-0",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 474,
+    "y": 259
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/tres-en-raya/card.png"
+   }
+  ]
+ },
+ {
+  "id": "card-0-text",
+  "name": "Text",
+  "visible": true,
+  "parentId": "card-0-front",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 400,
+    "y": 170
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "",
+    "fontSize": 6.67,
+    "autoSize": true,
+    "fontSizeMin": 1.11,
+    "fontSizeMax": 6.67,
+    "color": "#ffffff",
+    "fontKey": "jetBrainsMono",
+    "bold": true,
+    "italic": false,
+    "underline": false,
+    "letterSpacing": -7,
+    "lineSpacing": -17,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap"
+   }
+  ]
+ },
+ {
+  "id": "card-1",
+  "name": "Card 2",
+  "visible": true,
+  "parentId": "cards",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 299
+   },
+   "size": {
+    "x": 474,
+    "y": 259
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "flip"
+   },
+   {
+    "type": "click"
+   }
+  ]
+ },
+ {
+  "id": "card-1-back",
+  "name": "Back",
+  "visible": true,
+  "parentId": "card-1",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 474,
+    "y": 259
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "card-1-number",
+  "name": "Number",
+  "visible": true,
+  "parentId": "card-1-back",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 80,
+    "y": 145
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/tres-en-raya/numbers/2.png"
+   }
+  ]
+ },
+ {
+  "id": "card-1-cross",
+  "name": "Cross",
+  "visible": false,
+  "parentId": "card-1-back",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 244,
+    "y": 244
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/tres-en-raya/cross.png"
+   }
+  ]
+ },
+ {
+  "id": "card-1-circle",
+  "name": "Circle",
+  "visible": false,
+  "parentId": "card-1-back",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 250,
+    "y": 250
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/tres-en-raya/circle.png"
+   }
+  ]
+ },
+ {
+  "id": "card-1-front",
+  "name": "Front",
+  "visible": false,
+  "parentId": "card-1",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 474,
+    "y": 259
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/tres-en-raya/card.png"
+   }
+  ]
+ },
+ {
+  "id": "card-1-text",
+  "name": "Text",
+  "visible": true,
+  "parentId": "card-1-front",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 400,
+    "y": 170
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "",
+    "fontSize": 6.67,
+    "autoSize": true,
+    "fontSizeMin": 1.11,
+    "fontSizeMax": 6.67,
+    "color": "#ffffff",
+    "fontKey": "jetBrainsMono",
+    "bold": true,
+    "italic": false,
+    "underline": false,
+    "letterSpacing": -7,
+    "lineSpacing": -17,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap"
+   }
+  ]
+ },
+ {
+  "id": "card-2",
+  "name": "Card 3",
+  "visible": true,
+  "parentId": "cards",
+  "rect": {
+   "position": {
+    "x": 514,
+    "y": 299
+   },
+   "size": {
+    "x": 474,
+    "y": 259
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "flip"
+   },
+   {
+    "type": "click"
+   }
+  ]
+ },
+ {
+  "id": "card-2-back",
+  "name": "Back",
+  "visible": true,
+  "parentId": "card-2",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 474,
+    "y": 259
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "card-2-number",
+  "name": "Number",
+  "visible": true,
+  "parentId": "card-2-back",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 80,
+    "y": 145
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/tres-en-raya/numbers/3.png"
+   }
+  ]
+ },
+ {
+  "id": "card-2-cross",
+  "name": "Cross",
+  "visible": false,
+  "parentId": "card-2-back",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 244,
+    "y": 244
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/tres-en-raya/cross.png"
+   }
+  ]
+ },
+ {
+  "id": "card-2-circle",
+  "name": "Circle",
+  "visible": false,
+  "parentId": "card-2-back",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 250,
+    "y": 250
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/tres-en-raya/circle.png"
+   }
+  ]
+ },
+ {
+  "id": "card-2-front",
+  "name": "Front",
+  "visible": false,
+  "parentId": "card-2",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 474,
+    "y": 259
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/tres-en-raya/card.png"
+   }
+  ]
+ },
+ {
+  "id": "card-2-text",
+  "name": "Text",
+  "visible": true,
+  "parentId": "card-2-front",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 400,
+    "y": 170
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "",
+    "fontSize": 6.67,
+    "autoSize": true,
+    "fontSizeMin": 1.11,
+    "fontSizeMax": 6.67,
+    "color": "#ffffff",
+    "fontKey": "jetBrainsMono",
+    "bold": true,
+    "italic": false,
+    "underline": false,
+    "letterSpacing": -7,
+    "lineSpacing": -17,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap"
+   }
+  ]
+ },
+ {
+  "id": "card-3",
+  "name": "Card 4",
+  "visible": true,
+  "parentId": "cards",
+  "rect": {
+   "position": {
+    "x": -514,
+    "y": 0
+   },
+   "size": {
+    "x": 474,
+    "y": 259
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "flip"
+   },
+   {
+    "type": "click"
+   }
+  ]
+ },
+ {
+  "id": "card-3-back",
+  "name": "Back",
+  "visible": true,
+  "parentId": "card-3",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 474,
+    "y": 259
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "card-3-number",
+  "name": "Number",
+  "visible": true,
+  "parentId": "card-3-back",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 89,
+    "y": 143
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/tres-en-raya/numbers/4.png"
+   }
+  ]
+ },
+ {
+  "id": "card-3-cross",
+  "name": "Cross",
+  "visible": false,
+  "parentId": "card-3-back",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 244,
+    "y": 244
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/tres-en-raya/cross.png"
+   }
+  ]
+ },
+ {
+  "id": "card-3-circle",
+  "name": "Circle",
+  "visible": false,
+  "parentId": "card-3-back",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 250,
+    "y": 250
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/tres-en-raya/circle.png"
+   }
+  ]
+ },
+ {
+  "id": "card-3-front",
+  "name": "Front",
+  "visible": false,
+  "parentId": "card-3",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 474,
+    "y": 259
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/tres-en-raya/card.png"
+   }
+  ]
+ },
+ {
+  "id": "card-3-text",
+  "name": "Text",
+  "visible": true,
+  "parentId": "card-3-front",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 400,
+    "y": 170
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "",
+    "fontSize": 6.67,
+    "autoSize": true,
+    "fontSizeMin": 1.11,
+    "fontSizeMax": 6.67,
+    "color": "#ffffff",
+    "fontKey": "jetBrainsMono",
+    "bold": true,
+    "italic": false,
+    "underline": false,
+    "letterSpacing": -7,
+    "lineSpacing": -17,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap"
+   }
+  ]
+ },
+ {
+  "id": "card-4",
+  "name": "Card 5",
+  "visible": true,
+  "parentId": "cards",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 474,
+    "y": 259
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "flip"
+   },
+   {
+    "type": "click"
+   }
+  ]
+ },
+ {
+  "id": "card-4-back",
+  "name": "Back",
+  "visible": true,
+  "parentId": "card-4",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 474,
+    "y": 259
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "card-4-number",
+  "name": "Number",
+  "visible": true,
+  "parentId": "card-4-back",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 80,
+    "y": 145
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/tres-en-raya/numbers/5.png"
+   }
+  ]
+ },
+ {
+  "id": "card-4-cross",
+  "name": "Cross",
+  "visible": false,
+  "parentId": "card-4-back",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 244,
+    "y": 244
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/tres-en-raya/cross.png"
+   }
+  ]
+ },
+ {
+  "id": "card-4-circle",
+  "name": "Circle",
+  "visible": false,
+  "parentId": "card-4-back",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 250,
+    "y": 250
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/tres-en-raya/circle.png"
+   }
+  ]
+ },
+ {
+  "id": "card-4-front",
+  "name": "Front",
+  "visible": false,
+  "parentId": "card-4",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 474,
+    "y": 259
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/tres-en-raya/card.png"
+   }
+  ]
+ },
+ {
+  "id": "card-4-text",
+  "name": "Text",
+  "visible": true,
+  "parentId": "card-4-front",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 400,
+    "y": 170
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "",
+    "fontSize": 6.67,
+    "autoSize": true,
+    "fontSizeMin": 1.11,
+    "fontSizeMax": 6.67,
+    "color": "#ffffff",
+    "fontKey": "jetBrainsMono",
+    "bold": true,
+    "italic": false,
+    "underline": false,
+    "letterSpacing": -7,
+    "lineSpacing": -17,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap"
+   }
+  ]
+ },
+ {
+  "id": "card-5",
+  "name": "Card 6",
+  "visible": true,
+  "parentId": "cards",
+  "rect": {
+   "position": {
+    "x": 514,
+    "y": 0
+   },
+   "size": {
+    "x": 474,
+    "y": 259
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "flip"
+   },
+   {
+    "type": "click"
+   }
+  ]
+ },
+ {
+  "id": "card-5-back",
+  "name": "Back",
+  "visible": true,
+  "parentId": "card-5",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 474,
+    "y": 259
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "card-5-number",
+  "name": "Number",
+  "visible": true,
+  "parentId": "card-5-back",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 80,
+    "y": 145
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/tres-en-raya/numbers/6.png"
+   }
+  ]
+ },
+ {
+  "id": "card-5-cross",
+  "name": "Cross",
+  "visible": false,
+  "parentId": "card-5-back",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 244,
+    "y": 244
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/tres-en-raya/cross.png"
+   }
+  ]
+ },
+ {
+  "id": "card-5-circle",
+  "name": "Circle",
+  "visible": false,
+  "parentId": "card-5-back",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 250,
+    "y": 250
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/tres-en-raya/circle.png"
+   }
+  ]
+ },
+ {
+  "id": "card-5-front",
+  "name": "Front",
+  "visible": false,
+  "parentId": "card-5",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 474,
+    "y": 259
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/tres-en-raya/card.png"
+   }
+  ]
+ },
+ {
+  "id": "card-5-text",
+  "name": "Text",
+  "visible": true,
+  "parentId": "card-5-front",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 400,
+    "y": 170
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "",
+    "fontSize": 6.67,
+    "autoSize": true,
+    "fontSizeMin": 1.11,
+    "fontSizeMax": 6.67,
+    "color": "#ffffff",
+    "fontKey": "jetBrainsMono",
+    "bold": true,
+    "italic": false,
+    "underline": false,
+    "letterSpacing": -7,
+    "lineSpacing": -17,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap"
+   }
+  ]
+ },
+ {
+  "id": "card-6",
+  "name": "Card 7",
+  "visible": true,
+  "parentId": "cards",
+  "rect": {
+   "position": {
+    "x": -514,
+    "y": -299
+   },
+   "size": {
+    "x": 474,
+    "y": 259
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "flip"
+   },
+   {
+    "type": "click"
+   }
+  ]
+ },
+ {
+  "id": "card-6-back",
+  "name": "Back",
+  "visible": true,
+  "parentId": "card-6",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 474,
+    "y": 259
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "card-6-number",
+  "name": "Number",
+  "visible": true,
+  "parentId": "card-6-back",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 82,
+    "y": 143
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/tres-en-raya/numbers/7.png"
+   }
+  ]
+ },
+ {
+  "id": "card-6-cross",
+  "name": "Cross",
+  "visible": false,
+  "parentId": "card-6-back",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 244,
+    "y": 244
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/tres-en-raya/cross.png"
+   }
+  ]
+ },
+ {
+  "id": "card-6-circle",
+  "name": "Circle",
+  "visible": false,
+  "parentId": "card-6-back",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 250,
+    "y": 250
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/tres-en-raya/circle.png"
+   }
+  ]
+ },
+ {
+  "id": "card-6-front",
+  "name": "Front",
+  "visible": false,
+  "parentId": "card-6",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 474,
+    "y": 259
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/tres-en-raya/card.png"
+   }
+  ]
+ },
+ {
+  "id": "card-6-text",
+  "name": "Text",
+  "visible": true,
+  "parentId": "card-6-front",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 400,
+    "y": 170
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "",
+    "fontSize": 6.67,
+    "autoSize": true,
+    "fontSizeMin": 1.11,
+    "fontSizeMax": 6.67,
+    "color": "#ffffff",
+    "fontKey": "jetBrainsMono",
+    "bold": true,
+    "italic": false,
+    "underline": false,
+    "letterSpacing": -7,
+    "lineSpacing": -17,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap"
+   }
+  ]
+ },
+ {
+  "id": "card-7",
+  "name": "Card 8",
+  "visible": true,
+  "parentId": "cards",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": -299
+   },
+   "size": {
+    "x": 474,
+    "y": 259
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "flip"
+   },
+   {
+    "type": "click"
+   }
+  ]
+ },
+ {
+  "id": "card-7-back",
+  "name": "Back",
+  "visible": true,
+  "parentId": "card-7",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 474,
+    "y": 259
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "card-7-number",
+  "name": "Number",
+  "visible": true,
+  "parentId": "card-7-back",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 80,
+    "y": 147
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/tres-en-raya/numbers/8.png"
+   }
+  ]
+ },
+ {
+  "id": "card-7-cross",
+  "name": "Cross",
+  "visible": false,
+  "parentId": "card-7-back",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 244,
+    "y": 244
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/tres-en-raya/cross.png"
+   }
+  ]
+ },
+ {
+  "id": "card-7-circle",
+  "name": "Circle",
+  "visible": false,
+  "parentId": "card-7-back",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 250,
+    "y": 250
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/tres-en-raya/circle.png"
+   }
+  ]
+ },
+ {
+  "id": "card-7-front",
+  "name": "Front",
+  "visible": false,
+  "parentId": "card-7",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 474,
+    "y": 259
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/tres-en-raya/card.png"
+   }
+  ]
+ },
+ {
+  "id": "card-7-text",
+  "name": "Text",
+  "visible": true,
+  "parentId": "card-7-front",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 400,
+    "y": 170
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "",
+    "fontSize": 6.67,
+    "autoSize": true,
+    "fontSizeMin": 1.11,
+    "fontSizeMax": 6.67,
+    "color": "#ffffff",
+    "fontKey": "jetBrainsMono",
+    "bold": true,
+    "italic": false,
+    "underline": false,
+    "letterSpacing": -7,
+    "lineSpacing": -17,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap"
+   }
+  ]
+ },
+ {
+  "id": "card-8",
+  "name": "Card 9",
+  "visible": true,
+  "parentId": "cards",
+  "rect": {
+   "position": {
+    "x": 514,
+    "y": -299
+   },
+   "size": {
+    "x": 474,
+    "y": 259
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "flip"
+   },
+   {
+    "type": "click"
+   }
+  ]
+ },
+ {
+  "id": "card-8-back",
+  "name": "Back",
+  "visible": true,
+  "parentId": "card-8",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 474,
+    "y": 259
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "card-8-number",
+  "name": "Number",
+  "visible": true,
+  "parentId": "card-8-back",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 80,
+    "y": 145
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/tres-en-raya/numbers/9.png"
+   }
+  ]
+ },
+ {
+  "id": "card-8-cross",
+  "name": "Cross",
+  "visible": false,
+  "parentId": "card-8-back",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 244,
+    "y": 244
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/tres-en-raya/cross.png"
+   }
+  ]
+ },
+ {
+  "id": "card-8-circle",
+  "name": "Circle",
+  "visible": false,
+  "parentId": "card-8-back",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 250,
+    "y": 250
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/tres-en-raya/circle.png"
+   }
+  ]
+ },
+ {
+  "id": "card-8-front",
+  "name": "Front",
+  "visible": false,
+  "parentId": "card-8",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 474,
+    "y": 259
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/tres-en-raya/card.png"
+   }
+  ]
+ },
+ {
+  "id": "card-8-text",
+  "name": "Text",
+  "visible": true,
+  "parentId": "card-8-front",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 400,
+    "y": 170
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "",
+    "fontSize": 6.67,
+    "autoSize": true,
+    "fontSizeMin": 1.11,
+    "fontSizeMax": 6.67,
+    "color": "#ffffff",
+    "fontKey": "jetBrainsMono",
+    "bold": true,
+    "italic": false,
+    "underline": false,
+    "letterSpacing": -7,
+    "lineSpacing": -17,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap"
+   }
+  ]
+ },
+ {
+  "id": "line-row-0",
+  "name": "Row 0",
+  "visible": false,
+  "parentId": "lines",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 300
+   },
+   "size": {
+    "x": 1569,
+    "y": 16
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/tres-en-raya/lines/row.png"
+   }
+  ]
+ },
+ {
+  "id": "line-row-1",
+  "name": "Row 1",
+  "visible": false,
+  "parentId": "lines",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 1569,
+    "y": 16
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/tres-en-raya/lines/row.png"
+   }
+  ]
+ },
+ {
+  "id": "line-row-2",
+  "name": "Row 2",
+  "visible": false,
+  "parentId": "lines",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": -300
+   },
+   "size": {
+    "x": 1569,
+    "y": 16
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/tres-en-raya/lines/row.png"
+   }
+  ]
+ },
+ {
+  "id": "line-column-0",
+  "name": "Column 0",
+  "visible": false,
+  "parentId": "lines",
+  "rect": {
+   "position": {
+    "x": -510,
+    "y": 0
+   },
+   "size": {
+    "x": 17,
+    "y": 957
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/tres-en-raya/lines/column.png"
+   }
+  ]
+ },
+ {
+  "id": "line-column-1",
+  "name": "Column 1",
+  "visible": false,
+  "parentId": "lines",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 17,
+    "y": 957
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/tres-en-raya/lines/column.png"
+   }
+  ]
+ },
+ {
+  "id": "line-column-2",
+  "name": "Column 2",
+  "visible": false,
+  "parentId": "lines",
+  "rect": {
+   "position": {
+    "x": 510,
+    "y": 0
+   },
+   "size": {
+    "x": 17,
+    "y": 957
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/tres-en-raya/lines/column.png"
+   }
+  ]
+ },
+ {
+  "id": "line-diagonal-0",
+  "name": "Diagonal 0",
+  "visible": false,
+  "parentId": "lines",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 1362,
+    "y": 803
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/tres-en-raya/lines/diagonal.png",
+    "flipX": true
+   }
+  ]
+ },
+ {
+  "id": "line-diagonal-1",
+  "name": "Diagonal 1",
+  "visible": false,
+  "parentId": "lines",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 1362,
+    "y": 803
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/tres-en-raya/lines/diagonal.png"
+   }
+  ]
+ }
+]

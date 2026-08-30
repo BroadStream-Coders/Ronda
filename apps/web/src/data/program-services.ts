@@ -19,6 +19,7 @@ export const programServices: Record<string, ProgramServices> = {
       "busca-logo",
       "album",
       "cronos",
+      "tres-en-raya",
       "operaciones-combinadas",
       "reto-cruzado",
       "intruso",
