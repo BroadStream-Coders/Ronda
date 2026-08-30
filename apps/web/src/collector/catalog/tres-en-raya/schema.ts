@@ -7,7 +7,7 @@ export interface RowData {
 }
 
 export interface Data {
-  groups: { questions: { question: string; answer: string }[] }[];
+  groups: { slots: { question: string; answer: string }[] }[];
 }
 
 export const BOARD_SIZE = 9;
@@ -29,7 +29,7 @@ export function createEmptyColumn(): RowData[] {
 export function buildData(columns: RowData[][]): Data {
   return {
     groups: columns.map((rows) => ({
-      questions: rows.map((row) => ({
+      slots: rows.map((row) => ({
         question: row.question.trim(),
         answer: row.answer.trim(),
       })),
@@ -40,10 +40,10 @@ export function buildData(columns: RowData[][]): Data {
 export function fromData(data: Data): RowData[][] {
   const columns = data.groups.map((group) =>
     toBoard(
-      (group.questions ?? []).map((question) => ({
+      (group.slots ?? []).map((slot) => ({
         id: uid(),
-        question: question.question || "",
-        answer: question.answer || "",
+        question: slot.question || "",
+        answer: slot.answer || "",
       })),
     ),
   );

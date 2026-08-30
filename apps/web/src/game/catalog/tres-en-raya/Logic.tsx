@@ -64,7 +64,7 @@ export function TresEnRayaLogic() {
   }
 
   const groups = session?.groups ?? [];
-  const questions = groups[cursor.group]?.questions ?? [];
+  const slots = groups[cursor.group]?.slots ?? [];
 
   const marksRef = useRef<Mark[]>(CARDS.map(() => "normal"));
   const assignedRef = useRef<(number | null)[]>(CARDS.map(() => null));
@@ -96,11 +96,11 @@ export function TresEnRayaLogic() {
     currentRef.current = -1;
   }, [group, loadedAt, setVisible, patch]);
 
-  const assign = (i: number, questionIndex: number) => {
-    const question = questions[questionIndex];
-    if (!question) return;
-    assignedRef.current[i] = questionIndex;
-    patch(textId(i), "text", { text: question.question });
+  const assign = (i: number, slotIndex: number) => {
+    const slot = slots[slotIndex];
+    if (!slot) return;
+    assignedRef.current[i] = slotIndex;
+    patch(textId(i), "text", { text: slot.question });
   };
 
   // Fiel a Unity: cualquier SetStatus pone la respuesta en el texto, incluso al
@@ -109,8 +109,8 @@ export function TresEnRayaLogic() {
     marksRef.current[i] = value;
     showMark(i, value);
     const assigned = assignedRef.current[i];
-    const question = assigned === null ? undefined : questions[assigned];
-    if (question) patch(textId(i), "text", { text: question.answer });
+    const slot = assigned === null ? undefined : slots[assigned];
+    if (slot) patch(textId(i), "text", { text: slot.answer });
   };
 
   const flipCard = async (i: number, up: boolean) => {
@@ -185,7 +185,7 @@ export function TresEnRayaLogic() {
 
   const revealAll = (withAnswer: boolean) => {
     for (const i of CARDS) {
-      if (i >= questions.length) break;
+      if (i >= slots.length) break;
       assign(i, i);
       void flipCard(i, true);
       if (withAnswer) mark(i, "cross");
@@ -198,7 +198,7 @@ export function TresEnRayaLogic() {
       goToGroup(value - 1);
     },
     onNumber: (value) => {
-      if (value >= questions.length) return;
+      if (value >= slots.length) return;
       setSelected(value);
     },
     onArrowRight: () => setTeam("cross"),

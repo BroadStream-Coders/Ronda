@@ -1,10 +1,10 @@
-export interface TresEnRayaQuestion {
+export interface TresEnRayaSlot {
   question: string;
   answer: string;
 }
 
 export interface TresEnRayaGroup {
-  questions: TresEnRayaQuestion[];
+  slots: TresEnRayaSlot[];
 }
 
 export interface TresEnRayaSession {
@@ -22,13 +22,13 @@ export function isTresEnRayaSession(
       (group) =>
         typeof group === "object" &&
         group !== null &&
-        Array.isArray(group.questions) &&
-        group.questions.every(
-          (question) =>
-            typeof question === "object" &&
-            question !== null &&
-            typeof question.question === "string" &&
-            typeof question.answer === "string",
+        Array.isArray(group.slots) &&
+        group.slots.every(
+          (slot) =>
+            typeof slot === "object" &&
+            slot !== null &&
+            typeof slot.question === "string" &&
+            typeof slot.answer === "string",
         ),
     )
   );
