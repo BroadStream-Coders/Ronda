@@ -29,9 +29,15 @@ jerarquía, ni modo play**. Son juegos en navegador.
    script Node desechable en el scratchpad (`JSON.stringify(layout, null, 2)`), no a
    mano: los juegos tienen ~30 layers repetitivos.
 3. Traer los assets según §5 de [`migracion-games.md`](migracion-games.md).
-4. Validar con `pnpm build` (**nunca** `pnpm dev`) y esperar el visto bueno visual de
+   **Preguntar siempre de dónde salen**: si el juego también pasó por Games, los
+   originales están en el bucket de Games y los de Unity pueden estar viejos.
+4. **Preguntar siempre por el fondo.** El prefab casi nunca lo trae: en Unity el
+   fondo lo ponía el switcher, no el juego. Hay dos caminos y **no se adivina** —
+   croma (la ficha declara `chromaLayerId` y aparece el panel de color) o video
+   propio (`shared/video/`, y entonces la ficha **no** declara croma).
+5. Validar con `pnpm build` (**nunca** `pnpm dev`) y esperar el visto bueno visual de
    Esteban comparando contra Unity.
-5. Cablear la funcionalidad: `Logic.tsx` + carga de sesión.
+6. Cablear la funcionalidad: `Logic.tsx` + carga de sesión.
 
 ---
 
@@ -119,6 +125,13 @@ de TMP y el del catálogo, no un error de conversión.
 
 ## Patrones de escena
 
+- **Las teclas de función de Unity (F1-F9) se mapean al numpad**, que es
+  `onNavigate` en `useGameKeys` — la misma convención que ya usan Álbum y Cronos
+  para saltar de ronda. Los dígitos de la fila superior quedan para el índice
+  dentro de la ronda (`onNumber`). En Ronda no hay teclas de función.
+- **`Shift+U` y `Shift+I` (`onInteractAll` / `onShowAnswerAll`) son de depuración**,
+  no de show: revelan todo el tablero de una. Van con Shift a propósito, para que
+  no se disparen por error en vivo.
 - **IDs** kebab-case predecibles (`option-0-text`, `slot-1-answer`); la lógica los
   genera con helpers en un `constants.ts`. Nombres de layers en inglés (todo lo que
   el usuario no ve va en inglés).
@@ -134,10 +147,9 @@ de TMP y el del catálogo, no un error de conversión.
   un solo layer y la lógica intercambia el `src` de la part `image`, que es menos
   layers y menos estado.
 - **Mask de Unity** (Mask + `m_ShowMaskGraphic: 0`): recorta a los hijos con la
-  forma del sprite. **La part `mask` todavía no existe en el kit** — la trae el
-  primer juego que la necesite, escrita en `kit/parts/`, no en la carpeta del juego.
-  Si la Image de Unity no tiene sprite, alcanza con recortar al rect
-  (`overflow: hidden`).
+  forma del sprite. **La part `mask` ya está en el kit**: recorta el layer entero con
+  la silueta del `src` de su part `image` hermana, y **sin** esa image recorta al
+  rect. `showImage: false` es el equivalente de `m_ShowMaskGraphic: 0`.
 - **Nivel como grupo**: el GameObject que en Unity tenía el script del nivel (p. ej.
   "Level 1") se convierte en un layer contenedor sin parts. No hace falta una part
   que guarde el estado del nivel: lo que no se dibuja vive en la lógica (`useState`),
@@ -192,19 +204,22 @@ Misma forma que cualquier juego del catálogo (§3 y §4 de
 
 ### El cursor en pantalla completa
 
-`Stage` **oculta el cursor** al entrar en pantalla completa. Un juego que se opera
-con mouse —voltear cartas, arrastrar— lo necesita visible, y hoy no hay forma de
-pedirlo desde la ficha: `Stage` ya acepta `hideCursorOnFullscreen`, pero `GameShell`
-no se lo pasa. Si el juego que estás migrando usa mouse, esto se resuelve primero o
-el juego no se puede operar.
+**Resuelto** ([[RM-081]]). Un juego que se opera con mouse declara `pointer: true` en
+su ficha y `Stage` deja el cursor visible en pantalla completa; los demás lo siguen
+ocultando. Aparte, la tecla **P** lo alterna en cualquier juego sin que la ficha ni la
+lógica participen. **Centrarlo al mostrarlo, como hacía `CursorController` en Unity,
+no es posible en web**: no hay API para posicionar el puntero.
 
 ### Sesión ZIP
 
-> **Todavía no existe en el kit.** `useGameSession` guarda un JSON y no maneja el
-> ciclo de vida de blobs. El primer juego cuya sesión traiga imágenes tiene que
-> agregarle un `dispose`.
+> **Ya está en el kit** ([[RM-061]]). `readZipSession(file)` saca el `sessionData.json`
+> y las imágenes del paquete que arma el colector, y devuelve **Blobs**: las object URL
+> las crea `setSession`, que además las revoca sola al reemplazar la sesión o
+> desmontar el juego. El juego las lee de `useGameSession().images`, indexadas por la
+> misma ruta que guarda el JSON. La ficha declara `images: true`.
 
-El patrón probado en Games, para cuando toque:
+El patrón de abajo es el que se usó en Games y queda como referencia de por qué el kit
+hace lo que hace:
 
 1. `loadZipFile(file)` → leer `sessionData.json` → validar con el type-guard.
    (`loadZipFile` **ya existe** en Ronda: `src/helpers/persistence.ts`.)
