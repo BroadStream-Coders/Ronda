@@ -12,6 +12,9 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [RM-108] Migrar Galería de Fotos desde Unity (2026-08-30 18:37)
+El port más chico del catálogo: **dos layers** —el video de fondo y la foto a pantalla completa— y 55 líneas de lógica. **Cero assets propios**: no hay carpeta `Graphic` en Unity y las únicas imágenes son las de la sesión ZIP. La foto va en `fit: "contain"` (el `m_PreserveAspect: 1` del prefab), así que calza por alto o por ancho sin deformarse y en las franjas se ve el fondo animado. Sin `assets.ts`: `GameShell` ya saca el preload de las parts del propio layout. El `title` del grupo se guarda pero no se dibuja, igual que en Unity.
+
 ## [RM-106] Migrar Tres en Raya desde Unity (2026-08-30 14:00)
 Tablero 3×3 armado desde el prefab: 77 layers, con las 9 cartas resueltas a partir de `Card.prefab` más las modificaciones de cada `PrefabInstance`. **El kit ya tenía casi todo** — `flip` de [[RM-068]], `pointer` de [[RM-081]], `flipX` para la diagonal espejada (el `eulerHint 180` del prefab) y sesión JSON plana. Lo único nuevo es la part `click`, que avisa a la lógica por callback y no por store, para no acabar con un `setState` dentro de un efecto. Se conservaron tres rarezas de Unity a propósito: el clic solo asigna al voltear hacia arriba, cualquier cambio de marca escribe la respuesta, y solo se enciende una línea ganadora (`ActivateOnlyChildAt`).
 

@@ -1316,3 +1316,61 @@ assert.deepEqual(
 );
 
 console.log("tres en raya: checks ok");
+
+// --- el layout de galeria de fotos contra lo que la logica espera ---
+
+const galeria = JSON.parse(
+  readFileSync("src/game/catalog/galeria-fotos/layout.json", "utf8"),
+) as Layer[];
+
+const galeriaVideo = findPart<{ type: "video"; src: string }>(
+  galeria,
+  "background",
+  "video",
+);
+assert.ok(galeriaVideo, "'background' debe llevar una part 'video'");
+assert.ok(
+  existsSync(`public${galeriaVideo.src}`),
+  `el video de fondo no existe: ${galeriaVideo.src}`,
+);
+
+const galeriaTop = galeria.filter((layer) => !layer.parentId);
+assert.deepEqual(
+  galeriaTop.map((layer) => layer.id),
+  ["background", "photo"],
+  "'background' va antes que 'photo': GameShell pinta en orden y el ultimo queda arriba",
+);
+for (const layer of galeriaTop) {
+  assert.equal(layer.visible, true, `'${layer.id}' arranca prendido`);
+}
+
+const galeriaPhoto = findPart<{ type: "image"; src: string; fit?: string }>(
+  galeria,
+  "photo",
+  "image",
+);
+assert.ok(galeriaPhoto, "'photo' debe llevar una part 'image' (la pisa Logic)");
+// Con 'fill' la foto se estira a 16:9 y sale deformada al aire, que es un error
+// que se ve plausible: la imagen aparece, solo que mal.
+assert.equal(
+  galeriaPhoto.fit,
+  "contain",
+  "'photo' va en 'contain': la foto calza por alto o por ancho, sin deformarse",
+);
+assert.equal(
+  galeriaPhoto.src,
+  "",
+  "'photo' arranca sin src: la foto la pone Logic desde la sesion",
+);
+
+// La ficha no declara fuentes. Una clave de fuente en el layout caeria al font
+// por defecto sin avisar.
+assert.equal(
+  galeria.flatMap((layer) =>
+    layer.parts.filter((part) => (part as { fontKey?: string }).fontKey),
+  ).length,
+  0,
+  "el layout no usa fuentes: la ficha no declara ninguna",
+);
+
+console.log("galeria de fotos: checks ok");
