@@ -16,7 +16,14 @@ reutiliza). Al resolverse se mueve al `changelog.md` conservando su código.
 
 ---
 
-## [TD-114] Los colectores se tragan el error al cargar un archivo
+## [TD-115] La validación de Intruso no mira el Nivel 2
+- **Ubicación:** `apps/web/src/collector/catalog/intruso/schema.ts` — `validate(textRounds)`; el call site en `Editor.tsx:105`.
+- **Riesgo:** 5/10
+- **Problema:** `validate` solo recibe y recorre `textRounds`. Las rondas de fotos no se comprueban: ni que cada una tenga sus 4 imágenes, ni las etiquetas, ni que haya un intruso marcado. El productor puede dejar el Nivel 2 a medias y la validación le dice que todo está bien.
+- **Impacto futuro:** Sale al aire una ronda con huecos. **Viene así desde Studio** —su `validate` también recorría solo `nivel1`—, o sea que el port no lo introdujo, pero tampoco lo arregló, y hasta hoy nadie lo notaba porque **el Nivel 2 no se había usado nunca**. Con el primer pedido real (2026-08-30) deja de ser teórico. Es hermano de [[TD-114]]: los dos son fallos de "el archivo está mal y nadie avisa".
+- **Fecha:** 2026-08-30 · **Estado:** Abierto
+
+ Los colectores se tragan el error al cargar un archivo
 - **Ubicación:** `apps/web/src/collector/catalog/*/Editor.tsx` — **22 `catch {}` vacíos** repartidos por los 16 colectores; p. ej. `tres-en-raya/Editor.tsx:72`. Y los guards en `*/schema.ts`.
 - **Riesgo:** 7/10
 - **Problema:** Son dos fallos encadenados. (1) `loadJsonFile` **sí** lanza con mensaje ("Estructura de archivo no válida para este colector"), pero el `catch {}` vacío lo descarta sin mostrar nada. (2) Los `isData` son superficiales: el de Tres en Raya solo comprueba que `groups` sea un array, así que un archivo con la estructura vieja **pasa la validación**, `fromData` lee una clave que no existe, cae al `?? []` y el tablero queda en blanco.
