@@ -5,6 +5,7 @@ import JSZip from "jszip";
 import { readZipSession, ZIP_SESSION_JSON } from "../src/game/kit/zip.ts";
 import { mediaKind } from "../src/game/kit/media.ts";
 import { PRELOAD as INTRUSO_PRELOAD } from "../src/game/catalog/intruso/assets.ts";
+import { isIntrusoSession } from "../src/game/catalog/intruso/session.ts";
 import {
   CARD_COLORS,
   CARD_CROMA,
@@ -762,6 +763,153 @@ for (let option = 0; option < 4; option++) {
       `'${id}' arranca ${mark === "normal" ? "prendido" : "apagado"}`,
     );
   }
+}
+
+// --- intruso nivel 2 ---
+
+const intrusoLevel1 = intruso.find((layer) => layer.id === "level-1");
+const intrusoLevel2 = intruso.find((layer) => layer.id === "level-2");
+assert.ok(intrusoLevel1, "falta el contenedor 'level-1'");
+assert.ok(intrusoLevel2, "falta el contenedor 'level-2'");
+assert.equal(intrusoLevel1.visible, true, "'level-1' arranca prendido");
+assert.equal(intrusoLevel2.visible, false, "'level-2' arranca apagado");
+for (const id of ["main-frame", "options"]) {
+  assert.equal(
+    intruso.find((layer) => layer.id === id)?.parentId,
+    "level-1",
+    `'${id}' cuelga de 'level-1': es lo que apaga el nivel entero de una`,
+  );
+}
+
+const INTRUSO_COLORS = ["red", "green", "yellow", "blue"];
+
+for (let card = 0; card < 4; card++) {
+  const id = `photo-${card}`;
+  assert.equal(
+    intruso.find((layer) => layer.id === id)?.parentId,
+    "photos",
+    `'${id}' cuelga de 'photos'`,
+  );
+
+  const color = findPart<{ type: "image"; src: string }>(
+    intruso,
+    `${id}-color`,
+    "image",
+  );
+  assert.ok(color, `'${id}-color' debe llevar una part 'image'`);
+  assert.ok(
+    color.src.endsWith(`/color/${INTRUSO_COLORS[card]}.png`),
+    `'${id}-color' va en ${INTRUSO_COLORS[card]}: es el orden del array colors[] de Unity`,
+  );
+
+  const cardMask = intruso.find((layer) => layer.id === `${id}-mask`);
+  assert.ok(cardMask, `falta el layer '${id}-mask'`);
+  assert.ok(partOf(cardMask, "mask"), `'${id}-mask' debe llevar la part 'mask'`);
+  assert.ok(
+    partOf<{ type: "image"; src: string }>(cardMask, "image")?.src,
+    `'${id}-mask' debe llevar una part 'image': es la forma del recorte`,
+  );
+
+  const cardPicture = findPart<{ type: "image"; src: string; fit?: string }>(
+    intruso,
+    `${id}-picture`,
+    "image",
+  );
+  assert.ok(cardPicture, `'${id}-picture' debe llevar una part 'image'`);
+  assert.equal(cardPicture.src, "", `'${id}-picture' arranca sin src`);
+  assert.equal(
+    cardPicture.fit,
+    "cover",
+    `'${id}-picture' va en 'cover': el recorte 3:4 del colector llena el hueco sin franjas`,
+  );
+
+  const cardText = findPart<{ type: "text"; fontKey?: string }>(
+    intruso,
+    `${id}-text`,
+    "text",
+  );
+  assert.ok(cardText, `'${id}-text' debe llevar una part 'text' (la pisa Logic)`);
+  assert.equal(
+    cardText.fontKey,
+    "geniusTechno",
+    `'${id}-text' usa la fuente que declara la ficha`,
+  );
+
+  for (const state of ["normal", "correct", "incorrect"]) {
+    const frameId = `${id}-frame-${state}`;
+    const frame = intruso.find((layer) => layer.id === frameId);
+    assert.ok(frame, `falta el layer '${frameId}' (lo prende/apaga Logic)`);
+    const image = partOf<{ type: "image"; src: string }>(frame, "image");
+    assert.ok(image, `'${frameId}' debe llevar una part 'image'`);
+    assert.ok(
+      INTRUSO_PRELOAD.includes(image.src),
+      `'${frameId}' se intercambia en vivo al validar: debe estar en PRELOAD`,
+    );
+    assert.equal(
+      frame.visible,
+      state === "normal",
+      `'${frameId}' arranca ${state === "normal" ? "prendido" : "apagado"}`,
+    );
+  }
+}
+
+// --- los dos niveles son independientes ---
+
+const intrusoText = {
+  imagePath: "images/T1.png",
+  answerIndex: 0,
+  choices: ["a", "b", "c", "d"],
+};
+const intrusoPhoto = {
+  description: "ctx",
+  answerIndex: 1,
+  choices: [0, 1, 2, 3].map((i) => ({
+    label: `L${i}`,
+    imagePath: `images/P1_I${i}.png`,
+  })),
+};
+
+const intrusoAccepts: [string, unknown][] = [
+  ["ambos niveles", { textRounds: [intrusoText], photoRounds: [intrusoPhoto] }],
+  ["solo nivel 1", { textRounds: [intrusoText], photoRounds: [] }],
+  ["solo nivel 2", { textRounds: [], photoRounds: [intrusoPhoto] }],
+  ["los dos vacios", { textRounds: [], photoRounds: [] }],
+  [
+    "nivel 1 con 3 opciones",
+    { textRounds: [{ ...intrusoText, choices: ["a", "b", "c"] }], photoRounds: [] },
+  ],
+  [
+    "nivel 2 con 2 fotos",
+    {
+      textRounds: [],
+      photoRounds: [{ ...intrusoPhoto, choices: intrusoPhoto.choices.slice(0, 2) }],
+    },
+  ],
+];
+
+for (const [name, data] of intrusoAccepts) {
+  assert.ok(isIntrusoSession(data), `el guard debe aceptar: ${name}`);
+}
+
+const intrusoRejects: [string, unknown][] = [
+  ["falta photoRounds", { textRounds: [intrusoText] }],
+  ["falta textRounds", { photoRounds: [intrusoPhoto] }],
+  [
+    "nivel 1 con 5 opciones",
+    {
+      textRounds: [{ ...intrusoText, choices: ["a", "b", "c", "d", "e"] }],
+      photoRounds: [],
+    },
+  ],
+  [
+    "foto sin label",
+    { textRounds: [], photoRounds: [{ ...intrusoPhoto, choices: [{ imagePath: "x" }] }] },
+  ],
+  ["otro juego", { groups: [] }],
+];
+
+for (const [name, data] of intrusoRejects) {
+  assert.ok(!isIntrusoSession(data), `el guard debe rechazar: ${name}`);
 }
 
 console.log("intruso: checks ok");

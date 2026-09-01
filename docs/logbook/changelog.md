@@ -12,6 +12,9 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [RM-104] Nivel 2 de Intruso: las rondas de fotos (2026-09-01 14:35)
+El juego consume los `photoRounds` que el colector ya recolectaba y no leía nadie. Los layers existentes quedaron envueltos en `level-1` y el nivel 2 entra como `level-2` con sus 4 tarjetas, convertidas desde `PhotoChoiceView.prefab`; se conmutan con `Home`/`PageUp`, los mismos `panelKeys` de Unity. **Los dos niveles son independientes por construcción**: el cursor lleva estado separado (`text` y `photo`) y cada uno lee solo su array, así que una sesión con un solo nivel funciona. De paso se arregló un fallo del nivel 1 que ya existía: el guard exigía **4 opciones exactas** cuando el colector permite de 1 a 4, así que una ronda con 3 tumbaba el archivo entero. La descripción de la ronda de fotos no se dibuja, igual que en Unity. Queda [[TD-115]]: el colector sigue sin validar el nivel 2.
+
 ## [RM-108] Migrar Galería de Fotos desde Unity (2026-08-30 18:37)
 El port más chico del catálogo: **dos layers** —el video de fondo y la foto a pantalla completa— y 55 líneas de lógica. **Cero assets propios**: no hay carpeta `Graphic` en Unity y las únicas imágenes son las de la sesión ZIP. La foto va en `fit: "contain"` (el `m_PreserveAspect: 1` del prefab), así que calza por alto o por ancho sin deformarse y en las franjas se ve el fondo animado. Sin `assets.ts`: `GameShell` ya saca el preload de las parts del propio layout. El `title` del grupo se guarda pero no se dibuja, igual que en Unity.
 

@@ -98,23 +98,6 @@ cualquiera de estas tareas, no se repite acá.
   son asignables.
 - **Fecha:** 2026-08-13 · **Estado:** En progreso (2026-08-20)
 
-## [RM-104] Nivel 2 de Intruso: las rondas de fotos
-- **Objetivo:** que el juego consuma los `photoRounds` que el colector ya recolecta
-  y hoy no lee nadie. Es un nivel distinto, no una variante del primero: en vez de
-  una foto y cuatro textos son **cuatro fotos** con etiqueta y una descripción de
-  contexto (`description`).
-- **Por qué quedó fuera de [[RM-067]]:** **no existe del otro lado.** El juego en
-  Games tiene solo `level1` y su type-guard ni mira `photoRounds`; la gráfica sí
-  existe, pero en Unity (`Games/Intruso/Graphic/level 2/`, con su propio
-  `normalFrame`, `mask` y un `pictureFrame` que el nivel 1 no usa). O sea que esto
-  no es portar: es armar el nivel con la guía de Unity y el layout a mano.
-- **Ojo:** el colector ya lo valida y lo empaqueta, así que el archivo que produce
-  hoy ya trae los datos. La sesión ZIP y la precarga de sus imágenes están hechas
-  ([[RM-061]], [[RM-086]]); lo que falta es el layout, la lógica y los assets.
-- **Hecho cuando:** el conductor puede pasar a las rondas de fotos dentro del mismo
-  juego y las cuatro fotos salen al aire con su marco.
-- **Fecha:** 2026-08-28 · **Estado:** Abierto
-
 ## [RM-070] Portar Busca el Logo
 - **Objetivo:** traer el juego de Games. Colector: `busca-logo` (marcar dónde van los
   logos en cada tablero). **Va último a propósito:** es el que puede romper supuestos
