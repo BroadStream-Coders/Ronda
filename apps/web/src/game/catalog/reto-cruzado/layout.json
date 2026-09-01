@@ -4861,6 +4861,81 @@
   "parts": []
  },
  {
+  "id": "level-3-connector-0",
+  "name": "Connector 1",
+  "visible": true,
+  "parentId": "level-3-connectors",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 1920,
+    "y": 1080
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "connector"
+   }
+  ]
+ },
+ {
+  "id": "level-3-connector-1",
+  "name": "Connector 2",
+  "visible": true,
+  "parentId": "level-3-connectors",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 1920,
+    "y": 1080
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "connector"
+   }
+  ]
+ },
+ {
+  "id": "level-3-connector-2",
+  "name": "Connector 3",
+  "visible": true,
+  "parentId": "level-3-connectors",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 1920,
+    "y": 1080
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "connector"
+   }
+  ]
+ },
+ {
   "id": "level-4",
   "name": "Level 4",
   "visible": false,
