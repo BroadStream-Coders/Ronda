@@ -12,6 +12,7 @@ import { meta as album } from "./album/meta";
 import { meta as cronos } from "./cronos/meta";
 import { meta as tresEnRaya } from "./tres-en-raya/meta";
 import { meta as galeriaFotos } from "./galeria-fotos/meta";
+import { meta as retoCruzado } from "./reto-cruzado/meta";
 
 export const metas: Record<string, GameMeta> = {
   [deletreo.id]: deletreo,
@@ -26,4 +27,5 @@ export const metas: Record<string, GameMeta> = {
   [cronos.id]: cronos,
   [tresEnRaya.id]: tresEnRaya,
   [galeriaFotos.id]: galeriaFotos,
+  [retoCruzado.id]: retoCruzado,
 };

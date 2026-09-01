@@ -1,0 +1,4501 @@
+[
+ {
+  "id": "background",
+  "name": "Background",
+  "visible": true,
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 1920,
+    "y": 1080
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "video",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/shared/video/background-blue.mp4",
+    "muted": true,
+    "loop": true
+   }
+  ]
+ },
+ {
+  "id": "level-0",
+  "name": "Level 0",
+  "visible": true,
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 1920,
+    "y": 1080
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "level-0-title",
+  "name": "Title",
+  "visible": true,
+  "parentId": "level-0",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 395
+   },
+   "size": {
+    "x": 603,
+    "y": 109
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-0/title.png"
+   }
+  ]
+ },
+ {
+  "id": "courses",
+  "name": "Courses",
+  "visible": true,
+  "parentId": "level-0",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": -90
+   },
+   "size": {
+    "x": 1880,
+    "y": 850
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "course-0",
+  "name": "Course 1",
+  "visible": false,
+  "parentId": "courses",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 438,
+    "y": 142
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "blink"
+   }
+  ]
+ },
+ {
+  "id": "course-0-frame",
+  "name": "Frame",
+  "visible": true,
+  "parentId": "course-0",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 438,
+    "y": 142
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-0/frame-blue.png"
+   }
+  ]
+ },
+ {
+  "id": "course-0-text",
+  "name": "Text",
+  "visible": true,
+  "parentId": "course-0",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 438,
+    "y": 142
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "",
+    "fontSize": 4.48,
+    "autoSize": false,
+    "fontSizeMin": 1.67,
+    "fontSizeMax": 4.48,
+    "color": "#ffffff",
+    "bold": true,
+    "italic": false,
+    "underline": false,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "jetBrainsMono"
+   }
+  ]
+ },
+ {
+  "id": "course-1",
+  "name": "Course 2",
+  "visible": false,
+  "parentId": "courses",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 438,
+    "y": 142
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "blink"
+   }
+  ]
+ },
+ {
+  "id": "course-1-frame",
+  "name": "Frame",
+  "visible": true,
+  "parentId": "course-1",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 438,
+    "y": 142
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-0/frame-blue.png"
+   }
+  ]
+ },
+ {
+  "id": "course-1-text",
+  "name": "Text",
+  "visible": true,
+  "parentId": "course-1",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 438,
+    "y": 142
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "",
+    "fontSize": 4.48,
+    "autoSize": false,
+    "fontSizeMin": 1.67,
+    "fontSizeMax": 4.48,
+    "color": "#ffffff",
+    "bold": true,
+    "italic": false,
+    "underline": false,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "jetBrainsMono"
+   }
+  ]
+ },
+ {
+  "id": "course-2",
+  "name": "Course 3",
+  "visible": false,
+  "parentId": "courses",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 438,
+    "y": 142
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "blink"
+   }
+  ]
+ },
+ {
+  "id": "course-2-frame",
+  "name": "Frame",
+  "visible": true,
+  "parentId": "course-2",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 438,
+    "y": 142
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-0/frame-blue.png"
+   }
+  ]
+ },
+ {
+  "id": "course-2-text",
+  "name": "Text",
+  "visible": true,
+  "parentId": "course-2",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 438,
+    "y": 142
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "",
+    "fontSize": 4.48,
+    "autoSize": false,
+    "fontSizeMin": 1.67,
+    "fontSizeMax": 4.48,
+    "color": "#ffffff",
+    "bold": true,
+    "italic": false,
+    "underline": false,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "jetBrainsMono"
+   }
+  ]
+ },
+ {
+  "id": "course-3",
+  "name": "Course 4",
+  "visible": false,
+  "parentId": "courses",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 438,
+    "y": 142
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "blink"
+   }
+  ]
+ },
+ {
+  "id": "course-3-frame",
+  "name": "Frame",
+  "visible": true,
+  "parentId": "course-3",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 438,
+    "y": 142
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-0/frame-blue.png"
+   }
+  ]
+ },
+ {
+  "id": "course-3-text",
+  "name": "Text",
+  "visible": true,
+  "parentId": "course-3",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 438,
+    "y": 142
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "",
+    "fontSize": 4.48,
+    "autoSize": false,
+    "fontSizeMin": 1.67,
+    "fontSizeMax": 4.48,
+    "color": "#ffffff",
+    "bold": true,
+    "italic": false,
+    "underline": false,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "jetBrainsMono"
+   }
+  ]
+ },
+ {
+  "id": "course-4",
+  "name": "Course 5",
+  "visible": false,
+  "parentId": "courses",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 438,
+    "y": 142
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "blink"
+   }
+  ]
+ },
+ {
+  "id": "course-4-frame",
+  "name": "Frame",
+  "visible": true,
+  "parentId": "course-4",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 438,
+    "y": 142
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-0/frame-blue.png"
+   }
+  ]
+ },
+ {
+  "id": "course-4-text",
+  "name": "Text",
+  "visible": true,
+  "parentId": "course-4",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 438,
+    "y": 142
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "",
+    "fontSize": 4.48,
+    "autoSize": false,
+    "fontSizeMin": 1.67,
+    "fontSizeMax": 4.48,
+    "color": "#ffffff",
+    "bold": true,
+    "italic": false,
+    "underline": false,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "jetBrainsMono"
+   }
+  ]
+ },
+ {
+  "id": "course-5",
+  "name": "Course 6",
+  "visible": false,
+  "parentId": "courses",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 438,
+    "y": 142
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "blink"
+   }
+  ]
+ },
+ {
+  "id": "course-5-frame",
+  "name": "Frame",
+  "visible": true,
+  "parentId": "course-5",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 438,
+    "y": 142
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-0/frame-blue.png"
+   }
+  ]
+ },
+ {
+  "id": "course-5-text",
+  "name": "Text",
+  "visible": true,
+  "parentId": "course-5",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 438,
+    "y": 142
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "",
+    "fontSize": 4.48,
+    "autoSize": false,
+    "fontSizeMin": 1.67,
+    "fontSizeMax": 4.48,
+    "color": "#ffffff",
+    "bold": true,
+    "italic": false,
+    "underline": false,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "jetBrainsMono"
+   }
+  ]
+ },
+ {
+  "id": "course-6",
+  "name": "Course 7",
+  "visible": false,
+  "parentId": "courses",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 438,
+    "y": 142
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "blink"
+   }
+  ]
+ },
+ {
+  "id": "course-6-frame",
+  "name": "Frame",
+  "visible": true,
+  "parentId": "course-6",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 438,
+    "y": 142
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-0/frame-blue.png"
+   }
+  ]
+ },
+ {
+  "id": "course-6-text",
+  "name": "Text",
+  "visible": true,
+  "parentId": "course-6",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 438,
+    "y": 142
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "",
+    "fontSize": 4.48,
+    "autoSize": false,
+    "fontSizeMin": 1.67,
+    "fontSizeMax": 4.48,
+    "color": "#ffffff",
+    "bold": true,
+    "italic": false,
+    "underline": false,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "jetBrainsMono"
+   }
+  ]
+ },
+ {
+  "id": "course-7",
+  "name": "Course 8",
+  "visible": false,
+  "parentId": "courses",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 438,
+    "y": 142
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "blink"
+   }
+  ]
+ },
+ {
+  "id": "course-7-frame",
+  "name": "Frame",
+  "visible": true,
+  "parentId": "course-7",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 438,
+    "y": 142
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-0/frame-blue.png"
+   }
+  ]
+ },
+ {
+  "id": "course-7-text",
+  "name": "Text",
+  "visible": true,
+  "parentId": "course-7",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 438,
+    "y": 142
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "",
+    "fontSize": 4.48,
+    "autoSize": false,
+    "fontSizeMin": 1.67,
+    "fontSizeMax": 4.48,
+    "color": "#ffffff",
+    "bold": true,
+    "italic": false,
+    "underline": false,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "jetBrainsMono"
+   }
+  ]
+ },
+ {
+  "id": "course-8",
+  "name": "Course 9",
+  "visible": false,
+  "parentId": "courses",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 438,
+    "y": 142
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "blink"
+   }
+  ]
+ },
+ {
+  "id": "course-8-frame",
+  "name": "Frame",
+  "visible": true,
+  "parentId": "course-8",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 438,
+    "y": 142
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-0/frame-blue.png"
+   }
+  ]
+ },
+ {
+  "id": "course-8-text",
+  "name": "Text",
+  "visible": true,
+  "parentId": "course-8",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 438,
+    "y": 142
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "",
+    "fontSize": 4.48,
+    "autoSize": false,
+    "fontSizeMin": 1.67,
+    "fontSizeMax": 4.48,
+    "color": "#ffffff",
+    "bold": true,
+    "italic": false,
+    "underline": false,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "jetBrainsMono"
+   }
+  ]
+ },
+ {
+  "id": "course-9",
+  "name": "Course 10",
+  "visible": false,
+  "parentId": "courses",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 438,
+    "y": 142
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "blink"
+   }
+  ]
+ },
+ {
+  "id": "course-9-frame",
+  "name": "Frame",
+  "visible": true,
+  "parentId": "course-9",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 438,
+    "y": 142
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-0/frame-blue.png"
+   }
+  ]
+ },
+ {
+  "id": "course-9-text",
+  "name": "Text",
+  "visible": true,
+  "parentId": "course-9",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 438,
+    "y": 142
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "",
+    "fontSize": 4.48,
+    "autoSize": false,
+    "fontSizeMin": 1.67,
+    "fontSizeMax": 4.48,
+    "color": "#ffffff",
+    "bold": true,
+    "italic": false,
+    "underline": false,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "jetBrainsMono"
+   }
+  ]
+ },
+ {
+  "id": "course-10",
+  "name": "Course 11",
+  "visible": false,
+  "parentId": "courses",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 438,
+    "y": 142
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "blink"
+   }
+  ]
+ },
+ {
+  "id": "course-10-frame",
+  "name": "Frame",
+  "visible": true,
+  "parentId": "course-10",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 438,
+    "y": 142
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-0/frame-blue.png"
+   }
+  ]
+ },
+ {
+  "id": "course-10-text",
+  "name": "Text",
+  "visible": true,
+  "parentId": "course-10",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 438,
+    "y": 142
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "",
+    "fontSize": 4.48,
+    "autoSize": false,
+    "fontSizeMin": 1.67,
+    "fontSizeMax": 4.48,
+    "color": "#ffffff",
+    "bold": true,
+    "italic": false,
+    "underline": false,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "jetBrainsMono"
+   }
+  ]
+ },
+ {
+  "id": "course-11",
+  "name": "Course 12",
+  "visible": false,
+  "parentId": "courses",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 438,
+    "y": 142
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "blink"
+   }
+  ]
+ },
+ {
+  "id": "course-11-frame",
+  "name": "Frame",
+  "visible": true,
+  "parentId": "course-11",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 438,
+    "y": 142
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-0/frame-blue.png"
+   }
+  ]
+ },
+ {
+  "id": "course-11-text",
+  "name": "Text",
+  "visible": true,
+  "parentId": "course-11",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 438,
+    "y": 142
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "",
+    "fontSize": 4.48,
+    "autoSize": false,
+    "fontSizeMin": 1.67,
+    "fontSizeMax": 4.48,
+    "color": "#ffffff",
+    "bold": true,
+    "italic": false,
+    "underline": false,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "jetBrainsMono"
+   }
+  ]
+ },
+ {
+  "id": "course-12",
+  "name": "Course 13",
+  "visible": false,
+  "parentId": "courses",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 438,
+    "y": 142
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "blink"
+   }
+  ]
+ },
+ {
+  "id": "course-12-frame",
+  "name": "Frame",
+  "visible": true,
+  "parentId": "course-12",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 438,
+    "y": 142
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-0/frame-blue.png"
+   }
+  ]
+ },
+ {
+  "id": "course-12-text",
+  "name": "Text",
+  "visible": true,
+  "parentId": "course-12",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 438,
+    "y": 142
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "",
+    "fontSize": 4.48,
+    "autoSize": false,
+    "fontSizeMin": 1.67,
+    "fontSizeMax": 4.48,
+    "color": "#ffffff",
+    "bold": true,
+    "italic": false,
+    "underline": false,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "jetBrainsMono"
+   }
+  ]
+ },
+ {
+  "id": "course-13",
+  "name": "Course 14",
+  "visible": false,
+  "parentId": "courses",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 438,
+    "y": 142
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "blink"
+   }
+  ]
+ },
+ {
+  "id": "course-13-frame",
+  "name": "Frame",
+  "visible": true,
+  "parentId": "course-13",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 438,
+    "y": 142
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-0/frame-blue.png"
+   }
+  ]
+ },
+ {
+  "id": "course-13-text",
+  "name": "Text",
+  "visible": true,
+  "parentId": "course-13",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 438,
+    "y": 142
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "",
+    "fontSize": 4.48,
+    "autoSize": false,
+    "fontSizeMin": 1.67,
+    "fontSizeMax": 4.48,
+    "color": "#ffffff",
+    "bold": true,
+    "italic": false,
+    "underline": false,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "jetBrainsMono"
+   }
+  ]
+ },
+ {
+  "id": "course-14",
+  "name": "Course 15",
+  "visible": false,
+  "parentId": "courses",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 438,
+    "y": 142
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "blink"
+   }
+  ]
+ },
+ {
+  "id": "course-14-frame",
+  "name": "Frame",
+  "visible": true,
+  "parentId": "course-14",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 438,
+    "y": 142
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-0/frame-blue.png"
+   }
+  ]
+ },
+ {
+  "id": "course-14-text",
+  "name": "Text",
+  "visible": true,
+  "parentId": "course-14",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 438,
+    "y": 142
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "",
+    "fontSize": 4.48,
+    "autoSize": false,
+    "fontSizeMin": 1.67,
+    "fontSizeMax": 4.48,
+    "color": "#ffffff",
+    "bold": true,
+    "italic": false,
+    "underline": false,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "jetBrainsMono"
+   }
+  ]
+ },
+ {
+  "id": "course-15",
+  "name": "Course 16",
+  "visible": false,
+  "parentId": "courses",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 438,
+    "y": 142
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "blink"
+   }
+  ]
+ },
+ {
+  "id": "course-15-frame",
+  "name": "Frame",
+  "visible": true,
+  "parentId": "course-15",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 438,
+    "y": 142
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-0/frame-blue.png"
+   }
+  ]
+ },
+ {
+  "id": "course-15-text",
+  "name": "Text",
+  "visible": true,
+  "parentId": "course-15",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 438,
+    "y": 142
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "",
+    "fontSize": 4.48,
+    "autoSize": false,
+    "fontSizeMin": 1.67,
+    "fontSizeMax": 4.48,
+    "color": "#ffffff",
+    "bold": true,
+    "italic": false,
+    "underline": false,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "jetBrainsMono"
+   }
+  ]
+ },
+ {
+  "id": "course-16",
+  "name": "Course 17",
+  "visible": false,
+  "parentId": "courses",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 438,
+    "y": 142
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "blink"
+   }
+  ]
+ },
+ {
+  "id": "course-16-frame",
+  "name": "Frame",
+  "visible": true,
+  "parentId": "course-16",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 438,
+    "y": 142
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-0/frame-blue.png"
+   }
+  ]
+ },
+ {
+  "id": "course-16-text",
+  "name": "Text",
+  "visible": true,
+  "parentId": "course-16",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 438,
+    "y": 142
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "",
+    "fontSize": 4.48,
+    "autoSize": false,
+    "fontSizeMin": 1.67,
+    "fontSizeMax": 4.48,
+    "color": "#ffffff",
+    "bold": true,
+    "italic": false,
+    "underline": false,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "jetBrainsMono"
+   }
+  ]
+ },
+ {
+  "id": "course-17",
+  "name": "Course 18",
+  "visible": false,
+  "parentId": "courses",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 438,
+    "y": 142
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "blink"
+   }
+  ]
+ },
+ {
+  "id": "course-17-frame",
+  "name": "Frame",
+  "visible": true,
+  "parentId": "course-17",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 438,
+    "y": 142
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-0/frame-blue.png"
+   }
+  ]
+ },
+ {
+  "id": "course-17-text",
+  "name": "Text",
+  "visible": true,
+  "parentId": "course-17",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 438,
+    "y": 142
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "",
+    "fontSize": 4.48,
+    "autoSize": false,
+    "fontSizeMin": 1.67,
+    "fontSizeMax": 4.48,
+    "color": "#ffffff",
+    "bold": true,
+    "italic": false,
+    "underline": false,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "jetBrainsMono"
+   }
+  ]
+ },
+ {
+  "id": "course-18",
+  "name": "Course 19",
+  "visible": false,
+  "parentId": "courses",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 438,
+    "y": 142
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "blink"
+   }
+  ]
+ },
+ {
+  "id": "course-18-frame",
+  "name": "Frame",
+  "visible": true,
+  "parentId": "course-18",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 438,
+    "y": 142
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-0/frame-blue.png"
+   }
+  ]
+ },
+ {
+  "id": "course-18-text",
+  "name": "Text",
+  "visible": true,
+  "parentId": "course-18",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 438,
+    "y": 142
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "",
+    "fontSize": 4.48,
+    "autoSize": false,
+    "fontSizeMin": 1.67,
+    "fontSizeMax": 4.48,
+    "color": "#ffffff",
+    "bold": true,
+    "italic": false,
+    "underline": false,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "jetBrainsMono"
+   }
+  ]
+ },
+ {
+  "id": "course-19",
+  "name": "Course 20",
+  "visible": false,
+  "parentId": "courses",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 438,
+    "y": 142
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "blink"
+   }
+  ]
+ },
+ {
+  "id": "course-19-frame",
+  "name": "Frame",
+  "visible": true,
+  "parentId": "course-19",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 438,
+    "y": 142
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-0/frame-blue.png"
+   }
+  ]
+ },
+ {
+  "id": "course-19-text",
+  "name": "Text",
+  "visible": true,
+  "parentId": "course-19",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 438,
+    "y": 142
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "",
+    "fontSize": 4.48,
+    "autoSize": false,
+    "fontSizeMin": 1.67,
+    "fontSizeMax": 4.48,
+    "color": "#ffffff",
+    "bold": true,
+    "italic": false,
+    "underline": false,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "jetBrainsMono"
+   }
+  ]
+ },
+ {
+  "id": "level-1",
+  "name": "Level 1",
+  "visible": false,
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 1920,
+    "y": 1080
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "level-1-frame",
+  "name": "Question Frame",
+  "visible": true,
+  "parentId": "level-1",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 114.5
+   },
+   "size": {
+    "x": 1617,
+    "y": 518
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-1-2/main-frame.png"
+   }
+  ]
+ },
+ {
+  "id": "level-1-question",
+  "name": "Question",
+  "visible": true,
+  "parentId": "level-1-frame",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": -2.5
+   },
+   "size": {
+    "x": 1497,
+    "y": 363
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "",
+    "fontSize": 6.67,
+    "autoSize": true,
+    "fontSizeMin": 1.67,
+    "fontSizeMax": 6.67,
+    "color": "#ffffff",
+    "bold": false,
+    "italic": false,
+    "underline": false,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "jetBrainsMono"
+   }
+  ]
+ },
+ {
+  "id": "level-1-options",
+  "name": "Options",
+  "visible": true,
+  "parentId": "level-1",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": -246.5
+   },
+   "size": {
+    "x": 1630,
+    "y": 180
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "level-1-option-0",
+  "name": "Option 1",
+  "visible": true,
+  "parentId": "level-1-options",
+  "rect": {
+   "position": {
+    "x": -384.5,
+    "y": 0
+   },
+   "size": {
+    "x": 839,
+    "y": 180
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "level-1-option-0-frame",
+  "name": "Normal",
+  "visible": true,
+  "parentId": "level-1-option-0",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 839,
+    "y": 180
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-1-2/left-frame.png"
+   }
+  ]
+ },
+ {
+  "id": "level-1-option-0-frame-correct",
+  "name": "Correct",
+  "visible": false,
+  "parentId": "level-1-option-0",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 839,
+    "y": 180
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-1-2/left-frame-correct.png"
+   }
+  ]
+ },
+ {
+  "id": "level-1-option-0-frame-incorrect",
+  "name": "Incorrect",
+  "visible": false,
+  "parentId": "level-1-option-0",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 839,
+    "y": 180
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-1-2/left-frame-incorrect.png"
+   }
+  ]
+ },
+ {
+  "id": "level-1-option-0-mark",
+  "name": "Mark",
+  "visible": true,
+  "parentId": "level-1-option-0",
+  "rect": {
+   "position": {
+    "x": -304.82,
+    "y": 5.03
+   },
+   "size": {
+    "x": 206,
+    "y": 148
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-1-2/colors/red.png"
+   }
+  ]
+ },
+ {
+  "id": "level-1-option-0-text",
+  "name": "Text",
+  "visible": true,
+  "parentId": "level-1-option-0",
+  "rect": {
+   "position": {
+    "x": 45,
+    "y": 5
+   },
+   "size": {
+    "x": 549,
+    "y": 110
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "",
+    "fontSize": 6.67,
+    "autoSize": true,
+    "fontSizeMin": 1.39,
+    "fontSizeMax": 6.67,
+    "color": "#ffffff",
+    "bold": false,
+    "italic": false,
+    "underline": false,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "jetBrainsMono"
+   }
+  ]
+ },
+ {
+  "id": "level-1-option-1",
+  "name": "Option 2",
+  "visible": true,
+  "parentId": "level-1-options",
+  "rect": {
+   "position": {
+    "x": 384.5,
+    "y": 0
+   },
+   "size": {
+    "x": 839,
+    "y": 180
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "level-1-option-1-frame",
+  "name": "Normal",
+  "visible": true,
+  "parentId": "level-1-option-1",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 839,
+    "y": 180
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-1-2/right-frame.png"
+   }
+  ]
+ },
+ {
+  "id": "level-1-option-1-frame-correct",
+  "name": "Correct",
+  "visible": false,
+  "parentId": "level-1-option-1",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 839,
+    "y": 180
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-1-2/right-frame-correct.png"
+   }
+  ]
+ },
+ {
+  "id": "level-1-option-1-frame-incorrect",
+  "name": "Incorrect",
+  "visible": false,
+  "parentId": "level-1-option-1",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 839,
+    "y": 180
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-1-2/right-frame-incorrect.png"
+   }
+  ]
+ },
+ {
+  "id": "level-1-option-1-mark",
+  "name": "Mark",
+  "visible": true,
+  "parentId": "level-1-option-1",
+  "rect": {
+   "position": {
+    "x": -304.82,
+    "y": 5.03
+   },
+   "size": {
+    "x": 206,
+    "y": 148
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-1-2/colors/green.png"
+   }
+  ]
+ },
+ {
+  "id": "level-1-option-1-text",
+  "name": "Text",
+  "visible": true,
+  "parentId": "level-1-option-1",
+  "rect": {
+   "position": {
+    "x": 45,
+    "y": 5
+   },
+   "size": {
+    "x": 549,
+    "y": 110
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "",
+    "fontSize": 6.67,
+    "autoSize": true,
+    "fontSizeMin": 1.39,
+    "fontSizeMax": 6.67,
+    "color": "#ffffff",
+    "bold": false,
+    "italic": false,
+    "underline": false,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "jetBrainsMono"
+   }
+  ]
+ },
+ {
+  "id": "level-2",
+  "name": "Level 2",
+  "visible": false,
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 1920,
+    "y": 1080
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "level-2-frame",
+  "name": "Question Frame",
+  "visible": true,
+  "parentId": "level-2",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 206
+   },
+   "size": {
+    "x": 1617,
+    "y": 518
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-1-2/main-frame.png"
+   }
+  ]
+ },
+ {
+  "id": "level-2-question",
+  "name": "Question",
+  "visible": true,
+  "parentId": "level-2-frame",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": -2.5
+   },
+   "size": {
+    "x": 1497,
+    "y": 363
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "",
+    "fontSize": 6.67,
+    "autoSize": true,
+    "fontSizeMin": 1.67,
+    "fontSizeMax": 6.67,
+    "color": "#ffffff",
+    "bold": false,
+    "italic": false,
+    "underline": false,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "jetBrainsMono"
+   }
+  ]
+ },
+ {
+  "id": "level-2-options",
+  "name": "Options",
+  "visible": true,
+  "parentId": "level-2",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": -260
+   },
+   "size": {
+    "x": 1617,
+    "y": 400
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "level-2-option-0",
+  "name": "Option 1",
+  "visible": true,
+  "parentId": "level-2-options",
+  "rect": {
+   "position": {
+    "x": -386.25,
+    "y": 100
+   },
+   "size": {
+    "x": 839,
+    "y": 180
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "level-2-option-0-frame",
+  "name": "Normal",
+  "visible": true,
+  "parentId": "level-2-option-0",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 839,
+    "y": 180
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-1-2/left-frame.png"
+   }
+  ]
+ },
+ {
+  "id": "level-2-option-0-frame-correct",
+  "name": "Correct",
+  "visible": false,
+  "parentId": "level-2-option-0",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 839,
+    "y": 180
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-1-2/left-frame-correct.png"
+   }
+  ]
+ },
+ {
+  "id": "level-2-option-0-frame-incorrect",
+  "name": "Incorrect",
+  "visible": false,
+  "parentId": "level-2-option-0",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 839,
+    "y": 180
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-1-2/left-frame-incorrect.png"
+   }
+  ]
+ },
+ {
+  "id": "level-2-option-0-mark",
+  "name": "Mark",
+  "visible": true,
+  "parentId": "level-2-option-0",
+  "rect": {
+   "position": {
+    "x": -304.82,
+    "y": 5.03
+   },
+   "size": {
+    "x": 206,
+    "y": 148
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-1-2/colors/red.png"
+   }
+  ]
+ },
+ {
+  "id": "level-2-option-0-text",
+  "name": "Text",
+  "visible": true,
+  "parentId": "level-2-option-0",
+  "rect": {
+   "position": {
+    "x": 45,
+    "y": 5
+   },
+   "size": {
+    "x": 549,
+    "y": 110
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "",
+    "fontSize": 6.67,
+    "autoSize": true,
+    "fontSizeMin": 1.39,
+    "fontSizeMax": 6.67,
+    "color": "#ffffff",
+    "bold": false,
+    "italic": false,
+    "underline": false,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "jetBrainsMono"
+   }
+  ]
+ },
+ {
+  "id": "level-2-option-1",
+  "name": "Option 2",
+  "visible": true,
+  "parentId": "level-2-options",
+  "rect": {
+   "position": {
+    "x": 386.25,
+    "y": 100
+   },
+   "size": {
+    "x": 839,
+    "y": 180
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "level-2-option-1-frame",
+  "name": "Normal",
+  "visible": true,
+  "parentId": "level-2-option-1",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 839,
+    "y": 180
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-1-2/right-frame.png"
+   }
+  ]
+ },
+ {
+  "id": "level-2-option-1-frame-correct",
+  "name": "Correct",
+  "visible": false,
+  "parentId": "level-2-option-1",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 839,
+    "y": 180
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-1-2/right-frame-correct.png"
+   }
+  ]
+ },
+ {
+  "id": "level-2-option-1-frame-incorrect",
+  "name": "Incorrect",
+  "visible": false,
+  "parentId": "level-2-option-1",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 839,
+    "y": 180
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-1-2/right-frame-incorrect.png"
+   }
+  ]
+ },
+ {
+  "id": "level-2-option-1-mark",
+  "name": "Mark",
+  "visible": true,
+  "parentId": "level-2-option-1",
+  "rect": {
+   "position": {
+    "x": -304.82,
+    "y": 5.03
+   },
+   "size": {
+    "x": 206,
+    "y": 148
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-1-2/colors/green.png"
+   }
+  ]
+ },
+ {
+  "id": "level-2-option-1-text",
+  "name": "Text",
+  "visible": true,
+  "parentId": "level-2-option-1",
+  "rect": {
+   "position": {
+    "x": 45,
+    "y": 5
+   },
+   "size": {
+    "x": 549,
+    "y": 110
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "",
+    "fontSize": 6.67,
+    "autoSize": true,
+    "fontSizeMin": 1.39,
+    "fontSizeMax": 6.67,
+    "color": "#ffffff",
+    "bold": false,
+    "italic": false,
+    "underline": false,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "jetBrainsMono"
+   }
+  ]
+ },
+ {
+  "id": "level-2-option-2",
+  "name": "Option 3",
+  "visible": true,
+  "parentId": "level-2-options",
+  "rect": {
+   "position": {
+    "x": -386.25,
+    "y": -100
+   },
+   "size": {
+    "x": 839,
+    "y": 180
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "level-2-option-2-frame",
+  "name": "Normal",
+  "visible": true,
+  "parentId": "level-2-option-2",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 839,
+    "y": 180
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-1-2/left-frame.png"
+   }
+  ]
+ },
+ {
+  "id": "level-2-option-2-frame-correct",
+  "name": "Correct",
+  "visible": false,
+  "parentId": "level-2-option-2",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 839,
+    "y": 180
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-1-2/left-frame-correct.png"
+   }
+  ]
+ },
+ {
+  "id": "level-2-option-2-frame-incorrect",
+  "name": "Incorrect",
+  "visible": false,
+  "parentId": "level-2-option-2",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 839,
+    "y": 180
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-1-2/left-frame-incorrect.png"
+   }
+  ]
+ },
+ {
+  "id": "level-2-option-2-mark",
+  "name": "Mark",
+  "visible": true,
+  "parentId": "level-2-option-2",
+  "rect": {
+   "position": {
+    "x": -304.82,
+    "y": 5.03
+   },
+   "size": {
+    "x": 206,
+    "y": 148
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-1-2/colors/yellow.png"
+   }
+  ]
+ },
+ {
+  "id": "level-2-option-2-text",
+  "name": "Text",
+  "visible": true,
+  "parentId": "level-2-option-2",
+  "rect": {
+   "position": {
+    "x": 45,
+    "y": 5
+   },
+   "size": {
+    "x": 549,
+    "y": 110
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "",
+    "fontSize": 6.67,
+    "autoSize": true,
+    "fontSizeMin": 1.39,
+    "fontSizeMax": 6.67,
+    "color": "#ffffff",
+    "bold": false,
+    "italic": false,
+    "underline": false,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "jetBrainsMono"
+   }
+  ]
+ },
+ {
+  "id": "level-2-option-3",
+  "name": "Option 4",
+  "visible": true,
+  "parentId": "level-2-options",
+  "rect": {
+   "position": {
+    "x": 386.25,
+    "y": -100
+   },
+   "size": {
+    "x": 839,
+    "y": 180
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "level-2-option-3-frame",
+  "name": "Normal",
+  "visible": true,
+  "parentId": "level-2-option-3",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 839,
+    "y": 180
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-1-2/right-frame.png"
+   }
+  ]
+ },
+ {
+  "id": "level-2-option-3-frame-correct",
+  "name": "Correct",
+  "visible": false,
+  "parentId": "level-2-option-3",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 839,
+    "y": 180
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-1-2/right-frame-correct.png"
+   }
+  ]
+ },
+ {
+  "id": "level-2-option-3-frame-incorrect",
+  "name": "Incorrect",
+  "visible": false,
+  "parentId": "level-2-option-3",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 839,
+    "y": 180
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-1-2/right-frame-incorrect.png"
+   }
+  ]
+ },
+ {
+  "id": "level-2-option-3-mark",
+  "name": "Mark",
+  "visible": true,
+  "parentId": "level-2-option-3",
+  "rect": {
+   "position": {
+    "x": -304.82,
+    "y": 5.03
+   },
+   "size": {
+    "x": 206,
+    "y": 148
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-1-2/colors/blue.png"
+   }
+  ]
+ },
+ {
+  "id": "level-2-option-3-text",
+  "name": "Text",
+  "visible": true,
+  "parentId": "level-2-option-3",
+  "rect": {
+   "position": {
+    "x": 45,
+    "y": 5
+   },
+   "size": {
+    "x": 549,
+    "y": 110
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "",
+    "fontSize": 6.67,
+    "autoSize": true,
+    "fontSizeMin": 1.39,
+    "fontSizeMax": 6.67,
+    "color": "#ffffff",
+    "bold": false,
+    "italic": false,
+    "underline": false,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "jetBrainsMono"
+   }
+  ]
+ },
+ {
+  "id": "level-3",
+  "name": "Level 3",
+  "visible": false,
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 1920,
+    "y": 1080
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "level-3-left",
+  "name": "left column",
+  "visible": true,
+  "parentId": "level-3",
+  "rect": {
+   "position": {
+    "x": -530,
+    "y": 0
+   },
+   "size": {
+    "x": 709,
+    "y": 1080
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "level-3-left-0",
+  "name": "left 1",
+  "visible": true,
+  "parentId": "level-3-left",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 314.5
+   },
+   "size": {
+    "x": 709,
+    "y": 297
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "level-3-left-0-frame",
+  "name": "Normal",
+  "visible": true,
+  "parentId": "level-3-left-0",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 709,
+    "y": 297
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-3/left-frame.png"
+   }
+  ]
+ },
+ {
+  "id": "level-3-left-0-frame-correct",
+  "name": "Correct",
+  "visible": false,
+  "parentId": "level-3-left-0",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 709,
+    "y": 297
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-3/left-frame-correct.png"
+   }
+  ]
+ },
+ {
+  "id": "level-3-left-0-frame-incorrect",
+  "name": "Incorrect",
+  "visible": false,
+  "parentId": "level-3-left-0",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 709,
+    "y": 297
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-3/left-frame-incorrect.png"
+   }
+  ]
+ },
+ {
+  "id": "level-3-left-0-index",
+  "name": "Index",
+  "visible": true,
+  "parentId": "level-3-left-0",
+  "rect": {
+   "position": {
+    "x": -314.5,
+    "y": 0
+   },
+   "size": {
+    "x": 18,
+    "y": 69
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-3/index/1.png"
+   }
+  ]
+ },
+ {
+  "id": "level-3-left-0-point",
+  "name": "Point",
+  "visible": true,
+  "parentId": "level-3-left-0",
+  "rect": {
+   "position": {
+    "x": 325.5,
+    "y": -6.5
+   },
+   "size": {
+    "x": 58,
+    "y": 58
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "level-3-left-0-text",
+  "name": "Text",
+  "visible": true,
+  "parentId": "level-3-left-0",
+  "rect": {
+   "position": {
+    "x": 17.5,
+    "y": 0
+   },
+   "size": {
+    "x": 534,
+    "y": 227
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "",
+    "fontSize": 4.17,
+    "autoSize": true,
+    "fontSizeMin": 1.85,
+    "fontSizeMax": 4.17,
+    "color": "#ffffff",
+    "bold": false,
+    "italic": false,
+    "underline": false,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "jetBrainsMono"
+   }
+  ]
+ },
+ {
+  "id": "level-3-left-1",
+  "name": "left 2",
+  "visible": true,
+  "parentId": "level-3-left",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 2.5
+   },
+   "size": {
+    "x": 709,
+    "y": 297
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "level-3-left-1-frame",
+  "name": "Normal",
+  "visible": true,
+  "parentId": "level-3-left-1",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 709,
+    "y": 297
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-3/left-frame.png"
+   }
+  ]
+ },
+ {
+  "id": "level-3-left-1-frame-correct",
+  "name": "Correct",
+  "visible": false,
+  "parentId": "level-3-left-1",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 709,
+    "y": 297
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-3/left-frame-correct.png"
+   }
+  ]
+ },
+ {
+  "id": "level-3-left-1-frame-incorrect",
+  "name": "Incorrect",
+  "visible": false,
+  "parentId": "level-3-left-1",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 709,
+    "y": 297
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-3/left-frame-incorrect.png"
+   }
+  ]
+ },
+ {
+  "id": "level-3-left-1-index",
+  "name": "Index",
+  "visible": true,
+  "parentId": "level-3-left-1",
+  "rect": {
+   "position": {
+    "x": -314.5,
+    "y": 0
+   },
+   "size": {
+    "x": 18,
+    "y": 69
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-3/index/2.png"
+   }
+  ]
+ },
+ {
+  "id": "level-3-left-1-point",
+  "name": "Point",
+  "visible": true,
+  "parentId": "level-3-left-1",
+  "rect": {
+   "position": {
+    "x": 325.5,
+    "y": -6.5
+   },
+   "size": {
+    "x": 58,
+    "y": 58
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "level-3-left-1-text",
+  "name": "Text",
+  "visible": true,
+  "parentId": "level-3-left-1",
+  "rect": {
+   "position": {
+    "x": 17.5,
+    "y": 0
+   },
+   "size": {
+    "x": 534,
+    "y": 227
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "",
+    "fontSize": 4.17,
+    "autoSize": true,
+    "fontSizeMin": 1.85,
+    "fontSizeMax": 4.17,
+    "color": "#ffffff",
+    "bold": false,
+    "italic": false,
+    "underline": false,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "jetBrainsMono"
+   }
+  ]
+ },
+ {
+  "id": "level-3-left-2",
+  "name": "left 3",
+  "visible": true,
+  "parentId": "level-3-left",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": -309.5
+   },
+   "size": {
+    "x": 709,
+    "y": 297
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "level-3-left-2-frame",
+  "name": "Normal",
+  "visible": true,
+  "parentId": "level-3-left-2",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 709,
+    "y": 297
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-3/left-frame.png"
+   }
+  ]
+ },
+ {
+  "id": "level-3-left-2-frame-correct",
+  "name": "Correct",
+  "visible": false,
+  "parentId": "level-3-left-2",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 709,
+    "y": 297
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-3/left-frame-correct.png"
+   }
+  ]
+ },
+ {
+  "id": "level-3-left-2-frame-incorrect",
+  "name": "Incorrect",
+  "visible": false,
+  "parentId": "level-3-left-2",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 709,
+    "y": 297
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-3/left-frame-incorrect.png"
+   }
+  ]
+ },
+ {
+  "id": "level-3-left-2-index",
+  "name": "Index",
+  "visible": true,
+  "parentId": "level-3-left-2",
+  "rect": {
+   "position": {
+    "x": -314.5,
+    "y": 0
+   },
+   "size": {
+    "x": 18,
+    "y": 69
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-3/index/3.png"
+   }
+  ]
+ },
+ {
+  "id": "level-3-left-2-point",
+  "name": "Point",
+  "visible": true,
+  "parentId": "level-3-left-2",
+  "rect": {
+   "position": {
+    "x": 325.5,
+    "y": -6.5
+   },
+   "size": {
+    "x": 58,
+    "y": 58
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "level-3-left-2-text",
+  "name": "Text",
+  "visible": true,
+  "parentId": "level-3-left-2",
+  "rect": {
+   "position": {
+    "x": 17.5,
+    "y": 0
+   },
+   "size": {
+    "x": 534,
+    "y": 227
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "",
+    "fontSize": 4.17,
+    "autoSize": true,
+    "fontSizeMin": 1.85,
+    "fontSizeMax": 4.17,
+    "color": "#ffffff",
+    "bold": false,
+    "italic": false,
+    "underline": false,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "jetBrainsMono"
+   }
+  ]
+ },
+ {
+  "id": "level-3-right",
+  "name": "right column",
+  "visible": true,
+  "parentId": "level-3",
+  "rect": {
+   "position": {
+    "x": 532,
+    "y": 0
+   },
+   "size": {
+    "x": 709,
+    "y": 1080
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "level-3-right-0",
+  "name": "right 1",
+  "visible": true,
+  "parentId": "level-3-right",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 314.5
+   },
+   "size": {
+    "x": 709,
+    "y": 297
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "level-3-right-0-frame",
+  "name": "Normal",
+  "visible": true,
+  "parentId": "level-3-right-0",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 709,
+    "y": 297
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-3/right-frame.png"
+   }
+  ]
+ },
+ {
+  "id": "level-3-right-0-frame-correct",
+  "name": "Correct",
+  "visible": false,
+  "parentId": "level-3-right-0",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 709,
+    "y": 297
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-3/right-frame-correct.png"
+   }
+  ]
+ },
+ {
+  "id": "level-3-right-0-frame-incorrect",
+  "name": "Incorrect",
+  "visible": false,
+  "parentId": "level-3-right-0",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 709,
+    "y": 297
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-3/right-frame-incorrect.png"
+   }
+  ]
+ },
+ {
+  "id": "level-3-right-0-index",
+  "name": "Index",
+  "visible": true,
+  "parentId": "level-3-right-0",
+  "rect": {
+   "position": {
+    "x": 316.5,
+    "y": 0
+   },
+   "size": {
+    "x": 34,
+    "y": 69
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-3/index/a.png"
+   }
+  ]
+ },
+ {
+  "id": "level-3-right-0-point",
+  "name": "Point",
+  "visible": true,
+  "parentId": "level-3-right-0",
+  "rect": {
+   "position": {
+    "x": -325.5,
+    "y": -6.5
+   },
+   "size": {
+    "x": 58,
+    "y": 58
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "level-3-right-0-text",
+  "name": "Text",
+  "visible": true,
+  "parentId": "level-3-right-0",
+  "rect": {
+   "position": {
+    "x": -17.5,
+    "y": 0
+   },
+   "size": {
+    "x": 534,
+    "y": 227
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "",
+    "fontSize": 4.17,
+    "autoSize": true,
+    "fontSizeMin": 1.85,
+    "fontSizeMax": 4.17,
+    "color": "#ffffff",
+    "bold": false,
+    "italic": false,
+    "underline": false,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "jetBrainsMono"
+   }
+  ]
+ },
+ {
+  "id": "level-3-right-1",
+  "name": "right 2",
+  "visible": true,
+  "parentId": "level-3-right",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 2.5
+   },
+   "size": {
+    "x": 709,
+    "y": 297
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "level-3-right-1-frame",
+  "name": "Normal",
+  "visible": true,
+  "parentId": "level-3-right-1",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 709,
+    "y": 297
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-3/right-frame.png"
+   }
+  ]
+ },
+ {
+  "id": "level-3-right-1-frame-correct",
+  "name": "Correct",
+  "visible": false,
+  "parentId": "level-3-right-1",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 709,
+    "y": 297
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-3/right-frame-correct.png"
+   }
+  ]
+ },
+ {
+  "id": "level-3-right-1-frame-incorrect",
+  "name": "Incorrect",
+  "visible": false,
+  "parentId": "level-3-right-1",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 709,
+    "y": 297
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-3/right-frame-incorrect.png"
+   }
+  ]
+ },
+ {
+  "id": "level-3-right-1-index",
+  "name": "Index",
+  "visible": true,
+  "parentId": "level-3-right-1",
+  "rect": {
+   "position": {
+    "x": 316.5,
+    "y": 0
+   },
+   "size": {
+    "x": 34,
+    "y": 69
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-3/index/b.png"
+   }
+  ]
+ },
+ {
+  "id": "level-3-right-1-point",
+  "name": "Point",
+  "visible": true,
+  "parentId": "level-3-right-1",
+  "rect": {
+   "position": {
+    "x": -325.5,
+    "y": -6.5
+   },
+   "size": {
+    "x": 58,
+    "y": 58
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "level-3-right-1-text",
+  "name": "Text",
+  "visible": true,
+  "parentId": "level-3-right-1",
+  "rect": {
+   "position": {
+    "x": -17.5,
+    "y": 0
+   },
+   "size": {
+    "x": 534,
+    "y": 227
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "",
+    "fontSize": 4.17,
+    "autoSize": true,
+    "fontSizeMin": 1.85,
+    "fontSizeMax": 4.17,
+    "color": "#ffffff",
+    "bold": false,
+    "italic": false,
+    "underline": false,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "jetBrainsMono"
+   }
+  ]
+ },
+ {
+  "id": "level-3-right-2",
+  "name": "right 3",
+  "visible": true,
+  "parentId": "level-3-right",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": -309.5
+   },
+   "size": {
+    "x": 709,
+    "y": 297
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "level-3-right-2-frame",
+  "name": "Normal",
+  "visible": true,
+  "parentId": "level-3-right-2",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 709,
+    "y": 297
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-3/right-frame.png"
+   }
+  ]
+ },
+ {
+  "id": "level-3-right-2-frame-correct",
+  "name": "Correct",
+  "visible": false,
+  "parentId": "level-3-right-2",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 709,
+    "y": 297
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-3/right-frame-correct.png"
+   }
+  ]
+ },
+ {
+  "id": "level-3-right-2-frame-incorrect",
+  "name": "Incorrect",
+  "visible": false,
+  "parentId": "level-3-right-2",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 709,
+    "y": 297
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-3/right-frame-incorrect.png"
+   }
+  ]
+ },
+ {
+  "id": "level-3-right-2-index",
+  "name": "Index",
+  "visible": true,
+  "parentId": "level-3-right-2",
+  "rect": {
+   "position": {
+    "x": 316.5,
+    "y": 0
+   },
+   "size": {
+    "x": 34,
+    "y": 69
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-3/index/c.png"
+   }
+  ]
+ },
+ {
+  "id": "level-3-right-2-point",
+  "name": "Point",
+  "visible": true,
+  "parentId": "level-3-right-2",
+  "rect": {
+   "position": {
+    "x": -325.5,
+    "y": -6.5
+   },
+   "size": {
+    "x": 58,
+    "y": 58
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "level-3-right-2-text",
+  "name": "Text",
+  "visible": true,
+  "parentId": "level-3-right-2",
+  "rect": {
+   "position": {
+    "x": -17.5,
+    "y": 0
+   },
+   "size": {
+    "x": 534,
+    "y": 227
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "",
+    "fontSize": 4.17,
+    "autoSize": true,
+    "fontSizeMin": 1.85,
+    "fontSizeMax": 4.17,
+    "color": "#ffffff",
+    "bold": false,
+    "italic": false,
+    "underline": false,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "jetBrainsMono"
+   }
+  ]
+ },
+ {
+  "id": "level-3-connectors",
+  "name": "Connectors",
+  "visible": true,
+  "parentId": "level-3",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 1920,
+    "y": 1080
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "level-4",
+  "name": "Level 4",
+  "visible": false,
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 1920,
+    "y": 1080
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "level-4-main",
+  "name": "Main Frame",
+  "visible": true,
+  "parentId": "level-4",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 7.35
+   },
+   "size": {
+    "x": 1462,
+    "y": 508.3
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "shake"
+   },
+   {
+    "type": "pop"
+   }
+  ]
+ },
+ {
+  "id": "level-4-question",
+  "name": "Question Frame",
+  "visible": true,
+  "parentId": "level-4-main",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 90.65
+   },
+   "size": {
+    "x": 1462,
+    "y": 327
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-4/main-frame.png"
+   }
+  ]
+ },
+ {
+  "id": "level-4-question-text",
+  "name": "Question",
+  "visible": true,
+  "parentId": "level-4-question",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 7.5
+   },
+   "size": {
+    "x": 1362,
+    "y": 172.5
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "",
+    "fontSize": 6.67,
+    "autoSize": true,
+    "fontSizeMin": 1.67,
+    "fontSizeMax": 6.67,
+    "color": "#ffffff",
+    "bold": false,
+    "italic": false,
+    "underline": false,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "jetBrainsMono"
+   }
+  ]
+ },
+ {
+  "id": "level-4-answer",
+  "name": "Answer Frame",
+  "visible": false,
+  "parentId": "level-4-main",
+  "rect": {
+   "position": {
+    "x": 203.4,
+    "y": -164.15
+   },
+   "size": {
+    "x": 1045,
+    "y": 180
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/reto-cruzado/level-4/answer-frame.png"
+   }
+  ]
+ },
+ {
+  "id": "level-4-answer-text",
+  "name": "Answer",
+  "visible": true,
+  "parentId": "level-4-answer",
+  "rect": {
+   "position": {
+    "x": 20,
+    "y": 2.5
+   },
+   "size": {
+    "x": 845,
+    "y": 87.83
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "",
+    "fontSize": 6.94,
+    "autoSize": true,
+    "fontSizeMin": 1.39,
+    "fontSizeMax": 6.94,
+    "color": "#ffffff",
+    "bold": false,
+    "italic": false,
+    "underline": false,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "jetBrainsMono"
+   }
+  ]
+ }
+]
