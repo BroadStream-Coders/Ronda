@@ -1,586 +1,2041 @@
 [
-  {
-    "id": "background",
-    "name": "Background",
-    "visible": true,
-    "rect": {
-      "position": { "x": 0, "y": 0 },
-      "size": { "x": 1920, "y": 1080 },
-      "pivot": { "x": 0.5, "y": 0.5 }
-    },
-    "parts": [
-      {
-        "type": "video",
-        "fit": "fill",
-        "muted": true,
-        "loop": true,
-        "src": "/programs/que-gane-el-mejor/shared/video/background-blue.mp4"
-      }
-    ]
+ {
+  "id": "background",
+  "name": "Background",
+  "visible": true,
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 1920,
+    "y": 1080
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
   },
-  {
-    "id": "main-frame",
-    "name": "MainFrame",
-    "visible": true,
-    "rect": {
-      "position": { "x": 0, "y": 115 },
-      "size": { "x": 1617, "y": 651 },
-      "pivot": { "x": 0.5, "y": 0.5 }
-    },
-    "parts": [
-      {
-        "type": "image",
-        "fit": "fill",
-        "src": "/programs/que-gane-el-mejor/games/intruso/level-1/main-frame.png"
-      }
-    ]
+  "parts": [
+   {
+    "type": "video",
+    "fit": "fill",
+    "muted": true,
+    "loop": true,
+    "src": "/programs/que-gane-el-mejor/shared/video/background-blue.mp4"
+   }
+  ]
+ },
+ {
+  "id": "level-1",
+  "name": "Level 1",
+  "visible": true,
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 1920,
+    "y": 1080
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
   },
-  {
-    "id": "mask",
-    "name": "Mask",
-    "visible": true,
-    "parentId": "main-frame",
-    "rect": {
-      "position": { "x": 0, "y": 8.5 },
-      "size": { "x": 1564.5, "y": 582 },
-      "pivot": { "x": 0.5, "y": 0.5 }
-    },
-    "parts": [
-      {
-        "type": "image",
-        "fit": "fill",
-        "src": "/programs/que-gane-el-mejor/games/intruso/level-1/mask.png"
-      },
-      { "type": "mask", "showImage": false }
-    ]
+  "parts": []
+ },
+ {
+  "id": "main-frame",
+  "name": "MainFrame",
+  "visible": true,
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 115
+   },
+   "size": {
+    "x": 1617,
+    "y": 651
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
   },
-  {
-    "id": "picture",
-    "name": "Picture",
-    "visible": true,
-    "parentId": "mask",
-    "rect": {
-      "position": { "x": 0, "y": 0 },
-      "size": { "x": 1564.5, "y": 582 },
-      "pivot": { "x": 0.5, "y": 0.5 }
-    },
-    "parts": [
-      {
-        "type": "image",
-        "fit": "contain",
-        "src": ""
-      }
-    ]
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/intruso/level-1/main-frame.png"
+   }
+  ],
+  "parentId": "level-1"
+ },
+ {
+  "id": "mask",
+  "name": "Mask",
+  "visible": true,
+  "parentId": "main-frame",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 8.5
+   },
+   "size": {
+    "x": 1564.5,
+    "y": 582
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
   },
-  {
-    "id": "options",
-    "name": "Options",
-    "visible": true,
-    "rect": {
-      "position": { "x": 0, "y": -348 },
-      "size": { "x": 1617, "y": 188 },
-      "pivot": { "x": 0.5, "y": 0.5 }
-    },
-    "parts": []
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/intruso/level-1/mask.png"
+   },
+   {
+    "type": "mask",
+    "showImage": false
+   }
+  ]
+ },
+ {
+  "id": "picture",
+  "name": "Picture",
+  "visible": true,
+  "parentId": "mask",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 1564.5,
+    "y": 582
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
   },
-  {
-    "id": "option-0",
-    "name": "Option 1",
-    "visible": true,
-    "parentId": "options",
-    "rect": {
-      "position": { "x": -610.125, "y": 0 },
-      "size": { "x": 392, "y": 188 },
-      "pivot": { "x": 0.5, "y": 0.5 }
-    },
-    "parts": []
+  "parts": [
+   {
+    "type": "image",
+    "fit": "contain",
+    "src": ""
+   }
+  ]
+ },
+ {
+  "id": "options",
+  "name": "Options",
+  "visible": true,
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": -348
+   },
+   "size": {
+    "x": 1617,
+    "y": 188
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
   },
-  {
-    "id": "option-0-frame",
-    "name": "FrameText",
-    "visible": true,
-    "parentId": "option-0",
-    "rect": {
-      "position": { "x": 0, "y": 37 },
-      "size": { "x": 392, "y": 114 },
-      "pivot": { "x": 0.5, "y": 0.5 }
-    },
-    "parts": []
+  "parts": [],
+  "parentId": "level-1"
+ },
+ {
+  "id": "option-0",
+  "name": "Option 1",
+  "visible": true,
+  "parentId": "options",
+  "rect": {
+   "position": {
+    "x": -610.125,
+    "y": 0
+   },
+   "size": {
+    "x": 392,
+    "y": 188
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
   },
-  {
-    "id": "option-0-frame-normal",
-    "name": "normalFrame",
-    "visible": true,
-    "parentId": "option-0-frame",
-    "rect": {
-      "position": { "x": 0, "y": 0 },
-      "size": { "x": 392, "y": 114 },
-      "pivot": { "x": 0.5, "y": 0.5 }
-    },
-    "parts": [
-      {
-        "type": "image",
-        "fit": "fill",
-        "src": "/programs/que-gane-el-mejor/games/intruso/level-1/normal-frame.png"
-      }
-    ]
+  "parts": []
+ },
+ {
+  "id": "option-0-frame",
+  "name": "FrameText",
+  "visible": true,
+  "parentId": "option-0",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 37
+   },
+   "size": {
+    "x": 392,
+    "y": 114
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
   },
-  {
-    "id": "option-0-frame-correct",
-    "name": "correctFrame",
-    "visible": false,
-    "parentId": "option-0-frame",
-    "rect": {
-      "position": { "x": 0, "y": 0 },
-      "size": { "x": 392, "y": 114 },
-      "pivot": { "x": 0.5, "y": 0.5 }
-    },
-    "parts": [
-      {
-        "type": "image",
-        "fit": "fill",
-        "src": "/programs/que-gane-el-mejor/games/intruso/level-1/correct-frame.png"
-      }
-    ]
+  "parts": []
+ },
+ {
+  "id": "option-0-frame-normal",
+  "name": "normalFrame",
+  "visible": true,
+  "parentId": "option-0-frame",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 392,
+    "y": 114
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
   },
-  {
-    "id": "option-0-frame-incorrect",
-    "name": "incorrectFrame",
-    "visible": false,
-    "parentId": "option-0-frame",
-    "rect": {
-      "position": { "x": 0, "y": 0 },
-      "size": { "x": 392, "y": 114 },
-      "pivot": { "x": 0.5, "y": 0.5 }
-    },
-    "parts": [
-      {
-        "type": "image",
-        "fit": "fill",
-        "src": "/programs/que-gane-el-mejor/games/intruso/level-1/incorrect-frame.png"
-      }
-    ]
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/intruso/level-1/normal-frame.png"
+   }
+  ]
+ },
+ {
+  "id": "option-0-frame-correct",
+  "name": "correctFrame",
+  "visible": false,
+  "parentId": "option-0-frame",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 392,
+    "y": 114
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
   },
-  {
-    "id": "option-0-text",
-    "name": "Text",
-    "visible": true,
-    "parentId": "option-0-frame",
-    "rect": {
-      "position": { "x": 0, "y": 6.75 },
-      "size": { "x": 352, "y": 80.5 },
-      "pivot": { "x": 0.5, "y": 0.5 }
-    },
-    "parts": [
-      {
-        "type": "text",
-        "text": "OPCIÓN 1",
-        "fontSize": 3.33,
-        "autoSize": true,
-        "fontSizeMin": 1.67,
-        "fontSizeMax": 3.7,
-        "color": "#ffffff",
-        "bold": false,
-        "italic": false,
-        "underline": false,
-        "alignH": "center",
-        "alignV": "middle",
-        "overflow": "wrap",
-        "fontKey": "geniusTechno"
-      }
-    ]
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/intruso/level-1/correct-frame.png"
+   }
+  ]
+ },
+ {
+  "id": "option-0-frame-incorrect",
+  "name": "incorrectFrame",
+  "visible": false,
+  "parentId": "option-0-frame",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 392,
+    "y": 114
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
   },
-  {
-    "id": "option-0-color",
-    "name": "Color",
-    "visible": true,
-    "parentId": "option-0",
-    "rect": {
-      "position": { "x": 0, "y": -62 },
-      "size": { "x": 184, "y": 64 },
-      "pivot": { "x": 0.5, "y": 0.5 }
-    },
-    "parts": [
-      {
-        "type": "image",
-        "fit": "fill",
-        "src": "/programs/que-gane-el-mejor/games/intruso/color/red.png"
-      }
-    ]
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/intruso/level-1/incorrect-frame.png"
+   }
+  ]
+ },
+ {
+  "id": "option-0-text",
+  "name": "Text",
+  "visible": true,
+  "parentId": "option-0-frame",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 6.75
+   },
+   "size": {
+    "x": 352,
+    "y": 80.5
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
   },
-  {
-    "id": "option-1",
-    "name": "Option 2",
-    "visible": true,
-    "parentId": "options",
-    "rect": {
-      "position": { "x": -203.375, "y": 0 },
-      "size": { "x": 392, "y": 188 },
-      "pivot": { "x": 0.5, "y": 0.5 }
-    },
-    "parts": []
+  "parts": [
+   {
+    "type": "text",
+    "text": "OPCIÓN 1",
+    "fontSize": 3.33,
+    "autoSize": true,
+    "fontSizeMin": 1.67,
+    "fontSizeMax": 3.7,
+    "color": "#ffffff",
+    "bold": false,
+    "italic": false,
+    "underline": false,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "geniusTechno"
+   }
+  ]
+ },
+ {
+  "id": "option-0-color",
+  "name": "Color",
+  "visible": true,
+  "parentId": "option-0",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": -62
+   },
+   "size": {
+    "x": 184,
+    "y": 64
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
   },
-  {
-    "id": "option-1-frame",
-    "name": "FrameText",
-    "visible": true,
-    "parentId": "option-1",
-    "rect": {
-      "position": { "x": 0, "y": 37 },
-      "size": { "x": 392, "y": 114 },
-      "pivot": { "x": 0.5, "y": 0.5 }
-    },
-    "parts": []
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/intruso/color/red.png"
+   }
+  ]
+ },
+ {
+  "id": "option-1",
+  "name": "Option 2",
+  "visible": true,
+  "parentId": "options",
+  "rect": {
+   "position": {
+    "x": -203.375,
+    "y": 0
+   },
+   "size": {
+    "x": 392,
+    "y": 188
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
   },
-  {
-    "id": "option-1-frame-normal",
-    "name": "normalFrame",
-    "visible": true,
-    "parentId": "option-1-frame",
-    "rect": {
-      "position": { "x": 0, "y": 0 },
-      "size": { "x": 392, "y": 114 },
-      "pivot": { "x": 0.5, "y": 0.5 }
-    },
-    "parts": [
-      {
-        "type": "image",
-        "fit": "fill",
-        "src": "/programs/que-gane-el-mejor/games/intruso/level-1/normal-frame.png"
-      }
-    ]
+  "parts": []
+ },
+ {
+  "id": "option-1-frame",
+  "name": "FrameText",
+  "visible": true,
+  "parentId": "option-1",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 37
+   },
+   "size": {
+    "x": 392,
+    "y": 114
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
   },
-  {
-    "id": "option-1-frame-correct",
-    "name": "correctFrame",
-    "visible": false,
-    "parentId": "option-1-frame",
-    "rect": {
-      "position": { "x": 0, "y": 0 },
-      "size": { "x": 392, "y": 114 },
-      "pivot": { "x": 0.5, "y": 0.5 }
-    },
-    "parts": [
-      {
-        "type": "image",
-        "fit": "fill",
-        "src": "/programs/que-gane-el-mejor/games/intruso/level-1/correct-frame.png"
-      }
-    ]
+  "parts": []
+ },
+ {
+  "id": "option-1-frame-normal",
+  "name": "normalFrame",
+  "visible": true,
+  "parentId": "option-1-frame",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 392,
+    "y": 114
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
   },
-  {
-    "id": "option-1-frame-incorrect",
-    "name": "incorrectFrame",
-    "visible": false,
-    "parentId": "option-1-frame",
-    "rect": {
-      "position": { "x": 0, "y": 0 },
-      "size": { "x": 392, "y": 114 },
-      "pivot": { "x": 0.5, "y": 0.5 }
-    },
-    "parts": [
-      {
-        "type": "image",
-        "fit": "fill",
-        "src": "/programs/que-gane-el-mejor/games/intruso/level-1/incorrect-frame.png"
-      }
-    ]
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/intruso/level-1/normal-frame.png"
+   }
+  ]
+ },
+ {
+  "id": "option-1-frame-correct",
+  "name": "correctFrame",
+  "visible": false,
+  "parentId": "option-1-frame",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 392,
+    "y": 114
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
   },
-  {
-    "id": "option-1-text",
-    "name": "Text",
-    "visible": true,
-    "parentId": "option-1-frame",
-    "rect": {
-      "position": { "x": 0, "y": 6.75 },
-      "size": { "x": 352, "y": 80.5 },
-      "pivot": { "x": 0.5, "y": 0.5 }
-    },
-    "parts": [
-      {
-        "type": "text",
-        "text": "OPCIÓN 2",
-        "fontSize": 3.33,
-        "autoSize": true,
-        "fontSizeMin": 1.67,
-        "fontSizeMax": 3.7,
-        "color": "#ffffff",
-        "bold": false,
-        "italic": false,
-        "underline": false,
-        "alignH": "center",
-        "alignV": "middle",
-        "overflow": "wrap",
-        "fontKey": "geniusTechno"
-      }
-    ]
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/intruso/level-1/correct-frame.png"
+   }
+  ]
+ },
+ {
+  "id": "option-1-frame-incorrect",
+  "name": "incorrectFrame",
+  "visible": false,
+  "parentId": "option-1-frame",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 392,
+    "y": 114
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
   },
-  {
-    "id": "option-1-color",
-    "name": "Color",
-    "visible": true,
-    "parentId": "option-1",
-    "rect": {
-      "position": { "x": 0, "y": -62 },
-      "size": { "x": 184, "y": 64 },
-      "pivot": { "x": 0.5, "y": 0.5 }
-    },
-    "parts": [
-      {
-        "type": "image",
-        "fit": "fill",
-        "src": "/programs/que-gane-el-mejor/games/intruso/color/green.png"
-      }
-    ]
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/intruso/level-1/incorrect-frame.png"
+   }
+  ]
+ },
+ {
+  "id": "option-1-text",
+  "name": "Text",
+  "visible": true,
+  "parentId": "option-1-frame",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 6.75
+   },
+   "size": {
+    "x": 352,
+    "y": 80.5
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
   },
-  {
-    "id": "option-2",
-    "name": "Option 3",
-    "visible": true,
-    "parentId": "options",
-    "rect": {
-      "position": { "x": 203.375, "y": 0 },
-      "size": { "x": 392, "y": 188 },
-      "pivot": { "x": 0.5, "y": 0.5 }
-    },
-    "parts": []
+  "parts": [
+   {
+    "type": "text",
+    "text": "OPCIÓN 2",
+    "fontSize": 3.33,
+    "autoSize": true,
+    "fontSizeMin": 1.67,
+    "fontSizeMax": 3.7,
+    "color": "#ffffff",
+    "bold": false,
+    "italic": false,
+    "underline": false,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "geniusTechno"
+   }
+  ]
+ },
+ {
+  "id": "option-1-color",
+  "name": "Color",
+  "visible": true,
+  "parentId": "option-1",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": -62
+   },
+   "size": {
+    "x": 184,
+    "y": 64
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
   },
-  {
-    "id": "option-2-frame",
-    "name": "FrameText",
-    "visible": true,
-    "parentId": "option-2",
-    "rect": {
-      "position": { "x": 0, "y": 37 },
-      "size": { "x": 392, "y": 114 },
-      "pivot": { "x": 0.5, "y": 0.5 }
-    },
-    "parts": []
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/intruso/color/green.png"
+   }
+  ]
+ },
+ {
+  "id": "option-2",
+  "name": "Option 3",
+  "visible": true,
+  "parentId": "options",
+  "rect": {
+   "position": {
+    "x": 203.375,
+    "y": 0
+   },
+   "size": {
+    "x": 392,
+    "y": 188
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
   },
-  {
-    "id": "option-2-frame-normal",
-    "name": "normalFrame",
-    "visible": true,
-    "parentId": "option-2-frame",
-    "rect": {
-      "position": { "x": 0, "y": 0 },
-      "size": { "x": 392, "y": 114 },
-      "pivot": { "x": 0.5, "y": 0.5 }
-    },
-    "parts": [
-      {
-        "type": "image",
-        "fit": "fill",
-        "src": "/programs/que-gane-el-mejor/games/intruso/level-1/normal-frame.png"
-      }
-    ]
+  "parts": []
+ },
+ {
+  "id": "option-2-frame",
+  "name": "FrameText",
+  "visible": true,
+  "parentId": "option-2",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 37
+   },
+   "size": {
+    "x": 392,
+    "y": 114
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
   },
-  {
-    "id": "option-2-frame-correct",
-    "name": "correctFrame",
-    "visible": false,
-    "parentId": "option-2-frame",
-    "rect": {
-      "position": { "x": 0, "y": 0 },
-      "size": { "x": 392, "y": 114 },
-      "pivot": { "x": 0.5, "y": 0.5 }
-    },
-    "parts": [
-      {
-        "type": "image",
-        "fit": "fill",
-        "src": "/programs/que-gane-el-mejor/games/intruso/level-1/correct-frame.png"
-      }
-    ]
+  "parts": []
+ },
+ {
+  "id": "option-2-frame-normal",
+  "name": "normalFrame",
+  "visible": true,
+  "parentId": "option-2-frame",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 392,
+    "y": 114
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
   },
-  {
-    "id": "option-2-frame-incorrect",
-    "name": "incorrectFrame",
-    "visible": false,
-    "parentId": "option-2-frame",
-    "rect": {
-      "position": { "x": 0, "y": 0 },
-      "size": { "x": 392, "y": 114 },
-      "pivot": { "x": 0.5, "y": 0.5 }
-    },
-    "parts": [
-      {
-        "type": "image",
-        "fit": "fill",
-        "src": "/programs/que-gane-el-mejor/games/intruso/level-1/incorrect-frame.png"
-      }
-    ]
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/intruso/level-1/normal-frame.png"
+   }
+  ]
+ },
+ {
+  "id": "option-2-frame-correct",
+  "name": "correctFrame",
+  "visible": false,
+  "parentId": "option-2-frame",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 392,
+    "y": 114
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
   },
-  {
-    "id": "option-2-text",
-    "name": "Text",
-    "visible": true,
-    "parentId": "option-2-frame",
-    "rect": {
-      "position": { "x": 0, "y": 6.75 },
-      "size": { "x": 352, "y": 80.5 },
-      "pivot": { "x": 0.5, "y": 0.5 }
-    },
-    "parts": [
-      {
-        "type": "text",
-        "text": "OPCIÓN 3",
-        "fontSize": 3.33,
-        "autoSize": true,
-        "fontSizeMin": 1.67,
-        "fontSizeMax": 3.7,
-        "color": "#ffffff",
-        "bold": false,
-        "italic": false,
-        "underline": false,
-        "alignH": "center",
-        "alignV": "middle",
-        "overflow": "wrap",
-        "fontKey": "geniusTechno"
-      }
-    ]
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/intruso/level-1/correct-frame.png"
+   }
+  ]
+ },
+ {
+  "id": "option-2-frame-incorrect",
+  "name": "incorrectFrame",
+  "visible": false,
+  "parentId": "option-2-frame",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 392,
+    "y": 114
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
   },
-  {
-    "id": "option-2-color",
-    "name": "Color",
-    "visible": true,
-    "parentId": "option-2",
-    "rect": {
-      "position": { "x": 0, "y": -62 },
-      "size": { "x": 184, "y": 64 },
-      "pivot": { "x": 0.5, "y": 0.5 }
-    },
-    "parts": [
-      {
-        "type": "image",
-        "fit": "fill",
-        "src": "/programs/que-gane-el-mejor/games/intruso/color/yellow.png"
-      }
-    ]
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/intruso/level-1/incorrect-frame.png"
+   }
+  ]
+ },
+ {
+  "id": "option-2-text",
+  "name": "Text",
+  "visible": true,
+  "parentId": "option-2-frame",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 6.75
+   },
+   "size": {
+    "x": 352,
+    "y": 80.5
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
   },
-  {
-    "id": "option-3",
-    "name": "Option 4",
-    "visible": true,
-    "parentId": "options",
-    "rect": {
-      "position": { "x": 610.125, "y": 0 },
-      "size": { "x": 392, "y": 188 },
-      "pivot": { "x": 0.5, "y": 0.5 }
-    },
-    "parts": []
+  "parts": [
+   {
+    "type": "text",
+    "text": "OPCIÓN 3",
+    "fontSize": 3.33,
+    "autoSize": true,
+    "fontSizeMin": 1.67,
+    "fontSizeMax": 3.7,
+    "color": "#ffffff",
+    "bold": false,
+    "italic": false,
+    "underline": false,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "geniusTechno"
+   }
+  ]
+ },
+ {
+  "id": "option-2-color",
+  "name": "Color",
+  "visible": true,
+  "parentId": "option-2",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": -62
+   },
+   "size": {
+    "x": 184,
+    "y": 64
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
   },
-  {
-    "id": "option-3-frame",
-    "name": "FrameText",
-    "visible": true,
-    "parentId": "option-3",
-    "rect": {
-      "position": { "x": 0, "y": 37 },
-      "size": { "x": 392, "y": 114 },
-      "pivot": { "x": 0.5, "y": 0.5 }
-    },
-    "parts": []
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/intruso/color/yellow.png"
+   }
+  ]
+ },
+ {
+  "id": "option-3",
+  "name": "Option 4",
+  "visible": true,
+  "parentId": "options",
+  "rect": {
+   "position": {
+    "x": 610.125,
+    "y": 0
+   },
+   "size": {
+    "x": 392,
+    "y": 188
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
   },
-  {
-    "id": "option-3-frame-normal",
-    "name": "normalFrame",
-    "visible": true,
-    "parentId": "option-3-frame",
-    "rect": {
-      "position": { "x": 0, "y": 0 },
-      "size": { "x": 392, "y": 114 },
-      "pivot": { "x": 0.5, "y": 0.5 }
-    },
-    "parts": [
-      {
-        "type": "image",
-        "fit": "fill",
-        "src": "/programs/que-gane-el-mejor/games/intruso/level-1/normal-frame.png"
-      }
-    ]
+  "parts": []
+ },
+ {
+  "id": "option-3-frame",
+  "name": "FrameText",
+  "visible": true,
+  "parentId": "option-3",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 37
+   },
+   "size": {
+    "x": 392,
+    "y": 114
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
   },
-  {
-    "id": "option-3-frame-correct",
-    "name": "correctFrame",
-    "visible": false,
-    "parentId": "option-3-frame",
-    "rect": {
-      "position": { "x": 0, "y": 0 },
-      "size": { "x": 392, "y": 114 },
-      "pivot": { "x": 0.5, "y": 0.5 }
-    },
-    "parts": [
-      {
-        "type": "image",
-        "fit": "fill",
-        "src": "/programs/que-gane-el-mejor/games/intruso/level-1/correct-frame.png"
-      }
-    ]
+  "parts": []
+ },
+ {
+  "id": "option-3-frame-normal",
+  "name": "normalFrame",
+  "visible": true,
+  "parentId": "option-3-frame",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 392,
+    "y": 114
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
   },
-  {
-    "id": "option-3-frame-incorrect",
-    "name": "incorrectFrame",
-    "visible": false,
-    "parentId": "option-3-frame",
-    "rect": {
-      "position": { "x": 0, "y": 0 },
-      "size": { "x": 392, "y": 114 },
-      "pivot": { "x": 0.5, "y": 0.5 }
-    },
-    "parts": [
-      {
-        "type": "image",
-        "fit": "fill",
-        "src": "/programs/que-gane-el-mejor/games/intruso/level-1/incorrect-frame.png"
-      }
-    ]
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/intruso/level-1/normal-frame.png"
+   }
+  ]
+ },
+ {
+  "id": "option-3-frame-correct",
+  "name": "correctFrame",
+  "visible": false,
+  "parentId": "option-3-frame",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 392,
+    "y": 114
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
   },
-  {
-    "id": "option-3-text",
-    "name": "Text",
-    "visible": true,
-    "parentId": "option-3-frame",
-    "rect": {
-      "position": { "x": 0, "y": 6.75 },
-      "size": { "x": 352, "y": 80.5 },
-      "pivot": { "x": 0.5, "y": 0.5 }
-    },
-    "parts": [
-      {
-        "type": "text",
-        "text": "OPCIÓN 4",
-        "fontSize": 3.33,
-        "autoSize": true,
-        "fontSizeMin": 1.67,
-        "fontSizeMax": 3.7,
-        "color": "#ffffff",
-        "bold": false,
-        "italic": false,
-        "underline": false,
-        "alignH": "center",
-        "alignV": "middle",
-        "overflow": "wrap",
-        "fontKey": "geniusTechno"
-      }
-    ]
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/intruso/level-1/correct-frame.png"
+   }
+  ]
+ },
+ {
+  "id": "option-3-frame-incorrect",
+  "name": "incorrectFrame",
+  "visible": false,
+  "parentId": "option-3-frame",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 392,
+    "y": 114
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
   },
-  {
-    "id": "option-3-color",
-    "name": "Color",
-    "visible": true,
-    "parentId": "option-3",
-    "rect": {
-      "position": { "x": 0, "y": -62 },
-      "size": { "x": 184, "y": 64 },
-      "pivot": { "x": 0.5, "y": 0.5 }
-    },
-    "parts": [
-      {
-        "type": "image",
-        "fit": "fill",
-        "src": "/programs/que-gane-el-mejor/games/intruso/color/blue.png"
-      }
-    ]
-  }
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/intruso/level-1/incorrect-frame.png"
+   }
+  ]
+ },
+ {
+  "id": "option-3-text",
+  "name": "Text",
+  "visible": true,
+  "parentId": "option-3-frame",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 6.75
+   },
+   "size": {
+    "x": 352,
+    "y": 80.5
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "OPCIÓN 4",
+    "fontSize": 3.33,
+    "autoSize": true,
+    "fontSizeMin": 1.67,
+    "fontSizeMax": 3.7,
+    "color": "#ffffff",
+    "bold": false,
+    "italic": false,
+    "underline": false,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "geniusTechno"
+   }
+  ]
+ },
+ {
+  "id": "option-3-color",
+  "name": "Color",
+  "visible": true,
+  "parentId": "option-3",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": -62
+   },
+   "size": {
+    "x": 184,
+    "y": 64
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/intruso/color/blue.png"
+   }
+  ]
+ },
+ {
+  "id": "level-2",
+  "name": "Level 2",
+  "visible": false,
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 1920,
+    "y": 1080
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "photos",
+  "name": "Photos",
+  "visible": true,
+  "parentId": "level-2",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": -20
+   },
+   "size": {
+    "x": 1920,
+    "y": 850
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "photo-0",
+  "name": "Photo 1",
+  "visible": true,
+  "parentId": "photos",
+  "rect": {
+   "position": {
+    "x": -669,
+    "y": 0
+   },
+   "size": {
+    "x": 436,
+    "y": 850
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "photo-0-color",
+  "name": "Color",
+  "visible": true,
+  "parentId": "photo-0",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": -367.5
+   },
+   "size": {
+    "x": 184,
+    "y": 64
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/intruso/color/red.png"
+   }
+  ]
+ },
+ {
+  "id": "photo-0-card",
+  "name": "Frame Card",
+  "visible": true,
+  "parentId": "photo-0",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 140
+   },
+   "size": {
+    "x": 436,
+    "y": 570
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/intruso/level-2/picture-frame.png"
+   }
+  ]
+ },
+ {
+  "id": "photo-0-mask",
+  "name": "Mask",
+  "visible": true,
+  "parentId": "photo-0-card",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 390,
+    "y": 520
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/intruso/level-2/mask.png"
+   },
+   {
+    "type": "mask",
+    "showImage": false
+   }
+  ]
+ },
+ {
+  "id": "photo-0-picture",
+  "name": "Picture",
+  "visible": true,
+  "parentId": "photo-0-mask",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 390,
+    "y": 520
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "cover",
+    "src": ""
+   }
+  ]
+ },
+ {
+  "id": "photo-0-frame",
+  "name": "Frame Text",
+  "visible": true,
+  "parentId": "photo-0",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": -265
+   },
+   "size": {
+    "x": 425,
+    "y": 124
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "photo-0-frame-normal",
+  "name": "normal",
+  "visible": true,
+  "parentId": "photo-0-frame",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 425,
+    "y": 124
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/intruso/level-2/normal-frame.png"
+   }
+  ]
+ },
+ {
+  "id": "photo-0-frame-correct",
+  "name": "correct",
+  "visible": false,
+  "parentId": "photo-0-frame",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 425,
+    "y": 124
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/intruso/level-2/correct-frame.png"
+   }
+  ]
+ },
+ {
+  "id": "photo-0-frame-incorrect",
+  "name": "incorrect",
+  "visible": false,
+  "parentId": "photo-0-frame",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 425,
+    "y": 124
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/intruso/level-2/incorrect-frame.png"
+   }
+  ]
+ },
+ {
+  "id": "photo-0-text",
+  "name": "Text",
+  "visible": true,
+  "parentId": "photo-0-frame",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 7.5
+   },
+   "size": {
+    "x": 395,
+    "y": 79
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "",
+    "fontSize": 3.33,
+    "autoSize": true,
+    "fontSizeMin": 1.67,
+    "fontSizeMax": 3.7,
+    "color": "#ffffff",
+    "bold": true,
+    "italic": false,
+    "underline": false,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "geniusTechno"
+   }
+  ]
+ },
+ {
+  "id": "photo-1",
+  "name": "Photo 2",
+  "visible": true,
+  "parentId": "photos",
+  "rect": {
+   "position": {
+    "x": -223,
+    "y": 0
+   },
+   "size": {
+    "x": 436,
+    "y": 850
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "photo-1-color",
+  "name": "Color",
+  "visible": true,
+  "parentId": "photo-1",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": -367.5
+   },
+   "size": {
+    "x": 184,
+    "y": 64
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/intruso/color/green.png"
+   }
+  ]
+ },
+ {
+  "id": "photo-1-card",
+  "name": "Frame Card",
+  "visible": true,
+  "parentId": "photo-1",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 140
+   },
+   "size": {
+    "x": 436,
+    "y": 570
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/intruso/level-2/picture-frame.png"
+   }
+  ]
+ },
+ {
+  "id": "photo-1-mask",
+  "name": "Mask",
+  "visible": true,
+  "parentId": "photo-1-card",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 390,
+    "y": 520
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/intruso/level-2/mask.png"
+   },
+   {
+    "type": "mask",
+    "showImage": false
+   }
+  ]
+ },
+ {
+  "id": "photo-1-picture",
+  "name": "Picture",
+  "visible": true,
+  "parentId": "photo-1-mask",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 390,
+    "y": 520
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "cover",
+    "src": ""
+   }
+  ]
+ },
+ {
+  "id": "photo-1-frame",
+  "name": "Frame Text",
+  "visible": true,
+  "parentId": "photo-1",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": -265
+   },
+   "size": {
+    "x": 425,
+    "y": 124
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "photo-1-frame-normal",
+  "name": "normal",
+  "visible": true,
+  "parentId": "photo-1-frame",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 425,
+    "y": 124
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/intruso/level-2/normal-frame.png"
+   }
+  ]
+ },
+ {
+  "id": "photo-1-frame-correct",
+  "name": "correct",
+  "visible": false,
+  "parentId": "photo-1-frame",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 425,
+    "y": 124
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/intruso/level-2/correct-frame.png"
+   }
+  ]
+ },
+ {
+  "id": "photo-1-frame-incorrect",
+  "name": "incorrect",
+  "visible": false,
+  "parentId": "photo-1-frame",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 425,
+    "y": 124
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/intruso/level-2/incorrect-frame.png"
+   }
+  ]
+ },
+ {
+  "id": "photo-1-text",
+  "name": "Text",
+  "visible": true,
+  "parentId": "photo-1-frame",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 7.5
+   },
+   "size": {
+    "x": 395,
+    "y": 79
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "",
+    "fontSize": 3.33,
+    "autoSize": true,
+    "fontSizeMin": 1.67,
+    "fontSizeMax": 3.7,
+    "color": "#ffffff",
+    "bold": true,
+    "italic": false,
+    "underline": false,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "geniusTechno"
+   }
+  ]
+ },
+ {
+  "id": "photo-2",
+  "name": "Photo 3",
+  "visible": true,
+  "parentId": "photos",
+  "rect": {
+   "position": {
+    "x": 223,
+    "y": 0
+   },
+   "size": {
+    "x": 436,
+    "y": 850
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "photo-2-color",
+  "name": "Color",
+  "visible": true,
+  "parentId": "photo-2",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": -367.5
+   },
+   "size": {
+    "x": 184,
+    "y": 64
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/intruso/color/yellow.png"
+   }
+  ]
+ },
+ {
+  "id": "photo-2-card",
+  "name": "Frame Card",
+  "visible": true,
+  "parentId": "photo-2",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 140
+   },
+   "size": {
+    "x": 436,
+    "y": 570
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/intruso/level-2/picture-frame.png"
+   }
+  ]
+ },
+ {
+  "id": "photo-2-mask",
+  "name": "Mask",
+  "visible": true,
+  "parentId": "photo-2-card",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 390,
+    "y": 520
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/intruso/level-2/mask.png"
+   },
+   {
+    "type": "mask",
+    "showImage": false
+   }
+  ]
+ },
+ {
+  "id": "photo-2-picture",
+  "name": "Picture",
+  "visible": true,
+  "parentId": "photo-2-mask",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 390,
+    "y": 520
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "cover",
+    "src": ""
+   }
+  ]
+ },
+ {
+  "id": "photo-2-frame",
+  "name": "Frame Text",
+  "visible": true,
+  "parentId": "photo-2",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": -265
+   },
+   "size": {
+    "x": 425,
+    "y": 124
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "photo-2-frame-normal",
+  "name": "normal",
+  "visible": true,
+  "parentId": "photo-2-frame",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 425,
+    "y": 124
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/intruso/level-2/normal-frame.png"
+   }
+  ]
+ },
+ {
+  "id": "photo-2-frame-correct",
+  "name": "correct",
+  "visible": false,
+  "parentId": "photo-2-frame",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 425,
+    "y": 124
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/intruso/level-2/correct-frame.png"
+   }
+  ]
+ },
+ {
+  "id": "photo-2-frame-incorrect",
+  "name": "incorrect",
+  "visible": false,
+  "parentId": "photo-2-frame",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 425,
+    "y": 124
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/intruso/level-2/incorrect-frame.png"
+   }
+  ]
+ },
+ {
+  "id": "photo-2-text",
+  "name": "Text",
+  "visible": true,
+  "parentId": "photo-2-frame",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 7.5
+   },
+   "size": {
+    "x": 395,
+    "y": 79
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "",
+    "fontSize": 3.33,
+    "autoSize": true,
+    "fontSizeMin": 1.67,
+    "fontSizeMax": 3.7,
+    "color": "#ffffff",
+    "bold": true,
+    "italic": false,
+    "underline": false,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "geniusTechno"
+   }
+  ]
+ },
+ {
+  "id": "photo-3",
+  "name": "Photo 4",
+  "visible": true,
+  "parentId": "photos",
+  "rect": {
+   "position": {
+    "x": 669,
+    "y": 0
+   },
+   "size": {
+    "x": 436,
+    "y": 850
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "photo-3-color",
+  "name": "Color",
+  "visible": true,
+  "parentId": "photo-3",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": -367.5
+   },
+   "size": {
+    "x": 184,
+    "y": 64
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/intruso/color/blue.png"
+   }
+  ]
+ },
+ {
+  "id": "photo-3-card",
+  "name": "Frame Card",
+  "visible": true,
+  "parentId": "photo-3",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 140
+   },
+   "size": {
+    "x": 436,
+    "y": 570
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/intruso/level-2/picture-frame.png"
+   }
+  ]
+ },
+ {
+  "id": "photo-3-mask",
+  "name": "Mask",
+  "visible": true,
+  "parentId": "photo-3-card",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 390,
+    "y": 520
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/intruso/level-2/mask.png"
+   },
+   {
+    "type": "mask",
+    "showImage": false
+   }
+  ]
+ },
+ {
+  "id": "photo-3-picture",
+  "name": "Picture",
+  "visible": true,
+  "parentId": "photo-3-mask",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 390,
+    "y": 520
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "cover",
+    "src": ""
+   }
+  ]
+ },
+ {
+  "id": "photo-3-frame",
+  "name": "Frame Text",
+  "visible": true,
+  "parentId": "photo-3",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": -265
+   },
+   "size": {
+    "x": 425,
+    "y": 124
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": []
+ },
+ {
+  "id": "photo-3-frame-normal",
+  "name": "normal",
+  "visible": true,
+  "parentId": "photo-3-frame",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 425,
+    "y": 124
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/intruso/level-2/normal-frame.png"
+   }
+  ]
+ },
+ {
+  "id": "photo-3-frame-correct",
+  "name": "correct",
+  "visible": false,
+  "parentId": "photo-3-frame",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 425,
+    "y": 124
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/intruso/level-2/correct-frame.png"
+   }
+  ]
+ },
+ {
+  "id": "photo-3-frame-incorrect",
+  "name": "incorrect",
+  "visible": false,
+  "parentId": "photo-3-frame",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 0
+   },
+   "size": {
+    "x": 425,
+    "y": 124
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "image",
+    "fit": "fill",
+    "src": "/programs/que-gane-el-mejor/games/intruso/level-2/incorrect-frame.png"
+   }
+  ]
+ },
+ {
+  "id": "photo-3-text",
+  "name": "Text",
+  "visible": true,
+  "parentId": "photo-3-frame",
+  "rect": {
+   "position": {
+    "x": 0,
+    "y": 7.5
+   },
+   "size": {
+    "x": 395,
+    "y": 79
+   },
+   "pivot": {
+    "x": 0.5,
+    "y": 0.5
+   }
+  },
+  "parts": [
+   {
+    "type": "text",
+    "text": "",
+    "fontSize": 3.33,
+    "autoSize": true,
+    "fontSizeMin": 1.67,
+    "fontSizeMax": 3.7,
+    "color": "#ffffff",
+    "bold": true,
+    "italic": false,
+    "underline": false,
+    "alignH": "center",
+    "alignV": "middle",
+    "overflow": "wrap",
+    "fontKey": "geniusTechno"
+   }
+  ]
+ }
 ]
