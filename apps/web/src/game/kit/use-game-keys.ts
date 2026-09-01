@@ -25,6 +25,8 @@ export interface GameKeyHandlers {
   onClear?: () => void;
   /** Tecla L. */
   onLock?: () => void;
+  /** Shift + L: deshace todos los bloqueos. */
+  onUnlockAll?: () => void;
   /** Tecla A: revela y arranca la ronda. */
   onStart?: () => void;
   /** Tecla T: pausa o reanuda el cronómetro. */
@@ -57,6 +59,7 @@ const OPTION_KEYS: Record<string, number> = {
 };
 
 const SHIFT_KEY_MAP: Record<string, keyof GameKeyHandlers> = {
+  KeyL: "onUnlockAll",
   KeyU: "onInteractAll",
   KeyI: "onShowAnswerAll",
 };
