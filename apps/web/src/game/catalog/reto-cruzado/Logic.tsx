@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import {
   playSound,
+  shuffledOrder,
   useAnimations,
   useGameKeys,
   useGameSession,
@@ -15,6 +16,7 @@ import type {
   RetoCruzadoSession,
   RetoGroup,
 } from "./session";
+import type { ConnectorState } from "./parts/connector";
 
 const COURSE_SLOTS = 20;
 const COURSES_PER_ROW = 4;
@@ -62,6 +64,38 @@ function coursePosition(index: number, total: number) {
   return { x, y: COURSES_BOX.height / 2 - down };
 }
 
+const MATCH_ROWS = 3;
+const MATCH_INDEXES = Array.from({ length: MATCH_ROWS }, (_, index) => index);
+
+type Side = "left" | "right";
+
+const matchRowId = (side: Side, i: number) => `level-3-${side}-${i}`;
+const matchTextId = (side: Side, i: number) => `${matchRowId(side, i)}-text`;
+const matchPointId = (side: Side, i: number) => `${matchRowId(side, i)}-point`;
+const matchMarkId = (side: Side, i: number, mark: Mark) =>
+  mark === "normal"
+    ? `${matchRowId(side, i)}-frame`
+    : `${matchRowId(side, i)}-frame-${mark}`;
+const connectorId = (i: number) => `level-3-connector-${i}`;
+
+interface MatchState {
+  group: number;
+  question: number;
+  links: (number | null)[];
+  connector: number;
+  target: number;
+  validated: boolean;
+}
+
+const MATCH_START: MatchState = {
+  group: 0,
+  question: 0,
+  links: MATCH_INDEXES.map(() => null),
+  connector: -1,
+  target: -1,
+  validated: false,
+};
+
 interface ChoiceState {
   group: number;
   question: number;
@@ -91,6 +125,7 @@ interface Cursor {
   locked: boolean[];
   level1: ChoiceState;
   level2: ChoiceState;
+  level3: MatchState;
   level4: QaState;
 }
 
@@ -101,6 +136,7 @@ const START: Cursor = {
   locked: SLOTS.map(() => false),
   level1: CHOICE_START,
   level2: CHOICE_START,
+  level3: MATCH_START,
   level4: QA_START,
 };
 
@@ -198,6 +234,71 @@ export function RetoCruzadoLogic() {
     setVisible("level-4-answer", qaRevealed);
   }, [qaRevealed, setVisible]);
 
+  const matchGroups = groupsOf(session?.level3);
+  const match = cursor.level3;
+  const matchQuestion = matchGroups[match.group]?.questions[match.question];
+
+  const matchOrder = useMemo(
+    () => shuffledOrder(MATCH_ROWS, loadedAt + match.group * 31 + match.question),
+    [loadedAt, match.group, match.question],
+  );
+
+  useEffect(() => {
+    for (const i of MATCH_INDEXES) {
+      patch(matchTextId("left", i), "text", {
+        text: matchQuestion?.pairs[i]?.leftText ?? "",
+      });
+      patch(matchTextId("right", i), "text", {
+        text: matchQuestion?.pairs[matchOrder[i]]?.rightText ?? "",
+      });
+    }
+  }, [matchQuestion, matchOrder, patch]);
+
+  const matchValidated = match.validated;
+  const matchLinks = match.links;
+
+  const matchResult = useMemo(() => {
+    const left = MATCH_INDEXES.map(() => "normal" as Mark);
+    const right = MATCH_INDEXES.map(() => "normal" as Mark);
+    const line = MATCH_INDEXES.map(() => "normal" as ConnectorState);
+    if (!matchValidated) return { left, right, line };
+    for (const i of MATCH_INDEXES) {
+      const target = matchLinks[i];
+      if (target === null) continue;
+      const correct = matchOrder[target] === i;
+      line[i] = correct ? "correct" : "error";
+      left[i] = correct ? "correct" : "incorrect";
+      right[target] = correct ? "correct" : "incorrect";
+    }
+    return { left, right, line };
+  }, [matchValidated, matchLinks, matchOrder]);
+
+  const matchLines = matchResult.line;
+  useEffect(() => {
+    for (const i of MATCH_INDEXES) {
+      const target = matchLinks[i];
+      patch(connectorId(i), "connector", {
+        from: target === null ? undefined : matchPointId("left", i),
+        to: target === null ? undefined : matchPointId("right", target),
+        state: matchLines[i],
+      });
+    }
+  }, [matchLinks, matchLines, patch]);
+
+  const matchLeft = matchResult.left;
+  const matchRight = matchResult.right;
+  useEffect(() => {
+    for (const i of MATCH_INDEXES) {
+      for (const mark of MARKS) {
+        setVisible(matchMarkId("left", i, mark), matchLeft[i] === mark);
+        setVisible(matchMarkId("right", i, mark), matchRight[i] === mark);
+      }
+    }
+  }, [matchLeft, matchRight, setVisible]);
+
+  const updateMatch = (updater: (state: MatchState) => MatchState) =>
+    setCursor((c) => ({ ...c, level3: updater(c.level3) }));
+
   const updateChoice = (updater: (state: ChoiceState) => ChoiceState) =>
     setCursor((c) =>
       c.level === 1
@@ -220,6 +321,11 @@ export function RetoCruzadoLogic() {
       updateChoice(() => ({ ...CHOICE_START, group: index }));
       return;
     }
+    if (level === 3) {
+      if (index >= matchGroups.length) return;
+      updateMatch(() => ({ ...MATCH_START, group: index }));
+      return;
+    }
     if (level === 4) {
       if (index >= qaGroups.length) return;
       setCursor((c) => ({ ...c, level4: { ...QA_START, group: index } }));
@@ -232,6 +338,12 @@ export function RetoCruzadoLogic() {
       const group = choiceGroups(activeChoiceLevel)[activeChoice.group];
       if (!group || index >= group.questions.length) return;
       updateChoice((state) => ({ ...CHOICE_START, group: state.group, question: index }));
+      return;
+    }
+    if (level === 3) {
+      const group = matchGroups[match.group];
+      if (!group || index >= group.questions.length) return;
+      updateMatch((state) => ({ ...MATCH_START, group: state.group, question: index }));
       return;
     }
     if (level === 4) {
@@ -262,6 +374,17 @@ export function RetoCruzadoLogic() {
     },
     onNumber: goToQuestion,
     onLock: () => {
+      if (level === 3) {
+        if (match.connector < 0 || match.target < 0) return;
+        updateMatch((state) => ({
+          ...state,
+          validated: false,
+          links: state.links.map((value, i) =>
+            i === state.connector ? state.target : value,
+          ),
+        }));
+        return;
+      }
       if (level !== 0) return;
       const index = cursor.course;
       if (index < 0 || index >= courses.length) return;
@@ -276,11 +399,29 @@ export function RetoCruzadoLogic() {
       setCursor((c) => ({ ...c, locked: SLOTS.map(() => false) }));
     },
     onOption: (index) => {
+      if (level === 3) {
+        if (index >= MATCH_ROWS) return;
+        updateMatch((state) => ({ ...state, connector: index }));
+        return;
+      }
       if (level !== 1 && level !== 2) return;
       if (index >= OPTION_COUNT[activeChoiceLevel]) return;
       updateChoice((state) => ({ ...state, selected: index }));
     },
+    onTarget: (index) => {
+      if (level !== 3 || index >= MATCH_ROWS) return;
+      updateMatch((state) => ({ ...state, target: index }));
+    },
     onValidate: () => {
+      if (level === 3) {
+        const allCorrect = MATCH_INDEXES.every((i) => {
+          const target = match.links[i];
+          return target !== null && matchOrder[target] === i;
+        });
+        updateMatch((state) => ({ ...state, validated: true }));
+        playSound(allCorrect ? SOUNDS.correct : SOUNDS.incorrect);
+        return;
+      }
       if (level !== 1 && level !== 2) return;
       const question = choiceQuestion(activeChoiceLevel);
       if (!question || activeChoice.selected < 0) return;

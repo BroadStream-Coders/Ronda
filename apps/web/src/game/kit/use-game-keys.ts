@@ -15,6 +15,8 @@ export interface GameKeyHandlers {
   onShowAnswer?: () => void;
   /** Teclas Q/W/E/R. Si está definido, E deja de disparar onInteract. */
   onOption?: (index: number) => void;
+  /** Teclas A/S/D/F. Si está definido, A y F dejan de disparar onStart y onMarkError. */
+  onTarget?: (index: number) => void;
   /** Tecla V. */
   onValidate?: () => void;
   /** Tecla F. */
@@ -56,6 +58,13 @@ const OPTION_KEYS: Record<string, number> = {
   KeyW: 1,
   KeyE: 2,
   KeyR: 3,
+};
+
+const TARGET_KEYS: Record<string, number> = {
+  KeyA: 0,
+  KeyS: 1,
+  KeyD: 2,
+  KeyF: 3,
 };
 
 const SHIFT_KEY_MAP: Record<string, keyof GameKeyHandlers> = {
@@ -125,6 +134,12 @@ export function useGameKeys(handlers: GameKeyHandlers) {
       if (current.onOption && code in OPTION_KEYS) {
         event.preventDefault();
         current.onOption(OPTION_KEYS[code]);
+        return;
+      }
+
+      if (current.onTarget && code in TARGET_KEYS) {
+        event.preventDefault();
+        current.onTarget(TARGET_KEYS[code]);
         return;
       }
 
