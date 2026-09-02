@@ -124,33 +124,19 @@ cualquiera de estas tareas, no se repite acá.
   que produce su colector.
 - **Fecha:** 2026-08-20 · **Estado:** Abierto
 
-## [RM-109] Migrar Reto Cruzado desde Unity
-- **Objetivo:** traer el juego de cinco niveles. **No existe en Games**, así que la
-  fuente es Unity (`Games/RetoCruzado/`) y la guía es
-  [`docs/migracion-unity.md`](../migracion-unity.md). Colector: `reto-cruzado`.
-- **Cinco niveles, cinco mecánicas.** Son paneles del motor y las teclas mapean 1:1
-  con las que el kit ya tiene: `Insert` nivel 0 (lista de cursos, `L` tacha con
-  `blink`), `Home` nivel 1 (2 opciones L/R), `PageUp` nivel 2 (4 opciones A-D),
-  `Delete` nivel 3 (unir 3 pares), `End` nivel 4 (pregunta y respuesta que se
-  revela, con `shake` y `pop`). `PageDown` es el Splash.
-- **Lo único que el kit no tiene: el conector del nivel 3.** `Connector.cs` mide dos
-  marcos en pantalla, calcula ángulo y distancia, y hace crecer la línea en medio
-  segundo. Hay que medir en el DOM como hace el `drag` de Cronos ([[RM-069]]) y
-  dibujar una línea rotada y escalada. Es la pieza cara del port; el resto es
-  mecánico.
-- **Ojo — los niveles 1 y 2 no son el mismo layout.** Comparten gráficas pero uno
-  lleva 2 opciones y el otro 4, igual que el colector (`BINARY_OPTIONS` /
-  `MULTIPLE_OPTIONS`).
-- **Ojo — el nivel 0 es dinámico.** El colector permite hasta 20 cursos pero el
-  número varía; Unity instancia filas de 4 y las reparte con layout groups. Acá los
-  huecos se hornean al máximo y la lógica los coloca según cuántos vengan.
-- **Ojo — el nivel 3 baraja la columna derecha** en cada ronda: va con
-  `shuffledOrder`, no con `Math.random()`.
-- **Pendiente aparte:** el panel **Splash** es un video que todavía no está
-  convertido. Queda vacío hasta que exista el `.mp4`.
-- **Hecho cuando:** corre dentro de Que Gane El Mejor, es asignable y consume el
-  archivo que produce su colector.
-- **Fecha:** 2026-09-01 · **Estado:** En progreso (2026-09-01)
+## [RM-110] El panel Splash de Reto Cruzado
+- **Objetivo:** cablear el sexto panel del juego (`PageDown`), que en Unity es un
+  **video** y en Ronda quedó vacío al cerrar [[RM-109]].
+- **Qué falta:** el `.mp4`. El original vive en Unity sin convertir; va con la receta
+  de `CLAUDE.md` — H.264, `crf 18`, `preset slow`, 1080p, sin pista de audio — y se
+  guarda en `public/programs/que-gane-el-mejor/shared/video/` si lo comparten varios
+  juegos, o en el del juego si no.
+- **Lo que ya está:** el resto del panel. Solo hay que añadir el layer con la part
+  `video`, meterlo en `PRELOAD` y darle su tecla en `Logic.tsx`, que ya conmuta los
+  otros cinco.
+- **Hecho cuando:** `PageDown` muestra el video y el juego sigue teniendo los cinco
+  niveles anteriores intactos.
+- **Fecha:** 2026-09-01 · **Estado:** Abierto
 
 ## [RM-073] Migrar De Par en Par desde Unity
 - **Objetivo:** traer el juego de memoria con pares de cartas. **No existe en Games**,

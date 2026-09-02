@@ -13,6 +13,8 @@ import {
 } from "../src/game/catalog/album/assets.ts";
 import { PRELOAD as CRONOS_PRELOAD } from "../src/game/catalog/cronos/assets.ts";
 import { PRELOAD as RAYA_PRELOAD } from "../src/game/catalog/tres-en-raya/assets.ts";
+import { PRELOAD as RETO_PRELOAD } from "../src/game/catalog/reto-cruzado/assets.ts";
+import { coursePosition } from "../src/game/catalog/reto-cruzado/courses.ts";
 import { PRELOAD as VUELO_PRELOAD } from "../src/game/catalog/al-vuelo/assets.ts";
 import { correctOption } from "../src/game/catalog/al-vuelo/session.ts";
 
@@ -1522,3 +1524,132 @@ assert.equal(
 );
 
 console.log("galeria de fotos: checks ok");
+
+// --- el layout de reto cruzado contra lo que la logica espera ---
+
+const reto = JSON.parse(
+  readFileSync("src/game/catalog/reto-cruzado/layout.json", "utf8"),
+) as Layer[];
+
+const retoLayer = (id: string) => reto.find((layer) => layer.id === id);
+
+for (const src of RETO_PRELOAD) {
+  assert.ok(existsSync(`public${src}`), `asset declarado que no existe: ${src}`);
+}
+
+const retoVideo = findPart<{ type: "video"; src: string }>(reto, "background", "video");
+assert.ok(retoVideo, "'background' debe llevar una part 'video'");
+assert.ok(existsSync(`public${retoVideo.src}`), `el video de fondo no existe: ${retoVideo.src}`);
+
+// Los cinco niveles son paneles excluyentes. El 0 es el que arranca, como el
+// SetActiveOnlyPanel(0) del motor de Unity.
+for (let level = 0; level <= 4; level++) {
+  const layer = retoLayer(`level-${level}`);
+  assert.ok(layer, `falta el contenedor 'level-${level}'`);
+  assert.equal(layer.visible, level === 0, `'level-${level}' arranca ${level === 0 ? "prendido" : "apagado"}`);
+}
+
+for (let i = 0; i < 20; i++) {
+  const course = retoLayer(`course-${i}`);
+  assert.ok(course, `falta el layer 'course-${i}'`);
+  assert.equal(course.visible, false, `'course-${i}' arranca apagado`);
+  // Sin 'blink' tachar un curso no se ve y no hay error en consola.
+  assert.ok(partOf(course, "blink"), `'course-${i}' debe llevar la part 'blink'`);
+  assert.ok(findPart(reto, `course-${i}-text`, "text"), `'course-${i}-text' debe llevar 'text'`);
+  assert.equal(retoLayer(`course-${i}-frame`)?.visible, true, `'course-${i}-frame' arranca prendido`);
+  assert.equal(retoLayer(`course-${i}-frame-locked`)?.visible, false, `'course-${i}-frame-locked' arranca apagado`);
+}
+
+// El reparto lo calcula Logic imitando los layout groups de Unity: filas de 4,
+// centradas en los dos ejes, y una fila incompleta se centra sola.
+assert.deepEqual(coursePosition(0, 1), { x: 0, y: 0 }, "un curso queda centrado");
+assert.deepEqual([0, 1, 2].map((i) => coursePosition(i, 3).x), [-450, 0, 450], "tres cursos se centran");
+assert.deepEqual([0, 1, 2, 3].map((i) => coursePosition(i, 4).x), [-675, -225, 225, 675], "cuatro llenan la fila");
+assert.deepEqual([coursePosition(0, 6).y, coursePosition(4, 6).y], [77, -77], "seis cursos dan dos filas simetricas");
+assert.deepEqual([coursePosition(4, 6).x, coursePosition(5, 6).x], [-225, 225], "la fila incompleta se centra");
+assert.equal(coursePosition(0, 20).y - coursePosition(4, 20).y, 154, "entre filas hay 142 de alto mas 12 de gap");
+
+const RETO_MARKS = ["red", "green", "yellow", "blue"];
+const RETO_CELLS: [number, number, number[][]][] = [
+  [1, 2, [[-384.5, 0], [384.5, 0]]],
+  [2, 4, [[-386.25, 100], [386.25, 100], [-386.25, -100], [386.25, -100]]],
+];
+
+for (const [level, count, cells] of RETO_CELLS) {
+  assert.ok(findPart(reto, `level-${level}-question`, "text"), `'level-${level}-question' debe llevar 'text'`);
+  assert.equal(
+    reto.filter((l) => l.parentId === `level-${level}-options`).length,
+    count,
+    `el nivel ${level} tiene ${count} opciones`,
+  );
+
+  for (let i = 0; i < count; i++) {
+    const id = `level-${level}-option-${i}`;
+    // La rejilla de Unity se horneo aqui; si estas posiciones cambian, las
+    // opciones dejan de caer donde el marco de fondo las espera.
+    assert.deepEqual(retoLayer(id)?.rect.position, { x: cells[i][0], y: cells[i][1] }, `'${id}' va en la celda ${i}`);
+    assert.ok(findPart(reto, `${id}-text`, "text"), `'${id}-text' debe llevar 'text'`);
+
+    const mark = findPart<{ type: "image"; src: string }>(reto, `${id}-mark`, "image");
+    assert.ok(mark?.src.endsWith(`/colors/${RETO_MARKS[i]}.png`), `'${id}-mark' va en ${RETO_MARKS[i]}`);
+
+    const side = i % 2 === 0 ? "left" : "right";
+    for (const state of ["frame", "frame-correct", "frame-incorrect"]) {
+      const frame = retoLayer(`${id}-${state}`);
+      assert.ok(frame, `falta el layer '${id}-${state}'`);
+      const image = partOf<{ type: "image"; src: string }>(frame, "image");
+      assert.ok(image, `'${id}-${state}' debe llevar una part 'image'`);
+      assert.ok(RETO_PRELOAD.includes(image.src), `'${id}-${state}' se intercambia en vivo: debe estar en PRELOAD`);
+      assert.equal(frame.visible, state === "frame", `'${id}-${state}' arranca ${state === "frame" ? "prendido" : "apagado"}`);
+      // Izquierda y derecha no son la misma grafica: el marco esta recortado
+      // hacia su lado y confundirlas se ve al aire.
+      assert.ok(image.src.includes(`/${side}-frame`), `'${id}-${state}' usa la grafica ${side}`);
+    }
+  }
+}
+
+for (const side of ["left", "right"] as const) {
+  for (let i = 0; i < 3; i++) {
+    const id = `level-3-${side}-${i}`;
+    assert.ok(findPart(reto, `${id}-text`, "text"), `'${id}-text' debe llevar 'text'`);
+    // El conector mide este layer en el DOM para saber de donde sale la linea;
+    // sin el no dibuja nada y no avisa.
+    assert.ok(retoLayer(`${id}-point`), `falta el layer '${id}-point'`);
+    for (const state of ["frame", "frame-correct", "frame-incorrect"]) {
+      const frame = retoLayer(`${id}-${state}`);
+      assert.ok(frame, `falta el layer '${id}-${state}'`);
+      assert.equal(frame.visible, state === "frame", `'${id}-${state}' arranca ${state === "frame" ? "prendido" : "apagado"}`);
+    }
+  }
+}
+
+// Los puntos se miran de frente: si se espejan mal, las lineas salen por detras
+// de los marcos y cruzan la pantalla.
+assert.ok(retoLayer("level-3-left-0-point")!.rect.position.x > 0, "el punto izquierdo mira a la derecha");
+assert.ok(retoLayer("level-3-right-0-point")!.rect.position.x < 0, "el punto derecho mira a la izquierda");
+
+for (let i = 0; i < 3; i++) {
+  const connector = retoLayer(`level-3-connector-${i}`);
+  assert.ok(connector, `falta el layer 'level-3-connector-${i}'`);
+  assert.ok(partOf(connector, "connector"), `'level-3-connector-${i}' debe llevar la part 'connector'`);
+  // La part mide contra su propia caja: si no ocupara la pantalla entera, las
+  // lineas saldrian desplazadas.
+  assert.deepEqual(connector.rect.size, { x: 1920, y: 1080 }, `'level-3-connector-${i}' ocupa la pantalla`);
+}
+
+const retoMain = retoLayer("level-4-main");
+assert.ok(retoMain, "falta el layer 'level-4-main'");
+for (const type of ["shake", "pop"]) {
+  assert.ok(partOf(retoMain, type), `'level-4-main' debe llevar la part '${type}'`);
+}
+assert.equal(retoLayer("level-4-answer")?.visible, false, "'level-4-answer' arranca apagado: lo revela la M");
+for (const id of ["level-4-question-text", "level-4-answer-text"]) {
+  assert.ok(findPart(reto, id, "text"), `'${id}' debe llevar una part 'text'`);
+}
+
+const retoFonts = new Set(
+  reto.flatMap((l) => l.parts.map((p) => (p as { fontKey?: string }).fontKey).filter((k): k is string => Boolean(k))),
+);
+assert.deepEqual([...retoFonts], ["jetBrainsMono"], "las claves de fuente son las que declara la ficha");
+
+console.log("reto cruzado: checks ok");

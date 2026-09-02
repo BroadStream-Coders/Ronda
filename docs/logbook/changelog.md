@@ -12,6 +12,9 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [RM-109] Migrar Reto Cruzado desde Unity (2026-09-01 22:37)
+El juego más grande del catálogo: **183 layers y cinco niveles**, cada uno con su mecánica —lista de cursos, dos rondas de opción múltiple (2 y 4 opciones), unir pares y respuesta abierta—, conmutados con `Insert`/`Home`/`PageUp`/`Delete`/`End`, que son los `panelKeys` del motor de Unity. Se hornearon los `GridLayoutGroup` de los niveles 1 y 2 (las posiciones calculadas coincidieron con las que el editor tenía guardadas, salvo una obsoleta que se descartó) y el reparto dinámico del nivel 0, que Unity resuelve en runtime y acá calcula `coursePosition` — extraída a su propio módulo y probada en `check-game` con seis casos. Lo único nuevo del kit es la part **`connector`**: mide dos layers en el DOM, calcula largo y ángulo, y hace crecer la línea en medio segundo, todo en `cqw` para que no se deforme al escalar. Entraron también las teclas `A/S/D/F` como `onTarget`, un segundo grupo paralelo a `onOption`. Queda [[RM-110]]: el panel Splash, que es un video sin convertir.
+
 ## [RM-104] Nivel 2 de Intruso: las rondas de fotos (2026-09-01 14:35)
 El juego consume los `photoRounds` que el colector ya recolectaba y no leía nadie. Los layers existentes quedaron envueltos en `level-1` y el nivel 2 entra como `level-2` con sus 4 tarjetas, convertidas desde `PhotoChoiceView.prefab`; se conmutan con `Home`/`PageUp`, los mismos `panelKeys` de Unity. **Los dos niveles son independientes por construcción**: el cursor lleva estado separado (`text` y `photo`) y cada uno lee solo su array, así que una sesión con un solo nivel funciona. De paso se arregló un fallo del nivel 1 que ya existía: el guard exigía **4 opciones exactas** cuando el colector permite de 1 a 4, así que una ronda con 3 tumbaba el archivo entero. La descripción de la ronda de fotos no se dibuja, igual que en Unity. Queda [[TD-115]]: el colector sigue sin validar el nivel 2.
 

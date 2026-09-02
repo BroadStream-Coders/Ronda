@@ -11,17 +11,13 @@ import {
   useGameState,
 } from "@/game/kit";
 import { SOUNDS } from "./assets";
+import { COURSE_SLOTS, coursePosition } from "./courses";
 import type {
   RetoChoiceQuestion,
   RetoCruzadoSession,
   RetoGroup,
 } from "./session";
 import type { ConnectorState } from "./parts/connector";
-
-const COURSE_SLOTS = 20;
-const COURSES_PER_ROW = 4;
-const COURSE = { width: 438, height: 142, gap: 12 };
-const COURSES_BOX = { width: 1880, height: 850 };
 
 const MARKS = ["normal", "correct", "incorrect"] as const;
 type Mark = (typeof MARKS)[number];
@@ -44,25 +40,6 @@ const optionMarkId = (level: 1 | 2, i: number, mark: Mark) =>
     : `${optionId(level, i)}-frame-${mark}`;
 
 const OPTION_COUNT: Record<1 | 2, number> = { 1: 2, 2: 4 };
-
-function coursePosition(index: number, total: number) {
-  const rows = Math.ceil(total / COURSES_PER_ROW);
-  const row = Math.floor(index / COURSES_PER_ROW);
-  const column = index % COURSES_PER_ROW;
-  const inRow = Math.min(COURSES_PER_ROW, total - row * COURSES_PER_ROW);
-
-  const rowWidth = inRow * COURSE.width + (inRow - 1) * COURSE.gap;
-  const left = (COURSES_BOX.width - rowWidth) / 2;
-  const x =
-    left + column * (COURSE.width + COURSE.gap) + COURSE.width / 2 -
-    COURSES_BOX.width / 2;
-
-  const totalHeight = rows * COURSE.height + (rows - 1) * COURSE.gap;
-  const top = (COURSES_BOX.height - totalHeight) / 2;
-  const down = top + row * (COURSE.height + COURSE.gap) + COURSE.height / 2;
-
-  return { x, y: COURSES_BOX.height / 2 - down };
-}
 
 const MATCH_ROWS = 3;
 const MATCH_INDEXES = Array.from({ length: MATCH_ROWS }, (_, index) => index);
