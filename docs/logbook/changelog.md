@@ -12,6 +12,9 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [RM-111] El Stage ignora los gestos del navegador (2026-09-03 13:06)
+La pantalla del juego se opera con los dedos, y Chrome interpretaba el deslizamiento horizontal como navegación atrás/adelante. `overscroll-behavior: none` en `html` corta eso y el pull-to-refresh; `touch-action: none` en el contenedor del `Stage` mata el pan, el pinch-zoom y el zoom por doble toque dentro del escenario, y un `onContextMenu` con `preventDefault` mata el menú de pulsación larga. **Los deslizamientos desde el borde de Windows no se pueden bloquear desde la web** — eso es Chrome en modo kiosco o acceso asignado, y queda anotado en `CLAUDE.md`.
+
 ## [RM-109] Migrar Reto Cruzado desde Unity (2026-09-01 22:37)
 El juego más grande del catálogo: **183 layers y cinco niveles**, cada uno con su mecánica —lista de cursos, dos rondas de opción múltiple (2 y 4 opciones), unir pares y respuesta abierta—, conmutados con `Insert`/`Home`/`PageUp`/`Delete`/`End`, que son los `panelKeys` del motor de Unity. Se hornearon los `GridLayoutGroup` de los niveles 1 y 2 (las posiciones calculadas coincidieron con las que el editor tenía guardadas, salvo una obsoleta que se descartó) y el reparto dinámico del nivel 0, que Unity resuelve en runtime y acá calcula `coursePosition` — extraída a su propio módulo y probada en `check-game` con seis casos. Lo único nuevo del kit es la part **`connector`**: mide dos layers en el DOM, calcula largo y ángulo, y hace crecer la línea en medio segundo, todo en `cqw` para que no se deforme al escalar. Entraron también las teclas `A/S/D/F` como `onTarget`, un segundo grupo paralelo a `onOption`. Queda [[RM-110]]: el panel Splash, que es un video sin convertir.
 

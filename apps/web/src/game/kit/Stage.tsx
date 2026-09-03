@@ -61,8 +61,9 @@ export function Stage({ children, pointer = false, onReady }: StageProps) {
     <div
       ref={containerRef}
       tabIndex={-1}
+      onContextMenu={(event) => event.preventDefault()}
       className={cn(
-        "relative flex select-none items-center justify-center overflow-hidden bg-black outline-none [container-type:size]",
+        "relative flex touch-none select-none items-center justify-center overflow-hidden bg-black outline-none [container-type:size]",
         isFullscreen ? "h-screen w-screen" : "min-h-0 w-full flex-1",
         isFullscreen && !pointerVisible && "cursor-none",
       )}

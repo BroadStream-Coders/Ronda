@@ -152,6 +152,16 @@ Ver [README.md](README.md) para el panorama y `docs/logbook/` para el estado.
   `cqw`/`cqh`/`cqi`, **nunca** en `vw`/`rem`/`px`. Es lo que hace que la vista en
   ventana y en pantalla completa sean idénticas; usar unidades de viewport rompe eso.
 
+- **El juego se toca con los dedos, así que el Stage ignora los gestos del navegador.**
+  Chrome lee un deslizamiento horizontal como navegación atrás/adelante y uno vertical
+  como pull-to-refresh; con un tablero que se opera tocando cartas eso saca al juego del
+  aire. El bloqueo vive en dos sitios y no se reparte por juego: `overscroll-behavior:
+  none` en `html` (`globals.css`) y `touch-action: none` + `onContextMenu` con
+  `preventDefault` en el contenedor del `Stage`. **Lo que no se puede bloquear desde la
+  web son los deslizamientos desde el borde de Windows** (Centro de actividades, vista de
+  tareas): eso se resuelve en la máquina del estudio, con Chrome en modo kiosco
+  (`--kiosk`) o acceso asignado, y no hay CSS que lo evite.
+
 - **Sin comentarios en el código** salvo que se pidan; la deuda técnica se registra
   en `docs/logbook/technical-debt.md`, nunca como comentario.
 - **Idioma — regla dura:** todo lo que el usuario **no ve** va en **inglés** (tablas

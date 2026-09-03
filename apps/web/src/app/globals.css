@@ -127,7 +127,7 @@
     @apply bg-background text-foreground;
   }
   html {
-    @apply font-sans antialiased;
+    @apply font-sans antialiased overscroll-none;
   }
   ::selection {
     background: color-mix(in oklch, var(--primary) 22%, transparent);
