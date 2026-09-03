@@ -99,20 +99,43 @@ cualquiera de estas tareas, no se repite acá.
 - **Fecha:** 2026-08-13 · **Estado:** En progreso (2026-08-20)
 
 ## [RM-070] Portar Busca el Logo
-- **Objetivo:** traer el juego de Games. Colector: `busca-logo` (marcar dónde van los
-  logos en cada tablero). **Va último a propósito:** es el que puede romper supuestos
-  que hoy no molestan.
+- **Objetivo:** traer el juego, entero. **Un solo código para todo Busca Logo**: no se
+  abre otro RM por los tamaños de tablero ni por el táctil. Colector: `busca-logo`
+  (marcar dónde van los logos en cada tablero). **Va último a propósito:** es el que
+  puede romper supuestos que hoy no molestan.
+- **De dónde sale cada cosa:** las **gráficas de Unity**
+  (`TvPeru-QGEM-ManagedGames/Assets/_Project/Games/BuscaLogo/Graphic/`), las
+  **posiciones y la lógica de Games** (`src/app/workspaces/busca-logo/`). Verificado:
+  los PNG de `level_2` cuadran píxel a píxel con los rects del layout (252×232 el marco,
+  232×232 la cara), así que acá no aplica la trampa de Cronos.
+- **Los tres tamaños, no uno.** El colector ya ofrece `4x3`, `5x4` y `6x5`
+  (`VALID_BOARD_SIZES`) y `BuscaLogo.cs` los resuelve con `level1/2/3`. **Games solo
+  implementó `5x4`** y pinta un cartel "no disponible" para el resto: ese hueco se cierra
+  acá, no en otra tarea. Orden: `5x4` primero (es del que hay layout hecho), después los
+  otros dos.
+- **Es táctil.** La pantalla del estudio se opera con los dedos: tocar una carta la
+  **selecciona** (es lo que hacen `Card.cs` en Unity y el `CardView` de Games), y el
+  volteo, el bloqueo y el cambio de tablero siguen siendo del operador por teclado. La
+  part `click` sube de `catalog/tres-en-raya/` a `kit/` con esta tarea — Busca Logo es el
+  segundo juego que la pide, que era la condición. Los gestos del navegador ya no
+  estorban desde [[RM-111]].
+- **`emptyVariant` no está en Games.** Unity tiene una segunda cara para la carta vacía
+  y la conmuta para todo el tablero con las flechas izquierda/derecha
+  (`Level.SetVariantCards`). Se porta o se descarta explícitamente, pero no se olvida.
 - **Depende de:** nada nuevo. `flip` entró con [[RM-068]]; la part `text` y
   `playStagger`, con [[RM-063]].
-- **El riesgo real — 202 layers.** `bounce` y `slide` animan la posición escribiendo
-  en `useGameState` en cada frame, o sea un re-render de React por frame. Con los 4
-  layers de Deletreo no se nota y en Games funcionaba igual, pero acá son 202. Si se
-  arrastra, la salida es animar el transform del DOM en vez de la posición del
-  estado — y esa decisión afecta al kit entero, no solo a este juego.
-- **También:** su `layout.json` pesa ~100 KB, el más grande del catálogo.
-- **Hecho cuando:** corre dentro de un programa, es asignable, consume el archivo de
-  su colector y las animaciones van fluidas con los 202 layers en pantalla.
-- **Fecha:** 2026-08-20 · **Estado:** Abierto
+- **El riesgo de rendimiento es menor de lo que decía esta ficha.** El miedo eran
+  `bounce` y `slide`, que escriben la posición en `useGameState` por frame — pero
+  **Busca Logo no los usa**: anima con `flip`, que va por `motion` y no repinta React
+  por frame. Igual hay que medirlo con `flipAll` (20 cartas a la vez) antes de darlo por
+  cerrado; si se arrastra, la salida sigue siendo animar el transform del DOM, y esa
+  decisión afecta al kit entero.
+- **También:** su `layout.json` pesa ~100 KB, el más grande del catálogo. La conversión
+  `scene.json` → `layout.json` va con un script en `scripts/`, no a mano.
+- **Hecho cuando:** corre dentro de un programa, es asignable, consume el archivo de su
+  colector, responde al toque, pinta los tres tamaños de tablero y las animaciones van
+  fluidas con los 202 layers en pantalla.
+- **Fecha:** 2026-08-20 · **Estado:** En progreso (2026-09-03)
 
 ## [RM-071] Portar Operaciones Combinadas
 - **Objetivo:** traer el juego de Games. Colector: `operaciones-combinadas`
