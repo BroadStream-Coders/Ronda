@@ -4,7 +4,7 @@ import { geniusTechno } from "@/programs/que-gane-el-mejor/fonts/genius-techno";
 import layout from "./layout.json";
 import { meta } from "./meta";
 import { BuscaLogoLogic } from "./Logic";
-import { PRELOAD } from "./assets";
+import { PRELOAD } from "./constants";
 import { isBuscaLogoSession } from "./session";
 
 export const buscaLogo: GameType = {

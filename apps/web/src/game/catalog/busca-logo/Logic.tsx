@@ -10,29 +10,23 @@ import {
   useLayerClick,
   type Layer,
 } from "@/game/kit";
-import { EMPTY_FACES } from "./assets";
 import layout from "./layout.json";
 import {
-  BOARD_SIZE,
-  CARD_BACK_IDS,
-  CARD_COUNT,
-  CARD_EMPTY_IDS,
-  CARD_FRONT_IDS,
-  CARD_IDS,
-  CARD_LOCKED_IDS,
-  CARD_LOGO_IDS,
-  CARD_NORMAL_IDS,
-  CARD_SELECTED_IDS,
+  BOARD_SIZES,
+  EMPTY_FACES,
+  FALLBACK_LEVEL,
+  LEVELS,
   LEVEL_0_ID,
   LEVEL_0_MESSAGE_ID,
-  LEVEL_2_ID,
+  LEVEL_LIST,
+  MAX_CARDS,
+  type LevelSpec,
 } from "./constants";
 import type { BuscaLogoSession } from "./session";
 
 const FLIP_STEP_MS = 40;
 
-const CARDS = Array.from({ length: CARD_COUNT }, (_, index) => index);
-const NO_LOCKS = CARDS.map(() => false);
+const NO_LOCKS = Array.from({ length: MAX_CARDS }, () => false);
 
 interface Cursor {
   loadedAt: number;
@@ -63,74 +57,87 @@ export function BuscaLogoLogic() {
 
   const boards = session?.boards ?? [];
   const board = boards[cursor.board];
-  const supported = board?.size === BOARD_SIZE;
+  const level: LevelSpec | undefined = board
+    ? LEVELS[board.size]
+    : FALLBACK_LEVEL;
 
-  const faceUpRef = useRef<boolean[]>(CARDS.map(() => false));
-  const flippingRef = useRef(new Set<number>());
+  const faceUpRef = useRef(new Set<string>());
+  const flippingRef = useRef(new Set<string>());
 
   useEffect(() => {
-    setVisible(LEVEL_2_ID, !board || supported);
-    setVisible(LEVEL_0_ID, !!board && !supported);
-    if (board && !supported) {
+    for (const spec of LEVEL_LIST) setVisible(spec.id, spec === level);
+    setVisible(LEVEL_0_ID, !!board && !level);
+    if (board && !level) {
       patch(LEVEL_0_MESSAGE_ID, "text", {
-        text: `Tablero ${cursor.board + 1} · formato ${board.size}\nNo disponible: solo está implementado ${BOARD_SIZE}`,
+        text: `Tablero ${cursor.board + 1} · formato ${board.size}\nLos formatos disponibles son ${BOARD_SIZES.join(", ")}`,
       });
     }
-  }, [board, supported, cursor.board, patch, setVisible]);
+  }, [board, level, cursor.board, patch, setVisible]);
 
   useEffect(() => {
+    if (!level) return;
     const logos = new Set(board?.logoPositions ?? []);
-    faceUpRef.current = CARDS.map(() => false);
-    for (const i of CARDS) {
-      setVisible(CARD_BACK_IDS[i], true);
-      setVisible(CARD_FRONT_IDS[i], false);
-      setVisible(CARD_EMPTY_IDS[i], !logos.has(i));
-      setVisible(CARD_LOGO_IDS[i], logos.has(i));
+    faceUpRef.current = new Set();
+    for (let i = 0; i < level.count; i++) {
+      setVisible(level.backs[i], true);
+      setVisible(level.fronts[i], false);
+      setVisible(level.empties[i], !logos.has(i));
+      setVisible(level.logos[i], logos.has(i));
     }
-  }, [board, setVisible]);
+  }, [board, level, setVisible]);
 
   const { selected, locked, variant } = cursor;
 
   useEffect(() => {
-    for (const i of CARDS) {
+    if (!level) return;
+    for (let i = 0; i < level.count; i++) {
       const isLocked = locked[i] === true;
-      setVisible(CARD_LOCKED_IDS[i], isLocked);
-      setVisible(CARD_SELECTED_IDS[i], !isLocked && selected === i);
-      setVisible(CARD_NORMAL_IDS[i], !isLocked && selected !== i);
+      setVisible(level.lockeds[i], isLocked);
+      setVisible(level.selecteds[i], !isLocked && selected === i);
+      setVisible(level.normals[i], !isLocked && selected !== i);
     }
-  }, [selected, locked, setVisible]);
+  }, [selected, locked, level, setVisible]);
 
   useEffect(() => {
-    const src = variant ? EMPTY_FACES.variant : EMPTY_FACES.normal;
-    for (const i of CARDS) patch(CARD_EMPTY_IDS[i], "image", { src });
-  }, [variant, patch]);
+    if (!level) return;
+    const faces = EMPTY_FACES[level.id];
+    const src = variant ? faces.variant : faces.normal;
+    for (let i = 0; i < level.count; i++) {
+      patch(level.empties[i], "image", { src });
+    }
+  }, [variant, level, patch]);
 
-  const flipCard = async (i: number, up: boolean) => {
-    if (i < 0 || flippingRef.current.has(i)) return;
-    if (faceUpRef.current[i] === up) return;
-    flippingRef.current.add(i);
+  const flipCard = async (index: number, up: boolean) => {
+    if (!level || index < 0 || index >= level.count) return;
+    const id = level.cards[index];
+    if (flippingRef.current.has(id)) return;
+    if (faceUpRef.current.has(id) === up) return;
+    flippingRef.current.add(id);
     try {
-      await play(CARD_IDS[i], "flipHide");
-      faceUpRef.current[i] = up;
-      setVisible(CARD_BACK_IDS[i], !up);
-      setVisible(CARD_FRONT_IDS[i], up);
-      await play(CARD_IDS[i], "flipShow");
+      await play(id, "flipHide");
+      if (up) faceUpRef.current.add(id);
+      else faceUpRef.current.delete(id);
+      setVisible(level.backs[index], !up);
+      setVisible(level.fronts[index], up);
+      await play(id, "flipShow");
     } finally {
-      flippingRef.current.delete(i);
+      flippingRef.current.delete(id);
     }
   };
 
   const flipAll = (up: boolean) => {
-    for (const i of CARDS) {
+    if (!level) return;
+    for (let i = 0; i < level.count; i++) {
       window.setTimeout(() => void flipCard(i, up), i * FLIP_STEP_MS);
     }
   };
 
   useLayerClick(layout as Layer[], (layerId) => {
-    const match = /^card-(\d+)$/.exec(layerId);
-    if (!match) return;
-    const index = Number(match[1]);
-    if (index >= CARD_COUNT) return;
+    if (!level) return;
+    const prefix = `${level.id}-card-`;
+    if (!layerId.startsWith(prefix)) return;
+    const index = Number(layerId.slice(prefix.length));
+    if (!Number.isInteger(index) || index >= level.count) return;
     setCursor((c) => ({ ...c, selected: index }));
   });
 

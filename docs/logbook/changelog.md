@@ -12,6 +12,9 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [RM-070] Portar Busca el Logo (2026-09-03 15:01)
+El último juego que quedaba de Games, y el primero pensado para **pantalla táctil**: tocar una carta la selecciona, y voltear, bloquear y cambiar de tablero siguen siendo del operador por teclado. Entró completo, con los **tres tamaños de tablero** que el colector ofrece y que Games nunca implementó: el `5x4` se convirtió desde su `scene.json`, y el `4x3` y el `6x5` se hornearon reimplementando el `GridLayoutGroup` de Unity —constraint Flexible, MiddleCenter, padding cero— desde `BuscaLogo.prefab`. La comprobación fue que el algoritmo reprodujera al decimal los dos niveles que el prefab sí trae horneados, y que su `5x4` saliera idéntico al que ya venía de Games. Son **626 layers**; el miedo del rendimiento no se materializó porque `flip` anima el transform del DOM por `motion` y no repinta React (`applyState` cuesta 0,01 ms por render). También se portó `emptyVariant` (flechas ←/→), que existía en Unity y Games nunca trajo. Del kit salió [[RM-111]] y `useLayerClick`. Queda [[RM-071]], que del otro lado es un prototipo.
+
 ## [RM-111] El Stage ignora los gestos del navegador (2026-09-03 13:06)
 La pantalla del juego se opera con los dedos, y Chrome interpretaba el deslizamiento horizontal como navegación atrás/adelante. `overscroll-behavior: none` en `html` corta eso y el pull-to-refresh; `touch-action: none` en el contenedor del `Stage` mata el pan, el pinch-zoom y el zoom por doble toque dentro del escenario, y un `onContextMenu` con `preventDefault` mata el menú de pulsación larga. **Los deslizamientos desde el borde de Windows no se pueden bloquear desde la web** — eso es Chrome en modo kiosco o acceso asignado, y queda anotado en `CLAUDE.md`.
 

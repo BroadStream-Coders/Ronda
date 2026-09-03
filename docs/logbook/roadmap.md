@@ -74,8 +74,9 @@ cualquiera de estas tareas, no se repite acá.
      También el primero con imágenes de sesión, Intruso ([[RM-067]]), y Álbum
      ([[RM-068]]), que trajo el grupo de animaciones que compartía con Cronos y el
      `flip` que esperaban Busca Logo y De Par en Par. También Cronos ([[RM-069]]), que trajo el drag & drop, el cronómetro y el
-     cursor visible. Quedan Busca Logo al final, que es el que puede romper
-     supuestos de rendimiento, y Operaciones Combinadas aparte, porque del otro
+     cursor visible. Y Busca Logo ([[RM-070]]), que iba al final por el miedo al
+     rendimiento con 202 layers — resultó infundado, porque anima con `flip` y no
+     con `bounce`/`slide`. Queda Operaciones Combinadas aparte, porque del otro
      lado es un prototipo.
   2. **~~La ficha debe declarar su colector.~~ Ya no hace falta.** Existía por un
      solo caso: el colector `si-o-no` alimentaba al juego **Al Vuelo**. Ese colector
@@ -97,45 +98,6 @@ cualquiera de estas tareas, no se repite acá.
   hechas; los 10 juegos de Games más De Par en Par corren dentro de un programa y
   son asignables.
 - **Fecha:** 2026-08-13 · **Estado:** En progreso (2026-08-20)
-
-## [RM-070] Portar Busca el Logo
-- **Objetivo:** traer el juego, entero. **Un solo código para todo Busca Logo**: no se
-  abre otro RM por los tamaños de tablero ni por el táctil. Colector: `busca-logo`
-  (marcar dónde van los logos en cada tablero). **Va último a propósito:** es el que
-  puede romper supuestos que hoy no molestan.
-- **De dónde sale cada cosa:** las **gráficas de Unity**
-  (`TvPeru-QGEM-ManagedGames/Assets/_Project/Games/BuscaLogo/Graphic/`), las
-  **posiciones y la lógica de Games** (`src/app/workspaces/busca-logo/`). Verificado:
-  los PNG de `level_2` cuadran píxel a píxel con los rects del layout (252×232 el marco,
-  232×232 la cara), así que acá no aplica la trampa de Cronos.
-- **Los tres tamaños, no uno.** El colector ya ofrece `4x3`, `5x4` y `6x5`
-  (`VALID_BOARD_SIZES`) y `BuscaLogo.cs` los resuelve con `level1/2/3`. **Games solo
-  implementó `5x4`** y pinta un cartel "no disponible" para el resto: ese hueco se cierra
-  acá, no en otra tarea. Orden: `5x4` primero (es del que hay layout hecho), después los
-  otros dos.
-- **Es táctil.** La pantalla del estudio se opera con los dedos: tocar una carta la
-  **selecciona** (es lo que hacen `Card.cs` en Unity y el `CardView` de Games), y el
-  volteo, el bloqueo y el cambio de tablero siguen siendo del operador por teclado. La
-  part `click` sube de `catalog/tres-en-raya/` a `kit/` con esta tarea — Busca Logo es el
-  segundo juego que la pide, que era la condición. Los gestos del navegador ya no
-  estorban desde [[RM-111]].
-- **`emptyVariant` no está en Games.** Unity tiene una segunda cara para la carta vacía
-  y la conmuta para todo el tablero con las flechas izquierda/derecha
-  (`Level.SetVariantCards`). Se porta o se descarta explícitamente, pero no se olvida.
-- **Depende de:** nada nuevo. `flip` entró con [[RM-068]]; la part `text` y
-  `playStagger`, con [[RM-063]].
-- **~~El riesgo de rendimiento.~~ Descartado.** El miedo eran `bounce` y `slide`, que
-  escriben la posición en `useGameState` por frame — pero **Busca Logo no los usa**:
-  anima con `flip`, que va por `motion` sobre el transform del DOM y no repinta React
-  por frame. `Shift+U` son 40 escrituras al store repartidas en 800 ms, y `applyState`
-  sobre los 204 layers cuesta **0,01 ms**. No hace falta mover las animaciones al DOM,
-  ni acá ni en el kit. Queda por confirmar a ojo en la máquina del estudio.
-- **También:** su `layout.json` pesa ~100 KB, el más grande del catálogo. La conversión
-  `scene.json` → `layout.json` va con un script en `scripts/`, no a mano.
-- **Hecho cuando:** corre dentro de un programa, es asignable, consume el archivo de su
-  colector, responde al toque, pinta los tres tamaños de tablero y las animaciones van
-  fluidas con los 202 layers en pantalla.
-- **Fecha:** 2026-08-20 · **Estado:** En progreso (2026-09-03)
 
 ## [RM-071] Portar Operaciones Combinadas
 - **Objetivo:** traer el juego de Games. Colector: `operaciones-combinadas`

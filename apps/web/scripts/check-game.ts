@@ -17,25 +17,16 @@ import { PRELOAD as RETO_PRELOAD } from "../src/game/catalog/reto-cruzado/assets
 import { coursePosition } from "../src/game/catalog/reto-cruzado/courses.ts";
 import { PRELOAD as VUELO_PRELOAD } from "../src/game/catalog/al-vuelo/assets.ts";
 import { correctOption } from "../src/game/catalog/al-vuelo/session.ts";
-import {
-  EMPTY_FACES,
-  PRELOAD as BUSCA_PRELOAD,
-} from "../src/game/catalog/busca-logo/assets.ts";
 import { isBuscaLogoSession } from "../src/game/catalog/busca-logo/session.ts";
 import {
-  BOARD_SIZE,
-  CARD_BACK_IDS,
-  CARD_COUNT,
-  CARD_EMPTY_IDS,
-  CARD_FRONT_IDS,
-  CARD_IDS,
-  CARD_LOCKED_IDS,
-  CARD_LOGO_IDS,
-  CARD_NORMAL_IDS,
-  CARD_SELECTED_IDS,
+  BOARD_SIZES,
+  EMPTY_FACES,
+  FALLBACK_LEVEL,
+  PRELOAD as BUSCA_PRELOAD,
+  LEVELS,
   LEVEL_0_ID,
   LEVEL_0_MESSAGE_ID,
-  LEVEL_2_ID,
+  LEVEL_LIST,
 } from "../src/game/catalog/busca-logo/constants.ts";
 
 import {
@@ -44,6 +35,7 @@ import {
   layerStyle,
   partOf,
   type Layer,
+  type Vec2,
 } from "../src/game/kit/layer.ts";
 import { applyState } from "../src/game/kit/state.ts";
 import { settingKey } from "../src/game/kit/use-game-setting.ts";
@@ -1674,6 +1666,7 @@ assert.deepEqual([...retoFonts], ["jetBrainsMono"], "las claves de fuente son la
 
 console.log("reto cruzado: checks ok");
 
+
 // --- el layout de busca el logo contra lo que la logica y el toque esperan ---
 
 const busca = JSON.parse(
@@ -1697,74 +1690,120 @@ assert.ok(
   `el video de fondo no existe: ${buscaVideo.src}`,
 );
 
-for (const id of [LEVEL_0_ID, LEVEL_2_ID]) {
-  assert.ok(buscaLayer(id), `falta el layer '${id}' (Logic conmuta entre los dos)`);
-}
+assert.ok(buscaLayer(LEVEL_0_ID), `falta el layer '${LEVEL_0_ID}'`);
 assert.ok(
   findPart(busca, LEVEL_0_MESSAGE_ID, "text"),
   `'${LEVEL_0_MESSAGE_ID}' debe llevar una part 'text': ahi va el aviso de formato no soportado`,
 );
 
-const BUSCA_COLUMN_X = [-482, -241, 0, 241, 482];
-const BUSCA_ROW_Y = [357, 119, -119, -357];
-const BUSCA_LETTERS = "ABCDE";
+// Las grillas van escritas a mano a proposito: el generador las calcula con el
+// algoritmo del GridLayoutGroup de Unity, asi que recalcularlas aca no probaria
+// nada. Estas son las que el prefab trae horneadas en los niveles 1 y 2.
+const BUSCA_GRIDS: Record<string, { x: number[]; y: number[]; card: Vec2 }> = {
+  "level-1": {
+    x: [-472.5, -157.5, 157.5, 472.5],
+    y: [315, 0, -315],
+    card: { x: 305, y: 305 },
+  },
+  "level-2": {
+    x: [-482, -241, 0, 241, 482],
+    y: [357, 119, -119, -357],
+    card: { x: 235, y: 232 },
+  },
+  "level-3": {
+    x: [-482.5, -289.5, -96.5, 96.5, 289.5, 482.5],
+    y: [386, 193, 0, -193, -386],
+    card: { x: 187, y: 187 },
+  },
+};
 
-assert.equal(
-  BUSCA_COLUMN_X.length * BUSCA_ROW_Y.length,
-  CARD_COUNT,
-  `la grilla de ${BOARD_SIZE} tiene que dar ${CARD_COUNT} cartas`,
+// El contrato entre las dos puntas: estos son los VALID_BOARD_SIZES del colector.
+// Van copiados porque su schema.ts importa por alias '@/collector' y este script
+// corre en node pelado; se unifican con RM-039.
+assert.deepEqual(
+  BOARD_SIZES,
+  ["4x3", "5x4", "6x5"],
+  "los formatos del juego son los que ofrece el colector",
 );
+for (const spec of LEVEL_LIST) {
+  assert.equal(LEVELS[spec.size], spec, `'${spec.id}' esta indexado por su propio formato`);
+}
 
-for (let i = 0; i < CARD_COUNT; i++) {
-  const card = buscaLayer(CARD_IDS[i]);
-  assert.ok(card, `falta el layer '${CARD_IDS[i]}'`);
-  // Sin 'flip' la carta cambia de cara de golpe; sin 'click' se ve perfecta y
-  // no responde al dedo, que es como se opera este juego.
-  for (const type of ["flip", "click"]) {
-    assert.ok(partOf(card, type), `'${CARD_IDS[i]}' debe llevar la part '${type}'`);
-  }
-  assert.equal(card.parentId, LEVEL_2_ID, `'${CARD_IDS[i]}' cuelga de '${LEVEL_2_ID}'`);
+for (const spec of LEVEL_LIST) {
+  const container = buscaLayer(spec.id);
+  assert.ok(container, `falta el contenedor '${spec.id}'`);
   assert.deepEqual(
-    card.rect.position,
-    { x: BUSCA_COLUMN_X[i % 5], y: BUSCA_ROW_Y[Math.floor(i / 5)] },
-    `'${CARD_IDS[i]}' fuera de su casilla en la grilla`,
+    container.rect.size,
+    { x: 1300, y: 1000 },
+    `'${spec.id}' mide lo mismo que los otros niveles: las grillas se centran dentro`,
   );
-
-  // useLayerClick sube por el arbol desde el elemento tocado: el dedo aterriza
-  // en la imagen, no en la carta. Si esta cadena se aplana, el toque se pierde.
-  assert.equal(buscaLayer(CARD_BACK_IDS[i])?.parentId, CARD_IDS[i], `'${CARD_BACK_IDS[i]}' cuelga de su carta`);
-  assert.equal(buscaLayer(CARD_FRONT_IDS[i])?.parentId, CARD_IDS[i], `'${CARD_FRONT_IDS[i]}' cuelga de su carta`);
-  for (const id of [CARD_NORMAL_IDS[i], CARD_SELECTED_IDS[i], CARD_LOCKED_IDS[i]]) {
-    assert.equal(buscaLayer(id)?.parentId, CARD_BACK_IDS[i], `'${id}' cuelga del reverso`);
-  }
-  for (const id of [CARD_EMPTY_IDS[i], CARD_LOGO_IDS[i]]) {
-    assert.equal(buscaLayer(id)?.parentId, CARD_FRONT_IDS[i], `'${id}' cuelga del anverso`);
-  }
-
-  // El tablero tiene que verse bien ANTES de que cargue una sesion: si estos
-  // arrancan encendidos se ven los tres estados apilados en el primer frame.
-  for (const id of [CARD_SELECTED_IDS[i], CARD_LOCKED_IDS[i], CARD_FRONT_IDS[i], CARD_LOGO_IDS[i]]) {
-    assert.equal(buscaLayer(id)?.visible, false, `'${id}' arranca apagado`);
-  }
-  for (const id of [CARD_BACK_IDS[i], CARD_NORMAL_IDS[i], CARD_EMPTY_IDS[i]]) {
-    assert.equal(buscaLayer(id)?.visible, true, `'${id}' arranca encendido`);
-  }
-
-  // Logic pisa este src con EMPTY_FACES al conmutar la variante (flechas): si el
-  // layout trae otra ruta, la primera pulsacion cambia la cara sin querer.
+  // Solo el nivel de arranque se ve sin sesion cargada; Logic apaga el resto.
   assert.equal(
-    findPart<{ type: "image"; src: string }>(busca, CARD_EMPTY_IDS[i], "image")?.src,
-    EMPTY_FACES.normal,
-    `'${CARD_EMPTY_IDS[i]}' arranca con la cara normal`,
+    container.visible,
+    spec === FALLBACK_LEVEL,
+    `'${spec.id}' arranca ${spec === FALLBACK_LEVEL ? "encendido" : "apagado"}`,
   );
 
-  const label = `${Math.floor(i / 5) + 1}${BUSCA_LETTERS[i % 5]}`;
-  for (const id of [`card-${i}-label`, `card-${i}-locked-label`]) {
-    assert.equal(
-      findPart<{ type: "text"; text: string }>(busca, id, "text")?.text,
-      label,
-      `'${id}' rotula la casilla ${label}`,
+  const grid = BUSCA_GRIDS[spec.id];
+  assert.equal(
+    grid.x.length * grid.y.length,
+    spec.count,
+    `la grilla de ${spec.size} tiene que dar ${spec.count} cartas`,
+  );
+  assert.equal(grid.x.length, spec.columns, `'${spec.id}' tiene ${spec.columns} columnas`);
+
+  for (let i = 0; i < spec.count; i++) {
+    const card = buscaLayer(spec.cards[i]);
+    assert.ok(card, `falta el layer '${spec.cards[i]}'`);
+    // Sin 'flip' la carta cambia de cara de golpe; sin 'click' se ve perfecta y
+    // no responde al dedo, que es como se opera este juego.
+    for (const type of ["flip", "click"]) {
+      assert.ok(partOf(card, type), `'${spec.cards[i]}' debe llevar la part '${type}'`);
+    }
+    assert.equal(card.parentId, spec.id, `'${spec.cards[i]}' cuelga de '${spec.id}'`);
+    assert.deepEqual(card.rect.size, grid.card, `'${spec.cards[i]}' mide lo que su celda`);
+    assert.deepEqual(
+      card.rect.position,
+      { x: grid.x[i % spec.columns], y: grid.y[Math.floor(i / spec.columns)] },
+      `'${spec.cards[i]}' fuera de su casilla en la grilla`,
     );
+
+    // useLayerClick sube por el arbol desde el elemento tocado: el dedo aterriza
+    // en la imagen, no en la carta. Si esta cadena se aplana, el toque se pierde.
+    assert.equal(buscaLayer(spec.backs[i])?.parentId, spec.cards[i], `'${spec.backs[i]}' cuelga de su carta`);
+    assert.equal(buscaLayer(spec.fronts[i])?.parentId, spec.cards[i], `'${spec.fronts[i]}' cuelga de su carta`);
+    for (const id of [spec.normals[i], spec.selecteds[i], spec.lockeds[i]]) {
+      assert.equal(buscaLayer(id)?.parentId, spec.backs[i], `'${id}' cuelga del reverso`);
+    }
+    for (const id of [spec.empties[i], spec.logos[i]]) {
+      assert.equal(buscaLayer(id)?.parentId, spec.fronts[i], `'${id}' cuelga del anverso`);
+    }
+
+    // El tablero tiene que verse bien ANTES de que cargue una sesion: si estos
+    // arrancan encendidos se ven los tres estados apilados en el primer frame.
+    for (const id of [spec.selecteds[i], spec.lockeds[i], spec.fronts[i], spec.logos[i]]) {
+      assert.equal(buscaLayer(id)?.visible, false, `'${id}' arranca apagado`);
+    }
+    for (const id of [spec.backs[i], spec.normals[i], spec.empties[i]]) {
+      assert.equal(buscaLayer(id)?.visible, true, `'${id}' arranca encendido`);
+    }
+
+    // Logic pisa este src con EMPTY_FACES al conmutar la variante (flechas): si el
+    // layout trae otra ruta, la primera pulsacion cambia la cara sin querer.
+    assert.equal(
+      findPart<{ type: "image"; src: string }>(busca, spec.empties[i], "image")?.src,
+      EMPTY_FACES[spec.id].normal,
+      `'${spec.empties[i]}' arranca con la cara normal de su nivel`,
+    );
+
+    const label = `${Math.floor(i / spec.columns) + 1}${"ABCDEF"[i % spec.columns]}`;
+    for (const id of [`${spec.cards[i]}-label`, `${spec.lockeds[i]}-label`]) {
+      assert.equal(
+        findPart<{ type: "text"; text: string }>(busca, id, "text")?.text,
+        label,
+        `'${id}' rotula la casilla ${label}`,
+      );
+    }
   }
 }
 
@@ -1775,14 +1814,14 @@ const buscaFonts = new Set(
 );
 assert.deepEqual([...buscaFonts], ["geniusTechno"], "las claves de fuente son las que declara la ficha");
 
-// Un formato que el juego todavia no pinta tiene que PASAR el guard: se resuelve
-// con el aviso de 'level-0', no rechazando el archivo entero del productor.
+// Un formato que el juego no conozca tiene que PASAR el guard: se resuelve con
+// el aviso de 'level-0', no rechazando el archivo entero del productor.
 assert.ok(
-  isBuscaLogoSession({ boards: [{ size: "6x5", logoPositions: [0, 1] }] }),
+  isBuscaLogoSession({ boards: [{ size: "9x9", logoPositions: [0, 1] }] }),
   "un tablero de otro formato sigue siendo un archivo valido",
 );
 assert.ok(isBuscaLogoSession({ boards: [] }), "una sesion sin tableros es valida");
-assert.ok(!isBuscaLogoSession({ boards: [{ size: BOARD_SIZE }] }), "sin logoPositions no pasa");
+assert.ok(!isBuscaLogoSession({ boards: [{ size: "5x4" }] }), "sin logoPositions no pasa");
 assert.ok(!isBuscaLogoSession({ boards: [{ size: 5, logoPositions: [] }] }), "el formato es una cadena");
 assert.ok(!isBuscaLogoSession({ rounds: [] }), "el archivo de otro juego no pasa");
 
