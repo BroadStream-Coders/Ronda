@@ -124,12 +124,12 @@ cualquiera de estas tareas, no se repite acá.
   (`Level.SetVariantCards`). Se porta o se descarta explícitamente, pero no se olvida.
 - **Depende de:** nada nuevo. `flip` entró con [[RM-068]]; la part `text` y
   `playStagger`, con [[RM-063]].
-- **El riesgo de rendimiento es menor de lo que decía esta ficha.** El miedo eran
-  `bounce` y `slide`, que escriben la posición en `useGameState` por frame — pero
-  **Busca Logo no los usa**: anima con `flip`, que va por `motion` y no repinta React
-  por frame. Igual hay que medirlo con `flipAll` (20 cartas a la vez) antes de darlo por
-  cerrado; si se arrastra, la salida sigue siendo animar el transform del DOM, y esa
-  decisión afecta al kit entero.
+- **~~El riesgo de rendimiento.~~ Descartado.** El miedo eran `bounce` y `slide`, que
+  escriben la posición en `useGameState` por frame — pero **Busca Logo no los usa**:
+  anima con `flip`, que va por `motion` sobre el transform del DOM y no repinta React
+  por frame. `Shift+U` son 40 escrituras al store repartidas en 800 ms, y `applyState`
+  sobre los 204 layers cuesta **0,01 ms**. No hace falta mover las animaciones al DOM,
+  ni acá ni en el kit. Queda por confirmar a ojo en la máquina del estudio.
 - **También:** su `layout.json` pesa ~100 KB, el más grande del catálogo. La conversión
   `scene.json` → `layout.json` va con un script en `scripts/`, no a mano.
 - **Hecho cuando:** corre dentro de un programa, es asignable, consume el archivo de su
