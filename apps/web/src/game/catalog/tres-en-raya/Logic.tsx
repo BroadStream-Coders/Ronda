@@ -8,6 +8,7 @@ import {
   useGameKeys,
   useGameSession,
   useGameState,
+  useLayerClick,
   type Layer,
 } from "@/game/kit";
 import { SOUNDS } from "./assets";
@@ -35,12 +36,6 @@ const LINE_IDS = [
   "line-diagonal-0",
   "line-diagonal-1",
 ];
-
-const CLICKABLE = new Set(
-  (layout as Layer[])
-    .filter((layer) => layer.parts.some((part) => part.type === "click"))
-    .map((layer) => layer.id),
-);
 
 type Mark = "normal" | "cross" | "circle";
 
@@ -143,29 +138,7 @@ export function TresEnRayaLogic() {
     void flipCard(i, !up);
   };
 
-  const clickRef = useRef(onCardClick);
-  useEffect(() => {
-    clickRef.current = onCardClick;
-  });
-
-  useEffect(() => {
-    const onPointerDown = (event: globalThis.PointerEvent) => {
-      if (event.button !== 0) return;
-      const target = event.target as HTMLElement | null;
-      let element = target?.closest<HTMLElement>("[data-layer-id]") ?? null;
-      while (element) {
-        const id = element.dataset.layerId;
-        if (id && CLICKABLE.has(id)) {
-          clickRef.current(id);
-          return;
-        }
-        element =
-          element.parentElement?.closest<HTMLElement>("[data-layer-id]") ?? null;
-      }
-    };
-    window.addEventListener("pointerdown", onPointerDown);
-    return () => window.removeEventListener("pointerdown", onPointerDown);
-  }, []);
+  useLayerClick(layout as Layer[], onCardClick);
 
   const goToGroup = (index: number) => {
     if (index < 0 || index >= groups.length) return;

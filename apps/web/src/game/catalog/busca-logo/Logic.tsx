@@ -7,8 +7,11 @@ import {
   useGameKeys,
   useGameSession,
   useGameState,
+  useLayerClick,
+  type Layer,
 } from "@/game/kit";
 import { EMPTY_FACES } from "./assets";
+import layout from "./layout.json";
 import {
   BOARD_SIZE,
   CARD_BACK_IDS,
@@ -122,6 +125,14 @@ export function BuscaLogoLogic() {
       window.setTimeout(() => void flipCard(i, up), i * FLIP_STEP_MS);
     }
   };
+
+  useLayerClick(layout as Layer[], (layerId) => {
+    const match = /^card-(\d+)$/.exec(layerId);
+    if (!match) return;
+    const index = Number(match[1]);
+    if (index >= CARD_COUNT) return;
+    setCursor((c) => ({ ...c, selected: index }));
+  });
 
   const openBoard = (index: number) =>
     setCursor((c) =>

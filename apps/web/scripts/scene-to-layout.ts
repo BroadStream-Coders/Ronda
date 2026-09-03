@@ -14,6 +14,7 @@ interface Recipe {
   out: string;
   ids?: Record<string, string>;
   drop?: string[];
+  replace?: Record<string, Record<string, unknown>>;
   assets?: Record<string, string>;
   sources?: Record<string, string>;
 }
@@ -29,7 +30,8 @@ const RECIPES: Record<string, Recipe> = {
       level0: "level-0",
       "level0-message": "level-0-message",
     },
-    drop: ["controller", "card"],
+    drop: ["controller"],
+    replace: { card: { type: "click" } },
     assets: {
       cardNormal: `${BUSCA_LOGO}/normal.png`,
       cardSelected: `${BUSCA_LOGO}/selected.png`,
@@ -80,7 +82,10 @@ function convert(recipe: Recipe) {
     const id = rename(object.id)!;
     const parts = object.components
       .filter((part) => !dropped.has(part.type as string))
-      .map((part) => convertPart(part, object.id, recipe));
+      .map((part) => {
+        const swap = recipe.replace?.[part.type as string];
+        return swap ?? convertPart(part, object.id, recipe);
+      });
     const parentId = rename(object.parentId);
     return {
       id,

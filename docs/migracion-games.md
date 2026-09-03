@@ -291,6 +291,8 @@ estado.
 | `playSound` / `preloadMedia` | `preloadMedia` es **bloqueante**: devuelve una promesa que resuelve con todo decodificado (`decode()` para imágenes, `canplaythrough` para audio y video) y `GameShell` no monta la lógica hasta entonces. **Los assets que ya están en el layout** (las parts `image` y `video`) entran solos en esa espera; `preload` es para lo que la lógica intercambia en vivo y no aparece en el layout. Un juego cuyo único asset esté en el layout no necesita `assets.ts` |
 | Sesión **ZIP** | `readZipSession(file)` saca el `sessionData.json` y las imágenes del paquete que arma el colector. Devuelve **Blobs**, no URLs: las object URL las crea `setSession` y las revoca sola al reemplazar la sesión o desmontar el juego, así que un paquete que no pase el type-guard no deja nada colgando. El juego las lee de `useGameSession().images`, indexadas por la **misma ruta** que guarda el JSON (`images/T1.png`) |
 | `Stage` | 16:9, fullscreen, container-query |
+| `useLayerClick` | toque y clic por layer. El layer declara una part **`click` sin vista** (data, como las animaciones) y el hook devuelve el `layerId` tocado, subiendo por el árbol desde el elemento real hasta el primer ancestro que la declare — que es lo que hace que tocar la imagen de una carta seleccione la carta. Un solo `pointerdown` en `window`, no un div por layer |
+| Carga desde la nube | el `GameTopbar` la trae: `downloadCollectorData` devuelve un `File`, igual que el input de archivo, y el menú dice de dónde salieron los datos |
 | Puntero por layer | un layer **sin parts** es solo agrupación y lleva `pointer-events: none`; los que tienen parts van en `auto`. En Unity un `RectTransform` sin `Image` no es raycast target, pero en el navegador un div con tamaño sí recibe puntero: un contenedor vacío del tamaño del tablero se come los clics de todo lo que hay debajo, sin ninguna señal |
 | `GameConfig` | panel plegable; hoy solo el color del croma |
 | `useGameKeys` / `useGameSetting` | teclas de show; preferencias en localStorage. El mapa distingue Shift para las acciones en masa (`Shift+U` → `onInteractAll`, `Shift+I` → `onShowAnswerAll`), que es el seguro contra el dedo gordo en vivo |
@@ -305,9 +307,8 @@ escribe en `kit/`, no en la carpeta del juego**:
 |---|---|
 | Part `videoControl` | pausar o reanudar un video desde la lógica |
 | Presupuesto de memoria | diagnóstico; puede no volver nunca |
-| Carga desde la nube | engancha sin rediseño: `downloadCollectorData` devuelve un `File`, igual que el input de archivo |
 | Texto con formato (superíndices, fracciones) | notación matemática real; hoy la part `text` es una cadena plana |
-| Interacción de puntero en el kit | `drag` vive en `catalog/cronos/parts/` y `click` en `catalog/tres-en-raya/parts/`, cada una con un juego que la usa. Las dos se apoyan en el `data-layer-id` del kit; suben a `kit/` cuando un segundo juego las pida — De Par en Par ([[RM-073]]) es candidato a las dos |
+| `drag` en el kit | vive en `catalog/cronos/parts/`, con un solo juego que la usa. Sube a `kit/` cuando un segundo juego la pida — De Par en Par ([[RM-073]]) es el candidato |
 
 ---
 

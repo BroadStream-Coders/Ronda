@@ -47,6 +47,8 @@ export { shuffledOrder } from "./shuffle";
 export { settingKey, useGameSetting } from "./use-game-setting";
 export { GameConfig } from "./GameConfig";
 export { useGameKeys } from "./use-game-keys";
+export { useLayerClick } from "./use-layer-click";
+export type { ClickPart } from "./use-layer-click";
 export type { GameKeyHandlers } from "./use-game-keys";
 export {
   DESIGN_HEIGHT,
