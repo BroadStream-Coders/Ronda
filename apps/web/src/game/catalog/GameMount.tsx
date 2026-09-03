@@ -26,6 +26,7 @@ const loaders: Record<string, () => Promise<GameType>> = {
     import("./galeria-fotos").then((m) => m.galeriaFotos),
   "reto-cruzado": () =>
     import("./reto-cruzado").then((m) => m.retoCruzado),
+  "busca-logo": () => import("./busca-logo").then((m) => m.buscaLogo),
 };
 
 interface Mounted {
