@@ -62,7 +62,13 @@ export function fitRounds(rounds: AlbumRound[]): AlbumRound[] {
 export function validate(rounds: AlbumRound[]): ValidationIssue[] {
   const issues: ValidationIssue[] = [];
   rounds.forEach((round, roundIndex) => {
-    const roundLabel = round.context.trim() || `Columna ${roundIndex + 1}`;
+    const roundLabel = `Sobre ${roundIndex + 1}`;
+    if (isBlank(round.context)) {
+      issues.push({
+        path: formatPath(roundLabel, "Título"),
+        message: "Falta el título.",
+      });
+    }
     round.photos.forEach((photo, photoIndex) => {
       const cardLabel = `Carta ${photoIndex + 1}`;
       if (isBlank(photo.name)) {
