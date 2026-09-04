@@ -97,6 +97,22 @@ export function Editor() {
     );
   };
 
+  const handleQuickImages = (roundId: string, files: File[]) =>
+    setRounds((prev) =>
+      prev.map((r) =>
+        r.id === roundId
+          ? {
+              ...r,
+              photos: r.photos.map((p, i) =>
+                files[i]
+                  ? setSlotImage(p, files[i], URL.createObjectURL(files[i]))
+                  : p,
+              ),
+            }
+          : r,
+      ),
+    );
+
   const handleGetBundle = useCallback(() => {
     const packer = createImagePacker();
 
@@ -206,6 +222,7 @@ export function Editor() {
           }
           onUpdateRound={(updates) => updateRound(round.id, updates)}
           onQuickLoad={(matrix) => handleQuickLoad(round.id, matrix)}
+          onQuickImages={(files) => handleQuickImages(round.id, files)}
         />
       ))}
     </GroupsContainer>

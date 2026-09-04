@@ -3,12 +3,14 @@
 import {
   GroupColumn,
   GroupFooter,
+  QuickImages,
   QuickLoad,
   RowsContainer,
   TitleInput,
   type ImageSlot,
 } from "@/collector/kit";
 import { Card } from "./Card";
+import { PHOTOS_PER_ROUND } from "./schema";
 
 interface ColumnProps {
   index: number;
@@ -18,6 +20,7 @@ interface ColumnProps {
   onSetPhotoImage: (id: string, file: File, url: string) => void;
   onUpdateRound: (updates: Partial<{ context: string }>) => void;
   onQuickLoad: (data: string[][]) => void;
+  onQuickImages: (files: File[]) => void;
 }
 
 export function Column({
@@ -28,6 +31,7 @@ export function Column({
   onSetPhotoImage,
   onUpdateRound,
   onQuickLoad,
+  onQuickImages,
 }: ColumnProps) {
   return (
     <GroupColumn index={index} label="Sobre">
@@ -59,7 +63,16 @@ export function Column({
       <GroupFooter>
         <QuickLoad
           onLoad={onQuickLoad}
+          label="Planilla"
           placeholder="Pegar preguntas (una por línea)…"
+          leading={
+            <QuickImages
+              onLoad={onQuickImages}
+              max={PHOTOS_PER_ROUND}
+              label="Imágenes"
+              className="flex-1"
+            />
+          }
         />
       </GroupFooter>
     </GroupColumn>

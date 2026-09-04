@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import { ClipboardPaste, X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -9,12 +9,16 @@ import { parseExcelPaste } from "../data-processing";
 interface QuickLoadProps {
   onLoad: (data: string[][]) => void;
   placeholder?: string;
+  label?: string;
+  leading?: ReactNode;
   className?: string;
 }
 
 export function QuickLoad({
   onLoad,
   placeholder = "Pega aquí las celdas copiadas de tu planilla…",
+  label = "Pegar desde planilla",
+  leading,
   className = "",
 }: QuickLoadProps) {
   const [open, setOpen] = useState(false);
@@ -34,21 +38,25 @@ export function QuickLoad({
 
   if (!open) {
     return (
-      <Button
-        variant="outline"
-        onClick={() => setOpen(true)}
-        className={`h-9 w-full justify-start gap-2 text-muted-foreground ${className}`}
-      >
-        <ClipboardPaste />
-        Pegar desde planilla
-      </Button>
+      <div className={`flex gap-2 ${className}`}>
+        {leading}
+        <Button
+          variant="outline"
+          onClick={() => setOpen(true)}
+          title={label}
+          className="h-9 min-w-0 flex-1 justify-start gap-2 text-muted-foreground"
+        >
+          <ClipboardPaste />
+          <span className="truncate">{label}</span>
+        </Button>
+      </div>
     );
   }
 
   return (
     <div className={`flex flex-col gap-2 ${className}`}>
       <div className="flex items-center justify-between">
-        <span className="text-xs font-medium">Pegar desde planilla</span>
+        <span className="text-xs font-medium">{label}</span>
         <Button
           variant="ghost"
           size="icon-xs"
