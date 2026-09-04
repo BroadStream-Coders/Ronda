@@ -9,7 +9,6 @@ import {
   type ImageSlot,
 } from "@/collector/kit";
 import { Card } from "./Card";
-import { PHOTOS_PER_ROUND } from "./schema";
 
 interface ColumnProps {
   index: number;
@@ -31,12 +30,7 @@ export function Column({
   onQuickLoad,
 }: ColumnProps) {
   return (
-    <GroupColumn
-      index={index}
-      label="Sobre"
-      currentCapacity={PHOTOS_PER_ROUND}
-      maxCapacity={PHOTOS_PER_ROUND}
-    >
+    <GroupColumn index={index} label="Sobre">
       <TitleInput
         value={context}
         onChange={(val) => onUpdateRound({ context: val })}
