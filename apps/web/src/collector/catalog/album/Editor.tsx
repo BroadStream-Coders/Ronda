@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { Image as ImageIcon } from "lucide-react";
+import { Images } from "lucide-react";
 
 import { saveAsZip, loadZipFile } from "@/helpers/persistence";
 import {
@@ -180,7 +180,7 @@ export function Editor() {
   useEffect(() => {
     setHeader({
       title: "Álbum",
-      icon: <ImageIcon className="h-3 w-3" />,
+      icon: <Images className="h-3 w-3" />,
       format: "zip",
       onSave: handleSave,
       onLoad: handleLoad,

@@ -1,4 +1,4 @@
-import { Image as ImageIcon } from "lucide-react";
+import { Images } from "lucide-react";
 
 import type { CollectorType } from "../registry";
 import { Editor } from "./Editor";
@@ -8,7 +8,7 @@ export const album: CollectorType = {
     id: "album",
     name: "Álbum",
     description: "Fotos con pregunta por columna",
-    icon: ImageIcon,
+    icon: Images,
   },
   Editor,
 };
