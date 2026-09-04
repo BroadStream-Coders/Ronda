@@ -29,6 +29,7 @@ export interface Data {
 }
 
 export const PHOTOS_PER_ROUND = 5;
+export const ROUND_COUNT = 6;
 
 export const uid = () => Math.random().toString(36).slice(2, 9);
 
@@ -40,8 +41,22 @@ export function createEmptyRound(): AlbumRound {
   return {
     id: uid(),
     context: "",
-    photos: Array(PHOTOS_PER_ROUND).fill(null).map(createEmptyPhoto),
+    photos: fitPhotos([]),
   };
+}
+
+function fitTo<T>(items: T[], length: number, make: () => T): T[] {
+  const fitted = items.slice(0, length);
+  while (fitted.length < length) fitted.push(make());
+  return fitted;
+}
+
+export function fitPhotos(photos: ImageSlot[]): ImageSlot[] {
+  return fitTo(photos, PHOTOS_PER_ROUND, createEmptyPhoto);
+}
+
+export function fitRounds(rounds: AlbumRound[]): AlbumRound[] {
+  return fitTo(rounds, ROUND_COUNT, createEmptyRound);
 }
 
 export function validate(rounds: AlbumRound[]): ValidationIssue[] {

@@ -8,16 +8,18 @@ import {
   GroupsContainer,
   createImagePacker,
   readImageSlot,
-  releaseSlots,
   setSlotImage,
   useWorkspaceHeader,
   type ImageSlot,
   notifyError,
+  notifyInfo,
 } from "@/collector/kit";
 import { Column } from "./Column";
 import {
-  createEmptyPhoto,
-  createEmptyRound,
+  fitPhotos,
+  fitRounds,
+  PHOTOS_PER_ROUND,
+  ROUND_COUNT,
   uid,
   validate,
   type AlbumRound,
@@ -27,16 +29,9 @@ import {
 const SESSION_DATA_FILENAME = "sessionData.json";
 
 export function Editor() {
-  const [rounds, setRounds] = useState<AlbumRound[]>(() => [createEmptyRound()]);
+  const [rounds, setRounds] = useState<AlbumRound[]>(() => fitRounds([]));
   const setHeader = useWorkspaceHeader((s) => s.setHeader);
   const resetHeader = useWorkspaceHeader((s) => s.resetHeader);
-
-  const addRound = () => setRounds((prev) => [...prev, createEmptyRound()]);
-
-  const removeRound = (roundId: string) => {
-    releaseSlots(rounds.find((r) => r.id === roundId)?.photos ?? []);
-    setRounds((prev) => prev.filter((r) => r.id !== roundId));
-  };
 
   const updatePhotoInRound = (
     roundId: string,
@@ -147,27 +142,32 @@ export function Editor() {
         return;
       }
 
+      if (sessionData.rounds.length > ROUND_COUNT) {
+        notifyInfo(
+          `El archivo trae ${sessionData.rounds.length} sobres; solo se cargan los primeros ${ROUND_COUNT}.`,
+        );
+      }
+
       const loaded = await Promise.all(
-        sessionData.rounds.map(async (roundMeta) => {
+        sessionData.rounds.slice(0, ROUND_COUNT).map(async (roundMeta) => {
           const photos = await Promise.all(
-            (roundMeta.cards || []).map(async (pMeta) => ({
-              ...(await readImageSlot(zip, pMeta.imagePath)),
-              name: pMeta.question || "",
-              isCroma: pMeta.isCroma ?? false,
-            })),
+            (roundMeta.cards || []).slice(0, PHOTOS_PER_ROUND).map(
+              async (pMeta) => ({
+                ...(await readImageSlot(zip, pMeta.imagePath)),
+                name: pMeta.question || "",
+                isCroma: pMeta.isCroma ?? false,
+              }),
+            ),
           );
           return {
             id: uid(),
             context: roundMeta.title || "",
-            photos:
-              photos.length > 0
-                ? photos
-                : [createEmptyPhoto(), createEmptyPhoto()],
+            photos: fitPhotos(photos),
           } as AlbumRound;
         }),
       );
 
-      setRounds(loaded.length > 0 ? loaded : [createEmptyRound()]);
+      setRounds(fitRounds(loaded));
     } catch {
       notifyError("Error al importar los datos.");
     }
@@ -191,7 +191,7 @@ export function Editor() {
   }, [setHeader, handleSave, handleLoad, handleValidate, handleGetBundle]);
 
   return (
-    <GroupsContainer onAddGroup={addRound} addLabel="Agregar columna">
+    <GroupsContainer>
       {rounds.map((round, roundIndex) => (
         <Column
           key={round.id}
@@ -205,7 +205,6 @@ export function Editor() {
             setPhotoImage(round.id, photoId, file, url)
           }
           onUpdateRound={(updates) => updateRound(round.id, updates)}
-          onRemoveColumn={() => removeRound(round.id)}
           onQuickLoad={(matrix) => handleQuickLoad(round.id, matrix)}
         />
       ))}

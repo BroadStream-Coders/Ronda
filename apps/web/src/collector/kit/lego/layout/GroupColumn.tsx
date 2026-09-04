@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 
 interface GroupColumnProps {
   index: number;
-  onRemove: () => void;
+  onRemove?: () => void;
   children: ReactNode;
   width?: string;
   label?: string;
@@ -54,15 +54,17 @@ export function GroupColumn({
           </span>
         )}
 
-        <Button
-          variant="ghost"
-          size="icon-sm"
-          onClick={onRemove}
-          aria-label={`Eliminar ${label.toLowerCase()} ${index}`}
-          className={`${showCapacity ? "" : "ml-auto"} text-muted-foreground opacity-0 transition-opacity group-hover/column:opacity-100 focus-visible:opacity-100 hover:text-destructive`}
-        >
-          <Trash2 />
-        </Button>
+        {onRemove && (
+          <Button
+            variant="ghost"
+            size="icon-sm"
+            onClick={onRemove}
+            aria-label={`Eliminar ${label.toLowerCase()} ${index}`}
+            className={`${showCapacity ? "" : "ml-auto"} text-muted-foreground opacity-0 transition-opacity group-hover/column:opacity-100 focus-visible:opacity-100 hover:text-destructive`}
+          >
+            <Trash2 />
+          </Button>
+        )}
       </header>
 
       <div className="flex min-h-0 flex-1 flex-col">{children}</div>

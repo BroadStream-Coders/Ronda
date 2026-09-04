@@ -18,7 +18,6 @@ interface ColumnProps {
   onUpdatePhoto: (id: string, updates: Partial<ImageSlot>) => void;
   onSetPhotoImage: (id: string, file: File, url: string) => void;
   onUpdateRound: (updates: Partial<{ context: string }>) => void;
-  onRemoveColumn: () => void;
   onQuickLoad: (data: string[][]) => void;
 }
 
@@ -29,13 +28,12 @@ export function Column({
   onUpdatePhoto,
   onSetPhotoImage,
   onUpdateRound,
-  onRemoveColumn,
   onQuickLoad,
 }: ColumnProps) {
   return (
     <GroupColumn
       index={index}
-      onRemove={onRemoveColumn}
+      label="Sobre"
       currentCapacity={PHOTOS_PER_ROUND}
       maxCapacity={PHOTOS_PER_ROUND}
     >
