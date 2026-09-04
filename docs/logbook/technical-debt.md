@@ -16,6 +16,13 @@ reutiliza). Al resolverse se mueve al `changelog.md` conservando su código.
 
 ---
 
+## [TD-116] Ningún colector le dice al productor cuántos grupos acepta
+- **Ubicación:** `apps/web/src/collector/kit/lego/layout/GroupsContainer.tsx` y `GroupColumn.tsx` (el tope no existe como concepto), `apps/web/src/collector/catalog/album/schema.ts:32` (`ROUND_COUNT`, el único tope real, escrito a mano).
+- **Riesgo:** 6/10
+- **Problema:** cada juego acepta una cantidad concreta de grupos —Álbum pinta 6 temas y ni uno más—, pero eso vive en el layout del juego y en ningún lado del colector. Álbum lo resolvió a su manera con [[RM-112]]: seis sobres fijos, sin botón de agregar. El resto de los colectores deja agregar columnas hasta el infinito, y **ninguno le dice nada al productor**: no hay un "hasta acá nomás", ni un contador contra el tope, ni un aviso al intentar pasarse. Lo que falta son dos cosas que van juntas: que un colector pueda **declarar** su límite (como hoy declara su id y su ícono) y que el kit lo **pinte** donde el productor lo vea.
+- **Impacto futuro:** hoy la única defensa es que el productor sepa de memoria cuántas columnas tolera cada juego. Cuando no lo sabe, carga de más, guarda, valida sin un solo aviso y lo que sobra no existe al aire — se descubre en vivo. Cada juego que se porta agrega una variante del mismo agujero, y el arreglo de Álbum no se puede copiar: fijar seis sobres funciona porque son exactamente seis, pero un juego que acepte "de 1 a 8" necesita el tope declarado y mostrado, no seis casillas vacías.
+- **Fecha:** 2026-09-04 · **Estado:** Abierto
+
 ## [TD-115] La validación de Intruso no mira el Nivel 2
 - **Ubicación:** `apps/web/src/collector/catalog/intruso/schema.ts` — `validate(textRounds)`; el call site en `Editor.tsx:105`.
 - **Riesgo:** 5/10
@@ -35,13 +42,6 @@ reutiliza). Al resolverse se mueve al `changelog.md` conservando su código.
 - **Riesgo:** 4/10
 - **Problema:** Al terminar, `pop` y `shake` hacen `element.style.transform = ""` para no dejar residuo. `float` (y `blink`) escriben un transform en bucle infinito sobre **ese mismo elemento**. En un layer que declare `float` junto a `pop` o `shake`, el primer disparo deja la flotación congelada donde estaba.
 - **Impacto futuro:** El juego que los combine se ve perfecto al portarlo y pierde la flotación después de la primera animación, sin nada en consola. Hoy no pasa: verificado que ningún layer de Álbum ([[RM-068]]) junta `float` con `pop`/`shake`/`blink`. La salida es limpiar solo lo que cada animación escribió, en vez de vaciar el transform entero.
-- **Fecha:** 2026-08-29 · **Estado:** Abierto
-
-## [TD-113] El colector de Álbum no limita columnas y el juego solo pinta 6
-- **Ubicación:** `apps/web/src/collector/catalog/album/Editor.tsx:34`, `apps/web/src/game/catalog/album/Logic.tsx:16`
-- **Riesgo:** 5/10
-- **Problema:** `addRound` no tiene tope, y el layout del juego trae 6 temas fijos (`THEME_COUNT`); `onNavigate` descarta los índices que se pasan. Un productor puede cargar 8 columnas, guardarlas y pasar la validación sin un solo aviso: las dos últimas no existen al aire.
-- **Impacto futuro:** Se descubre en vivo, que es el peor momento. Viene así desde Games, no lo introdujo el port ([[RM-068]]). Lo barato es el tope en el colector; la alternativa cara es un layout de temas dinámico.
 - **Fecha:** 2026-08-29 · **Estado:** Abierto
 
 ## [TD-110] El formateo de fecha va copiado en cuatro archivos
