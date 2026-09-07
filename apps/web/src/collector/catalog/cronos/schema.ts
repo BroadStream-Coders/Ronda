@@ -53,11 +53,11 @@ export function validate(
 ): ValidationIssue[] {
   const issues: ValidationIssue[] = [];
   groups.forEach((items, groupIndex) => {
-    const groupLabel = titles[groupIndex]?.trim() || `Grupo ${groupIndex + 1}`;
+    const groupLabel = `Ronda ${groupIndex + 1}`;
     if (isBlank(titles[groupIndex])) {
       issues.push({
-        path: formatPath(`Grupo ${groupIndex + 1}`, "Pregunta / Título"),
-        message: "Falta la pregunta / título del grupo.",
+        path: formatPath(groupLabel, "Pregunta / Título"),
+        message: "Falta la pregunta / título de la ronda.",
       });
     }
     items.forEach((item, itemIndex) => {
