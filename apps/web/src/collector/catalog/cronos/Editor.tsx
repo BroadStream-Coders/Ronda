@@ -104,13 +104,13 @@ export function Editor() {
         const content = await dataFile.async("string");
         const sessionData = JSON.parse(content) as Data;
         if (!Array.isArray(sessionData.groups)) {
-          notifyError("El archivo no contiene grupos válidos.");
+          notifyError("El archivo no contiene rondas válidas.");
           return;
         }
 
         if (sessionData.groups.some((g) => (g.items || []).length > COLUMN_SIZE)) {
           notifyInfo(
-            `Cada grupo tiene ${COLUMN_SIZE} eventos; los que sobren en el archivo no se cargan.`,
+            `Cada ronda tiene ${COLUMN_SIZE} eventos; los que sobren en el archivo no se cargan.`,
           );
         }
 
@@ -158,7 +158,7 @@ export function Editor() {
   }, [setHeader, handleSave, handleLoad, handleValidate, handleGetBundle]);
 
   return (
-    <GroupsContainer onAddGroup={handleAddGroup} addLabel="Agregar grupo">
+    <GroupsContainer onAddGroup={handleAddGroup} addLabel="Agregar ronda">
       {groups.map((items, groupIndex) => (
         <Column
           key={groupIndex}
