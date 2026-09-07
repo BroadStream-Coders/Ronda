@@ -17,6 +17,8 @@ import {
   buildData,
   createEmptyPhotoRound,
   createEmptyTextRound,
+  fitOptions,
+  fitPhotos,
   uid,
   validate,
   type Data,
@@ -66,12 +68,12 @@ export function Editor() {
         (data.textRounds ?? []).map(async (round) => ({
           id: uid(),
           image: await readImageSlot(zip, round.imagePath),
-          options: round.choices?.length
-            ? round.choices.map((text, i) => ({
-                text,
-                isIntruso: i === round.answerIndex,
-              }))
-            : [{ text: "", isIntruso: false }],
+          options: fitOptions(
+            (round.choices ?? []).map((text, i) => ({
+              text,
+              isIntruso: i === round.answerIndex,
+            })),
+          ),
         })),
       );
 
@@ -79,12 +81,14 @@ export function Editor() {
         (data.photoRounds ?? []).map(async (round) => ({
           id: uid(),
           context: round.description || "",
-          photos: await Promise.all(
-            (round.choices ?? []).map(async (choice, i) => ({
-              ...(await readImageSlot(zip, choice.imagePath)),
-              name: choice.label || "",
-              isIntruso: i === round.answerIndex,
-            })),
+          photos: fitPhotos(
+            await Promise.all(
+              (round.choices ?? []).map(async (choice, i) => ({
+                ...(await readImageSlot(zip, choice.imagePath)),
+                name: choice.label || "",
+                isIntruso: i === round.answerIndex,
+              })),
+            ),
           ),
         })),
       );

@@ -1,10 +1,9 @@
 "use client";
 
 import type { Dispatch, SetStateAction } from "react";
-import { AlertCircle, X } from "lucide-react";
+import { AlertCircle } from "lucide-react";
 
 import {
-  AddRowButton,
   GroupColumn,
   GroupFooter,
   GroupsContainer,
@@ -59,10 +58,12 @@ export function Level1({ rounds, setRounds }: Level1Props) {
       }
     }
     if (lines.length === 0) return;
-    setOptions(
-      roundId,
-      lines.map((text) => ({ text, isIntruso: false })),
-    );
+    updateRound(roundId, (round) => ({
+      ...round,
+      options: round.options.map((option, i) =>
+        lines[i] !== undefined ? { ...option, text: lines[i] } : option,
+      ),
+    }));
   };
 
   return (
@@ -72,8 +73,6 @@ export function Level1({ rounds, setRounds }: Level1Props) {
           key={round.id}
           index={roundIndex + 1}
           onRemove={() => removeRound(round.id)}
-          currentCapacity={round.options.length}
-          maxCapacity={MAX_OPTIONS}
         >
           <RowsContainer>
             <div className="space-y-1.5">
@@ -92,7 +91,7 @@ export function Level1({ rounds, setRounds }: Level1Props) {
 
             <div className="space-y-2">
               <label className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground/60 px-1">
-                Opciones ({round.options.length}/{MAX_OPTIONS})
+                Opciones
               </label>
 
               <div className="space-y-2">
@@ -140,35 +139,11 @@ export function Level1({ rounds, setRounds }: Level1Props) {
                       className="h-9 flex-1 bg-transparent px-2 text-xs focus:outline-hidden placeholder:text-muted-foreground/30"
                     />
 
-                    {round.options.length > 1 && (
-                      <button
-                        onClick={() =>
-                          setOptions(
-                            round.id,
-                            round.options.filter((_, i) => i !== optionIndex),
-                          )
-                        }
-                        className="mr-2 text-muted-foreground/30 hover:text-destructive transition-colors"
-                      >
-                        <X className="h-3.5 w-3.5" />
-                      </button>
-                    )}
                   </div>
                 ))}
               </div>
             </div>
           </RowsContainer>
-
-          <AddRowButton
-            onClick={() => {
-              if (round.options.length >= MAX_OPTIONS) return;
-              setOptions(round.id, [
-                ...round.options,
-                { text: "", isIntruso: false },
-              ]);
-            }}
-            label="Agregar opción"
-          />
 
           <GroupFooter>
             <QuickLoad

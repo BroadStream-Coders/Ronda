@@ -56,16 +56,34 @@ export function createEmptyPhoto(): Photo {
   return { ...emptyImageSlot(), name: "", isIntruso: false };
 }
 
+export function createEmptyOption(): TextOption {
+  return { text: "", isIntruso: false };
+}
+
+function fitTo<T>(items: T[], length: number, make: () => T): T[] {
+  const fitted = items.slice(0, length);
+  while (fitted.length < length) fitted.push(make());
+  return fitted;
+}
+
+export function fitOptions(options: TextOption[]): TextOption[] {
+  return fitTo(options, MAX_OPTIONS, createEmptyOption);
+}
+
+export function fitPhotos(photos: Photo[]): Photo[] {
+  return fitTo(photos, MAX_PHOTOS, createEmptyPhoto);
+}
+
 export function createEmptyTextRound(): TextRoundState {
   return {
     id: uid(),
     image: emptyImageSlot(),
-    options: [{ text: "", isIntruso: false }],
+    options: fitOptions([]),
   };
 }
 
 export function createEmptyPhotoRound(): PhotoRoundState {
-  const photos = Array(MAX_PHOTOS).fill(null).map(createEmptyPhoto);
+  const photos = fitPhotos([]);
   photos[0].isIntruso = true;
   return { id: uid(), context: "", photos };
 }

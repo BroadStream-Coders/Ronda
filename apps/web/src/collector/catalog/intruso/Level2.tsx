@@ -3,7 +3,6 @@
 import type { Dispatch, SetStateAction } from "react";
 
 import {
-  AddRowButton,
   DescriptionInput,
   GroupColumn,
   GroupFooter,
@@ -17,7 +16,6 @@ import { Card } from "./Card";
 import {
   MAX_PHOTOS,
   PHOTO_CROP,
-  createEmptyPhoto,
   createEmptyPhotoRound,
   type Photo,
   type PhotoRoundState,
@@ -68,15 +66,6 @@ export function Level2({ rounds, setRounds }: Level2Props) {
       ),
     }));
 
-  const removePhoto = (roundId: string, photoId: string) => {
-    const round = rounds.find((r) => r.id === roundId);
-    releaseSlots([round?.photos.find((p) => p.id === photoId)]);
-    updateRound(roundId, (current) => ({
-      ...current,
-      photos: current.photos.filter((p) => p.id !== photoId),
-    }));
-  };
-
   const handleQuickLoad = (roundId: string, matrix: string[][]) => {
     const names: string[] = [];
     for (const row of matrix) {
@@ -103,8 +92,6 @@ export function Level2({ rounds, setRounds }: Level2Props) {
           key={round.id}
           index={roundIndex + 1}
           onRemove={() => removeRound(round.id)}
-          currentCapacity={round.photos.length}
-          maxCapacity={MAX_PHOTOS}
         >
           <DescriptionInput
             value={round.context}
@@ -132,22 +119,10 @@ export function Level2({ rounds, setRounds }: Level2Props) {
                   onToggleIntruso={() =>
                     updatePhoto(round.id, photo.id, { isIntruso: true })
                   }
-                  onRemove={() => removePhoto(round.id, photo.id)}
                 />
               ))}
             </div>
           </RowsContainer>
-
-          <AddRowButton
-            onClick={() => {
-              if (round.photos.length >= MAX_PHOTOS) return;
-              updateRound(round.id, (current) => ({
-                ...current,
-                photos: [...current.photos, createEmptyPhoto()],
-              }));
-            }}
-            label="Agregar foto"
-          />
 
           <GroupFooter>
             <QuickLoad
