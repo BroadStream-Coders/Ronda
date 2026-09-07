@@ -17,35 +17,8 @@ export function LevelTabs({ levels, className = "" }: LevelTabsProps) {
   const [activeIndex, setActiveIndex] = useState(0);
 
   return (
-    <div className={`flex h-full flex-col ${className}`}>
-      <div
-        role="tablist"
-        aria-label="Niveles"
-        className="flex shrink-0 items-center gap-1 overflow-x-auto border-b border-border bg-card px-3 py-2"
-      >
-        {levels.map((level, index) => {
-          const active = activeIndex === index;
-          const Icon = level.icon;
-          return (
-            <button
-              key={index}
-              role="tab"
-              aria-selected={active}
-              onClick={() => setActiveIndex(index)}
-              className={`inline-flex h-9 shrink-0 items-center gap-2 rounded-lg px-3 text-sm font-medium transition-colors outline-none focus-visible:ring-3 focus-visible:ring-ring/50 ${
-                active
-                  ? "bg-primary text-primary-foreground"
-                  : "text-muted-foreground hover:bg-muted hover:text-foreground"
-              }`}
-            >
-              {Icon && <Icon className="size-4" />}
-              {level.name}
-            </button>
-          );
-        })}
-      </div>
-
-      <div className="relative min-h-0 flex-1">
+    <div className={`flex h-full ${className}`}>
+      <div className="relative min-h-0 flex-1 overflow-hidden">
         {levels.map((level, index) => (
           <div
             key={index}
@@ -56,6 +29,38 @@ export function LevelTabs({ levels, className = "" }: LevelTabsProps) {
             {level.component}
           </div>
         ))}
+      </div>
+
+      <div
+        role="tablist"
+        aria-label="Niveles"
+        className="flex shrink-0 flex-col overflow-y-auto border-l border-border bg-card"
+      >
+        {levels.map((level, index) => {
+          const active = activeIndex === index;
+          const Icon = level.icon;
+          return (
+            <button
+              key={index}
+              role="tab"
+              aria-selected={active}
+              onClick={() => setActiveIndex(index)}
+              className={`flex shrink-0 flex-col items-center gap-2 border-r-2 px-2 py-4 transition-colors outline-none focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:-outline-offset-2 ${
+                active
+                  ? "border-primary bg-primary/5 text-primary"
+                  : "border-transparent text-muted-foreground hover:bg-muted/40 hover:text-foreground"
+              }`}
+            >
+              {Icon && <Icon className="size-3.5 shrink-0" />}
+              <span
+                className="text-[10px] font-bold tracking-widest uppercase"
+                style={{ writingMode: "vertical-lr" }}
+              >
+                {level.name}
+              </span>
+            </button>
+          );
+        })}
       </div>
     </div>
   );
