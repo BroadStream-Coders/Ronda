@@ -34,7 +34,7 @@ export function ImagePicker({
     fileInputRef,
     triggerUpload,
     handleFileChange,
-    setPreviewUrl,
+    syncValue,
     uncroppedUrl,
     uncroppedFile,
     commitCrop,
@@ -49,8 +49,8 @@ export function ImagePicker({
   const srcForCrop = uncroppedUrl || sourceUrl || previewUrl;
 
   useEffect(() => {
-    setPreviewUrl(value ?? null);
-  }, [value, setPreviewUrl]);
+    syncValue(value);
+  }, [value, syncValue]);
 
   const shapeClass = crop ? "" : fill ? "h-full" : "aspect-square";
 

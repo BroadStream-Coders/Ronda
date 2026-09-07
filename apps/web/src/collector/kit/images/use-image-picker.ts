@@ -74,6 +74,14 @@ export function useImagePicker(options: UseImagePickerOptions = {}) {
     [onImageSelect, registerOwnedUrl],
   );
 
+  const syncValue = useCallback((url: string | null | undefined) => {
+    setPreviewUrl(url ?? null);
+    if (!url || !ownedUrls.current.has(url)) {
+      setUncroppedUrl(null);
+      setUncroppedFile(null);
+    }
+  }, []);
+
   const clearImage = useCallback(() => {
     if (previewUrl && ownedUrls.current.has(previewUrl)) {
       URL.revokeObjectURL(previewUrl);
@@ -100,6 +108,7 @@ export function useImagePicker(options: UseImagePickerOptions = {}) {
     handleFileChange,
     clearImage,
     setPreviewUrl,
+    syncValue,
     uncroppedUrl,
     uncroppedFile,
     setUncroppedUrl,

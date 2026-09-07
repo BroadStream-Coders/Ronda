@@ -13,6 +13,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import getCroppedImg from "./crop-image";
+import { notifyError } from "../notices/use-notices";
 
 interface ImageCropperDialogProps {
   isOpen: boolean;
@@ -47,8 +48,8 @@ export function ImageCropperDialog({
       const blob = await getCroppedImg(imageSrc, croppedAreaPixels, 0, fileType);
       const url = URL.createObjectURL(blob);
       onConfirm(blob, url);
-    } catch (e) {
-      console.error(e);
+    } catch {
+      notifyError("No se pudo recortar la imagen.");
     } finally {
       setIsProcessing(false);
       onClose();
