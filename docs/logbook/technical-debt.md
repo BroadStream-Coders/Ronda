@@ -16,6 +16,13 @@ reutiliza). Al resolverse se mueve al `changelog.md` conservando su código.
 
 ---
 
+## [TD-117] Tres pantallas quedaron fuera de la normalización de filas
+- **Ubicación:** `apps/web/src/collector/catalog/de-par-en-par/Tab1.tsx:76`, `apps/web/src/collector/catalog/mi-libro-favorito/Players.tsx:19`, `apps/web/src/collector/catalog/intruso/Level1.tsx` (las filas de opción).
+- **Riesgo:** 2/10
+- **Problema:** [[RM-114]] unificó las filas de doce colectores en `RowCard`, pero estas tres no entraron porque no son listas de filas: las cartas 4:5 de De Par en Par, el panel de equipos de Mi Libro Favorito y las opciones del nivel 1 de Intruso. Las tres siguen con su propia tarjeta —`bg-muted/30` o `bg-background/40` sobre `bg-card`— y en el caso de Intruso con un input `bg-transparent` sin borde dentro de una fila que sí lo tiene.
+- **Impacto futuro:** ninguno funcional; las tres tienen borde y se leen en los dos temas. Es deuda de consistencia: quien toque una de estas pantallas va a encontrar un patrón distinto al de las otras doce y no hay nada escrito que diga cuál manda. Se paga sola si alguna de las tres se rediseña por otra razón.
+- **Fecha:** 2026-09-06 · **Estado:** Abierto
+
 ## [TD-116] Ningún colector le dice al productor cuántos grupos acepta
 - **Ubicación:** `apps/web/src/collector/kit/lego/layout/GroupsContainer.tsx` y `GroupColumn.tsx` (el tope no existe como concepto), `apps/web/src/collector/catalog/album/schema.ts:32` (`ROUND_COUNT`, el único tope real, escrito a mano).
 - **Riesgo:** 6/10
