@@ -24,20 +24,21 @@ function RowFrame({
   children: ReactNode;
 }) {
   return (
-    <div className="flex flex-col rounded-lg border border-border bg-card p-3 shadow-sm transition-all hover:border-primary/30">
+    <div className="group flex flex-col rounded-xl border border-border bg-card p-3 transition-all duration-200 hover:border-primary/40 hover:shadow-xs">
       <div className="grid grid-cols-[2rem_1fr] items-start gap-2 w-full">
-        <div className="flex flex-col gap-1 w-full shrink-0">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={onRemove}
-            className="h-8 w-full rounded bg-destructive/10 text-destructive hover:bg-destructive hover:text-destructive-foreground transition-colors"
-          >
-            <Trash2 className="size-4" />
-          </Button>
+        <div className="flex w-full shrink-0 flex-col gap-1.5">
           <div className="flex h-8 w-full items-center justify-center rounded border border-border bg-muted/30 text-xs font-mono font-medium text-muted-foreground">
             {index + 1}
           </div>
+          <Button
+            variant="ghost"
+            size="icon-sm"
+            onClick={onRemove}
+            aria-label={`Eliminar fila ${index + 1}`}
+            className="h-8 w-full text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100 focus-visible:opacity-100 hover:text-destructive"
+          >
+            <Trash2 />
+          </Button>
         </div>
 
         {children}

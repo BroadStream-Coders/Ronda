@@ -8,6 +8,7 @@ import {
   GroupColumn,
   GroupFooter,
   QuickLoad,
+  RowCard,
   RowsContainer,
   getColumnData,
 } from "@/collector/kit";
@@ -43,27 +44,29 @@ export function Level0({ courses, setCourses }: Level0Props) {
         >
           <RowsContainer>
             {courses.map((course, index) => (
-              <div key={index} className="flex items-center gap-2 group">
-                <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded text-[10px] font-mono text-muted-foreground/50 select-none">
-                  {index + 1}
+              <RowCard
+                key={index}
+                index={index + 1}
+                action={
+                  <Button
+                    variant="ghost"
+                    size="icon-sm"
+                    onClick={() => removeCourse(index)}
+                    aria-label={`Eliminar valor ${index + 1}`}
+                    className="h-8 w-full text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100 focus-visible:opacity-100 hover:text-destructive"
+                  >
+                    <Trash2 />
+                  </Button>
+                }
+              >
+                <div className="flex min-w-0 flex-col justify-center">
+                  <Input
+                    value={course}
+                    onChange={(e) => updateCourse(index, e.target.value)}
+                    placeholder="Escribe el valor aquí..."
+                  />
                 </div>
-
-                <Input
-                  value={course}
-                  onChange={(e) => updateCourse(index, e.target.value)}
-                  placeholder="Escribe el valor aquí..."
-                  className="h-9 flex-1 rounded-lg bg-background border-border text-sm placeholder:text-muted-foreground/40 focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring/30"
-                />
-
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => removeCourse(index)}
-                  className="h-7 w-7 shrink-0 text-muted-foreground/40 hover:text-primary hover:bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity"
-                >
-                  <Trash2 className="h-3.5 w-3.5" />
-                </Button>
-              </div>
+              </RowCard>
             ))}
           </RowsContainer>
 
