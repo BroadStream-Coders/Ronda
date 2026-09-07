@@ -14,12 +14,12 @@ export function Row({ index, imageUrl, onImageChange, onRemove }: RowProps) {
     <GroupRow
       index={index}
       onRemove={onRemove}
-      align="start"
       removeLabel="Eliminar foto"
     >
       <ImagePicker
         value={imageUrl}
         onChange={onImageChange}
+        ratio={{ x: 16, y: 9 }}
         placeholder="Subir foto"
       />
     </GroupRow>

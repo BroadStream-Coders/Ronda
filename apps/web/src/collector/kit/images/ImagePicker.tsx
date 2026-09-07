@@ -12,6 +12,7 @@ interface ImagePickerProps {
   sourceUrl?: string;
   onChange: (file: File, url: string, sourceUrl?: string) => void;
   crop?: { x: number; y: number };
+  ratio?: { x: number; y: number };
   placeholder?: string;
   fill?: boolean;
   onClear?: () => void;
@@ -22,6 +23,7 @@ export function ImagePicker({
   sourceUrl,
   onChange,
   crop,
+  ratio,
   placeholder = "Foto",
   fill = false,
   onClear,
@@ -52,13 +54,14 @@ export function ImagePicker({
     syncValue(value);
   }, [value, syncValue]);
 
-  const shapeClass = crop ? "" : fill ? "h-full" : "aspect-square";
+  const box = crop ?? ratio;
+  const shapeClass = box ? "" : fill ? "h-full" : "aspect-square";
 
   return (
     <>
       <div
         className={`relative w-full ${shapeClass} group cursor-pointer overflow-hidden rounded-lg border border-dashed border-border bg-background transition-colors hover:border-primary/50 hover:bg-muted/40`}
-        style={crop ? { aspectRatio: `${crop.x} / ${crop.y}` } : undefined}
+        style={box ? { aspectRatio: `${box.x} / ${box.y}` } : undefined}
         onClick={(e) => {
           if ((e.target as HTMLElement).closest(".picker-action-btn")) return;
           triggerUpload();
@@ -72,7 +75,7 @@ export function ImagePicker({
               fill
               unoptimized
               className={`transition-transform duration-300 group-hover:scale-105 ${
-                crop ? "object-contain p-1" : "object-cover"
+                box ? "object-contain p-1" : "object-cover"
               }`}
             />
             {isCropEnabled && srcForCrop && (

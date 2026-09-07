@@ -8,7 +8,6 @@ import {
 } from "@/collector/kit";
 
 export interface ColumnData {
-  title: string;
   photos: ImageSlot[];
 }
 
@@ -24,7 +23,7 @@ export function createEmptyPhoto(): ImageSlot {
 }
 
 export function createEmptyColumn(): ColumnData {
-  return { title: "", photos: [createEmptyPhoto()] };
+  return { photos: [createEmptyPhoto()] };
 }
 
 export function buildData(columns: ColumnData[]): {
@@ -34,7 +33,7 @@ export function buildData(columns: ColumnData[]): {
   const packer = createImagePacker();
 
   const groups = columns.map((column, columnIndex) => ({
-    title: column.title.trim(),
+    title: "",
     items: column.photos.map((photo, photoIndex) => ({
       imagePath: packer.add(photo, `G${columnIndex + 1}`, `I${photoIndex + 1}`),
     })),
@@ -46,7 +45,7 @@ export function buildData(columns: ColumnData[]): {
 export function validate(columns: ColumnData[]): ValidationIssue[] {
   const issues: ValidationIssue[] = [];
   columns.forEach((column, columnIndex) => {
-    const groupLabel = column.title.trim() || `Grupo ${columnIndex + 1}`;
+    const groupLabel = `Grupo ${columnIndex + 1}`;
     column.photos.forEach((photo, photoIndex) => {
       if (!hasImage(photo)) {
         issues.push({

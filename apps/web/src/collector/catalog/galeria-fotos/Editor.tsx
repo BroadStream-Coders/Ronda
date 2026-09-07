@@ -115,7 +115,6 @@ export function Editor() {
 
       const loaded = await Promise.all(
         data.groups.map(async (group) => ({
-          title: group.title || "",
           photos: await Promise.all(
             (group.items ?? []).map((item) => readImageSlot(zip, item.imagePath)),
           ),
@@ -151,11 +150,7 @@ export function Editor() {
         <Column
           key={columnIndex}
           index={columnIndex + 1}
-          title={column.title}
           photos={column.photos}
-          onTitleChange={(val) =>
-            updateColumn(columnIndex, (current) => ({ ...current, title: val }))
-          }
           onPhotoChange={(photoId, file, url) =>
             setPhoto(columnIndex, photoId, file, url)
           }

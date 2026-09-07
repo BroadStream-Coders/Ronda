@@ -7,7 +7,6 @@ import {
   GroupFooter,
   QuickImages,
   RowsContainer,
-  TitleInput,
   hasImage,
 } from "@/collector/kit";
 import { Row } from "./Row";
@@ -15,9 +14,7 @@ import { MAX_CAPACITY } from "./schema";
 
 interface ColumnProps {
   index: number;
-  title: string;
   photos: ImageSlot[];
-  onTitleChange: (value: string) => void;
   onPhotoChange: (photoId: string, file: File, url: string) => void;
   onAddPhoto: () => void;
   onRemovePhoto: (photoId: string) => void;
@@ -27,9 +24,7 @@ interface ColumnProps {
 
 export function Column({
   index,
-  title,
   photos,
-  onTitleChange,
   onPhotoChange,
   onAddPhoto,
   onRemovePhoto,
@@ -39,16 +34,11 @@ export function Column({
   return (
     <GroupColumn
       index={index}
+      label="Grupo"
       onRemove={onRemoveColumn}
       currentCapacity={photos.length}
       maxCapacity={MAX_CAPACITY}
     >
-      <TitleInput
-        value={title}
-        onChange={onTitleChange}
-        placeholder="Nombre del grupo..."
-      />
-
       <RowsContainer>
         {photos.map((photo, photoIndex) => (
           <Row
