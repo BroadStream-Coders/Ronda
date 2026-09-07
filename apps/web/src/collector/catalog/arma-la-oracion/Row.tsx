@@ -1,6 +1,9 @@
 "use client";
 
-import { GroupRow, rowFieldClass } from "@/collector/kit";
+import { Trash2 } from "lucide-react";
+
+import { RowCard } from "@/collector/kit";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 interface RowProps {
@@ -16,13 +19,26 @@ export function Row({ index, value, onChange, onRemove }: RowProps) {
   const words = value.trim() ? value.trim().split(/\s+/).length : 0;
 
   return (
-    <GroupRow index={index} onRemove={onRemove} removeLabel="Eliminar oración">
-      <div className="relative">
+    <RowCard
+      index={index + 1}
+      action={
+        <Button
+          variant="ghost"
+          size="icon-sm"
+          onClick={onRemove}
+          aria-label={`Eliminar oración ${index + 1}`}
+          className="h-8 w-full text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100 focus-visible:opacity-100 hover:text-destructive"
+        >
+          <Trash2 />
+        </Button>
+      }
+    >
+      <div className="relative flex min-w-0 flex-col justify-center">
         <Input
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder="Oración"
-          className={`${rowFieldClass} pr-9`}
+          className="pr-9"
         />
         {words > LONG_SENTENCE && (
           <span
@@ -33,6 +49,6 @@ export function Row({ index, value, onChange, onRemove }: RowProps) {
           </span>
         )}
       </div>
-    </GroupRow>
+    </RowCard>
   );
 }
