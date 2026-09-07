@@ -1,6 +1,9 @@
 "use client";
 
-import { GroupRow, rowFieldClass } from "@/collector/kit";
+import { Trash2 } from "lucide-react";
+
+import { RowCard } from "@/collector/kit";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 interface RowProps {
@@ -21,26 +24,34 @@ export function Row({
   onRemove,
 }: RowProps) {
   return (
-    <GroupRow
-      index={index}
-      onRemove={onRemove}
-      align="start"
-      removeLabel="Eliminar pregunta"
+    <RowCard
+      index={index + 1}
+      action={
+        <Button
+          variant="ghost"
+          size="icon-sm"
+          onClick={onRemove}
+          aria-label={`Eliminar pregunta ${index + 1}`}
+          className="h-8 w-full text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100 focus-visible:opacity-100 hover:text-destructive"
+        >
+          <Trash2 />
+        </Button>
+      }
     >
-      <div className="flex flex-col gap-1.5 rounded-lg border border-border bg-muted/30 p-2">
+      <div className="flex min-w-0 flex-col justify-center gap-1.5">
         <Input
           value={question}
           onChange={(e) => onQuestionChange(e.target.value)}
           placeholder="Pregunta"
-          className={`${rowFieldClass} h-8 border-transparent bg-background`}
+          className="text-xs"
         />
         <Input
           value={answer}
           onChange={(e) => onAnswerChange(e.target.value)}
           placeholder="Respuesta"
-          className={`${rowFieldClass} h-8 border-transparent bg-background`}
+          className="text-xs"
         />
       </div>
-    </GroupRow>
+    </RowCard>
   );
 }
