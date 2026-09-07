@@ -37,8 +37,14 @@ export function createEmptyRow(): RowData {
   return { id: uid(), date: "", title: "", image: emptyImageSlot() };
 }
 
+export function fitRows(rows: RowData[]): RowData[] {
+  const fitted = rows.slice(0, COLUMN_SIZE);
+  while (fitted.length < COLUMN_SIZE) fitted.push(createEmptyRow());
+  return fitted;
+}
+
 export function createFullColumn(): RowData[] {
-  return Array.from({ length: COLUMN_SIZE }, createEmptyRow);
+  return fitRows([]);
 }
 
 export function validate(

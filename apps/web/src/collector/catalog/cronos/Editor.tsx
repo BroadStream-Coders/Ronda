@@ -12,11 +12,14 @@ import {
   useWorkspaceGroups,
   useWorkspaceHeader,
   notifyError,
+  notifyInfo,
 } from "@/collector/kit";
 import { Column } from "./Column";
 import {
+  COLUMN_SIZE,
   createEmptyRow,
   createFullColumn,
+  fitRows,
   validate,
   type Data,
   type RowData,
@@ -31,8 +34,6 @@ export function Editor() {
   const {
     groups,
     removeGroup,
-    addItem,
-    removeItem,
     updateItem,
     replaceGroup,
     setGroups,
@@ -107,17 +108,23 @@ export function Editor() {
           return;
         }
 
+        if (sessionData.groups.some((g) => (g.items || []).length > COLUMN_SIZE)) {
+          notifyInfo(
+            `Cada grupo tiene ${COLUMN_SIZE} eventos; los que sobren en el archivo no se cargan.`,
+          );
+        }
+
         const loadedGroups = await Promise.all(
           sessionData.groups.map(async (g) => {
             const items = await Promise.all(
-              (g.items || []).map(async (item) => ({
+              (g.items || []).slice(0, COLUMN_SIZE).map(async (item) => ({
                 ...createEmptyRow(),
                 date: item.date || "",
                 title: item.title || "",
                 image: await readImageSlot(zip, item.imagePath),
               })),
             );
-            return { title: g.title || "", items };
+            return { title: g.title || "", items: fitRows(items) };
           }),
         );
 
@@ -162,8 +169,6 @@ export function Editor() {
           onItemChange={(itemIdx, updates) =>
             updateItem(groupIndex, itemIdx, { ...items[itemIdx], ...updates })
           }
-          onAddItem={() => addItem(groupIndex)}
-          onRemoveItem={(itemIdx) => removeItem(groupIndex, itemIdx)}
           onRemoveColumn={() => handleRemoveGroup(groupIndex)}
           onQuickLoad={(matrix) => handleQuickLoad(groupIndex, matrix)}
         />
