@@ -37,8 +37,9 @@ export function Row({ index, data, onChange }: RowProps) {
       <div className="w-full">
         <ImagePicker
           value={data.image.url}
-          onChange={(file, url) =>
-            onChange({ image: setSlotImage(data.image, file, url) })
+          sourceUrl={data.image.sourceUrl}
+          onChange={(file, url, source) =>
+            onChange({ image: setSlotImage(data.image, file, url, source) })
           }
           crop={{ x: 1, y: 1 }}
           placeholder="Imagen"

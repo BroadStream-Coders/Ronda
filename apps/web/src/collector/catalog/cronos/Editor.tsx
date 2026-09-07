@@ -9,8 +9,10 @@ import {
   createImagePacker,
   readImageSlot,
   releaseSlots,
+  setSlotImage,
   useWorkspaceGroups,
   useWorkspaceHeader,
+  type QuickImage,
   notifyError,
   notifyInfo,
 } from "@/collector/kit";
@@ -48,6 +50,23 @@ export function Editor() {
     const updated = groups[groupIndex].map((row, i) =>
       matrix[i]
         ? { ...row, date: matrix[i][0] || "", title: matrix[i][1] || "" }
+        : row,
+    );
+    replaceGroup(groupIndex, updated);
+  };
+
+  const handleQuickImages = (groupIndex: number, images: QuickImage[]) => {
+    const updated = groups[groupIndex].map((row, i) =>
+      images[i]
+        ? {
+            ...row,
+            image: setSlotImage(
+              row.image,
+              images[i].file,
+              images[i].url,
+              images[i].sourceUrl,
+            ),
+          }
         : row,
     );
     replaceGroup(groupIndex, updated);
@@ -171,6 +190,7 @@ export function Editor() {
           }
           onRemoveColumn={() => handleRemoveGroup(groupIndex)}
           onQuickLoad={(matrix) => handleQuickLoad(groupIndex, matrix)}
+          onQuickImages={(files) => handleQuickImages(groupIndex, files)}
         />
       ))}
     </GroupsContainer>

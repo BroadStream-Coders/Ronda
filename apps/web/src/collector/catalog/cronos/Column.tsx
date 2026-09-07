@@ -3,11 +3,13 @@
 import {
   GroupColumn,
   GroupFooter,
+  QuickImages,
   QuickLoad,
+  type QuickImage,
   RowsContainer,
   TitleInput,
 } from "@/collector/kit";
-import type { RowData } from "./schema";
+import { COLUMN_SIZE, type RowData } from "./schema";
 import { Row } from "./Row";
 
 interface ColumnProps {
@@ -18,6 +20,7 @@ interface ColumnProps {
   onItemChange: (itemIndex: number, updates: Partial<RowData>) => void;
   onRemoveColumn: () => void;
   onQuickLoad: (data: string[][]) => void;
+  onQuickImages: (images: QuickImage[]) => void;
 }
 
 export function Column({
@@ -28,6 +31,7 @@ export function Column({
   onItemChange,
   onRemoveColumn,
   onQuickLoad,
+  onQuickImages,
 }: ColumnProps) {
   return (
     <GroupColumn index={index} onRemove={onRemoveColumn}>
@@ -51,7 +55,17 @@ export function Column({
       <GroupFooter>
         <QuickLoad
           onLoad={onQuickLoad}
+          label="Planilla"
           placeholder="Pegar fecha (col 1) + título (col 2)…"
+          leading={
+            <QuickImages
+              onLoad={onQuickImages}
+              max={COLUMN_SIZE}
+              crop={{ x: 1, y: 1 }}
+              label="Imágenes"
+              className="flex-1"
+            />
+          }
         />
       </GroupFooter>
     </GroupColumn>
