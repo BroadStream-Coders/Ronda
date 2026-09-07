@@ -3,5 +3,6 @@ export interface ImageSlot {
   name?: string;
   file?: File;
   url?: string;
+  sourceUrl?: string;
   isCroma?: boolean;
 }

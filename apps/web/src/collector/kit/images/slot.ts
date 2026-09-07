@@ -16,19 +16,25 @@ export function setSlotImage<T extends ImageSlot>(
   slot: T,
   file: File,
   url: string,
+  sourceUrl?: string,
 ): T {
   if (slot.url && slot.url !== url) URL.revokeObjectURL(slot.url);
-  return { ...slot, file, url };
+  if (slot.sourceUrl && slot.sourceUrl !== sourceUrl) {
+    URL.revokeObjectURL(slot.sourceUrl);
+  }
+  return { ...slot, file, url, sourceUrl };
 }
 
 export function clearSlotImage<T extends ImageSlot>(slot: T): T {
   if (slot.url) URL.revokeObjectURL(slot.url);
-  return { ...slot, file: undefined, url: undefined };
+  if (slot.sourceUrl) URL.revokeObjectURL(slot.sourceUrl);
+  return { ...slot, file: undefined, url: undefined, sourceUrl: undefined };
 }
 
 export function releaseSlots(slots: (ImageSlot | undefined)[]): void {
   slots.forEach((slot) => {
     if (slot?.url) URL.revokeObjectURL(slot.url);
+    if (slot?.sourceUrl) URL.revokeObjectURL(slot.sourceUrl);
   });
 }
 

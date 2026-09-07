@@ -11,25 +11,6 @@ se retira de aquí.
 
 ---
 
-## [WL-014] Alinear la carga rápida de imágenes con el recorte
-- **Idea:** que `QuickImages` (`apps/web/src/collector/kit/lego/components/QuickImages.tsx`)
-  sepa del recorte, para poder ponerlo en un colector que hoy recorta —Cronos (1:1),
-  Intruso (21:9 y 3:4)— sin que las dos formas de subir una foto dejen cosas distintas.
-  Hoy el `ImagePicker` de a una abre el cropper y la carga rápida sube el archivo tal
-  cual. Las dos salidas posibles: abrir el cropper una foto tras otra (cinco diálogos
-  seguidos, pesado para el productor) o recortar al centro con la proporción pedida y
-  dejar que el productor ajuste después la que no le guste.
-- **Por qué / valor:** hoy no está mal nada —el único colector con carga rápida es Álbum,
-  que nunca tuvo recorte, ni acá ni en Studio—, así que esto no es deuda. Es la decisión
-  que hay que tomar el día que la carga rápida entre en un colector con recorte.
-- **Por qué no ahora:** la carga rápida se va a ir poniendo en varios colectores **a
-  sabiendas de que ahí se pierde el recorte**, y eso está aceptado. Recién cuando esa
-  pérdida moleste en un juego concreto vale la pena elegir entre los dos caminos; antes
-  es adivinar cuál de los dos quiere el productor.
-- **Ojo:** se cruza con [[TD-086]] — el recorte de hoy sale sin tope de tamaño ni de
-  calidad, así que recortar automático a escala no arregla el peso por sí solo.
-- **Fecha:** 2026-09-04.
-
 ## [WL-013] Los layers apagados dejan de desmontarse (el `SetActive` de Unity)
 - **Idea:** que `LayerView` no borre del DOM un layer con `visible: false`, sino que lo
   deje montado y solo lo vuelva transparente. Hoy hace `child.visible ? <LayerView/> : null`

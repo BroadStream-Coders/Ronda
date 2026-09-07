@@ -12,6 +12,9 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [WL-014] Alinear la carga rápida de imágenes con el recorte (2026-09-06 19:46)
+`QuickImages` acepta `crop` y, cuando lo recibe, **recorta al centro** cada archivo a esa proporción antes de entregarlo (`centerCropFile` en `crop-image.ts`, un `drawImage` con el rect centrado; el `getCroppedImg` del diálogo no se reusó porque su lienzo `safeArea` pesa ~288 MB con una foto de celular). Cronos lo estrena en 1:1, la misma proporción que su `ImagePicker`, así que las dos formas de subir una foto dejan lo mismo. El recorte automático **no tapa el original**: el `ImageSlot` guarda además un `sourceUrl` con la foto entera y el cropper trabaja sobre ese, así que reencuadrar a mano una foto cargada de golpe muestra la imagen completa y no el cuadrado ya recortado (lo que se exporta sigue siendo el recorte). El original vive solo en la sesión: al guardar y volver a cargar el zip, el cropper arranca desde el recorte. Era necesario y no cosmético: el layout de Cronos dibuja la foto con `fit: "fill"` en un slot de 292×303, o sea que una foto sin recortar sale **estirada** al aire. Sigue abierta [[TD-086]]: el recorte no limita el lado mayor ni acá ni en el diálogo.
+
 ## [TD-113] El colector de Álbum no limita columnas y el juego solo pinta 6 (2026-09-04 15:02)
 Cerrada por [[RM-112]]: el colector pasó a seis sobres fijos, así que ya no se puede cargar una séptima columna que al aire no existe. El agujero general —declarar y mostrar el tope en cualquier colector— queda abierto en [[TD-116]].
 

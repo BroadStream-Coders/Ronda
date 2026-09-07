@@ -5,6 +5,7 @@ import {
   GroupFooter,
   QuickImages,
   QuickLoad,
+  type QuickImage,
   RowsContainer,
   TitleInput,
   type ImageSlot,
@@ -20,7 +21,7 @@ interface ColumnProps {
   onSetPhotoImage: (id: string, file: File, url: string) => void;
   onUpdateRound: (updates: Partial<{ context: string }>) => void;
   onQuickLoad: (data: string[][]) => void;
-  onQuickImages: (files: File[]) => void;
+  onQuickImages: (images: QuickImage[]) => void;
 }
 
 export function Column({

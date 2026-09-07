@@ -4,11 +4,19 @@ import { useRef, type ChangeEvent } from "react";
 import { ImagePlus } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import { centerCropFile } from "../../images/crop-image";
 import { notifyInfo } from "../../notices/use-notices";
 
+export interface QuickImage {
+  file: File;
+  url: string;
+  sourceUrl?: string;
+}
+
 interface QuickImagesProps {
-  onLoad: (files: File[]) => void;
+  onLoad: (images: QuickImage[]) => void;
   max?: number;
+  crop?: { x: number; y: number };
   label?: string;
   className?: string;
 }
@@ -16,12 +24,13 @@ interface QuickImagesProps {
 export function QuickImages({
   onLoad,
   max,
+  crop,
   label = "Cargar varias imágenes",
   className = "",
 }: QuickImagesProps) {
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files ?? []);
     e.target.value = "";
     if (files.length === 0) return;
@@ -30,7 +39,26 @@ export function QuickImages({
         `Se eligieron ${files.length} imágenes; solo entran las primeras ${max}.`,
       );
     }
-    onLoad(max === undefined ? files : files.slice(0, max));
+
+    const taken = max === undefined ? files : files.slice(0, max);
+    if (!crop) {
+      onLoad(
+        taken.map((file) => ({ file, url: URL.createObjectURL(file) })),
+      );
+      return;
+    }
+
+    const aspect = crop.x / crop.y;
+    const images: QuickImage[] = [];
+    for (const file of taken) {
+      const cropped = await centerCropFile(file, aspect);
+      images.push({
+        file: cropped,
+        url: URL.createObjectURL(cropped),
+        sourceUrl: URL.createObjectURL(file),
+      });
+    }
+    onLoad(images);
   };
 
   return (

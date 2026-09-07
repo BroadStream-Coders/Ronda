@@ -9,7 +9,8 @@ import { ImageCropperDialog } from "./ImageCropperDialog";
 
 interface ImagePickerProps {
   value?: string;
-  onChange: (file: File, url: string) => void;
+  sourceUrl?: string;
+  onChange: (file: File, url: string, sourceUrl?: string) => void;
   crop?: { x: number; y: number };
   placeholder?: string;
   fill?: boolean;
@@ -18,6 +19,7 @@ interface ImagePickerProps {
 
 export function ImagePicker({
   value,
+  sourceUrl,
   onChange,
   crop,
   placeholder = "Foto",
@@ -44,7 +46,7 @@ export function ImagePicker({
     onCropTrigger: () => setIsCropperOpen(true),
   });
 
-  const srcForCrop = uncroppedUrl || previewUrl;
+  const srcForCrop = uncroppedUrl || sourceUrl || previewUrl;
 
   useEffect(() => {
     setPreviewUrl(value ?? null);
@@ -126,7 +128,7 @@ export function ImagePicker({
             const fileName = uncroppedFile?.name || "image.jpg";
             const ft = uncroppedFile?.type || "image/jpeg";
             const finalFile = new File([blob], fileName, { type: ft });
-            commitCrop(finalFile, url);
+            commitCrop(finalFile, url, srcForCrop);
             setIsCropperOpen(false);
           }}
         />

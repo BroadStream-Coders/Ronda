@@ -60,3 +60,40 @@ export default async function getCroppedImg(
     }, fileType);
   });
 }
+
+export async function centerCropFile(
+  file: File,
+  aspect: number,
+): Promise<File> {
+  const url = URL.createObjectURL(file);
+  try {
+    const image = await createImage(url);
+    const width = Math.min(image.width, image.height * aspect);
+    const height = width / aspect;
+    const canvas = document.createElement("canvas");
+    canvas.width = Math.round(width);
+    canvas.height = Math.round(height);
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return file;
+
+    ctx.drawImage(
+      image,
+      (image.width - width) / 2,
+      (image.height - height) / 2,
+      width,
+      height,
+      0,
+      0,
+      canvas.width,
+      canvas.height,
+    );
+
+    const type = file.type || "image/jpeg";
+    const blob = await new Promise<Blob | null>((resolve) =>
+      canvas.toBlob(resolve, type, 0.92),
+    );
+    return blob ? new File([blob], file.name, { type }) : file;
+  } finally {
+    URL.revokeObjectURL(url);
+  }
+}

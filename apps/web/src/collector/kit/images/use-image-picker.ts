@@ -3,7 +3,7 @@
 import { useState, useRef, useCallback, useEffect } from "react";
 
 interface UseImagePickerOptions {
-  onImageSelect?: (file: File, previewUrl: string) => void;
+  onImageSelect?: (file: File, previewUrl: string, sourceUrl?: string) => void;
   initialPreview?: string | null;
   skipCleanupOnUnmount?: boolean;
   enableCrop?: boolean;
@@ -65,11 +65,11 @@ export function useImagePicker(options: UseImagePickerOptions = {}) {
   );
 
   const commitCrop = useCallback(
-    (file: File, url: string) => {
+    (file: File, url: string, sourceUrl?: string) => {
       registerOwnedUrl(url);
       setPreviewUrl(url);
       setSelectedFile(file);
-      onImageSelect?.(file, url);
+      onImageSelect?.(file, url, sourceUrl);
     },
     [onImageSelect, registerOwnedUrl],
   );

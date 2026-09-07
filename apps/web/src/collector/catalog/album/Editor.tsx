@@ -11,6 +11,7 @@ import {
   setSlotImage,
   useWorkspaceHeader,
   type ImageSlot,
+  type QuickImage,
   notifyError,
   notifyInfo,
 } from "@/collector/kit";
@@ -97,16 +98,14 @@ export function Editor() {
     );
   };
 
-  const handleQuickImages = (roundId: string, files: File[]) =>
+  const handleQuickImages = (roundId: string, images: QuickImage[]) =>
     setRounds((prev) =>
       prev.map((r) =>
         r.id === roundId
           ? {
               ...r,
               photos: r.photos.map((p, i) =>
-                files[i]
-                  ? setSlotImage(p, files[i], URL.createObjectURL(files[i]))
-                  : p,
+                images[i] ? setSlotImage(p, images[i].file, images[i].url) : p,
               ),
             }
           : r,
