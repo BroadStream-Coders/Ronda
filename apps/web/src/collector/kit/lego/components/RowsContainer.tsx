@@ -17,7 +17,7 @@ export function RowsContainer({
   return (
     <div className="min-h-0 flex-1">
       <ScrollArea className={`h-full ${className}`}>
-        <div className={`flex flex-col px-3 py-3 ${gap}`}>{children}</div>
+        <div className={`flex flex-col px-3 pt-3 ${gap}`}>{children}</div>
       </ScrollArea>
     </div>
   );
