@@ -1,11 +1,14 @@
 "use client";
 
-import type { ImageSlot } from "@/collector/kit";
+import type { ImageSlot, QuickImage } from "@/collector/kit";
 import {
   AddRowButton,
   GroupColumn,
+  GroupFooter,
+  QuickImages,
   RowsContainer,
   TitleInput,
+  hasImage,
 } from "@/collector/kit";
 import { Row } from "./Row";
 import { MAX_CAPACITY } from "./schema";
@@ -19,6 +22,7 @@ interface ColumnProps {
   onAddPhoto: () => void;
   onRemovePhoto: (photoId: string) => void;
   onRemoveColumn: () => void;
+  onQuickImages: (images: QuickImage[]) => void;
 }
 
 export function Column({
@@ -30,6 +34,7 @@ export function Column({
   onAddPhoto,
   onRemovePhoto,
   onRemoveColumn,
+  onQuickImages,
 }: ColumnProps) {
   return (
     <GroupColumn
@@ -63,6 +68,14 @@ export function Column({
         }}
         label="Agregar foto"
       />
+
+      <GroupFooter>
+        <QuickImages
+          onLoad={onQuickImages}
+          max={MAX_CAPACITY - photos.filter(hasImage).length}
+          className="w-full"
+        />
+      </GroupFooter>
     </GroupColumn>
   );
 }

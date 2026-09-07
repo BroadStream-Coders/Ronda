@@ -34,6 +34,10 @@ export function QuickImages({
     const files = Array.from(e.target.files ?? []);
     e.target.value = "";
     if (files.length === 0) return;
+    if (max === 0) {
+      notifyInfo("No entran más imágenes en este grupo.");
+      return;
+    }
     if (max !== undefined && files.length > max) {
       notifyInfo(
         `Se eligieron ${files.length} imágenes; solo entran las primeras ${max}.`,

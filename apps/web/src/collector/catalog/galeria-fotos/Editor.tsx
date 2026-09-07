@@ -6,11 +6,13 @@ import { Image as ImageIcon } from "lucide-react";
 import { loadZipFile, saveAsZip } from "@/helpers/persistence";
 import {
   GroupsContainer,
+  hasImage,
   readImageSlot,
   releaseSlots,
   setSlotImage,
   useWorkspaceHeader,
   notifyError,
+  type QuickImage,
 } from "@/collector/kit";
 import { Column } from "./Column";
 import {
@@ -68,6 +70,20 @@ export function Editor() {
       photos: column.photos.filter((p) => p.id !== photoId),
     }));
   };
+
+  const addQuickImages = (columnIndex: number, images: QuickImage[]) =>
+    updateColumn(columnIndex, (column) => {
+      const pending = [...images];
+      const photos = column.photos.map((photo) => {
+        if (hasImage(photo)) return photo;
+        const next = pending.shift();
+        return next ? setSlotImage(photo, next.file, next.url) : photo;
+      });
+      const appended = pending.map((image) =>
+        setSlotImage(createEmptyPhoto(), image.file, image.url),
+      );
+      return { ...column, photos: [...photos, ...appended] };
+    });
 
   const handleGetBundle = useCallback(() => buildData(columns), [columns]);
 
@@ -151,6 +167,7 @@ export function Editor() {
           }
           onRemovePhoto={(photoId) => removePhoto(columnIndex, photoId)}
           onRemoveColumn={() => removeColumn(columnIndex)}
+          onQuickImages={(images) => addQuickImages(columnIndex, images)}
         />
       ))}
     </GroupsContainer>
