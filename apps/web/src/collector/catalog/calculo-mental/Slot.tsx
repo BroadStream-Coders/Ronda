@@ -29,13 +29,13 @@ export function Slot({
           value={question}
           onChange={(e) => onQuestionChange(e.target.value)}
           placeholder="Q..."
-          className="h-7 px-1.5 text-center rounded-md bg-background border-blue-500/20 focus-visible:border-blue-500/50 focus-visible:ring-blue-500/20 text-xs placeholder:text-muted-foreground/30"
+          className="h-7 px-1.5 text-center text-xs"
         />
         <Input
           value={answer}
           onChange={(e) => onAnswerChange(e.target.value)}
           placeholder="A..."
-          className="h-7 px-1.5 text-center rounded-md bg-background border-purple-500/20 focus-visible:border-purple-500/50 focus-visible:ring-purple-500/20 text-xs font-bold text-purple-200 placeholder:text-muted-foreground/30"
+          className="h-7 px-1.5 text-center text-xs font-bold"
         />
       </div>
     </div>

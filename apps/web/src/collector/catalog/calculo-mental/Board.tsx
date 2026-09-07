@@ -1,6 +1,8 @@
 "use client";
 
 import { Trash2 } from "lucide-react";
+
+import { RowCard } from "@/collector/kit";
 import { Button } from "@/components/ui/button";
 import type { SlotData } from "./schema";
 import { Slot } from "./Slot";
@@ -20,12 +22,21 @@ export function Board({ index, slots, onSlotChange, onRemoveBoard }: BoardProps)
   const labels = ["A", "B", "C", "D"];
 
   return (
-    <div className="flex items-start gap-2 group relative pr-8">
-      <div className="flex h-14 w-6 shrink-0 items-center justify-center rounded text-[10px] font-mono text-muted-foreground/40 font-bold select-none pt-4">
-        {index}
-      </div>
-
-      <div className="flex flex-1 gap-1.5">
+    <RowCard
+      index={index}
+      action={
+        <Button
+          variant="ghost"
+          size="icon-sm"
+          onClick={onRemoveBoard}
+          aria-label={`Eliminar tablero ${index}`}
+          className="h-8 w-full text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100 focus-visible:opacity-100 hover:text-destructive"
+        >
+          <Trash2 />
+        </Button>
+      }
+    >
+      <div className="flex min-w-0 flex-1 gap-1.5">
         {slots.map((slot, slotIdx) => (
           <Slot
             key={slotIdx}
@@ -37,15 +48,6 @@ export function Board({ index, slots, onSlotChange, onRemoveBoard }: BoardProps)
           />
         ))}
       </div>
-
-      <Button
-        variant="ghost"
-        size="icon"
-        onClick={onRemoveBoard}
-        className="absolute right-0 top-1/2 -translate-y-1/2 size-7 text-muted-foreground/30 hover:text-destructive hover:bg-destructive/10 opacity-0 group-hover:opacity-100 transition-opacity"
-      >
-        <Trash2 className="size-3.5" />
-      </Button>
-    </div>
+    </RowCard>
   );
 }
