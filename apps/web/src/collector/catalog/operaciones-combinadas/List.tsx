@@ -56,7 +56,7 @@ export function List({
                   className={`group/op flex items-center gap-1.5 rounded-lg border p-1.5 transition-colors ${
                     selected
                       ? "border-primary bg-primary/5"
-                      : "border-transparent bg-muted/40 hover:bg-muted"
+                      : "border-border bg-muted/30 hover:border-primary/40"
                   }`}
                 >
                   <button
@@ -86,7 +86,7 @@ export function List({
                       onUpdateOperation(op.id, "text", e.target.value)
                     }
                     placeholder="15+12=27"
-                    className="h-8 min-w-0 flex-1 border-transparent bg-background tabular-nums"
+                    className="min-w-0 flex-1 tabular-nums"
                   />
 
                   <select
