@@ -21,6 +21,7 @@ export function Row({ index, value, onChange, onRemove }: RowProps) {
   return (
     <RowCard
       index={index + 1}
+      inline
       action={
         <Button
           variant="ghost"
@@ -33,7 +34,7 @@ export function Row({ index, value, onChange, onRemove }: RowProps) {
         </Button>
       }
     >
-      <div className="relative flex min-w-0 flex-col justify-center">
+      <div className="relative min-w-0">
         <Input
           value={value}
           onChange={(e) => onChange(e.target.value)}

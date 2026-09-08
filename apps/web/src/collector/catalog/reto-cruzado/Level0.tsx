@@ -47,6 +47,7 @@ export function Level0({ courses, setCourses }: Level0Props) {
               <RowCard
                 key={index}
                 index={index + 1}
+                inline
                 action={
                   <Button
                     variant="ghost"
@@ -59,13 +60,11 @@ export function Level0({ courses, setCourses }: Level0Props) {
                   </Button>
                 }
               >
-                <div className="flex min-w-0 flex-col justify-center">
-                  <Input
-                    value={course}
-                    onChange={(e) => updateCourse(index, e.target.value)}
-                    placeholder="Escribe el valor aquí..."
-                  />
-                </div>
+                <Input
+                  value={course}
+                  onChange={(e) => updateCourse(index, e.target.value)}
+                  placeholder="Escribe el valor aquí..."
+                />
               </RowCard>
             ))}
           </RowsContainer>
