@@ -42,3 +42,23 @@ export function isDeParEnParSession(
     candidate.answer.every((slot) => typeof slot === "string")
   );
 }
+
+export interface Slot {
+  pair: number;
+  card: DeParEnParCard;
+}
+
+export function resolveSlot(
+  session: DeParEnParSession | null,
+  index: number,
+): Slot | null {
+  const entry = session?.answer[index];
+  if (!entry) return null;
+
+  const [rawPair, side] = entry.split("_");
+  const pair = Number(rawPair);
+  const cell = session.cells[pair];
+  if (!cell) return null;
+
+  return { pair, card: side === "B" ? cell.cardB : cell.cardA };
+}

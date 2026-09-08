@@ -8,6 +8,7 @@ import { candara } from "@/programs/mas-conectados/fonts/candara";
 import { poppins } from "@/programs/mas-conectados/fonts/poppins";
 import layout from "./layout.json";
 import { meta } from "./meta";
+import { DeParEnParLogic } from "./Logic";
 import { isDeParEnParSession } from "./session";
 
 export const deParEnPar: GameType = {
@@ -16,6 +17,7 @@ export const deParEnPar: GameType = {
   images: true,
   pointer: true,
   fonts: { candara, poppins },
+  logic: DeParEnParLogic,
   load: async (file) => {
     const { data, images } = await readZipSession(file);
     if (!isDeParEnParSession(data)) {
