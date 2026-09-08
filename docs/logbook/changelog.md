@@ -12,6 +12,9 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [RM-073] Migrar De Par en Par desde Unity (2026-09-08 11:30)
+Juego de memoria portado desde el prefab de Unity a `catalog/de-par-en-par/`, el primero de Más Conectados con sesión ZIP: 20 cartas con `flip`/`click`/`pop`/`shake`, tres modos de carta (texto en Candara, imagen, o Poppins sobre imagen recortada por la máscara del plato) y la grilla horneada con el algoritmo del `GridLayoutGroup`, validada contra las posiciones que el propio prefab trae bakeadas. Controles idénticos a Unity —`V` validar, `C` limpiar, `A` rebarajar, `F`/`B` todas arriba/abajo, clic derecho validar, clic central alternar— con un solo cambio deliberado: la selección sigue la cara de la carta, así que clickear dos veces la misma ya no da un falso acierto al aire. **Solo se portó el tablero de 10 pares**: en Unity los de 8, 12 y 15 siguen con la gráfica vieja.
+
 ## [TD-119] El sonido seguía sonando después de salir del juego (2026-09-08 10:02)
 `playSound` guarda los `HTMLAudioElement` en un `Map` del módulo y fuera del DOM, así que desmontar el juego no los detenía: salir a un colector con un clip a medias lo dejaba sonando encima de otra pantalla. `stopAllSounds` en el cleanup de `GameShell` —el único sitio por donde pasan todos— corta cualquier audio del juego al abandonarlo, no solo el conteo de [[RM-117]]. Cambiar de pestaña no lo corta a propósito: en vivo el operador puede volver.
 

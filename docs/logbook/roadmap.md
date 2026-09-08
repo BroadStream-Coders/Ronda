@@ -47,8 +47,8 @@ Al terminar una tarea se mueve al changelog y se borra de aquí.
 # Juegos — el núcleo del negocio
 
 `RM-038` es el paraguas. Debajo va **un juego por tarea**: los que se portan desde
-Games ([[RM-064]]–[[RM-071]]) y De Par en Par ([[RM-073]]), que no existe en Games y
-se migra desde Unity.
+Games ([[RM-064]]–[[RM-071]]) y De Par en Par ([[RM-073]], cerrada), que no existía en
+Games y se migró desde Unity.
 
 **Lo que le falta al kit no se hace por adelantado.** Cada pieza entra con el primer
 juego que la pida, escrita en `kit/` y no en la carpeta del juego — el mismo criterio
@@ -91,12 +91,12 @@ cualquiera de estas tareas, no se repite acá.
      tiene, parts sin vista registrada.
   4. **Fuera del inventario de Games quedan los que solo existen en Unity**, que se
      migran con [`docs/migracion-unity.md`](../migracion-unity.md): De Par en Par
-     ([[RM-073]]), Tres en Raya ([[RM-106]]) y Galería de Fotos ([[RM-108]]), estos
-     dos últimos ya cerrados. Unity tiene más juegos
-     sin migrar que ni Games ni este roadmap contemplan todavía.
+     ([[RM-073]]), Tres en Raya ([[RM-106]]) y Galería de Fotos ([[RM-108]]), **las
+     tres ya cerradas**. Unity tiene más juegos sin migrar que ni Games ni este
+     roadmap contemplan todavía.
 - **Hecho cuando:** cierran las tareas por juego y las tres piezas de arriba están
   hechas; los 10 juegos de Games más De Par en Par corren dentro de un programa y
-  son asignables.
+  son asignables. **Queda solo Operaciones Combinadas** ([[RM-071]]).
 - **Fecha:** 2026-08-13 · **Estado:** En progreso (2026-08-20)
 
 ## [RM-071] Portar Operaciones Combinadas
@@ -122,32 +122,6 @@ cualquiera de estas tareas, no se repite acá.
 - **Hecho cuando:** `PageDown` muestra el video y el juego sigue teniendo los cinco
   niveles anteriores intactos.
 - **Fecha:** 2026-09-01 · **Estado:** Abierto
-
-## [RM-073] Migrar De Par en Par desde Unity
-- **Objetivo:** traer el juego de memoria con pares de cartas. **No existe en Games**,
-  así que la fuente es el proyecto **Unity** (`TvPeru-QGEM-ManagedGames`) y la guía es
-  [`docs/migracion-unity.md`](../migracion-unity.md), no la de Games. Colector:
-  `de-par-en-par`, asignado hoy a **Más Conectados** (su único programa).
-- **Lo que ya define el colector:** cada carta es imagen, texto o ambos
-  (`CardMode`), y la sesión trae las imágenes por nombre de archivo
-  (`pictureFile`) más el orden del tablero (`answer`) — o sea, sesión ZIP, no JSON
-  suelto.
-- **Alcance: solo el tablero de 20 cartas (10 pares).** El colector ofrece cuatro
-  conteos (8/10/12/15), pero en Unity **solo el de 10 pares está terminado con la
-  gráfica actual**: es el único activo, el único que usa `Graphic New/` y el único
-  con los números en TMP. Los de 16, 24 y 30 siguen apuntando a las gráficas viejas
-  (`Graphic/Board 24|30/`, números como PNG) y el de 16 tiene celdas cuadradas de
-  290×290 contra una carta de 360×250. Los otros tres conteos no se portan.
-- **Depende de:** nada. La animación **flip** entró con [[RM-068]] y el cursor
-  visible con [[RM-081]]. El ZIP y los blobs entraron con [[RM-061]]; la part `text`
-  de las cartas de texto, con [[RM-063]]. **No pide `drag`:** en Unity cada carta es
-  un `Button`, se clickea, no se arrastra — la promoción de la part `drag` de Cronos
-  al kit sigue esperando a otro juego.
-- **Ojo:** [[TD-013]] es del **colector** (anchos fijos por cantidad de pares), no
-  del juego — no se cierra con esta tarea.
-- **Hecho cuando:** corre dentro de Más Conectados, es asignable y consume la sesión
-  que produce su colector, imágenes incluidas.
-- **Fecha:** 2026-08-20 · **Estado:** En progreso (2026-09-08)
 
 ---
 

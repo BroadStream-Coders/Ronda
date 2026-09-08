@@ -18,6 +18,11 @@ import { coursePosition } from "../src/game/catalog/reto-cruzado/courses.ts";
 import { PRELOAD as VUELO_PRELOAD } from "../src/game/catalog/al-vuelo/assets.ts";
 import { correctOption } from "../src/game/catalog/al-vuelo/session.ts";
 import { isBuscaLogoSession } from "../src/game/catalog/busca-logo/session.ts";
+import { PRELOAD as DEPAR_PRELOAD } from "../src/game/catalog/de-par-en-par/assets.ts";
+import {
+  isDeParEnParSession,
+  resolveSlot,
+} from "../src/game/catalog/de-par-en-par/session.ts";
 import {
   BOARD_SIZES,
   EMPTY_FACES,
@@ -700,6 +705,7 @@ for (const src of [
   ...LIBRO_PRELOAD,
   ...INTRUSO_PRELOAD,
   ...VUELO_PRELOAD,
+  ...DEPAR_PRELOAD,
 ]) {
   assert.ok(
     ["audio", "video", "image"].includes(mediaKind(src)),
@@ -1826,3 +1832,309 @@ assert.ok(!isBuscaLogoSession({ boards: [{ size: 5, logoPositions: [] }] }), "el
 assert.ok(!isBuscaLogoSession({ rounds: [] }), "el archivo de otro juego no pasa");
 
 console.log("busca el logo: checks ok");
+
+// --- el layout de de par en par contra lo que la logica y el clic esperan ---
+
+const depar = JSON.parse(
+  readFileSync("src/game/catalog/de-par-en-par/layout.json", "utf8"),
+) as Layer[];
+
+const deparLayer = (id: string) => depar.find((layer) => layer.id === id);
+
+for (const src of DEPAR_PRELOAD) {
+  assert.ok(existsSync(`public${src}`), `asset declarado que no existe: ${src}`);
+}
+
+const deparBackground = findPart<{ type: "image"; src: string }>(
+  depar,
+  "background",
+  "image",
+);
+assert.ok(deparBackground, "'background' debe llevar una part 'image'");
+assert.ok(
+  existsSync(`public${deparBackground.src}`),
+  `el fondo no existe: ${deparBackground.src}`,
+);
+
+// La grilla va escrita a mano por la misma razon que la de busca el logo: el
+// generador la calcula con el algoritmo del GridLayoutGroup de Unity, asi que
+// recalcularla aca no probaria nada. Celda 360x250, spacing 15, middle-center.
+const DEPAR_COLS = [-750, -375, 0, 375, 750];
+const DEPAR_ROWS = [397.5, 132.5, -132.5, -397.5];
+const DEPAR_CARD: Vec2 = { x: 360, y: 250 };
+const DEPAR_PLATE: Vec2 = { x: 315, y: 196 };
+const DEPAR_SLOTS = DEPAR_COLS.length * DEPAR_ROWS.length;
+
+assert.equal(DEPAR_SLOTS, 20, "el tablero portado es el de 20 cartas (10 pares)");
+
+for (let i = 0; i < DEPAR_SLOTS; i++) {
+  const id = `card-${i}`;
+  const card = deparLayer(id);
+  assert.ok(card, `falta el layer '${id}'`);
+  assert.equal(card.parentId, "board", `'${id}' cuelga de 'board'`);
+  assert.deepEqual(card.rect.size, DEPAR_CARD, `'${id}' mide lo que su celda`);
+  assert.deepEqual(
+    card.rect.position,
+    {
+      x: DEPAR_COLS[i % DEPAR_COLS.length],
+      y: DEPAR_ROWS[Math.floor(i / DEPAR_COLS.length)],
+    },
+    `'${id}' fuera de su casilla en la grilla`,
+  );
+
+  // Sin 'flip' la carta cambia de cara de golpe, sin 'click' no responde al
+  // dedo, y sin 'pop'/'shake' la validacion no tiene con que contestar.
+  for (const type of ["flip", "click", "pop", "shake"]) {
+    assert.ok(partOf(card, type), `'${id}' debe llevar la part '${type}'`);
+  }
+
+  // useLayerClick sube por el arbol desde el elemento tocado: el dedo aterriza
+  // en el numero o en la foto, no en la carta. Si esta cadena se aplana, el
+  // toque se pierde sin ninguna senal.
+  assert.equal(deparLayer(`${id}-back`)?.parentId, id, `'${id}-back' cuelga de su carta`);
+  assert.equal(deparLayer(`${id}-front`)?.parentId, id, `'${id}-front' cuelga de su carta`);
+  assert.equal(
+    deparLayer(`${id}-number`)?.parentId,
+    `${id}-back`,
+    `'${id}-number' cuelga del reverso`,
+  );
+  assert.equal(
+    deparLayer(`${id}-plate`)?.parentId,
+    `${id}-front`,
+    `'${id}-plate' cuelga del anverso`,
+  );
+  for (const suffix of ["text", "image", "both"]) {
+    assert.equal(
+      deparLayer(`${id}-${suffix}`)?.parentId,
+      `${id}-plate`,
+      `'${id}-${suffix}' cuelga del plato: ahi lo recorta la mascara`,
+    );
+  }
+  for (const suffix of ["both-text", "both-image"]) {
+    assert.equal(
+      deparLayer(`${id}-${suffix}`)?.parentId,
+      `${id}-both`,
+      `'${id}-${suffix}' cuelga de 'both'`,
+    );
+  }
+
+  // El tablero arranca boca abajo y sin ningun setter encendido: si el anverso o
+  // dos setters arrancan visibles, el primer frame muestra la respuesta.
+  for (const suffix of ["front", "text", "image", "both"]) {
+    assert.equal(
+      deparLayer(`${id}-${suffix}`)?.visible,
+      false,
+      `'${id}-${suffix}' arranca apagado`,
+    );
+  }
+  for (const suffix of ["back", "number", "plate", "both-text", "both-image"]) {
+    assert.equal(
+      deparLayer(`${id}-${suffix}`)?.visible,
+      true,
+      `'${id}-${suffix}' arranca encendido`,
+    );
+  }
+
+  // La mascara recorta el layer con la silueta de su propia part 'image'. En
+  // Unity el Mask va con m_ShowMaskGraphic: 1, o sea que el plato SE DIBUJA.
+  const plate = deparLayer(`${id}-plate`);
+  assert.ok(plate, `falta el layer '${id}-plate'`);
+  assert.deepEqual(
+    plate.rect.size,
+    DEPAR_PLATE,
+    `'${id}-plate' mide lo que la mascara del prefab`,
+  );
+  assert.notEqual(
+    partOf<{ type: "mask"; showImage?: boolean }>(plate, "mask")?.showImage,
+    false,
+    `'${id}-plate' dibuja su mascara, como el m_ShowMaskGraphic del prefab`,
+  );
+  const plateImage = partOf<{ type: "image"; src: string }>(plate, "image");
+  assert.ok(
+    plateImage,
+    `'${id}-plate' necesita su part 'image': es la silueta que recorta`,
+  );
+  assert.ok(
+    existsSync(`public${plateImage.src}`),
+    `la mascara no existe: ${plateImage.src}`,
+  );
+
+  // Los dorsos y anversos alternan diseno por paridad de slot, como los dejo la
+  // herramienta del editor de Unity.
+  const variant = i % 2 === 0 ? 2 : 1;
+  for (const face of ["back", "front"]) {
+    const image = findPart<{ type: "image"; src: string }>(
+      depar,
+      `${id}-${face}`,
+      "image",
+    );
+    assert.ok(image, `'${id}-${face}' debe llevar una part 'image'`);
+    assert.ok(
+      image.src.endsWith(`/${face}-${variant}.png`),
+      `'${id}-${face}' usa la variante ${variant}, no ${image.src}`,
+    );
+    assert.ok(existsSync(`public${image.src}`), `asset que no existe: ${image.src}`);
+  }
+
+  // El numero del dorso es como el operador nombra la carta al aire.
+  assert.equal(
+    findPart<{ type: "text"; text: string }>(depar, `${id}-number`, "text")?.text,
+    String(i + 1),
+    `'${id}-number' rotula la carta ${i + 1}`,
+  );
+
+  // Logic pisa estos con el contenido de la sesion: si el layout no trae la
+  // part, el patch no tiene donde caer y la carta sale en blanco.
+  const patched: [string, string][] = [
+    ["text", "text"],
+    ["both-text", "text"],
+    ["image", "image"],
+    ["both-image", "image"],
+  ];
+  for (const [suffix, type] of patched) {
+    assert.ok(
+      findPart(depar, `${id}-${suffix}`, type),
+      `'${id}-${suffix}' debe llevar una part '${type}'`,
+    );
+  }
+}
+
+// slotOfLayer hace Number(layerId.slice(5)) sobre lo que devuelve useLayerClick:
+// si otro layer declarara 'click', el slot saldria NaN y el clic no haria nada,
+// sin error en consola.
+assert.deepEqual(
+  depar
+    .filter((layer) => partOf(layer, "click"))
+    .map((layer) => layer.id)
+    .sort(),
+  Array.from({ length: DEPAR_SLOTS }, (_, i) => `card-${i}`).sort(),
+  "solo las cartas declaran 'click'",
+);
+
+// 'board' no tiene parts a proposito: un contenedor del tamano del tablero con
+// pointer-events auto se comeria los clics de las 20 cartas.
+assert.deepEqual(deparLayer("board")?.parts, [], "'board' es solo agrupacion");
+
+const deparFonts = new Set(
+  depar.flatMap((l) =>
+    l.parts
+      .map((p) => (p as { fontKey?: string }).fontKey)
+      .filter((k): k is string => Boolean(k)),
+  ),
+);
+assert.deepEqual(
+  [...deparFonts].sort(),
+  ["candara", "poppins"],
+  "las claves de fuente son las que declara la ficha",
+);
+
+// El contrato con el colector: type 0 texto, 1 imagen, 2 ambos, y las imagenes
+// llegan en 'images/P<n>_<A|B>.<ext>'. Va copiado porque su schema.ts importa
+// por alias '@/collector' y este script corre en node pelado.
+const DEPAR_PAIRS = 10;
+const DEPAR_MODES = [1, 1, 0, 2, 1, 0, 2, 1, 1, 2];
+const deparSession = {
+  cells: Array.from({ length: DEPAR_PAIRS }, (_, p) => {
+    const type = DEPAR_MODES[p];
+    const card = (side: string) => ({
+      type,
+      text: type === 0 || type === 2 ? `Par ${p + 1}${side}` : "",
+      pictureFile: type === 0 ? "" : `images/P${p + 1}_${side}.png`,
+    });
+    return { cardA: card("A"), cardB: card("B") };
+  }),
+  answer: Array.from({ length: DEPAR_PAIRS }, (_, p) => [`${p}_A`, `${p}_B`]).flat(),
+};
+
+assert.ok(isDeParEnParSession(deparSession), "el guard rechaza un paquete valido");
+assert.equal(deparSession.answer.length, DEPAR_SLOTS, "el tablero trae 20 slots");
+
+// Rebarajar con 'A' remapea el answer con shuffledOrder: no puede perder,
+// duplicar ni desemparejar una carta, y cada pulsacion tiene que mover algo.
+const deparOrder = (shuffles: number) =>
+  shuffles === 0
+    ? deparSession.answer
+    : shuffledOrder(deparSession.answer.length, shuffles).map(
+        (i) => deparSession.answer[i],
+      );
+
+for (let shuffles = 0; shuffles <= 20; shuffles++) {
+  const order = deparOrder(shuffles);
+  assert.deepEqual(
+    [...order].sort(),
+    [...deparSession.answer].sort(),
+    `la baraja ${shuffles} cambio el contenido del tablero`,
+  );
+  if (shuffles > 0) {
+    assert.ok(
+      order.some((entry, i) => entry !== deparSession.answer[i]),
+      `la baraja ${shuffles} dejo el tablero igual`,
+    );
+  }
+
+  // La decision de acierto compara el par de los dos slots elegidos: de las 190
+  // combinaciones posibles, exactamente 10 son pareja. Si el mapeo se corriera,
+  // dos cartas distintas darian "correcto" en vivo.
+  const pairOf = (i: number) => resolveSlot(deparSession, order[i])?.pair;
+  let matches = 0;
+  for (let a = 0; a < DEPAR_SLOTS; a++) {
+    for (let b = a + 1; b < DEPAR_SLOTS; b++) {
+      const pair = pairOf(a);
+      if (pair !== undefined && pair === pairOf(b)) matches++;
+    }
+  }
+  assert.equal(
+    matches,
+    DEPAR_PAIRS,
+    `la baraja ${shuffles} da ${matches} parejas, no ${DEPAR_PAIRS}`,
+  );
+
+  for (let i = 0; i < DEPAR_SLOTS; i++) {
+    const slot = resolveSlot(deparSession, order[i]);
+    assert.ok(slot, `el slot ${i} no resuelve en la baraja ${shuffles}`);
+    assert.ok(
+      [0, 1, 2].includes(slot.card.type),
+      `tipo fuera del contrato en el slot ${i}`,
+    );
+  }
+}
+
+// Un answer que apunta a una celda inexistente devuelve null en vez de reventar,
+// y dos slots sin resolver NO pueden validarse como acierto.
+assert.equal(
+  resolveSlot({ cells: [], answer: ["99_A"] }, "99_A"),
+  null,
+  "resolveSlot tolera un indice fuera de rango",
+);
+assert.equal(
+  resolveSlot(deparSession, undefined),
+  null,
+  "un slot sin entrada no resuelve",
+);
+assert.equal(resolveSlot(null, "0_A"), null, "sin sesion no resuelve");
+
+assert.ok(!isDeParEnParSession({ rounds: [] }), "el archivo de otro juego no pasa");
+assert.ok(!isDeParEnParSession({ cells: [], answer: "0_A" }), "el answer es una lista");
+assert.ok(!isDeParEnParSession({ cells: [], answer: [0, 1] }), "el answer son cadenas");
+assert.ok(
+  !isDeParEnParSession({ cells: [{ cardA: { type: 1, text: "" } }], answer: [] }),
+  "una carta sin pictureFile no pasa",
+);
+assert.ok(
+  !isDeParEnParSession({
+    cells: [
+      {
+        cardA: { type: "1", text: "", pictureFile: "" },
+        cardB: { type: 1, text: "", pictureFile: "" },
+      },
+    ],
+    answer: [],
+  }),
+  "el type es un numero, no una cadena",
+);
+assert.ok(
+  isDeParEnParSession({ cells: [], answer: [] }),
+  "una sesion vacia pero bien formada es valida",
+);
+
+console.log("de par en par: checks ok");
