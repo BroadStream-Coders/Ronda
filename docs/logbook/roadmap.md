@@ -132,15 +132,22 @@ cualquiera de estas tareas, no se repite acá.
   (`CardMode`), y la sesión trae las imágenes por nombre de archivo
   (`pictureFile`) más el orden del tablero (`answer`) — o sea, sesión ZIP, no JSON
   suelto.
+- **Alcance: solo el tablero de 20 cartas (10 pares).** El colector ofrece cuatro
+  conteos (8/10/12/15), pero en Unity **solo el de 10 pares está terminado con la
+  gráfica actual**: es el único activo, el único que usa `Graphic New/` y el único
+  con los números en TMP. Los de 16, 24 y 30 siguen apuntando a las gráficas viejas
+  (`Graphic/Board 24|30/`, números como PNG) y el de 16 tiene celdas cuadradas de
+  290×290 contra una carta de 360×250. Los otros tres conteos no se portan.
 - **Depende de:** nada. La animación **flip** entró con [[RM-068]] y el cursor
-  visible con [[RM-081]]; el drag & drop de cartas que se voltean puede partir de
-  la part `drag` de Cronos ([[RM-069]]). El ZIP y los blobs entraron con
-  [[RM-061]]; la part `text` de las cartas de texto, con [[RM-063]].
+  visible con [[RM-081]]. El ZIP y los blobs entraron con [[RM-061]]; la part `text`
+  de las cartas de texto, con [[RM-063]]. **No pide `drag`:** en Unity cada carta es
+  un `Button`, se clickea, no se arrastra — la promoción de la part `drag` de Cronos
+  al kit sigue esperando a otro juego.
 - **Ojo:** [[TD-013]] es del **colector** (anchos fijos por cantidad de pares), no
   del juego — no se cierra con esta tarea.
 - **Hecho cuando:** corre dentro de Más Conectados, es asignable y consume la sesión
   que produce su colector, imágenes incluidas.
-- **Fecha:** 2026-08-20 · **Estado:** Abierto
+- **Fecha:** 2026-08-20 · **Estado:** En progreso (2026-09-08)
 
 ---
 

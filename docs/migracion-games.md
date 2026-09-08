@@ -308,7 +308,7 @@ escribe en `kit/`, no en la carpeta del juego**:
 | Part `videoControl` | pausar o reanudar un video desde la lógica |
 | Presupuesto de memoria | diagnóstico; puede no volver nunca |
 | Texto con formato (superíndices, fracciones) | notación matemática real; hoy la part `text` es una cadena plana |
-| `drag` en el kit | vive en `catalog/cronos/parts/`, con un solo juego que la usa. Sube a `kit/` cuando un segundo juego la pida — De Par en Par ([[RM-073]]) es el candidato |
+| `drag` en el kit | vive en `catalog/cronos/parts/`, con un solo juego que la usa. Sube a `kit/` cuando un segundo juego la pida — De Par en Par ([[RM-073]]) no cuenta: en Unity sus cartas son `Button`, se clickean |
 
 ---
 
