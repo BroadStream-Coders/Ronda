@@ -12,6 +12,9 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [RM-116] La duración del cronómetro de Cronos se configura (2026-09-08 09:28)
+El tiempo estaba clavado en el `layout.json` (30 s) y solo se cambiaba con un deploy; ahora el panel lateral del juego —el mismo del croma— lleva un campo en segundos que se guarda por programa y juego en el navegador, y `GameConfig` pasó a montar un control por ajuste (`chromaLayerId`, `timerLayerId`) en vez de ser solo el croma. La `Logic` recibe `programId` para leer el ajuste; el valor nuevo entra en la siguiente ronda y, con el reloj detenido, el número en pantalla se actualiza al toque.
+
 ## [TD-118] Las gráficas decorativas se robaban el clic (2026-09-08 09:04)
 `LayerView` daba `pointer-events: auto` a **cualquier** layer con parts, así que una imagen sin lógica bloqueaba lo que tuviera debajo: en Tres en Raya la línea ganadora diagonal tapaba entre el 76% y el 100% del área clicable de las nueve cartas, y el conductor no podía seguir volteándolas después de validar. Ahora solo lo reciben los layers con una part que de verdad interactúa (`click`, `drag`); el resto queda transparente al puntero sin cambiar cómo se pinta.
 

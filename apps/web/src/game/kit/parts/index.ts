@@ -17,6 +17,7 @@ export type {
   VideoPart,
 };
 export { maskStyle, type MaskPart } from "./mask";
+export type { TimerPart } from "./timer";
 
 export const NATIVE_PARTS: PartRegistry = {
   backdrop: partView<BackdropPart>(BackdropView),

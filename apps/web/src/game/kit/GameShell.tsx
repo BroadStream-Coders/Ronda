@@ -79,7 +79,7 @@ export function GameShell({
     <FontRegistryProvider value={fonts}>
       <PartRegistryProvider value={registry}>
         <AnimationsProvider>
-        {ready && Logic && <Logic />}
+        {ready && Logic && <Logic programId={programId} />}
         <div className="flex h-full flex-col">
           <GameTopbar
             game={game}
@@ -107,12 +107,8 @@ export function GameShell({
                 </div>
               )}
             </Stage>
-            {game.chromaLayerId && (
-              <GameConfig
-                game={game}
-                programId={programId}
-                layerId={game.chromaLayerId}
-              />
+            {(game.chromaLayerId || game.timerLayerId) && (
+              <GameConfig game={game} programId={programId} />
             )}
           </div>
         </div>

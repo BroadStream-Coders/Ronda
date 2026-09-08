@@ -17,9 +17,10 @@ export interface GameType {
   images?: boolean;
   pointer?: boolean;
   chromaLayerId?: string;
+  timerLayerId?: string;
   preload?: string[];
   parts?: PartRegistry;
   fonts?: FontRegistry;
-  logic?: ComponentType;
+  logic?: ComponentType<{ programId: string }>;
   load: (file: File) => Promise<void>;
 }

@@ -18,6 +18,7 @@ export const cronos: GameType = {
   layout: layout as Layer[],
   images: true,
   pointer: true,
+  timerLayerId: "timer",
   preload: PRELOAD,
   fonts: { geniusTechno },
   parts: { drag: partView<DragPart>(DragView) },

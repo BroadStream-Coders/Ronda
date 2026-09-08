@@ -5,15 +5,19 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import {
   findPart,
   playSound,
+  settingKey,
   shuffledOrder,
   stopSound,
   useGameKeys,
   useGameSession,
+  useGameSetting,
   useGameState,
   type Layer,
+  type TimerPart,
 } from "@/game/kit";
 import { COUNTDOWN_SECONDS, SOUNDS } from "./assets";
 import layout from "./layout.json";
+import { meta } from "./meta";
 import { placement } from "./placement";
 import type { CronosSession } from "./session";
 
@@ -29,14 +33,10 @@ const cardTitleId = (i: number) => `card-${i}-title`;
 const dateId = (i: number) => `zone-${i}-date`;
 const pointId = (i: number, mark: string) => `zone-${i}-point-${mark}`;
 
-interface TimerPart {
-  type: "timer";
-  duration: number;
-}
-
 const design = layout as Layer[];
 
 const DURATION = findPart<TimerPart>(design, TIMER_ID, "timer")?.duration ?? 30;
+const FALLBACK = String(DURATION);
 
 const HOME = new Map(
   design
@@ -52,7 +52,7 @@ interface Cursor {
 
 const START: Cursor = { loadedAt: 0, round: 0, revealed: false };
 
-export function CronosLogic() {
+export function CronosLogic({ programId }: { programId: string }) {
   const patch = useGameState((s) => s.patch);
   const setVisible = useGameState((s) => s.setVisible);
   const setPosition = useGameState((s) => s.setPosition);
@@ -61,14 +61,26 @@ export function CronosLogic() {
   const images = useGameSession((s) => s.images);
   const loadedAt = useGameSession((s) => s.loadedAt);
 
+  const [setting] = useGameSetting(
+    settingKey(programId, meta.id, "duration"),
+    FALLBACK,
+  );
+  const duration = Number(setting) || DURATION;
+
   const [cursor, setCursor] = useState<Cursor>(START);
-  const [timeLeft, setTimeLeft] = useState(DURATION);
+  const [timeLeft, setTimeLeft] = useState(duration);
   const [deadline, setDeadline] = useState<number | null>(null);
+  const [idle, setIdle] = useState(duration);
 
   if (cursor.loadedAt !== loadedAt) {
     setCursor({ ...START, loadedAt });
-    setTimeLeft(DURATION);
+    setTimeLeft(duration);
     setDeadline(null);
+  }
+
+  if (idle !== duration) {
+    setIdle(duration);
+    if (deadline === null) setTimeLeft(duration);
   }
 
   const groups = session?.groups ?? [];
@@ -146,7 +158,7 @@ export function CronosLogic() {
 
   const stopTimer = () => {
     setDeadline(null);
-    setTimeLeft(DURATION);
+    setTimeLeft(duration);
   };
 
   const goTo = (index: number) => {
@@ -162,15 +174,15 @@ export function CronosLogic() {
     onBack: () => goTo(round - 1),
     onStart: () => {
       setCursor((c) => ({ ...c, revealed: true }));
-      setTimeLeft(DURATION);
-      setDeadline(performance.now() + DURATION * 1000);
+      setTimeLeft(duration);
+      setDeadline(performance.now() + duration * 1000);
     },
     onTimer: () => {
       if (deadline !== null) {
         setDeadline(null);
         return;
       }
-      const left = timeLeft > 0 ? timeLeft : DURATION;
+      const left = timeLeft > 0 ? timeLeft : duration;
       setTimeLeft(left);
       setDeadline(performance.now() + left * 1000);
     },

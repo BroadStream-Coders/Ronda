@@ -13,6 +13,7 @@ export type {
   MaskPart,
   ShimmerPart,
   TextPart,
+  TimerPart,
   VideoPart,
 } from "./parts";
 export { FontRegistryProvider, useFontRegistry } from "./font-context";
