@@ -50,10 +50,9 @@ export interface Slot {
 
 export function resolveSlot(
   session: DeParEnParSession | null,
-  index: number,
+  entry: string | undefined,
 ): Slot | null {
-  const entry = session?.answer[index];
-  if (!entry) return null;
+  if (!session || !entry) return null;
 
   const [rawPair, side] = entry.split("_");
   const pair = Number(rawPair);

@@ -1,13 +1,17 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import {
+  shuffledOrder,
   useAnimations,
   useGameKeys,
   useGameSession,
   useGameState,
+  useLayerClick,
+  type Layer,
 } from "@/game/kit";
+import layout from "./layout.json";
 import { resolveSlot, type DeParEnParSession } from "./session";
 
 const SLOT_COUNT = 20;
@@ -26,6 +30,13 @@ const bothId = (i: number) => `card-${i}-both`;
 const bothTextId = (i: number) => `card-${i}-both-text`;
 const bothImageId = (i: number) => `card-${i}-both-image`;
 
+const slotOfLayer = (layerId: string) => Number(layerId.slice("card-".length));
+
+interface Board {
+  loadedAt: number;
+  shuffles: number;
+}
+
 export function DeParEnParLogic() {
   const patch = useGameState((s) => s.patch);
   const setVisible = useGameState((s) => s.setVisible);
@@ -37,15 +48,26 @@ export function DeParEnParLogic() {
   const images = useGameSession((s) => s.images);
   const loadedAt = useGameSession((s) => s.loadedAt);
 
+  const [board, setBoard] = useState<Board>({ loadedAt: 0, shuffles: 0 });
+  if (board.loadedAt !== loadedAt) setBoard({ loadedAt, shuffles: 0 });
+
+  const order = useMemo(() => {
+    const answer = session?.answer ?? [];
+    if (board.shuffles === 0) return answer;
+    return shuffledOrder(answer.length, board.shuffles).map((i) => answer[i]);
+  }, [session, board.shuffles]);
+
   const faceUpRef = useRef<boolean[]>(SLOTS.map(() => false));
   const flippingRef = useRef(new Set<number>());
+  const selectionRef = useRef<number[]>([]);
 
   useEffect(() => {
     faceUpRef.current = SLOTS.map(() => false);
     flippingRef.current.clear();
+    selectionRef.current = [];
 
     for (const i of SLOTS) {
-      const card = resolveSlot(session, i)?.card;
+      const card = resolveSlot(session, order[i])?.card;
       const text = card?.text ?? "";
       const picture = card?.pictureFile
         ? (images[card.pictureFile] ?? "")
@@ -63,7 +85,7 @@ export function DeParEnParLogic() {
       setVisible(backId(i), true);
       setVisible(frontId(i), false);
     }
-  }, [session, images, loadedAt, patch, setVisible]);
+  }, [session, order, images, patch, setVisible]);
 
   const flipCard = async (i: number, up: boolean) => {
     if (flippingRef.current.has(i)) return;
@@ -80,12 +102,56 @@ export function DeParEnParLogic() {
     }
   };
 
-  const flipAll = (up: boolean) =>
-    Promise.all(SLOTS.map((i) => flipCard(i, up)));
+  const flipAll = (up: boolean) => {
+    selectionRef.current = [];
+    return Promise.all(SLOTS.map((i) => flipCard(i, up)));
+  };
+
+  const toggleAll = () =>
+    flipAll(!faceUpRef.current.some((up) => up));
+
+  const clickCard = (i: number) => {
+    if (flippingRef.current.has(i)) return;
+
+    const up = !faceUpRef.current[i];
+    const selection = selectionRef.current;
+
+    if (up) {
+      if (selection.length < 2) selectionRef.current = [...selection, i];
+    } else {
+      selectionRef.current = selection.filter((slot) => slot !== i);
+    }
+
+    void flipCard(i, up);
+  };
+
+  useLayerClick(layout as Layer[], (layerId) =>
+    clickCard(slotOfLayer(layerId)),
+  );
+
+  const auxRef = useRef(toggleAll);
+  useEffect(() => {
+    auxRef.current = toggleAll;
+  });
+
+  useEffect(() => {
+    const onPointerDown = (event: PointerEvent) => {
+      if (event.button !== 1) return;
+      event.preventDefault();
+      void auxRef.current();
+    };
+    window.addEventListener("pointerdown", onPointerDown);
+    return () => window.removeEventListener("pointerdown", onPointerDown);
+  }, []);
 
   useGameKeys({
     onMarkError: () => void flipAll(true),
     onBack: () => void flipAll(false),
+    onClear: () => {
+      selectionRef.current = [];
+    },
+    onStart: () =>
+      setBoard((current) => ({ ...current, shuffles: current.shuffles + 1 })),
   });
 
   return null;
