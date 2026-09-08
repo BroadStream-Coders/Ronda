@@ -63,6 +63,19 @@ export function stopSound(src: string) {
   audio.currentTime = 0;
 }
 
+export function toggleSound(src: string) {
+  const audio = audioCache.get(resolveMedia(src));
+  if (audio && !audio.paused) stopSound(src);
+  else playSound(src);
+}
+
+export function stopAllSounds() {
+  for (const audio of audioCache.values()) {
+    audio.pause();
+    audio.currentTime = 0;
+  }
+}
+
 function whenPlayable(element: HTMLMediaElement): Promise<void> {
   element.load();
   if (element.readyState >= element.HAVE_ENOUGH_DATA) return Promise.resolve();

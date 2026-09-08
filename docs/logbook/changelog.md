@@ -12,6 +12,12 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [TD-119] El sonido seguía sonando después de salir del juego (2026-09-08 10:02)
+`playSound` guarda los `HTMLAudioElement` en un `Map` del módulo y fuera del DOM, así que desmontar el juego no los detenía: salir a un colector con un clip a medias lo dejaba sonando encima de otra pantalla. `stopAllSounds` en el cleanup de `GameShell` —el único sitio por donde pasan todos— corta cualquier audio del juego al abandonarlo, no solo el conteo de [[RM-117]]. Cambiar de pestaña no lo corta a propósito: en vivo el operador puede volver.
+
+## [RM-117] Shift+Y suelta el conteo en cualquier juego del programa (2026-09-08 09:58)
+Tecla de show global, como la tenía Unity: vive en `GameShell` —no en `useGameKeys`, que lo monta cada `Logic` y obligaría a declararla juego por juego— así que entra sola en los 12 juegos y en los que vengan, y el colector y el host quedan fuera por construcción. El clip se resuelve por programa en `src/programs/countdown.ts` con la misma convención que los servicios (**clave presente = lo tiene**): hoy solo Que Gane El Mejor, y Más Conectados no se entera hasta que tenga el suyo. Entra al `preload` del juego, así que suena desde RAM, y la tecla alterna: si el clip está sonando, la segunda pulsación lo corta. Con el reloj de Cronos corriendo comparten el mismo clip, así que la tecla también lo corta a él. Aparte, **el toque de Shift a secas corta todo lo que esté sonando** —el botón de pánico de cabina—: se arma al pulsarla y se desarma con cualquier otra tecla, así que dispara solo al soltarla sola y los combos `Shift+U`/`Shift+I`/`Shift+Y` siguen intactos.
+
 ## [RM-116] La duración del cronómetro de Cronos se configura (2026-09-08 09:28)
 El tiempo estaba clavado en el `layout.json` (30 s) y solo se cambiaba con un deploy; ahora el panel lateral del juego —el mismo del croma— lleva un campo en segundos que se guarda por programa y juego en el navegador, y `GameConfig` pasó a montar un control por ajuste (`chromaLayerId`, `timerLayerId`) en vez de ser solo el croma. La `Logic` recibe `programId` para leer el ajuste; el valor nuevo entra en la siguiente ronda y, con el reloj detenido, el número en pantalla se actualiza al toque.
 

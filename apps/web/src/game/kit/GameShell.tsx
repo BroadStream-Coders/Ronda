@@ -8,7 +8,8 @@ import { GameConfig } from "./GameConfig";
 import type { GameType } from "./game";
 import { GameTopbar } from "./GameTopbar";
 import { LayerView } from "./LayerView";
-import { preloadMedia } from "./media";
+import { countdownFor } from "@/programs/countdown";
+import { preloadMedia, stopAllSounds, toggleSound } from "./media";
 import { NATIVE_PARTS } from "./parts";
 import { PartRegistryProvider } from "./part-context";
 import type { PartRegistry } from "./registry";
@@ -42,6 +43,8 @@ export function GameShell({
     fullscreenRef.current = toggle;
   }, []);
 
+  const countdown = countdownFor(programId);
+
   const preload = useMemo(() => {
     const fromLayout = game.layout.flatMap((layer) =>
       layer.parts
@@ -49,8 +52,14 @@ export function GameShell({
         .map((part) => (part as { src?: string }).src)
         .filter((src): src is string => Boolean(src)),
     );
-    return [...new Set([...fromLayout, ...(game.preload ?? [])])];
-  }, [game.layout, game.preload]);
+    return [
+      ...new Set([
+        ...fromLayout,
+        ...(game.preload ?? []),
+        ...(countdown ? [countdown] : []),
+      ]),
+    ];
+  }, [game.layout, game.preload, countdown]);
   const [ready, setReady] = useState(!preload.length);
   useEffect(() => {
     if (!preload.length) return;
@@ -63,8 +72,52 @@ export function GameShell({
     };
   }, [preload]);
 
+  useEffect(() => {
+    if (!ready || !countdown) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.code !== "KeyY" || !event.shiftKey) return;
+      if (event.repeat || event.ctrlKey || event.metaKey || event.altKey) return;
+      const target = event.target as HTMLElement | null;
+      if (target && /^(INPUT|TEXTAREA|SELECT)$/.test(target.tagName)) return;
+      event.preventDefault();
+      toggleSound(countdown);
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [ready, countdown]);
+
+  useEffect(() => {
+    const isShift = (code: string) =>
+      code === "ShiftLeft" || code === "ShiftRight";
+    let armed = false;
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      armed =
+        isShift(event.code) &&
+        !event.ctrlKey &&
+        !event.altKey &&
+        !event.metaKey;
+    };
+
+    const onKeyUp = (event: KeyboardEvent) => {
+      if (!isShift(event.code) || !armed) return;
+      armed = false;
+      const target = event.target as HTMLElement | null;
+      if (target && /^(INPUT|TEXTAREA|SELECT)$/.test(target.tagName)) return;
+      stopAllSounds();
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    window.addEventListener("keyup", onKeyUp);
+    return () => {
+      window.removeEventListener("keydown", onKeyDown);
+      window.removeEventListener("keyup", onKeyUp);
+    };
+  }, []);
+
   useEffect(
     () => () => {
+      stopAllSounds();
       resetState();
       clearSession();
     },

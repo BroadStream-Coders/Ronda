@@ -24,7 +24,9 @@ export {
   playSound,
   preloadMedia,
   resolveMedia,
+  stopAllSounds,
   stopSound,
+  toggleSound,
 } from "./media";
 export type { MediaKind } from "./media";
 export { AnimationsProvider, useAnimations } from "./animations/context";
