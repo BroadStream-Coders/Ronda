@@ -44,7 +44,7 @@ export const programServices: Record<string, ProgramServices> = {
   "a379ba63-30eb-4acc-95b4-5080b02c7516": {
     name: "Más Conectados",
     collectors: ["de-par-en-par", "arma-la-palabra", "arma-la-oracion"],
-    games: ["arma-la-palabra", "arma-la-oracion"],
+    games: ["arma-la-palabra", "arma-la-oracion", "de-par-en-par"],
   },
 };
 
