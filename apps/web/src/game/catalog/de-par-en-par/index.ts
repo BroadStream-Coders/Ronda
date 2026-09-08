@@ -8,6 +8,7 @@ import { candara } from "@/programs/mas-conectados/fonts/candara";
 import { poppins } from "@/programs/mas-conectados/fonts/poppins";
 import layout from "./layout.json";
 import { meta } from "./meta";
+import { PRELOAD } from "./assets";
 import { DeParEnParLogic } from "./Logic";
 import { isDeParEnParSession } from "./session";
 
@@ -16,6 +17,7 @@ export const deParEnPar: GameType = {
   layout: layout as Layer[],
   images: true,
   pointer: true,
+  preload: PRELOAD,
   fonts: { candara, poppins },
   logic: DeParEnParLogic,
   load: async (file) => {

@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 
 import {
+  playSound,
   shuffledOrder,
   useAnimations,
   useGameKeys,
@@ -11,6 +12,7 @@ import {
   useLayerClick,
   type Layer,
 } from "@/game/kit";
+import { SOUNDS } from "./assets";
 import layout from "./layout.json";
 import { resolveSlot, type DeParEnParSession } from "./session";
 
@@ -58,12 +60,12 @@ export function DeParEnParLogic() {
   }, [session, board.shuffles]);
 
   const faceUpRef = useRef<boolean[]>(SLOTS.map(() => false));
-  const flippingRef = useRef(new Set<number>());
+  const flightRef = useRef(new Map<number, Promise<void>>());
   const selectionRef = useRef<number[]>([]);
 
   useEffect(() => {
     faceUpRef.current = SLOTS.map(() => false);
-    flippingRef.current.clear();
+    flightRef.current.clear();
     selectionRef.current = [];
 
     for (const i of SLOTS) {
@@ -87,19 +89,25 @@ export function DeParEnParLogic() {
     }
   }, [session, order, images, patch, setVisible]);
 
-  const flipCard = async (i: number, up: boolean) => {
-    if (flippingRef.current.has(i)) return;
-    if (faceUpRef.current[i] === up) return;
-    flippingRef.current.add(i);
-    try {
-      await play(cardId(i), "flipHide");
-      faceUpRef.current[i] = up;
-      setVisible(backId(i), !up);
-      setVisible(frontId(i), up);
-      await play(cardId(i), "flipShow");
-    } finally {
-      flippingRef.current.delete(i);
-    }
+  const flipCard = (i: number, up: boolean) => {
+    const inFlight = flightRef.current.get(i);
+    if (inFlight) return inFlight;
+    if (faceUpRef.current[i] === up) return Promise.resolve();
+
+    const run = (async () => {
+      try {
+        await play(cardId(i), "flipHide");
+        faceUpRef.current[i] = up;
+        setVisible(backId(i), !up);
+        setVisible(frontId(i), up);
+        await play(cardId(i), "flipShow");
+      } finally {
+        flightRef.current.delete(i);
+      }
+    })();
+
+    flightRef.current.set(i, run);
+    return run;
   };
 
   const flipAll = (up: boolean) => {
@@ -107,11 +115,10 @@ export function DeParEnParLogic() {
     return Promise.all(SLOTS.map((i) => flipCard(i, up)));
   };
 
-  const toggleAll = () =>
-    flipAll(!faceUpRef.current.some((up) => up));
+  const toggleAll = () => flipAll(!faceUpRef.current.some((up) => up));
 
   const clickCard = (i: number) => {
-    if (flippingRef.current.has(i)) return;
+    if (flightRef.current.has(i)) return;
 
     const up = !faceUpRef.current[i];
     const selection = selectionRef.current;
@@ -125,26 +132,62 @@ export function DeParEnParLogic() {
     void flipCard(i, up);
   };
 
+  const validate = async () => {
+    const selection = selectionRef.current;
+    if (selection.length < 2) return;
+
+    const [first, second] = selection;
+    selectionRef.current = [];
+
+    await Promise.all(selection.map((i) => flightRef.current.get(i)));
+
+    const pairOf = (i: number) => resolveSlot(session, order[i])?.pair;
+    const pair = pairOf(first);
+
+    if (pair !== undefined && pair === pairOf(second)) {
+      playSound(SOUNDS.correct);
+      await Promise.all([
+        play(cardId(first), "pop"),
+        play(cardId(second), "pop"),
+      ]);
+      return;
+    }
+
+    playSound(SOUNDS.incorrect);
+    await Promise.all([
+      play(cardId(first), "shake"),
+      play(cardId(second), "shake"),
+    ]);
+    await Promise.all([flipCard(first, false), flipCard(second, false)]);
+  };
+
   useLayerClick(layout as Layer[], (layerId) =>
     clickCard(slotOfLayer(layerId)),
   );
 
-  const auxRef = useRef(toggleAll);
+  const mouseRef = useRef({ toggleAll, validate });
   useEffect(() => {
-    auxRef.current = toggleAll;
+    mouseRef.current = { toggleAll, validate };
   });
 
   useEffect(() => {
     const onPointerDown = (event: PointerEvent) => {
-      if (event.button !== 1) return;
-      event.preventDefault();
-      void auxRef.current();
+      if (event.button === 1) {
+        event.preventDefault();
+        void mouseRef.current.toggleAll();
+        return;
+      }
+      if (event.button === 2) {
+        event.preventDefault();
+        void mouseRef.current.validate();
+      }
     };
     window.addEventListener("pointerdown", onPointerDown);
     return () => window.removeEventListener("pointerdown", onPointerDown);
   }, []);
 
   useGameKeys({
+    onValidate: () => void validate(),
     onMarkError: () => void flipAll(true),
     onBack: () => void flipAll(false),
     onClear: () => {
