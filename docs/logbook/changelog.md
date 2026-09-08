@@ -12,6 +12,9 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [TD-118] Las gráficas decorativas se robaban el clic (2026-09-08 09:04)
+`LayerView` daba `pointer-events: auto` a **cualquier** layer con parts, así que una imagen sin lógica bloqueaba lo que tuviera debajo: en Tres en Raya la línea ganadora diagonal tapaba entre el 76% y el 100% del área clicable de las nueve cartas, y el conductor no podía seguir volteándolas después de validar. Ahora solo lo reciben los layers con una part que de verdad interactúa (`click`, `drag`); el resto queda transparente al puntero sin cambiar cómo se pinta.
+
 ## [RM-114] Una sola tarjeta de fila para todos los colectores (2026-09-06 23:40)
 Las filas se veían distintas en cada colector y varias no se veían: el número y el tacho colgaban **fuera** del borde (los siete que usaban `GroupRow`), y los campos iban con `border-transparent bg-background` sobre una tarjeta `bg-muted/30`, que en modo claro es blanco sobre blanco — el mismo fallo que ya había mordido en Cronos. Del kit salió **`RowCard`** (tarjeta + riel de 2rem con la casilla del número y un slot `action` debajo, más el estado `selected`), y lo usan Álbum, Cronos, Galería, Deletreo, Arma la Palabra, Arma la Oración, Al Vuelo, La Sabes o No, Tres en Raya, Mi Libro Favorito, Cálculo Mental y el nivel 0 de Reto Cruzado. Todos los campos pasaron a usar el `Input`/`Textarea` del sistema, sin overrides de color. **Reto Cruzado (niveles 1-4) y Operaciones Combinadas no lo adoptan a propósito**: el primero comparte la columna de 2rem entre el número y los botones A/B/C/D, y el segundo es una lista compacta de 32px en un panel lateral; a los dos se les arregló el riel y el borde sin cambiarles la estructura. En Cálculo Mental el arreglo no era cosmético: la respuesta iba en `text-purple-200`, un tono para fondo oscuro que en claro no se leía. `GroupRow` y `rowFieldClass` quedaron sin un solo uso y se borraron.
 

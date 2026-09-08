@@ -5,6 +5,8 @@ import { DESIGN_SIZE, layerStyle, partOf, type Layer, type Vec2 } from "./layer"
 import { usePartRegistry } from "./part-context";
 import { maskStyle, type ImagePart, type MaskPart } from "./parts";
 
+const INTERACTIVE_PARTS = new Set(["click", "drag"]);
+
 interface LayerViewProps {
   layer: Layer;
   all: Layer[];
@@ -31,7 +33,11 @@ export function LayerView({
       className="absolute"
       style={{
         ...layerStyle(layer.rect, parentSize),
-        pointerEvents: layer.parts.length > 0 ? "auto" : "none",
+        pointerEvents: layer.parts.some((part) =>
+          INTERACTIVE_PARTS.has(part.type),
+        )
+          ? "auto"
+          : "none",
       }}
     >
       <div
