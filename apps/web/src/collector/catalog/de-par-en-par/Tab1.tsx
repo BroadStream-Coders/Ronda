@@ -16,12 +16,7 @@ import { ImagePicker, clearSlotImage, setSlotImage } from "@/collector/kit";
 import { createEmptyCard, createEmptyPair } from "./schema";
 import type { CardMode, CardContent, PairData } from "./schema";
 
-const OPTIONS = [
-  { value: "8", label: "16 cartas (8 pares)" },
-  { value: "10", label: "20 cartas (10 pares)" },
-  { value: "12", label: "24 cartas (12 pares)" },
-  { value: "15", label: "30 cartas (15 pares)" },
-];
+const OPTIONS = [{ value: "10", label: "20 cartas (10 pares)" }];
 
 interface Tab1Props {
   numPairs: number;
@@ -37,6 +32,16 @@ export function Tab1({
   setPairsData,
 }: Tab1Props) {
   const pairsArray = Array.from({ length: numPairs }, (_, i) => i + 1);
+
+  const options = OPTIONS.some((option) => Number(option.value) === numPairs)
+    ? OPTIONS
+    : [
+        ...OPTIONS,
+        {
+          value: String(numPairs),
+          label: `${numPairs * 2} cartas (${numPairs} pares)`,
+        },
+      ];
 
   const getCardData = useCallback(
     (pairIndex: number, cardSide: "A" | "B"): CardContent => {
@@ -168,7 +173,7 @@ export function Tab1({
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              {OPTIONS.map((opt) => (
+              {options.map((opt) => (
                 <SelectItem key={opt.value} value={opt.value}>
                   {opt.label}
                 </SelectItem>

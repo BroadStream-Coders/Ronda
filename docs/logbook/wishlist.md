@@ -157,3 +157,19 @@ se retira de aquí.
   Álbum, Cronos, Galería de Fotos e Intruso piden entre 4 y 30 fotos por columna,
   todas de a un clic. Es el mismo ahorro que dio el llenado rápido para texto.
 - **Fecha:** 2026-08-13
+
+## [WL-120] Volver a abrir los otros tamaños de tablero de De Par en Par
+- **Idea:** el colector ofrecía cuatro conteos (8, 10, 12 y 15 pares) y hoy solo
+  muestra el de 10. Los otros tres **no se borraron**: se sacaron de `OPTIONS` en
+  `catalog/de-par-en-par/Tab1.tsx`, y `Tab2` sigue sabiendo dibujar los cuatro
+  tableros. Reabrir uno es devolver su línea a `OPTIONS`.
+- **Ojo — no alcanza con el colector:** el juego solo tiene el tablero de 20 cartas
+  ([[RM-073]]). Un archivo de otro conteo deja slots vacíos en pantalla. Reabrir un
+  tamaño es, en realidad, portar su tablero: en Unity los de 16, 24 y 30 siguen con
+  la gráfica vieja (`Graphic/Board 24|30/`, números como PNG) y el de 16 tiene
+  celdas cuadradas de 290×290 contra una carta de 360×250, así que primero hay que
+  rediseñarlos con la gráfica nueva.
+- **Por qué / valor:** hoy nadie los pide y esconderlos le saca cuatro pantallas de
+  encima a quien llena los datos, que no es del equipo. Vuelve si el programa pide
+  tableros más grandes.
+- **Fecha:** 2026-09-09

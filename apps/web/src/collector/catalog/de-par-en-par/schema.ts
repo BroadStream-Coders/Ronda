@@ -39,7 +39,7 @@ export interface Data {
   answer: string[];
 }
 
-export const DEFAULT_PAIRS = 8;
+export const DEFAULT_PAIRS = 10;
 
 export function initialBoardOrder(numPairs: number): string[] {
   const order: string[] = [];
