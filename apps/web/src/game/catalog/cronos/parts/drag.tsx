@@ -30,11 +30,15 @@ interface DragState {
 }
 
 function zoneAt(x: number, y: number) {
-  for (const found of document.elementsFromPoint(x, y)) {
-    const id = (found as HTMLElement).dataset?.layerId;
-    if (!id) continue;
-    const index = ZONE_IDS.indexOf(id);
-    if (index >= 0) return { index, element: found as HTMLElement };
+  for (const [index, id] of ZONE_IDS.entries()) {
+    const element = document.querySelector<HTMLElement>(
+      `[data-layer-id="${id}"]`,
+    );
+    if (!element) continue;
+    const rect = element.getBoundingClientRect();
+    if (x < rect.left || x > rect.right) continue;
+    if (y < rect.top || y > rect.bottom) continue;
+    return { index, element };
   }
   return null;
 }

@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import JSZip from "jszip";
 
 import { readZipSession, ZIP_SESSION_JSON } from "../src/game/kit/zip.ts";
@@ -1250,9 +1250,9 @@ for (let slot = 0; slot < 5; slot++) {
   // --- la zona de soltado ---
   const zoneId = `zone-${slot}-target`;
   const zone = cronosLayer(zoneId);
-  // El drag encuentra la zona por este id exacto (/^zone-\d+-target$/) via
-  // elementsFromPoint. Si el layout la renombrara, soltar devolveria la carta a
-  // casa siempre, sin un error en consola.
+  // El drag encuentra la zona por este id exacto (/^zone-\d+-target$/) y mide su
+  // rectangulo. Si el layout la renombrara, soltar devolveria la carta a casa
+  // siempre, sin un error en consola.
   assert.ok(zone, `falta el layer '${zoneId}' (lo busca la part 'drag')`);
   assert.ok(partOf(zone, "image"), `'${zoneId}' debe llevar una part 'image'`);
 
@@ -1341,6 +1341,66 @@ assert.deepEqual(
 );
 
 console.log("cronos: checks ok");
+
+// Las zonas de soltado no pueden solaparse: 'zoneAt' devuelve la primera que
+// contiene el punto, asi que dos zonas encimadas harian que una fuera imposible
+// de acertar.
+const cronosZoneBox = (slot: number) => {
+  const zone = cronosLayer(`zone-${slot}-target`);
+  assert.ok(zone, `falta el layer 'zone-${slot}-target'`);
+  let x = zone.rect.position.x;
+  let y = zone.rect.position.y;
+  let parentId = zone.parentId;
+  while (parentId) {
+    const parent = cronosLayer(parentId);
+    assert.ok(parent, `'${parentId}' no existe pero alguien cuelga de el`);
+    x += parent.rect.position.x;
+    y += parent.rect.position.y;
+    parentId = parent.parentId;
+  }
+  return {
+    left: x - zone.rect.size.x / 2,
+    right: x + zone.rect.size.x / 2,
+    top: y - zone.rect.size.y / 2,
+    bottom: y + zone.rect.size.y / 2,
+  };
+};
+
+for (let a = 0; a < 5; a++) {
+  for (let b = a + 1; b < 5; b++) {
+    const first = cronosZoneBox(a);
+    const second = cronosZoneBox(b);
+    const overlaps =
+      first.left < second.right &&
+      second.left < first.right &&
+      first.top < second.bottom &&
+      second.top < first.bottom;
+    assert.ok(!overlaps, `las zonas ${a} y ${b} se solapan: el soltado es ambiguo`);
+  }
+}
+
+// --- ningun juego puede depender del hit-test del navegador ---
+
+// 'pointer-events' lo decide el kit (LayerView solo se lo da a las parts 'click'
+// y 'drag'), asi que un juego que localice layers con elementsFromPoint depende
+// de una decision del kit que no declara en ninguna parte: el dia que el kit la
+// cambie, el juego se rompe callado y no se ve hasta el aire. Se localizan por
+// id y se mide el rectangulo, como hacen el drag de Cronos y el connector de
+// Reto Cruzado.
+for (const entry of readdirSync("src/game/catalog", { withFileTypes: true })) {
+  if (!entry.isDirectory()) continue;
+  const dir = `src/game/catalog/${entry.name}`;
+  const files = readdirSync(dir, { recursive: true, encoding: "utf8" });
+  for (const file of files) {
+    if (!/\.tsx?$/.test(file)) continue;
+    const source = readFileSync(`${dir}/${file}`, "utf8");
+    assert.ok(
+      !/element(s)?FromPoint/.test(source),
+      `${entry.name}/${file} usa elementsFromPoint: localiza el layer por su ` +
+        `id y mide su rectangulo con getBoundingClientRect`,
+    );
+  }
+}
 
 // --- el layout de tres en raya contra lo que la logica y el clic esperan ---
 

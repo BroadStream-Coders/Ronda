@@ -12,6 +12,9 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [TD-120] El arrastre de Cronos se rompió con el arreglo del puntero (2026-09-09 22:07)
+Regresión de [[TD-118]]: `zoneAt` localizaba la zona de soltado con `document.elementsFromPoint`, que **excluye lo que tiene `pointer-events: none`**, así que al dejar de dárselo a las capas decorativas las cinco zonas se volvieron invisibles al hit-test y toda carta soltada volvía a casa. Ahora el drag localiza cada zona por su id y mide su rectángulo —lo que ya hacía el `connector` de Reto Cruzado—, con lo que deja de depender de una decisión de CSS del kit; el arreglo de Tres en Raya se queda intacto. `pnpm check` gana dos contratos: que las zonas no se solapen (el escaneo por rectángulo sería ambiguo) y que **ningún juego del catálogo use `elementsFromPoint`**, que era el único acoplamiento capaz de romper un juego desde el kit sin que se note hasta el aire.
+
 ## [RM-073] Migrar De Par en Par desde Unity (2026-09-08 11:30)
 Juego de memoria portado desde el prefab de Unity a `catalog/de-par-en-par/`, el primero de Más Conectados con sesión ZIP: 20 cartas con `flip`/`click`/`pop`/`shake`, tres modos de carta (texto en Candara, imagen, o Poppins sobre imagen recortada por la máscara del plato) y la grilla horneada con el algoritmo del `GridLayoutGroup`, validada contra las posiciones que el propio prefab trae bakeadas. Controles idénticos a Unity —`V` validar, `C` limpiar, `A` rebarajar, `F`/`B` todas arriba/abajo, clic derecho validar, clic central alternar— con un solo cambio deliberado: la selección sigue la cara de la carta, así que clickear dos veces la misma ya no da un falso acierto al aire. **Solo se portó el tablero de 10 pares**: en Unity los de 8, 12 y 15 siguen con la gráfica vieja.
 
