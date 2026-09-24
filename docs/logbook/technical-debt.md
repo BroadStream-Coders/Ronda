@@ -158,13 +158,6 @@ reutiliza). Al resolverse se mueve al `changelog.md` conservando su código.
 - **Impacto futuro:** En laptops de baja resolución el modal se sale de la pantalla y Cancelar/Confirmar quedan fuera de vista, bloqueando el recorte. Hoy lo usan Cronos e Intruso, y sumará De Par en Par si más adelante se le activa el recorte ([[RM-043]]).
 - **Fecha:** 2026-08-13 · **Estado:** Abierto
 
-## [TD-013] Anchos máximos fijos por cantidad de pares en De Par en Par
-- **Ubicación:** `apps/web/src/collector/catalog/de-par-en-par/Tab2.tsx:106-118`
-- **Riesgo:** 4/10
-- **Problema:** El tablero elige `max-w-[1200px]`, `[950px]`, `[1100px]` o `[1400px]` según cuántos pares haya. Son medidas afinadas a ojo para 1080p, no derivadas del espacio disponible.
-- **Impacto futuro:** En resoluciones distintas el tablero se desborda o deja las cartas demasiado chicas o grandes, y cada nuevo conteo de pares pide otro número mágico.
-- **Fecha:** 2026-08-13 · **Estado:** Abierto
-
 ## [TD-014] Los colectores no tienen scroll vertical en pantallas bajas
 - **Ubicación:** `apps/web/src/collector/kit/lego/layout/GroupsContainer.tsx:17` (y la ruta del colector, `apps/web/src/app/programs/[slug]/collectors/[collectorId]/page.tsx:32`)
 - **Riesgo:** 5/10

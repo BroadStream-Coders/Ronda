@@ -13,36 +13,17 @@ import { Card } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { ImagePicker, clearSlotImage, setSlotImage } from "@/collector/kit";
-import { createEmptyCard, createEmptyPair } from "./schema";
+import { PAIRS, createEmptyCard, createEmptyPair } from "./schema";
 import type { CardMode, CardContent, PairData } from "./schema";
 
-const OPTIONS = [{ value: "10", label: "20 cartas (10 pares)" }];
-
 interface Tab1Props {
-  numPairs: number;
-  setNumPairs: (n: number) => void;
   pairsData: Record<number, PairData>;
   setPairsData: React.Dispatch<React.SetStateAction<Record<number, PairData>>>;
 }
 
-export function Tab1({
-  numPairs,
-  setNumPairs,
-  pairsData,
-  setPairsData,
-}: Tab1Props) {
-  const pairsArray = Array.from({ length: numPairs }, (_, i) => i + 1);
+const pairsArray = Array.from({ length: PAIRS }, (_, i) => i + 1);
 
-  const options = OPTIONS.some((option) => Number(option.value) === numPairs)
-    ? OPTIONS
-    : [
-        ...OPTIONS,
-        {
-          value: String(numPairs),
-          label: `${numPairs * 2} cartas (${numPairs} pares)`,
-        },
-      ];
-
+export function Tab1({ pairsData, setPairsData }: Tab1Props) {
   const getCardData = useCallback(
     (pairIndex: number, cardSide: "A" | "B"): CardContent => {
       const pair = pairsData[pairIndex];
@@ -153,36 +134,7 @@ export function Tab1({
   };
 
   return (
-    <div className="flex h-full flex-col p-6 space-y-6 overflow-hidden">
-      <div className="flex items-center justify-between pb-4 border-b border-border">
-        <div>
-          <h2 className="text-lg font-bold text-foreground">
-            Configuración de pares
-          </h2>
-          <p className="text-sm text-muted-foreground">
-            Personaliza el contenido de cada carta. Puedes usar imágenes, texto
-            o ambos.
-          </p>
-        </div>
-        <div className="w-[280px]">
-          <Select
-            value={numPairs.toString()}
-            onValueChange={(val) => val && setNumPairs(parseInt(val))}
-          >
-            <SelectTrigger className="w-full">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {options.map((opt) => (
-                <SelectItem key={opt.value} value={opt.value}>
-                  {opt.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-      </div>
-
+    <div className="flex h-full flex-col p-6 overflow-hidden">
       <div className="flex-1 overflow-y-auto pr-2 pb-12">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {pairsArray.map((pairNum) => (

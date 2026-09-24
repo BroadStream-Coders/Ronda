@@ -12,6 +12,12 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [RM-121] De Par en Par para Que Gane el Mejor (2026-09-24 09:01)
+El colector y el juego `de-par-en-par` pasan de Más Conectados, que ya no los usa, a Que Gane el Mejor. El colector queda fijo en el tablero de 20 cartas: sin selector de tamaño, y un archivo con otro conteo de pares se rechaza con aviso en vez de abrirse a medias. La gráfica de QGEM queda en [[TD-122]].
+
+## [TD-013] Anchos máximos fijos por cantidad de pares en De Par en Par (2026-09-24 09:01)
+Se fue con los tamaños de tablero de [[RM-121]]: `Tab2` solo dibuja la grilla de 5×4 y ya no elige ancho según el conteo.
+
 ## [TD-120] El arrastre de Cronos se rompió con el arreglo del puntero (2026-09-09 22:07)
 Regresión de [[TD-118]]: `zoneAt` localizaba la zona de soltado con `document.elementsFromPoint`, que **excluye lo que tiene `pointer-events: none`**, así que al dejar de dárselo a las capas decorativas las cinco zonas se volvieron invisibles al hit-test y toda carta soltada volvía a casa. Ahora el drag localiza cada zona por su id y mide su rectángulo —lo que ya hacía el `connector` de Reto Cruzado—, con lo que deja de depender de una decisión de CSS del kit; el arreglo de Tres en Raya se queda intacto. `pnpm check` gana dos contratos: que las zonas no se solapen (el escaneo por rectángulo sería ambiguo) y que **ningún juego del catálogo use `elementsFromPoint`**, que era el único acoplamiento capaz de romper un juego desde el kit sin que se note hasta el aire.
 

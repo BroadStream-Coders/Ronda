@@ -97,28 +97,6 @@ export function Tab2({ boardOrder, setBoardOrder, pairsData }: Tab2Props) {
     );
   };
 
-  let gridColsClass = "grid-cols-4";
-  let maxWidthClass = "max-w-5xl";
-  let totalCells = boardOrder.length;
-
-  if (boardOrder.length === 16) {
-    gridColsClass = "grid-cols-6";
-    maxWidthClass = "max-w-[1200px]";
-    totalCells = 18;
-  } else if (boardOrder.length === 20) {
-    gridColsClass = "grid-cols-5";
-    maxWidthClass = "max-w-[950px]";
-    totalCells = 20;
-  } else if (boardOrder.length === 24) {
-    gridColsClass = "grid-cols-6";
-    maxWidthClass = "max-w-[1100px]";
-    totalCells = 24;
-  } else if (boardOrder.length === 30) {
-    gridColsClass = "grid-cols-8";
-    maxWidthClass = "max-w-[1400px]";
-    totalCells = 32;
-  }
-
   return (
     <div className="flex h-full flex-col p-6 space-y-4 overflow-hidden">
       <div className="flex items-center justify-between pb-4 border-b border-border">
@@ -153,23 +131,8 @@ export function Tab2({ boardOrder, setBoardOrder, pairsData }: Tab2Props) {
       </div>
 
       <div className="flex-1 flex flex-col items-center justify-center overflow-hidden pb-4">
-        <div className={`grid ${gridColsClass} gap-3 ${maxWidthClass} w-full`}>
-          {Array.from({ length: totalCells }).map((_, index) => {
-            const cardId = boardOrder[index];
-
-            if (!cardId) {
-              return (
-                <div
-                  key={`empty-${index}`}
-                  className="p-2 aspect-square rounded-lg border-2 border-dashed border-border/30 bg-muted/10 flex items-center justify-center"
-                >
-                  <span className="text-[9px] font-mono text-muted-foreground/30">
-                    Vacío
-                  </span>
-                </div>
-              );
-            }
-
+        <div className="grid grid-cols-5 gap-3 max-w-[950px] w-full">
+          {boardOrder.map((cardId, index) => {
             const isSelected = selectedCards.includes(cardId);
 
             return (

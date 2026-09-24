@@ -39,18 +39,24 @@ export interface Data {
   answer: string[];
 }
 
-export const DEFAULT_PAIRS = 10;
+export const PAIRS = 10;
 
-export function initialBoardOrder(numPairs: number): string[] {
+export function initialBoardOrder(): string[] {
   const order: string[] = [];
-  for (let i = 0; i < numPairs; i++) order.push(`${i}_A`, `${i}_B`);
+  for (let i = 0; i < PAIRS; i++) order.push(`${i}_A`, `${i}_B`);
   return order;
 }
 
-export function validate(
-  numPairs: number,
-  pairsData: Record<number, PairData>,
-): ValidationIssue[] {
+export function isBoardOrder(order: unknown): order is string[] {
+  const expected = initialBoardOrder();
+  return (
+    Array.isArray(order) &&
+    order.length === expected.length &&
+    expected.every((id) => order.includes(id))
+  );
+}
+
+export function validate(pairsData: Record<number, PairData>): ValidationIssue[] {
   const issues: ValidationIssue[] = [];
 
   const checkCard = (
@@ -75,7 +81,7 @@ export function validate(
     }
   };
 
-  for (let i = 0; i < numPairs; i++) {
+  for (let i = 0; i < PAIRS; i++) {
     const pair = pairsData[i + 1];
     const pairLabel = `Par ${i + 1}`;
     checkCard(pair?.cartaA, pairLabel, "A");

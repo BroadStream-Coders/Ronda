@@ -14,10 +14,11 @@ import {
 import { Tab1 } from "./Tab1";
 import { Tab2 } from "./Tab2";
 import {
-  DEFAULT_PAIRS,
+  PAIRS,
   createEmptyCard,
   createEmptyPair,
   initialBoardOrder,
+  isBoardOrder,
   validate,
   type CardContent,
   type Data,
@@ -28,22 +29,14 @@ export function Editor() {
   const setHeader = useWorkspaceHeader((s) => s.setHeader);
   const resetHeader = useWorkspaceHeader((s) => s.resetHeader);
 
-  const [numPairs, setNumPairs] = useState<number>(DEFAULT_PAIRS);
   const [pairsData, setPairsData] = useState<Record<number, PairData>>({});
-  const [boardOrder, setBoardOrder] = useState<string[]>(() =>
-    initialBoardOrder(DEFAULT_PAIRS),
-  );
-
-  const handleNumPairsChange = useCallback((newPairs: number) => {
-    setNumPairs(newPairs);
-    setBoardOrder(initialBoardOrder(newPairs));
-  }, []);
+  const [boardOrder, setBoardOrder] = useState<string[]>(initialBoardOrder);
 
   const handleGetBundle = useCallback(() => {
     const cells: Data["cells"] = [];
     const packer = createImagePacker();
 
-    for (let i = 0; i < numPairs; i++) {
+    for (let i = 0; i < PAIRS; i++) {
       const pair = pairsData[i + 1] || createEmptyPair();
 
       const processCard = (cardData: CardContent, side: "A" | "B") => {
@@ -68,7 +61,7 @@ export function Editor() {
     const data: Data = { cells, answer: boardOrder };
 
     return { data, files: packer.files };
-  }, [numPairs, pairsData, boardOrder]);
+  }, [pairsData, boardOrder]);
 
   const handleSave = useCallback(async () => {
     const { data, files } = handleGetBundle();
@@ -95,10 +88,16 @@ export function Editor() {
         return;
       }
 
-      const newNumPairs = sessionData.cells.length;
+      if (sessionData.cells.length !== PAIRS) {
+        notifyError(
+          `El archivo trae ${sessionData.cells.length} pares; el tablero es de ${PAIRS}.`,
+        );
+        return;
+      }
+
       const newPairsData: Record<number, PairData> = {};
 
-      for (let i = 0; i < newNumPairs; i++) {
+      for (let i = 0; i < PAIRS; i++) {
         const cell = sessionData.cells[i];
 
         const processLoadedCard = async (cardInfo: {
@@ -124,22 +123,20 @@ export function Editor() {
         };
       }
 
-      setNumPairs(newNumPairs);
       setPairsData(newPairsData);
-
-      if (Array.isArray(sessionData.answer)) {
-        setBoardOrder(sessionData.answer);
-      } else {
-        setBoardOrder(initialBoardOrder(newNumPairs));
-      }
+      setBoardOrder(
+        isBoardOrder(sessionData.answer)
+          ? sessionData.answer
+          : initialBoardOrder(),
+      );
     } catch {
       notifyError("Error al importar los datos.");
     }
   }, []);
 
   const handleValidate = useCallback(
-    () => validate(numPairs, pairsData),
-    [numPairs, pairsData],
+    () => validate(pairsData),
+    [pairsData],
   );
 
   useEffect(() => () => resetHeader(), [resetHeader]);
@@ -164,12 +161,7 @@ export function Editor() {
           name: "Recolector",
           icon: Layers,
           component: (
-            <Tab1
-              numPairs={numPairs}
-              setNumPairs={handleNumPairsChange}
-              pairsData={pairsData}
-              setPairsData={setPairsData}
-            />
+            <Tab1 pairsData={pairsData} setPairsData={setPairsData} />
           ),
         },
         {
