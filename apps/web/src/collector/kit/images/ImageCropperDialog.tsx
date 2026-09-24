@@ -13,7 +13,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import getCroppedImg from "./crop-image";
-import { notifyError } from "../notices/use-notices";
+import { notifyError } from "@/components/notices/use-notices";
 
 interface ImageCropperDialogProps {
   isOpen: boolean;

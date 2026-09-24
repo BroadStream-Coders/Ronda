@@ -68,7 +68,7 @@ export async function saveAsZip(
 export async function loadZipFile(file: File): Promise<JSZip> {
   try {
     return await JSZip.loadAsync(file);
-  } catch {
-    throw new Error("No se pudo leer el archivo ZIP.");
+  } catch (error) {
+    throw new Error("No se pudo leer el archivo ZIP.", { cause: error });
   }
 }

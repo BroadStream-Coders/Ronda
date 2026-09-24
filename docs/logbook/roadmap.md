@@ -30,12 +30,13 @@ Al terminar una tarea se mueve al changelog y se borra de aquí.
 ## [RM-124] El ZIP del colector no debe depender del archivo en disco
 - **Objetivo:** que exportar el ZIP funcione aunque la imagen original se haya
   movido, borrado o cambiado después de elegirla.
-- **Sospecha a confirmar:** `saveAsZip` (`helpers/persistence.ts:53`) vuelve a leer
-  cada `File` con `arrayBuffer()` al exportar; si el archivo ya no está, Chrome lanza
-  `NotReadableError`. Explicaría el error de Álbum del 2026-09-22, que no se reproduce
-  en otra máquina y se arregla recargando (las imágenes vuelven desde la nube).
+- **Causa confirmada (2026-09-24):** `saveAsZip` (`helpers/persistence.ts:53`)
+  vuelve a leer cada `File` con `arrayBuffer()` al exportar. Con la imagen borrada
+  del disco, Chrome lanza `NotFoundError` (movida o modificada daría
+  `NotReadableError`). Explica el error de Álbum del 2026-09-22: no se reproduce en
+  otra máquina y se arregla recargando, porque las imágenes vuelven desde la nube.
 - **Prueba:** subir una imagen del escritorio en Galería de Fotos, borrarla del
-  disco y exportar el ZIP con DevTools en "Pause on caught exceptions".
+  disco y exportar el ZIP.
 - **Salida si se confirma:** leer la imagen una vez al elegirla y guardarla en
   memoria, para que el ZIP no toque el disco.
 - **Hecho cuando:** la prueba de arriba exporta sin error.

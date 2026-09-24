@@ -10,6 +10,7 @@ import {
   Upload,
 } from "lucide-react";
 
+import { notifyError } from "@/components/notices/use-notices";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -86,10 +87,11 @@ export function GameTopbar({ game, programId, onFullscreen }: GameTopbarProps) {
       await game.load(found.file);
       setSource({ origin, at: found.at });
     } catch (cause) {
-      setError(
+      notifyError(
         cause instanceof Error
           ? cause.message
           : "No se pudieron cargar los datos.",
+        cause,
       );
     } finally {
       setLoading(false);

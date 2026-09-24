@@ -31,7 +31,7 @@ import {
   getCollectorSessionInfo,
   uploadCollectorData,
 } from "@/data/collector-storage";
-import { notifyError, notifySuccess } from "../notices/use-notices";
+import { notifyError, notifySuccess } from "@/components/notices/use-notices";
 import { ValidationDialog } from "../validation/ValidationDialog";
 import type { ValidationIssue } from "../validation/validation";
 import { SaveState, type SaveStage } from "./SaveState";

@@ -5,7 +5,7 @@ import { ImagePlus } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { centerCropFile } from "../../images/crop-image";
-import { notifyInfo } from "../../notices/use-notices";
+import { notifyInfo } from "@/components/notices/use-notices";
 
 export interface QuickImage {
   file: File;

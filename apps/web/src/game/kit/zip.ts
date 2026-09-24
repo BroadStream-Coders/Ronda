@@ -24,8 +24,8 @@ export async function readZipSession(file: File): Promise<ZipSession> {
   let zip: JSZip;
   try {
     zip = await JSZip.loadAsync(await file.arrayBuffer());
-  } catch {
-    throw new Error("No se pudo leer el archivo ZIP.");
+  } catch (error) {
+    throw new Error("No se pudo leer el archivo ZIP.", { cause: error });
   }
 
   const entry = zip.file(ZIP_SESSION_JSON);

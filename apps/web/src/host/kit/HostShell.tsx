@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowLeft, RefreshCw } from "lucide-react";
 
+import { NoticeStack } from "@/components/notices/NoticeStack";
+import { notifyError } from "@/components/notices/use-notices";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { loadCollectorSession } from "@/data/collector-storage";
 import { cn } from "@/lib/utils";
@@ -49,8 +51,10 @@ export function HostShell({
           session: data,
         });
       })
-      .catch(() => {
-        if (alive) setLoaded({ key, status: "error", session: null });
+      .catch((error) => {
+        if (!alive) return;
+        notifyError("No se pudieron cargar los datos.", error);
+        setLoaded({ key, status: "error", session: null });
       });
 
     return () => {
@@ -102,6 +106,7 @@ export function HostShell({
         )}
         {status === "ready" && <View session={session} />}
       </div>
+      <NoticeStack />
     </div>
   );
 }

@@ -16,6 +16,13 @@ reutiliza). Al resolverse se mueve al `changelog.md` conservando su código.
 
 ---
 
+## [TD-125] El topbar dice "Guardado recién" aunque la exportación falle
+- **Ubicación:** `apps/web/src/collector/kit/topbar/CollectorTopbar.tsx:111-114` (`doSave`)
+- **Riesgo:** 6/10
+- **Problema:** `doSave` llama a `onSave()` sin esperarlo y marca `saved` en el acto. Además cada colector atrapa su propio error de exportación dentro de `handleSave` y no lo relanza, así que el topbar no tiene forma de enterarse de que falló. Se vio en el reporte de Álbum del 2026-09-22: aviso de "Error al exportar los datos." y, al lado, "Guardado recién".
+- **Impacto futuro:** quien llena los datos cree que tiene el ZIP en su máquina y no lo tiene. Si además la nube falla o no se usa, el trabajo se pierde sin que nada lo contradiga en pantalla.
+- **Fecha:** 2026-09-24 · **Estado:** Abierto
+
 ## [TD-122] De Par en Par es de QGEM pero carga la gráfica de Más Conectados
 - **Ubicación:** `apps/web/src/game/catalog/de-par-en-par/layout.json` (todas las rutas `image`), `apps/web/public/programs/mas-conectados/games/de-par-en-par/`
 - **Riesgo:** 3/10

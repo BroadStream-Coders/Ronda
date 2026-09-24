@@ -9,6 +9,7 @@ import type { GameType } from "./game";
 import { GameTopbar } from "./GameTopbar";
 import { LayerView } from "./LayerView";
 import { countdownFor } from "@/programs/countdown";
+import { NoticeStack } from "@/components/notices/NoticeStack";
 import { preloadMedia, stopAllSounds, toggleSound } from "./media";
 import { NATIVE_PARTS } from "./parts";
 import { PartRegistryProvider } from "./part-context";
@@ -164,6 +165,7 @@ export function GameShell({
               <GameConfig game={game} programId={programId} />
             )}
           </div>
+          <NoticeStack />
         </div>
         </AnimationsProvider>
       </PartRegistryProvider>
