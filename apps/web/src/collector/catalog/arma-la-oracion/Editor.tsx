@@ -42,8 +42,8 @@ export function Editor() {
       try {
         const data = await loadJsonFile<Data>(file, isData);
         setGroups(data.groups.map((g) => g.sentences));
-      } catch {
-        notifyError("Archivo de Arma la Oración no válido.");
+      } catch (error) {
+        notifyError("Archivo de Arma la Oración no válido.", error);
       }
     },
     [setGroups],

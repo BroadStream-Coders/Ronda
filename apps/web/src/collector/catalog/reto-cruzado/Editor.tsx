@@ -58,8 +58,8 @@ export function Editor() {
   const handleSave = useCallback(() => {
     try {
       saveAsJson("RetoCruzado.json", handleGetData());
-    } catch {
-      notifyError("Error al exportar los datos.");
+    } catch (error) {
+      notifyError("Error al exportar los datos.", error);
     }
   }, [handleGetData]);
 
@@ -72,8 +72,8 @@ export function Editor() {
       setLevel2(loaded.level2);
       setLevel3(loaded.level3);
       setLevel4(loaded.level4);
-    } catch {
-      notifyError("Archivo de Reto Cruzado no válido.");
+    } catch (error) {
+      notifyError("Archivo de Reto Cruzado no válido.", error);
     }
   }, []);
 

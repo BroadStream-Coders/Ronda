@@ -106,8 +106,8 @@ export function Editor() {
     const { data, files } = handleGetBundle();
     try {
       await saveAsZip("Cronos.zip", data, files);
-    } catch {
-      notifyError("Error al exportar los datos.");
+    } catch (error) {
+      notifyError("Error al exportar los datos.", error);
     }
   }, [handleGetBundle]);
 
@@ -149,8 +149,8 @@ export function Editor() {
 
         setTitles(loadedGroups.map((g) => g.title));
         setGroups(loadedGroups.map((g) => g.items));
-      } catch {
-        notifyError("Error al procesar el archivo ZIP.");
+      } catch (error) {
+        notifyError("Error al procesar el archivo ZIP.", error);
       }
     },
     [setGroups],

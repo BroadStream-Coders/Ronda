@@ -131,6 +131,7 @@ export function CollectorTopbar({
         error instanceof Error
           ? `No se pudo subir: ${error.message}`
           : "No se pudo subir a la nube. Revisa tu conexión e intenta de nuevo.",
+        error,
       );
     } finally {
       setBusy(null);
@@ -153,8 +154,8 @@ export function CollectorTopbar({
       onLoad(file);
       setStage({ kind: "uploaded", at: Date.now() });
       notifySuccess("Se cargó lo último que había en la nube.");
-    } catch {
-      notifyError("No se pudo cargar desde la nube. Intenta de nuevo.");
+    } catch (error) {
+      notifyError("No se pudo cargar desde la nube. Intenta de nuevo.", error);
     } finally {
       setBusy(null);
     }

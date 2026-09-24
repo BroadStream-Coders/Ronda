@@ -48,8 +48,8 @@ export function Editor() {
         setBoards(newBoards);
         setSelectedBoardId(newBoards[0].id);
       }
-    } catch {
-      notifyError("Archivo de Busca el Logo no válido.");
+    } catch (error) {
+      notifyError("Archivo de Busca el Logo no válido.", error);
     }
   }, []);
 

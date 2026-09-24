@@ -42,8 +42,8 @@ export function Editor() {
       try {
         const data = await loadJsonFile<Data>(file, isData);
         setGroups(data.groups.map((g) => g.words));
-      } catch {
-        notifyError("Archivo de Arma la Palabra no válido.");
+      } catch (error) {
+        notifyError("Archivo de Arma la Palabra no válido.", error);
       }
     },
     [setGroups],

@@ -69,8 +69,8 @@ export function Editor() {
     try {
       const data = await loadJsonFile<Data>(file, isData);
       setColumns(fromData(data));
-    } catch {
-      notifyError("Archivo de Tres en Raya no válido.");
+    } catch (error) {
+      notifyError("Archivo de Tres en Raya no válido.", error);
     }
   }, []);
 

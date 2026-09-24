@@ -64,8 +64,8 @@ export function Editor() {
       try {
         const data = await loadJsonFile<Data>(file, isData);
         setGroups(data.groups.map((g) => g.boards));
-      } catch {
-        notifyError("Archivo de Cálculo Mental no válido.");
+      } catch (error) {
+        notifyError("Archivo de Cálculo Mental no válido.", error);
       }
     },
     [setGroups],

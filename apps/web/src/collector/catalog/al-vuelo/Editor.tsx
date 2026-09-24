@@ -91,8 +91,8 @@ export function Editor() {
     try {
       const data = await loadJsonFile<Data>(file, isData);
       setColumns(fromData(data));
-    } catch {
-      notifyError("Archivo de Al Vuelo no válido.");
+    } catch (error) {
+      notifyError("Archivo de Al Vuelo no válido.", error);
     }
   }, []);
 

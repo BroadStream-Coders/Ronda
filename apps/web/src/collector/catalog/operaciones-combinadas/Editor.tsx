@@ -75,8 +75,8 @@ export function Editor() {
         setSelectedOperationId(null);
         setHoverCell(null);
       }
-    } catch {
-      notifyError("Archivo de Operaciones Combinadas no válido.");
+    } catch (error) {
+      notifyError("Archivo de Operaciones Combinadas no válido.", error);
     }
   }, []);
 

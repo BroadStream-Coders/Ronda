@@ -66,8 +66,8 @@ export function Editor() {
         const parsed = fromData(data);
         setPlayers(parsed.players);
         setGroups(parsed.groups);
-      } catch {
-        notifyError("Archivo de Mi Libro Favorito no válido.");
+      } catch (error) {
+        notifyError("Archivo de Mi Libro Favorito no válido.", error);
       }
     },
     [setGroups],

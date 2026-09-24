@@ -67,8 +67,8 @@ export function Editor() {
     const { data, files } = handleGetBundle();
     try {
       await saveAsZip("DeParEnPar.zip", data, files, "sessionData.json");
-    } catch {
-      notifyError("Error al exportar los datos.");
+    } catch (error) {
+      notifyError("Error al exportar los datos.", error);
     }
   }, [handleGetBundle]);
 
@@ -129,8 +129,8 @@ export function Editor() {
           ? sessionData.answer
           : initialBoardOrder(),
       );
-    } catch {
-      notifyError("Error al importar los datos.");
+    } catch (error) {
+      notifyError("Error al importar los datos.", error);
     }
   }, []);
 

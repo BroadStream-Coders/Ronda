@@ -91,8 +91,8 @@ export function Editor() {
     const { data, files } = handleGetBundle();
     try {
       await saveAsZip("GaleriaFotos.zip", data, files, SESSION_DATA_FILENAME);
-    } catch {
-      notifyError("Error al exportar los datos.");
+    } catch (error) {
+      notifyError("Error al exportar los datos.", error);
     }
   }, [handleGetBundle]);
 
@@ -122,8 +122,8 @@ export function Editor() {
       );
 
       setColumns(loaded.length > 0 ? loaded : [createEmptyColumn()]);
-    } catch {
-      notifyError("Error al importar los datos.");
+    } catch (error) {
+      notifyError("Error al importar los datos.", error);
     }
   }, []);
 

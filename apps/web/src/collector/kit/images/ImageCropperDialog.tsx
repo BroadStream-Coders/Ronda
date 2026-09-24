@@ -48,8 +48,8 @@ export function ImageCropperDialog({
       const blob = await getCroppedImg(imageSrc, croppedAreaPixels, 0, fileType);
       const url = URL.createObjectURL(blob);
       onConfirm(blob, url);
-    } catch {
-      notifyError("No se pudo recortar la imagen.");
+    } catch (error) {
+      notifyError("No se pudo recortar la imagen.", error);
     } finally {
       setIsProcessing(false);
       onClose();
