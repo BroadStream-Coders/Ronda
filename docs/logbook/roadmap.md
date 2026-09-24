@@ -10,6 +10,39 @@ Al terminar una tarea se mueve al changelog y se borra de aquí.
 
 ---
 
+## [RM-123] Errores con botón "Copiar detalle"
+- **Objetivo:** que todo error visible muestre su título y un botón **"Copiar
+  detalle"** que copia al portapapeles un texto con el error y su stack, la página,
+  el navegador y la hora, para que quien usa la app se lo pegue al desarrollador.
+  Hoy hay `catch {}` que descartan el error real: el 2026-09-22 el productor reportó
+  "Error al exportar los datos." en Álbum y no hubo forma de saber qué pasó.
+- **Pasos:** (1) el aviso flotante con el botón y sin cierre automático para los
+  errores; (2) los `catch` de los colectores le pasan el error; (3) el juego y el
+  host, en su propia pantalla y sin aviso flotante, porque el juego sale al aire;
+  (4) un listener global para lo que nadie atrapa.
+- **Fuera, a propósito:** nada sale del navegador — ni servidor, ni base de datos,
+  ni logs en la nube, ni datos del usuario. Tampoco la regla automática en
+  `pnpm check`.
+- **Hecho cuando:** cualquier error visible se puede copiar con su detalle. Cierra
+  la parte (1) de [[TD-114]].
+- **Fecha:** 2026-09-24 · **Estado:** En progreso (2026-09-24)
+
+## [RM-124] El ZIP del colector no debe depender del archivo en disco
+- **Objetivo:** que exportar el ZIP funcione aunque la imagen original se haya
+  movido, borrado o cambiado después de elegirla.
+- **Sospecha a confirmar:** `saveAsZip` (`helpers/persistence.ts:53`) vuelve a leer
+  cada `File` con `arrayBuffer()` al exportar; si el archivo ya no está, Chrome lanza
+  `NotReadableError`. Explicaría el error de Álbum del 2026-09-22, que no se reproduce
+  en otra máquina y se arregla recargando (las imágenes vuelven desde la nube).
+- **Prueba:** subir una imagen del escritorio en Galería de Fotos, borrarla del
+  disco y exportar el ZIP con DevTools en "Pause on caught exceptions".
+- **Salida si se confirma:** leer la imagen una vez al elegirla y guardarla en
+  memoria, para que el ZIP no toque el disco.
+- **Hecho cuando:** la prueba de arriba exporta sin error.
+- **Fecha:** 2026-09-24 · **Estado:** Abierto
+
+---
+
 ## [RM-079] Gráfica real de Arma la Palabra
 - **Objetivo:** reemplazar el diseño provisional en CSS de la part `blanks`
   (`src/game/catalog/arma-la-palabra/parts/blanks.tsx`) por la gráfica del
