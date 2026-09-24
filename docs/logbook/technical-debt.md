@@ -16,11 +16,11 @@ reutiliza). Al resolverse se mueve al `changelog.md` conservando su código.
 
 ---
 
-## [TD-122] De Par en Par es de QGEM pero carga assets de Más Conectados
-- **Ubicación:** `apps/web/src/game/catalog/de-par-en-par/assets.ts:2-3`, `apps/web/src/game/catalog/de-par-en-par/index.ts:7-8`, `apps/web/public/programs/mas-conectados/games/de-par-en-par/`
+## [TD-122] De Par en Par es de QGEM pero carga la gráfica de Más Conectados
+- **Ubicación:** `apps/web/src/game/catalog/de-par-en-par/layout.json` (todas las rutas `image`), `apps/web/public/programs/mas-conectados/games/de-par-en-par/`
 - **Riesgo:** 3/10
-- **Problema:** [[RM-121]] pasó el juego a Que Gane el Mejor, pero su gráfica, sus sonidos y sus fuentes (Candara, Poppins) siguen bajo `programs/mas-conectados/`. Rompe la regla de que nada cruza programas.
-- **Impacto futuro:** borrar lo de Más Conectados deja a De Par en Par sin marcos, sonidos ni tipografía al aire. Se paga cuando entre la gráfica de QGEM: sus assets van a `public/programs/que-gane-el-mejor/games/de-par-en-par/` y las fuentes a `src/programs/que-gane-el-mejor/fonts/`.
+- **Problema:** [[RM-121]] pasó el juego a Que Gane el Mejor. Sonidos y fuentes ya son de QGEM (Candara se reemplazó por Genius Techno), pero los marcos front/back, la máscara y el fondo siguen bajo `programs/mas-conectados/`. Rompe la regla de que nada cruza programas.
+- **Impacto futuro:** borrar lo de Más Conectados deja a De Par en Par sin marcos ni fondo al aire. Se paga cuando entre la gráfica de QGEM, que va a `public/programs/que-gane-el-mejor/games/de-par-en-par/`.
 - **Fecha:** 2026-09-24 · **Estado:** Abierto
 
 ## [TD-117] Tres pantallas quedaron fuera de la normalización de filas
@@ -44,14 +44,14 @@ reutiliza). Al resolverse se mueve al `changelog.md` conservando su código.
 - **Impacto futuro:** Sale al aire una ronda con huecos. **Viene así desde Studio** —su `validate` también recorría solo `nivel1`—, o sea que el port no lo introdujo, pero tampoco lo arregló, y hasta hoy nadie lo notaba porque **el Nivel 2 no se había usado nunca**. Con el primer pedido real (2026-08-30) deja de ser teórico. Es hermano de [[TD-114]]: los dos son fallos de "el archivo está mal y nadie avisa".
 - **Fecha:** 2026-08-30 · **Estado:** Abierto
 
- Los colectores se tragan el error al cargar un archivo
+## [TD-114] Los colectores se tragan el error al cargar un archivo
 - **Ubicación:** `apps/web/src/collector/catalog/*/Editor.tsx` — **22 `catch {}` vacíos** repartidos por los 16 colectores; p. ej. `tres-en-raya/Editor.tsx:72`. Y los guards en `*/schema.ts`.
 - **Riesgo:** 7/10
 - **Problema:** Son dos fallos encadenados. (1) `loadJsonFile` **sí** lanza con mensaje ("Estructura de archivo no válida para este colector"), pero el `catch {}` vacío lo descarta sin mostrar nada. (2) Los `isData` son superficiales: el de Tres en Raya solo comprueba que `groups` sea un array, así que un archivo con la estructura vieja **pasa la validación**, `fromData` lee una clave que no existe, cae al `?? []` y el tablero queda en blanco.
 - **Impacto futuro:** Ya mordió. El contrato de un juego cambia a menudo —es la forma de trabajo, y la retrocompatibilidad se descarta a propósito—, así que cargar un archivo viejo es un caso normal, no raro. Hoy el productor lo carga, no ve ningún aviso, y el colector se abre vacío como si el archivo no tuviera nada. Se descubre cuando ya se rehízo el trabajo a mano. Los guards profundos se resuelven solos con [[RM-039]], que unifica el esquema de cada juego entre colector y juego; el `catch` vacío no.
 - **Fecha:** 2026-08-30 · **Estado:** Abierto
 
- `pop` y `shake` borran el transform que `float` está animando
+## [TD-112] `pop` y `shake` borran el transform que `float` está animando
 - **Ubicación:** `apps/web/src/game/kit/animations/use-layer-animations.ts:131`, `:160`
 - **Riesgo:** 4/10
 - **Problema:** Al terminar, `pop` y `shake` hacen `element.style.transform = ""` para no dejar residuo. `float` (y `blink`) escriben un transform en bucle infinito sobre **ese mismo elemento**. En un layer que declare `float` junto a `pop` o `shake`, el primer disparo deja la flotación congelada donde estaba.

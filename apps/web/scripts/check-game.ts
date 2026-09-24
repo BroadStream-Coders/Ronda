@@ -2084,7 +2084,7 @@ const deparFonts = new Set(
 );
 assert.deepEqual(
   [...deparFonts].sort(),
-  ["candara", "poppins"],
+  ["geniusTechno", "poppins"],
   "las claves de fuente son las que declara la ficha",
 );
 
