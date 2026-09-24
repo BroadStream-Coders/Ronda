@@ -41,7 +41,7 @@ export interface Data {
 
 export const PAIRS = 10;
 
-export const CARD_RATIO = { x: 16, y: 9 };
+export const CARD_RATIO = { x: 252, y: 164 };
 
 export const cardAspect = {
   aspectRatio: `${CARD_RATIO.x} / ${CARD_RATIO.y}`,
