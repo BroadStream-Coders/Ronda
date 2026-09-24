@@ -10,6 +10,20 @@ Al terminar una tarea se mueve al changelog y se borra de aquí.
 
 ---
 
+## [RM-121] De Par en Par para Que Gane el Mejor
+- **Objetivo:** que el colector y el juego `de-par-en-par` pasen de Más Conectados,
+  que ya no lo usa, a Que Gane el Mejor, y dejar el colector solo con lo que el
+  programa usa: el tablero de 20 cartas (10 pares).
+- **Pasos:** (1) reasignar colector y juego en `program-services.ts`; (2) fijar el
+  tablero en 10 pares y sacar el selector y los otros tamaños.
+- **Fuera:** la gráfica de QGEM para el juego ([[TD-122]]) y la proporción de las
+  imágenes, que se define después.
+- **Hecho cuando:** QGEM ve el colector y el juego, Más Conectados no, y el colector
+  no ofrece ni acepta otro tamaño de tablero.
+- **Fecha:** 2026-09-24 · **Estado:** En progreso (2026-09-24)
+
+---
+
 ## [RM-079] Gráfica real de Arma la Palabra
 - **Objetivo:** reemplazar el diseño provisional en CSS de la part `blanks`
   (`src/game/catalog/arma-la-palabra/parts/blanks.tsx`) por la gráfica del

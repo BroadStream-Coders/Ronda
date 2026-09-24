@@ -16,6 +16,13 @@ reutiliza). Al resolverse se mueve al `changelog.md` conservando su código.
 
 ---
 
+## [TD-122] De Par en Par es de QGEM pero carga assets de Más Conectados
+- **Ubicación:** `apps/web/src/game/catalog/de-par-en-par/assets.ts:2-3`, `apps/web/src/game/catalog/de-par-en-par/index.ts:7-8`, `apps/web/public/programs/mas-conectados/games/de-par-en-par/`
+- **Riesgo:** 3/10
+- **Problema:** [[RM-121]] pasó el juego a Que Gane el Mejor, pero su gráfica, sus sonidos y sus fuentes (Candara, Poppins) siguen bajo `programs/mas-conectados/`. Rompe la regla de que nada cruza programas.
+- **Impacto futuro:** borrar lo de Más Conectados deja a De Par en Par sin marcos, sonidos ni tipografía al aire. Se paga cuando entre la gráfica de QGEM: sus assets van a `public/programs/que-gane-el-mejor/games/de-par-en-par/` y las fuentes a `src/programs/que-gane-el-mejor/fonts/`.
+- **Fecha:** 2026-09-24 · **Estado:** Abierto
+
 ## [TD-117] Tres pantallas quedaron fuera de la normalización de filas
 - **Ubicación:** `apps/web/src/collector/catalog/de-par-en-par/Tab1.tsx:76`, `apps/web/src/collector/catalog/mi-libro-favorito/Players.tsx:19`, `apps/web/src/collector/catalog/intruso/Level1.tsx` (las filas de opción).
 - **Riesgo:** 2/10

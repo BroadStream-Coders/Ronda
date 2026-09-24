@@ -24,6 +24,7 @@ export const programServices: Record<string, ProgramServices> = {
       "intruso",
       "galeria-fotos",
       "tres-en-raya",
+      "de-par-en-par",
     ],
     games: [
       "deletreo",
@@ -38,13 +39,14 @@ export const programServices: Record<string, ProgramServices> = {
       "galeria-fotos",
       "reto-cruzado",
       "busca-logo",
+      "de-par-en-par",
     ],
     host: ["deletreo", "calculo-mental", "la-sabes-o-no", "al-vuelo"],
   },
   "a379ba63-30eb-4acc-95b4-5080b02c7516": {
     name: "Más Conectados",
-    collectors: ["de-par-en-par", "arma-la-palabra", "arma-la-oracion"],
-    games: ["arma-la-palabra", "arma-la-oracion", "de-par-en-par"],
+    collectors: ["arma-la-palabra", "arma-la-oracion"],
+    games: ["arma-la-palabra", "arma-la-oracion"],
   },
 };
 
