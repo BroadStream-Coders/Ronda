@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Image as ImageIcon, Shuffle, ArrowRightLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import type { PairData } from "./schema";
+import { cardAspect, type PairData } from "./schema";
 
 interface Tab2Props {
   boardOrder: string[];
@@ -56,7 +56,7 @@ export function Tab2({ boardOrder, setBoardOrder, pairsData }: Tab2Props) {
     const pair = pairsData[pairIdx + 1];
     if (!pair)
       return (
-        <div className="p-2 text-xs text-muted-foreground text-center">
+        <div className="flex h-full items-center justify-center rounded-md border border-dashed border-border/50 text-xs text-muted-foreground">
           Vacío
         </div>
       );
@@ -65,7 +65,7 @@ export function Tab2({ boardOrder, setBoardOrder, pairsData }: Tab2Props) {
     if (!data) return null;
 
     return (
-      <div className="flex-1 flex flex-col min-h-0 w-full rounded-md overflow-hidden bg-background border border-border/50 justify-center">
+      <div className="flex h-full flex-col w-full rounded-md overflow-hidden bg-background border border-border/50 justify-center">
         {(data.mode === "image" || data.mode === "both") && (
           <div
             className={`relative flex flex-col items-center justify-center bg-card ${data.mode === "both" ? "flex-1 min-h-0 shrink border-b border-border/40" : "h-full w-full"}`}
@@ -139,7 +139,7 @@ export function Tab2({ boardOrder, setBoardOrder, pairsData }: Tab2Props) {
               <div
                 key={cardId}
                 onClick={() => handleCardClick(cardId)}
-                className={`relative p-2 aspect-square rounded-lg border-2 cursor-pointer transition-all flex flex-col gap-1.5 items-center ${
+                className={`relative p-2 rounded-lg border-2 cursor-pointer transition-all flex flex-col gap-1.5 items-center ${
                   isSelected
                     ? "border-primary bg-primary/5 shadow-lg shadow-primary/30 scale-105 z-10"
                     : "border-border/60 hover:border-primary/40 hover:bg-muted/50"
@@ -154,7 +154,9 @@ export function Tab2({ boardOrder, setBoardOrder, pairsData }: Tab2Props) {
                   </span>
                 </div>
 
-                {renderCardVisuals(cardId)}
+                <div className="w-full" style={cardAspect}>
+                  {renderCardVisuals(cardId)}
+                </div>
               </div>
             );
           })}

@@ -41,6 +41,12 @@ export interface Data {
 
 export const PAIRS = 10;
 
+export const CARD_RATIO = { x: 16, y: 9 };
+
+export const cardAspect = {
+  aspectRatio: `${CARD_RATIO.x} / ${CARD_RATIO.y}`,
+};
+
 export function initialBoardOrder(): string[] {
   const order: string[] = [];
   for (let i = 0; i < PAIRS; i++) order.push(`${i}_A`, `${i}_B`);

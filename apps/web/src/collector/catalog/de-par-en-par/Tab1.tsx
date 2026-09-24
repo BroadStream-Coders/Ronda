@@ -13,7 +13,13 @@ import { Card } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { ImagePicker, clearSlotImage, setSlotImage } from "@/collector/kit";
-import { PAIRS, createEmptyCard, createEmptyPair } from "./schema";
+import {
+  CARD_RATIO,
+  PAIRS,
+  cardAspect,
+  createEmptyCard,
+  createEmptyPair,
+} from "./schema";
 import type { CardMode, CardContent, PairData } from "./schema";
 
 interface Tab1Props {
@@ -22,6 +28,12 @@ interface Tab1Props {
 }
 
 const pairsArray = Array.from({ length: PAIRS }, (_, i) => i + 1);
+
+const MODES: Record<CardMode, string> = {
+  image: "Solo Imagen",
+  text: "Solo Texto",
+  both: "Ambos",
+};
 
 export function Tab1({ pairsData, setPairsData }: Tab1Props) {
   const getCardData = useCallback(
@@ -59,12 +71,13 @@ export function Tab1({ pairsData, setPairsData }: Tab1Props) {
     const { mode, image, text } = cardData;
 
     return (
-      <div className="flex-1 flex flex-col gap-1.5 p-1.5 bg-muted/30 rounded-lg border border-border/50 aspect-4/5">
+      <div className="flex-1 min-w-0 flex flex-col gap-1.5 p-1.5 bg-muted/30 rounded-lg border border-border/50">
         <div className="flex flex-col 2xl:flex-row items-start 2xl:items-center justify-between gap-1 shrink-0">
           <span className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground ml-1">
             Carta {cardSide}
           </span>
           <Select
+            items={MODES}
             value={mode}
             onValueChange={(val) =>
               updateCardContent(pairNum, cardSide, { mode: val as CardMode })
@@ -74,38 +87,33 @@ export function Tab1({ pairsData, setPairsData }: Tab1Props) {
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="image" className="text-xs">
-                Solo Imagen
-              </SelectItem>
-              <SelectItem value="text" className="text-xs">
-                Solo Texto
-              </SelectItem>
-              <SelectItem value="both" className="text-xs">
-                Ambos
-              </SelectItem>
+              {Object.entries(MODES).map(([value, label]) => (
+                <SelectItem key={value} value={value} className="text-xs">
+                  {label}
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
         </div>
 
-        <div className="flex-1 flex flex-col gap-2 min-h-0">
+        <div className="flex flex-col gap-2">
           {(mode === "image" || mode === "both") && (
-            <div className="flex-1 min-h-0">
-              <ImagePicker
-                fill
-                value={image.url}
-                placeholder="Subir imagen"
-                onChange={(file, url) =>
-                  updateCardContent(pairNum, cardSide, {
-                    image: setSlotImage(image, file, url),
-                  })
-                }
-                onClear={() =>
-                  updateCardContent(pairNum, cardSide, {
-                    image: clearSlotImage(image),
-                  })
-                }
-              />
-            </div>
+            <ImagePicker
+              crop={CARD_RATIO}
+              value={image.url}
+              sourceUrl={image.sourceUrl}
+              placeholder="Subir imagen"
+              onChange={(file, url, sourceUrl) =>
+                updateCardContent(pairNum, cardSide, {
+                  image: setSlotImage(image, file, url, sourceUrl),
+                })
+              }
+              onClear={() =>
+                updateCardContent(pairNum, cardSide, {
+                  image: clearSlotImage(image),
+                })
+              }
+            />
           )}
 
           {(mode === "text" || mode === "both") &&
@@ -125,7 +133,8 @@ export function Tab1({ pairsData, setPairsData }: Tab1Props) {
                   updateCardContent(pairNum, cardSide, { text: e.target.value })
                 }
                 placeholder="Ingresa el texto aquí..."
-                className="resize-none text-xs w-full bg-card flex-1 min-h-0"
+                style={cardAspect}
+                className="resize-none field-sizing-fixed min-h-0 text-xs w-full bg-card"
               />
             ))}
         </div>
@@ -135,7 +144,7 @@ export function Tab1({ pairsData, setPairsData }: Tab1Props) {
 
   return (
     <div className="flex h-full flex-col p-6 overflow-hidden">
-      <div className="flex-1 overflow-y-auto pr-2 pb-12">
+      <div className="flex-1 overflow-y-auto p-1 pr-2 pb-12">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {pairsArray.map((pairNum) => (
             <Card
@@ -146,7 +155,7 @@ export function Tab1({ pairsData, setPairsData }: Tab1Props) {
                 <Copy className="h-4 w-4 text-primary" />
                 Par {pairNum}
               </div>
-              <div className="flex gap-2 min-h-[140px]">
+              <div className="flex gap-2">
                 {renderCardSlot(pairNum, "A")}
                 {renderCardSlot(pairNum, "B")}
               </div>
