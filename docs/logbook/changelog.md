@@ -12,6 +12,9 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [RM-127] Colector Cubigrama (2026-09-25 08:29)
+Nuevo colector `cubigrama` en Que Gane el Mejor: por ronda, las letras (3 a 7, detectadas desde una palabra) y hasta 5 palabras ocultas de 3 a 7 letras. Valida que cada palabra se arme con las letras disponibles y exporta `Cubigrama.json` con el formato de Unity (`rounds[].boards[0]`).
+
 ## [RM-126] Colector Cubito Piezas (2026-09-24 21:31)
 Nuevo colector `cubito-piezas` en Que Gane el Mejor: rondas con una imagen 16:9 y exactamente 8 preguntas con respuesta única, en lista. Exporta un ZIP con `sessionData.json` y carga rápida de pregunta y respuesta desde planilla.
 

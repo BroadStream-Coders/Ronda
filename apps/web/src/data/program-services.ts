@@ -26,6 +26,7 @@ export const programServices: Record<string, ProgramServices> = {
       "tres-en-raya",
       "de-par-en-par",
       "cubito-piezas",
+      "cubigrama",
     ],
     games: [
       "deletreo",
