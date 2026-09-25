@@ -34,7 +34,7 @@ export interface Data {
 }
 
 export const QUESTIONS_PER_ROUND = 8;
-export const IMAGE_CROP = { x: 16, y: 9 };
+export const IMAGE_CROP = { x: 1376, y: 692 };
 export const SESSION_DATA_FILENAME = "sessionData.json";
 
 export const uid = () => Math.random().toString(36).slice(2, 9);

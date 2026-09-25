@@ -32,7 +32,7 @@ export function Editor() {
   const handleSave = useCallback(async () => {
     const { data, files } = handleGetBundle();
     try {
-      await saveAsZip("CubitoPiezas.zip", data, files, SESSION_DATA_FILENAME);
+      await saveAsZip("Cubipiezas.zip", data, files, SESSION_DATA_FILENAME);
     } catch (error) {
       notifyError("Error al exportar los datos.", error);
     }
@@ -44,7 +44,7 @@ export function Editor() {
       const dataFile = zip.file(SESSION_DATA_FILENAME);
       if (!dataFile) {
         notifyError(
-          "El archivo no es un paquete válido de Cubito Piezas (falta sessionData.json).",
+          "El archivo no es un paquete válido de Cubipiezas (falta sessionData.json).",
         );
         return;
       }
@@ -76,7 +76,7 @@ export function Editor() {
 
   useEffect(() => {
     setHeader({
-      title: "Cubito Piezas",
+      title: "Cubipiezas",
       icon: <Puzzle className="h-3 w-3" />,
       format: "zip",
       onSave: handleSave,

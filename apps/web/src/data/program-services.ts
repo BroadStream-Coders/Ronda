@@ -25,7 +25,7 @@ export const programServices: Record<string, ProgramServices> = {
       "galeria-fotos",
       "tres-en-raya",
       "de-par-en-par",
-      "cubito-piezas",
+      "cubipiezas",
       "cubigrama",
     ],
     games: [

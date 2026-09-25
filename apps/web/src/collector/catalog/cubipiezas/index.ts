@@ -3,10 +3,10 @@ import { Puzzle } from "lucide-react";
 import type { CollectorType } from "../registry";
 import { Editor } from "./Editor";
 
-export const cubitoPiezas: CollectorType = {
+export const cubipiezas: CollectorType = {
   meta: {
-    id: "cubito-piezas",
-    name: "Cubito Piezas",
+    id: "cubipiezas",
+    name: "Cubipiezas",
     description: "Preguntas que destapan una imagen",
     icon: Puzzle,
   },

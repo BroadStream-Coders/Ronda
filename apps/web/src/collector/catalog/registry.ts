@@ -16,7 +16,7 @@ import { galeriaFotos } from "./galeria-fotos";
 import { tresEnRaya } from "./tres-en-raya";
 import { armaLaPalabra } from "./arma-la-palabra";
 import { armaLaOracion } from "./arma-la-oracion";
-import { cubitoPiezas } from "./cubito-piezas";
+import { cubipiezas } from "./cubipiezas";
 import { cubigrama } from "./cubigrama";
 
 export interface CollectorMeta {
@@ -48,6 +48,6 @@ export const registry: Record<string, CollectorType> = {
   [tresEnRaya.meta.id]: tresEnRaya,
   [armaLaPalabra.meta.id]: armaLaPalabra,
   [armaLaOracion.meta.id]: armaLaOracion,
-  [cubitoPiezas.meta.id]: cubitoPiezas,
+  [cubipiezas.meta.id]: cubipiezas,
   [cubigrama.meta.id]: cubigrama,
 };
