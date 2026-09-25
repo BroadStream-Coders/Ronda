@@ -12,6 +12,9 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [RM-126] Colector Cubito Piezas (2026-09-24 21:31)
+Nuevo colector `cubito-piezas` en Que Gane el Mejor: rondas con una imagen 16:9 y exactamente 8 preguntas con respuesta única, en lista. Exporta un ZIP con `sessionData.json` y carga rápida de pregunta y respuesta desde planilla.
+
 ## [RM-121] De Par en Par para Que Gane el Mejor (2026-09-24 09:01)
 El colector y el juego `de-par-en-par` pasan de Más Conectados, que ya no los usa, a Que Gane el Mejor. El colector queda fijo en el tablero de 20 cartas: sin selector de tamaño, y un archivo con otro conteo de pares se rechaza con aviso en vez de abrirse a medias. La gráfica de QGEM queda en [[TD-122]].
 
