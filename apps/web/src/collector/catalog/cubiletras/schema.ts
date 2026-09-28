@@ -36,7 +36,7 @@ export interface ExportedData {
   rounds: {
     words: { sequence: SequenceData }[];
     clues: string[];
-    grid: string[][];
+    grid: string[];
   }[];
 }
 
@@ -128,28 +128,24 @@ export function buildData(rounds: RoundData[]): ExportedData {
     rounds: rounds.map((r) => ({
       words: r.words.flatMap((w) => (w.sequence ? [{ sequence: w.sequence }] : [])),
       clues: r.clues.map((c) => c.text.trim()),
-      grid: composeGrid(r),
+      grid: composeGrid(r).map((row) => row.map((c) => c || " ").join("")),
     })),
   };
 }
 
-function isFullGrid(grid: unknown): grid is string[][] {
-  return (
-    Array.isArray(grid) &&
-    grid.length === ROWS &&
-    grid.every(
-      (row) =>
-        Array.isArray(row) &&
-        row.length === COLS &&
-        row.every((c) => typeof c === "string" && c !== ""),
-    )
+function parseFiller(grid: unknown): string[][] | null {
+  if (!Array.isArray(grid) || grid.length !== ROWS) return null;
+  const rows = grid.map((row) => (typeof row === "string" ? [...row] : []));
+  const complete = rows.every(
+    (row) => row.length === COLS && row.every((c) => /^[A-ZÑ]$/.test(c)),
   );
+  return complete ? rows : null;
 }
 
 export function fromData(data: ExportedData): RoundData[] {
   return data.rounds.map((r) => ({
     id: uid(),
-    filler: isFullGrid(r.grid) ? r.grid : null,
+    filler: parseFiller(r.grid),
     clues: (r.clues || []).map((text) => ({ id: uid(), text })),
     words: (r.words || []).map((w) => ({
       id: uid(),
