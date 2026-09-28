@@ -1955,7 +1955,7 @@ for (let i = 0; i < DEPAR_SLOTS; i++) {
   // Sin 'flip' la carta cambia de cara de golpe, sin 'click' no responde al
   // dedo, y sin 'wiggle' el acierto no tiene con que contestar (el error
   // contesta con la X de '-error', como en Unity).
-  for (const type of ["flip", "click", "wiggle"]) {
+  for (const type of ["flip", "click", "wiggle", "shake", "sparkles"]) {
     assert.ok(partOf(card, type), `'${id}' debe llevar la part '${type}'`);
   }
 
@@ -2087,6 +2087,29 @@ assert.deepEqual(
     .sort(),
   Array.from({ length: DEPAR_SLOTS }, (_, i) => `card-${i}`).sort(),
   "solo las cartas declaran 'click'",
+);
+
+// El brillo del acierto cuelga del anverso y arranca oculto: montarlo es
+// dispararlo. Los destellos arrancan apagados: los prende el acierto.
+for (let i = 0; i < DEPAR_SLOTS; i++) {
+  const glint = deparLayer(`card-${i}-glint`);
+  assert.ok(glint && glint.parentId === `card-${i}-front` && !glint.visible, `card-${i}-glint cuelga del anverso y arranca oculto`);
+  assert.equal(
+    findPart<{ type: "sparkles"; enabled?: boolean }>(depar, `card-${i}`, "sparkles")?.enabled,
+    false,
+    `card-${i}: los destellos arrancan apagados`,
+  );
+  assert.ok(findPart(depar, `card-${i}-back`, "shimmer"), `card-${i}-back lleva el brillo de reposo`);
+}
+assert.equal(
+  findPart<{ type: "sparkles"; enabled?: boolean }>(depar, "celebration", "sparkles")?.enabled,
+  false,
+  "la celebracion arranca apagada: la prende el ultimo par o Shift+M",
+);
+assert.deepEqual(
+  depar.filter((layer) => !layer.parentId).map((layer) => layer.id),
+  ["background", "board", "celebration"],
+  "la celebracion va encima del tablero",
 );
 
 // 'board' no tiene parts a proposito: un contenedor del tamano del tablero con

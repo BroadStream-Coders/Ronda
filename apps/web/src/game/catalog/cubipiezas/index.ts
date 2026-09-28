@@ -1,6 +1,5 @@
 import { isData } from "@/collector/catalog/cubipiezas/schema";
 import {
-  partView,
   readZipSession,
   useGameSession,
   type GameType,
@@ -12,7 +11,6 @@ import { meta } from "./meta";
 import { PRELOAD } from "./assets";
 import { BLUR_MAX, CARD_COUNT, slotId } from "./cards";
 import { CubipiezasLogic } from "./Logic";
-import { GlintView, type GlintPart } from "./parts/glint";
 
 export const cubipiezas: GameType = {
   meta,
@@ -21,7 +19,6 @@ export const cubipiezas: GameType = {
   preload: PRELOAD,
   blurMax: BLUR_MAX,
   fonts: { poppins },
-  parts: { glint: partView<GlintPart>(GlintView) },
   colors: [
     {
       key: "slot",

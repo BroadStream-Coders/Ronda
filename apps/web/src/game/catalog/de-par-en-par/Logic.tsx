@@ -17,11 +17,19 @@ import layout from "./layout.json";
 import { resolveSlot, type DeParEnParSession } from "./session";
 
 const SLOT_COUNT = 20;
+const COLS = 5;
 const SLOTS = Array.from({ length: SLOT_COUNT }, (_, index) => index);
+const DIAGONAL = [...SLOTS].sort(
+  (a, b) =>
+    (a % COLS) + Math.floor(a / COLS) - ((b % COLS) + Math.floor(b / COLS)) ||
+    a - b,
+);
 
 const CARD_TEXT = 0;
 const CARD_IMAGE = 1;
 const CARD_BOTH = 2;
+
+const CELEBRATION_ID = "celebration";
 
 const cardId = (i: number) => `card-${i}`;
 const backId = (i: number) => `card-${i}-back`;
@@ -32,9 +40,19 @@ const bothId = (i: number) => `card-${i}-both`;
 const bothTextId = (i: number) => `card-${i}-both-text`;
 const bothImageId = (i: number) => `card-${i}-both-image`;
 const errorId = (i: number) => `card-${i}-error`;
+const glintId = (i: number) => `card-${i}-glint`;
 
 const ERROR_BLINK_MS = 100;
+const WAVE_STEP_MS = 40;
+const CELEBRATION_STEP_MS = 60;
+const PAIR_SPARKLES_MS = 1000;
+const CELEBRATION_MS = 2500;
+
 const delay = (ms: number) => new Promise<void>((r) => setTimeout(r, ms));
+const nextFrame = () =>
+  new Promise<void>((r) =>
+    requestAnimationFrame(() => requestAnimationFrame(() => r())),
+  );
 
 const slotOfLayer = (layerId: string) => Number(layerId.slice("card-".length));
 
@@ -46,7 +64,7 @@ interface Board {
 export function DeParEnParLogic() {
   const patch = useGameState((s) => s.patch);
   const setVisible = useGameState((s) => s.setVisible);
-  const { play } = useAnimations();
+  const { play, playStagger } = useAnimations();
 
   const session = useGameSession(
     (s) => s.session,
@@ -66,11 +84,15 @@ export function DeParEnParLogic() {
   const faceUpRef = useRef<boolean[]>(SLOTS.map(() => false));
   const flightRef = useRef(new Map<number, Promise<void>>());
   const selectionRef = useRef<number[]>([]);
+  const matchedRef = useRef(new Set<number>());
+  const lockedRef = useRef(false);
 
   useEffect(() => {
     faceUpRef.current = SLOTS.map(() => false);
     flightRef.current.clear();
     selectionRef.current = [];
+    matchedRef.current = new Set();
+    patch(CELEBRATION_ID, "sparkles", { enabled: false });
 
     for (const i of SLOTS) {
       const card = resolveSlot(session, order[i])?.card;
@@ -83,6 +105,7 @@ export function DeParEnParLogic() {
       patch(bothTextId(i), "text", { text });
       patch(imageId(i), "image", { src: picture });
       patch(bothImageId(i), "image", { src: picture });
+      patch(cardId(i), "sparkles", { enabled: false });
 
       setVisible(textId(i), card?.type === CARD_TEXT);
       setVisible(imageId(i), card?.type === CARD_IMAGE);
@@ -91,6 +114,7 @@ export function DeParEnParLogic() {
       setVisible(backId(i), true);
       setVisible(frontId(i), false);
       setVisible(errorId(i), false);
+      setVisible(glintId(i), false);
     }
   }, [session, order, images, patch, setVisible]);
 
@@ -104,6 +128,7 @@ export function DeParEnParLogic() {
         await play(cardId(i), "flipHide");
         faceUpRef.current[i] = up;
         setVisible(errorId(i), false);
+        setVisible(glintId(i), false);
         setVisible(backId(i), !up);
         setVisible(frontId(i), up);
         await play(cardId(i), "flipShow");
@@ -134,15 +159,50 @@ export function DeParEnParLogic() {
     return run;
   };
 
-  const flipAll = (up: boolean) => {
-    selectionRef.current = [];
-    return Promise.all(SLOTS.map((i) => flipCard(i, up)));
+  const withLock = async (job: () => Promise<void>) => {
+    if (lockedRef.current) return;
+    lockedRef.current = true;
+    try {
+      await job();
+    } finally {
+      lockedRef.current = false;
+    }
   };
+
+  const deal = (swap?: () => void) =>
+    withLock(async () => {
+      selectionRef.current = [];
+      await Promise.all(SLOTS.map((i) => flightRef.current.get(i)));
+      await Promise.all(SLOTS.map((i) => play(cardId(i), "flipHide")));
+      swap?.();
+      await nextFrame();
+      await playStagger(DIAGONAL.map(cardId), "flipShow", WAVE_STEP_MS);
+    });
+
+  const flipAll = (up: boolean) =>
+    withLock(async () => {
+      selectionRef.current = [];
+      if (!up) matchedRef.current = new Set();
+      await Promise.all(
+        DIAGONAL.map(async (i, step) => {
+          await delay(step * WAVE_STEP_MS);
+          await flipCard(i, up);
+        }),
+      );
+    });
 
   const toggleAll = () => flipAll(!faceUpRef.current.some((up) => up));
 
+  const celebrate = () => {
+    patch(CELEBRATION_ID, "sparkles", { enabled: true });
+    void delay(CELEBRATION_MS).then(() =>
+      patch(CELEBRATION_ID, "sparkles", { enabled: false }),
+    );
+    return playStagger(DIAGONAL.map(cardId), "wiggle", CELEBRATION_STEP_MS);
+  };
+
   const clickCard = (i: number) => {
-    if (flightRef.current.has(i)) return;
+    if (lockedRef.current || flightRef.current.has(i)) return;
 
     const up = !faceUpRef.current[i];
     const selection = selectionRef.current;
@@ -158,7 +218,7 @@ export function DeParEnParLogic() {
 
   const validate = async () => {
     const selection = selectionRef.current;
-    if (selection.length < 2) return;
+    if (lockedRef.current || selection.length < 2) return;
 
     const [first, second] = selection;
     selectionRef.current = [];
@@ -170,15 +230,29 @@ export function DeParEnParLogic() {
 
     if (pair !== undefined && pair === pairOf(second)) {
       playSound(SOUNDS.correct);
-      await Promise.all([
-        play(cardId(first), "wiggle"),
-        play(cardId(second), "wiggle"),
-      ]);
+      matchedRef.current.add(pair);
+      for (const i of selection) {
+        setVisible(glintId(i), true);
+        patch(cardId(i), "sparkles", { enabled: true });
+      }
+      void delay(PAIR_SPARKLES_MS).then(() => {
+        for (const i of selection) {
+          patch(cardId(i), "sparkles", { enabled: false });
+          setVisible(glintId(i), false);
+        }
+      });
+      await Promise.all(selection.map((i) => play(cardId(i), "wiggle")));
+
+      const pairs = session?.cells.length ?? 0;
+      if (pairs > 0 && matchedRef.current.size === pairs) await celebrate();
       return;
     }
 
     playSound(SOUNDS.incorrect);
-    await Promise.all([blinkError(first), blinkError(second)]);
+    await Promise.all([
+      ...selection.map((i) => blinkError(i)),
+      ...selection.map((i) => play(cardId(i), "shake")),
+    ]);
     await Promise.all([flipCard(first, false), flipCard(second, false)]);
   };
 
@@ -186,21 +260,25 @@ export function DeParEnParLogic() {
     clickCard(slotOfLayer(layerId)),
   );
 
-  const mouseRef = useRef({ toggleAll, validate });
+  const latestRef = useRef({ toggleAll, validate, deal });
   useEffect(() => {
-    mouseRef.current = { toggleAll, validate };
+    latestRef.current = { toggleAll, validate, deal };
   });
+
+  useEffect(() => {
+    if (loadedAt) void latestRef.current.deal();
+  }, [loadedAt]);
 
   useEffect(() => {
     const onPointerDown = (event: PointerEvent) => {
       if (event.button === 1) {
         event.preventDefault();
-        void mouseRef.current.toggleAll();
+        void latestRef.current.toggleAll();
         return;
       }
       if (event.button === 2) {
         event.preventDefault();
-        void mouseRef.current.validate();
+        void latestRef.current.validate();
       }
     };
     window.addEventListener("pointerdown", onPointerDown);
@@ -215,7 +293,14 @@ export function DeParEnParLogic() {
       selectionRef.current = [];
     },
     onStart: () =>
-      setBoard((current) => ({ ...current, shuffles: current.shuffles + 1 })),
+      void deal(() =>
+        setBoard((current) => ({ ...current, shuffles: current.shuffles + 1 })),
+      ),
+    onRevealAll: () => {
+      if (lockedRef.current) return;
+      playSound(SOUNDS.correct);
+      void celebrate();
+    },
   });
 
   return null;

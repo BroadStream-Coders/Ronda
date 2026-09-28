@@ -8,6 +8,7 @@ export { NATIVE_PARTS } from "./parts";
 export type {
   BackdropPart,
   ColorPart,
+  GlintPart,
   HoloPart,
   ImagePart,
   MaskPart,

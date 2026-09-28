@@ -1,6 +1,7 @@
 import { partView, type PartRegistry } from "../registry";
 import { BackdropView, type BackdropPart } from "./backdrop";
 import { ColorView, type ColorPart } from "./color";
+import { GlintView, type GlintPart } from "./glint";
 import { HoloView, type HoloPart } from "./holo";
 import { ImageView, type ImagePart } from "./image";
 import { ShimmerView, type ShimmerPart } from "./shimmer";
@@ -10,6 +11,7 @@ import { VideoView, type VideoPart } from "./video";
 export type {
   BackdropPart,
   ColorPart,
+  GlintPart,
   HoloPart,
   ImagePart,
   ShimmerPart,
@@ -22,6 +24,7 @@ export type { TimerPart } from "./timer";
 export const NATIVE_PARTS: PartRegistry = {
   backdrop: partView<BackdropPart>(BackdropView),
   color: partView<ColorPart>(ColorView),
+  glint: partView<GlintPart>(GlintView),
   holo: partView<HoloPart>(HoloView),
   image: partView<ImagePart>(ImageView),
   shimmer: partView<ShimmerPart>(ShimmerView),

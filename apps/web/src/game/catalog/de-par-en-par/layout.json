@@ -77,7 +77,20 @@
         "duration": 0.4
       },
       {
+        "type": "shake",
+        "amplitude": 3,
+        "shakes": 3,
+        "duration": 0.3
+      },
+      {
         "type": "click"
+      },
+      {
+        "type": "sparkles",
+        "enabled": false,
+        "rate": 14,
+        "size": 7,
+        "duration": 0.8
       }
     ]
   },
@@ -105,6 +118,14 @@
         "type": "image",
         "fit": "fill",
         "src": "/programs/que-gane-el-mejor/games/de-par-en-par/card-back.png"
+      },
+      {
+        "type": "shimmer",
+        "period": 7,
+        "sweep": 1.1,
+        "phase": 0,
+        "intensity": 0.3,
+        "radius": 0.3
       }
     ]
   },
@@ -372,6 +393,33 @@
     ]
   },
   {
+    "id": "card-0-glint",
+    "name": "Glint",
+    "visible": false,
+    "parentId": "card-0-front",
+    "rect": {
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "x": 266,
+        "y": 181
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": [
+      {
+        "type": "glint",
+        "duration": 0.7,
+        "intensity": 0.6
+      }
+    ]
+  },
+  {
     "id": "card-1",
     "name": "Card 2",
     "visible": true,
@@ -403,7 +451,20 @@
         "duration": 0.4
       },
       {
+        "type": "shake",
+        "amplitude": 3,
+        "shakes": 3,
+        "duration": 0.3
+      },
+      {
         "type": "click"
+      },
+      {
+        "type": "sparkles",
+        "enabled": false,
+        "rate": 14,
+        "size": 7,
+        "duration": 0.8
       }
     ]
   },
@@ -431,6 +492,14 @@
         "type": "image",
         "fit": "fill",
         "src": "/programs/que-gane-el-mejor/games/de-par-en-par/card-back.png"
+      },
+      {
+        "type": "shimmer",
+        "period": 7,
+        "sweep": 1.1,
+        "phase": 0.15,
+        "intensity": 0.3,
+        "radius": 0.3
       }
     ]
   },
@@ -698,6 +767,33 @@
     ]
   },
   {
+    "id": "card-1-glint",
+    "name": "Glint",
+    "visible": false,
+    "parentId": "card-1-front",
+    "rect": {
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "x": 266,
+        "y": 181
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": [
+      {
+        "type": "glint",
+        "duration": 0.7,
+        "intensity": 0.6
+      }
+    ]
+  },
+  {
     "id": "card-2",
     "name": "Card 3",
     "visible": true,
@@ -729,7 +825,20 @@
         "duration": 0.4
       },
       {
+        "type": "shake",
+        "amplitude": 3,
+        "shakes": 3,
+        "duration": 0.3
+      },
+      {
         "type": "click"
+      },
+      {
+        "type": "sparkles",
+        "enabled": false,
+        "rate": 14,
+        "size": 7,
+        "duration": 0.8
       }
     ]
   },
@@ -757,6 +866,14 @@
         "type": "image",
         "fit": "fill",
         "src": "/programs/que-gane-el-mejor/games/de-par-en-par/card-back.png"
+      },
+      {
+        "type": "shimmer",
+        "period": 7,
+        "sweep": 1.1,
+        "phase": 0.3,
+        "intensity": 0.3,
+        "radius": 0.3
       }
     ]
   },
@@ -1024,6 +1141,33 @@
     ]
   },
   {
+    "id": "card-2-glint",
+    "name": "Glint",
+    "visible": false,
+    "parentId": "card-2-front",
+    "rect": {
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "x": 266,
+        "y": 181
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": [
+      {
+        "type": "glint",
+        "duration": 0.7,
+        "intensity": 0.6
+      }
+    ]
+  },
+  {
     "id": "card-3",
     "name": "Card 4",
     "visible": true,
@@ -1055,7 +1199,20 @@
         "duration": 0.4
       },
       {
+        "type": "shake",
+        "amplitude": 3,
+        "shakes": 3,
+        "duration": 0.3
+      },
+      {
         "type": "click"
+      },
+      {
+        "type": "sparkles",
+        "enabled": false,
+        "rate": 14,
+        "size": 7,
+        "duration": 0.8
       }
     ]
   },
@@ -1083,6 +1240,14 @@
         "type": "image",
         "fit": "fill",
         "src": "/programs/que-gane-el-mejor/games/de-par-en-par/card-back.png"
+      },
+      {
+        "type": "shimmer",
+        "period": 7,
+        "sweep": 1.1,
+        "phase": 0.44999999999999996,
+        "intensity": 0.3,
+        "radius": 0.3
       }
     ]
   },
@@ -1350,6 +1515,33 @@
     ]
   },
   {
+    "id": "card-3-glint",
+    "name": "Glint",
+    "visible": false,
+    "parentId": "card-3-front",
+    "rect": {
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "x": 266,
+        "y": 181
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": [
+      {
+        "type": "glint",
+        "duration": 0.7,
+        "intensity": 0.6
+      }
+    ]
+  },
+  {
     "id": "card-4",
     "name": "Card 5",
     "visible": true,
@@ -1381,7 +1573,20 @@
         "duration": 0.4
       },
       {
+        "type": "shake",
+        "amplitude": 3,
+        "shakes": 3,
+        "duration": 0.3
+      },
+      {
         "type": "click"
+      },
+      {
+        "type": "sparkles",
+        "enabled": false,
+        "rate": 14,
+        "size": 7,
+        "duration": 0.8
       }
     ]
   },
@@ -1409,6 +1614,14 @@
         "type": "image",
         "fit": "fill",
         "src": "/programs/que-gane-el-mejor/games/de-par-en-par/card-back.png"
+      },
+      {
+        "type": "shimmer",
+        "period": 7,
+        "sweep": 1.1,
+        "phase": 0.6,
+        "intensity": 0.3,
+        "radius": 0.3
       }
     ]
   },
@@ -1676,6 +1889,33 @@
     ]
   },
   {
+    "id": "card-4-glint",
+    "name": "Glint",
+    "visible": false,
+    "parentId": "card-4-front",
+    "rect": {
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "x": 266,
+        "y": 181
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": [
+      {
+        "type": "glint",
+        "duration": 0.7,
+        "intensity": 0.6
+      }
+    ]
+  },
+  {
     "id": "card-5",
     "name": "Card 6",
     "visible": true,
@@ -1707,7 +1947,20 @@
         "duration": 0.4
       },
       {
+        "type": "shake",
+        "amplitude": 3,
+        "shakes": 3,
+        "duration": 0.3
+      },
+      {
         "type": "click"
+      },
+      {
+        "type": "sparkles",
+        "enabled": false,
+        "rate": 14,
+        "size": 7,
+        "duration": 0.8
       }
     ]
   },
@@ -1735,6 +1988,14 @@
         "type": "image",
         "fit": "fill",
         "src": "/programs/que-gane-el-mejor/games/de-par-en-par/card-back.png"
+      },
+      {
+        "type": "shimmer",
+        "period": 7,
+        "sweep": 1.1,
+        "phase": 0.15,
+        "intensity": 0.3,
+        "radius": 0.3
       }
     ]
   },
@@ -2002,6 +2263,33 @@
     ]
   },
   {
+    "id": "card-5-glint",
+    "name": "Glint",
+    "visible": false,
+    "parentId": "card-5-front",
+    "rect": {
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "x": 266,
+        "y": 181
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": [
+      {
+        "type": "glint",
+        "duration": 0.7,
+        "intensity": 0.6
+      }
+    ]
+  },
+  {
     "id": "card-6",
     "name": "Card 7",
     "visible": true,
@@ -2033,7 +2321,20 @@
         "duration": 0.4
       },
       {
+        "type": "shake",
+        "amplitude": 3,
+        "shakes": 3,
+        "duration": 0.3
+      },
+      {
         "type": "click"
+      },
+      {
+        "type": "sparkles",
+        "enabled": false,
+        "rate": 14,
+        "size": 7,
+        "duration": 0.8
       }
     ]
   },
@@ -2061,6 +2362,14 @@
         "type": "image",
         "fit": "fill",
         "src": "/programs/que-gane-el-mejor/games/de-par-en-par/card-back.png"
+      },
+      {
+        "type": "shimmer",
+        "period": 7,
+        "sweep": 1.1,
+        "phase": 0.3,
+        "intensity": 0.3,
+        "radius": 0.3
       }
     ]
   },
@@ -2328,6 +2637,33 @@
     ]
   },
   {
+    "id": "card-6-glint",
+    "name": "Glint",
+    "visible": false,
+    "parentId": "card-6-front",
+    "rect": {
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "x": 266,
+        "y": 181
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": [
+      {
+        "type": "glint",
+        "duration": 0.7,
+        "intensity": 0.6
+      }
+    ]
+  },
+  {
     "id": "card-7",
     "name": "Card 8",
     "visible": true,
@@ -2359,7 +2695,20 @@
         "duration": 0.4
       },
       {
+        "type": "shake",
+        "amplitude": 3,
+        "shakes": 3,
+        "duration": 0.3
+      },
+      {
         "type": "click"
+      },
+      {
+        "type": "sparkles",
+        "enabled": false,
+        "rate": 14,
+        "size": 7,
+        "duration": 0.8
       }
     ]
   },
@@ -2387,6 +2736,14 @@
         "type": "image",
         "fit": "fill",
         "src": "/programs/que-gane-el-mejor/games/de-par-en-par/card-back.png"
+      },
+      {
+        "type": "shimmer",
+        "period": 7,
+        "sweep": 1.1,
+        "phase": 0.44999999999999996,
+        "intensity": 0.3,
+        "radius": 0.3
       }
     ]
   },
@@ -2654,6 +3011,33 @@
     ]
   },
   {
+    "id": "card-7-glint",
+    "name": "Glint",
+    "visible": false,
+    "parentId": "card-7-front",
+    "rect": {
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "x": 266,
+        "y": 181
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": [
+      {
+        "type": "glint",
+        "duration": 0.7,
+        "intensity": 0.6
+      }
+    ]
+  },
+  {
     "id": "card-8",
     "name": "Card 9",
     "visible": true,
@@ -2685,7 +3069,20 @@
         "duration": 0.4
       },
       {
+        "type": "shake",
+        "amplitude": 3,
+        "shakes": 3,
+        "duration": 0.3
+      },
+      {
         "type": "click"
+      },
+      {
+        "type": "sparkles",
+        "enabled": false,
+        "rate": 14,
+        "size": 7,
+        "duration": 0.8
       }
     ]
   },
@@ -2713,6 +3110,14 @@
         "type": "image",
         "fit": "fill",
         "src": "/programs/que-gane-el-mejor/games/de-par-en-par/card-back.png"
+      },
+      {
+        "type": "shimmer",
+        "period": 7,
+        "sweep": 1.1,
+        "phase": 0.6,
+        "intensity": 0.3,
+        "radius": 0.3
       }
     ]
   },
@@ -2980,6 +3385,33 @@
     ]
   },
   {
+    "id": "card-8-glint",
+    "name": "Glint",
+    "visible": false,
+    "parentId": "card-8-front",
+    "rect": {
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "x": 266,
+        "y": 181
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": [
+      {
+        "type": "glint",
+        "duration": 0.7,
+        "intensity": 0.6
+      }
+    ]
+  },
+  {
     "id": "card-9",
     "name": "Card 10",
     "visible": true,
@@ -3011,7 +3443,20 @@
         "duration": 0.4
       },
       {
+        "type": "shake",
+        "amplitude": 3,
+        "shakes": 3,
+        "duration": 0.3
+      },
+      {
         "type": "click"
+      },
+      {
+        "type": "sparkles",
+        "enabled": false,
+        "rate": 14,
+        "size": 7,
+        "duration": 0.8
       }
     ]
   },
@@ -3039,6 +3484,14 @@
         "type": "image",
         "fit": "fill",
         "src": "/programs/que-gane-el-mejor/games/de-par-en-par/card-back.png"
+      },
+      {
+        "type": "shimmer",
+        "period": 7,
+        "sweep": 1.1,
+        "phase": 0.75,
+        "intensity": 0.3,
+        "radius": 0.3
       }
     ]
   },
@@ -3306,6 +3759,33 @@
     ]
   },
   {
+    "id": "card-9-glint",
+    "name": "Glint",
+    "visible": false,
+    "parentId": "card-9-front",
+    "rect": {
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "x": 266,
+        "y": 181
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": [
+      {
+        "type": "glint",
+        "duration": 0.7,
+        "intensity": 0.6
+      }
+    ]
+  },
+  {
     "id": "card-10",
     "name": "Card 11",
     "visible": true,
@@ -3337,7 +3817,20 @@
         "duration": 0.4
       },
       {
+        "type": "shake",
+        "amplitude": 3,
+        "shakes": 3,
+        "duration": 0.3
+      },
+      {
         "type": "click"
+      },
+      {
+        "type": "sparkles",
+        "enabled": false,
+        "rate": 14,
+        "size": 7,
+        "duration": 0.8
       }
     ]
   },
@@ -3365,6 +3858,14 @@
         "type": "image",
         "fit": "fill",
         "src": "/programs/que-gane-el-mejor/games/de-par-en-par/card-back.png"
+      },
+      {
+        "type": "shimmer",
+        "period": 7,
+        "sweep": 1.1,
+        "phase": 0.3,
+        "intensity": 0.3,
+        "radius": 0.3
       }
     ]
   },
@@ -3632,6 +4133,33 @@
     ]
   },
   {
+    "id": "card-10-glint",
+    "name": "Glint",
+    "visible": false,
+    "parentId": "card-10-front",
+    "rect": {
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "x": 266,
+        "y": 181
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": [
+      {
+        "type": "glint",
+        "duration": 0.7,
+        "intensity": 0.6
+      }
+    ]
+  },
+  {
     "id": "card-11",
     "name": "Card 12",
     "visible": true,
@@ -3663,7 +4191,20 @@
         "duration": 0.4
       },
       {
+        "type": "shake",
+        "amplitude": 3,
+        "shakes": 3,
+        "duration": 0.3
+      },
+      {
         "type": "click"
+      },
+      {
+        "type": "sparkles",
+        "enabled": false,
+        "rate": 14,
+        "size": 7,
+        "duration": 0.8
       }
     ]
   },
@@ -3691,6 +4232,14 @@
         "type": "image",
         "fit": "fill",
         "src": "/programs/que-gane-el-mejor/games/de-par-en-par/card-back.png"
+      },
+      {
+        "type": "shimmer",
+        "period": 7,
+        "sweep": 1.1,
+        "phase": 0.44999999999999996,
+        "intensity": 0.3,
+        "radius": 0.3
       }
     ]
   },
@@ -3958,6 +4507,33 @@
     ]
   },
   {
+    "id": "card-11-glint",
+    "name": "Glint",
+    "visible": false,
+    "parentId": "card-11-front",
+    "rect": {
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "x": 266,
+        "y": 181
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": [
+      {
+        "type": "glint",
+        "duration": 0.7,
+        "intensity": 0.6
+      }
+    ]
+  },
+  {
     "id": "card-12",
     "name": "Card 13",
     "visible": true,
@@ -3989,7 +4565,20 @@
         "duration": 0.4
       },
       {
+        "type": "shake",
+        "amplitude": 3,
+        "shakes": 3,
+        "duration": 0.3
+      },
+      {
         "type": "click"
+      },
+      {
+        "type": "sparkles",
+        "enabled": false,
+        "rate": 14,
+        "size": 7,
+        "duration": 0.8
       }
     ]
   },
@@ -4017,6 +4606,14 @@
         "type": "image",
         "fit": "fill",
         "src": "/programs/que-gane-el-mejor/games/de-par-en-par/card-back.png"
+      },
+      {
+        "type": "shimmer",
+        "period": 7,
+        "sweep": 1.1,
+        "phase": 0.6,
+        "intensity": 0.3,
+        "radius": 0.3
       }
     ]
   },
@@ -4284,6 +4881,33 @@
     ]
   },
   {
+    "id": "card-12-glint",
+    "name": "Glint",
+    "visible": false,
+    "parentId": "card-12-front",
+    "rect": {
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "x": 266,
+        "y": 181
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": [
+      {
+        "type": "glint",
+        "duration": 0.7,
+        "intensity": 0.6
+      }
+    ]
+  },
+  {
     "id": "card-13",
     "name": "Card 14",
     "visible": true,
@@ -4315,7 +4939,20 @@
         "duration": 0.4
       },
       {
+        "type": "shake",
+        "amplitude": 3,
+        "shakes": 3,
+        "duration": 0.3
+      },
+      {
         "type": "click"
+      },
+      {
+        "type": "sparkles",
+        "enabled": false,
+        "rate": 14,
+        "size": 7,
+        "duration": 0.8
       }
     ]
   },
@@ -4343,6 +4980,14 @@
         "type": "image",
         "fit": "fill",
         "src": "/programs/que-gane-el-mejor/games/de-par-en-par/card-back.png"
+      },
+      {
+        "type": "shimmer",
+        "period": 7,
+        "sweep": 1.1,
+        "phase": 0.75,
+        "intensity": 0.3,
+        "radius": 0.3
       }
     ]
   },
@@ -4610,6 +5255,33 @@
     ]
   },
   {
+    "id": "card-13-glint",
+    "name": "Glint",
+    "visible": false,
+    "parentId": "card-13-front",
+    "rect": {
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "x": 266,
+        "y": 181
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": [
+      {
+        "type": "glint",
+        "duration": 0.7,
+        "intensity": 0.6
+      }
+    ]
+  },
+  {
     "id": "card-14",
     "name": "Card 15",
     "visible": true,
@@ -4641,7 +5313,20 @@
         "duration": 0.4
       },
       {
+        "type": "shake",
+        "amplitude": 3,
+        "shakes": 3,
+        "duration": 0.3
+      },
+      {
         "type": "click"
+      },
+      {
+        "type": "sparkles",
+        "enabled": false,
+        "rate": 14,
+        "size": 7,
+        "duration": 0.8
       }
     ]
   },
@@ -4669,6 +5354,14 @@
         "type": "image",
         "fit": "fill",
         "src": "/programs/que-gane-el-mejor/games/de-par-en-par/card-back.png"
+      },
+      {
+        "type": "shimmer",
+        "period": 7,
+        "sweep": 1.1,
+        "phase": 0.8999999999999999,
+        "intensity": 0.3,
+        "radius": 0.3
       }
     ]
   },
@@ -4936,6 +5629,33 @@
     ]
   },
   {
+    "id": "card-14-glint",
+    "name": "Glint",
+    "visible": false,
+    "parentId": "card-14-front",
+    "rect": {
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "x": 266,
+        "y": 181
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": [
+      {
+        "type": "glint",
+        "duration": 0.7,
+        "intensity": 0.6
+      }
+    ]
+  },
+  {
     "id": "card-15",
     "name": "Card 16",
     "visible": true,
@@ -4967,7 +5687,20 @@
         "duration": 0.4
       },
       {
+        "type": "shake",
+        "amplitude": 3,
+        "shakes": 3,
+        "duration": 0.3
+      },
+      {
         "type": "click"
+      },
+      {
+        "type": "sparkles",
+        "enabled": false,
+        "rate": 14,
+        "size": 7,
+        "duration": 0.8
       }
     ]
   },
@@ -4995,6 +5728,14 @@
         "type": "image",
         "fit": "fill",
         "src": "/programs/que-gane-el-mejor/games/de-par-en-par/card-back.png"
+      },
+      {
+        "type": "shimmer",
+        "period": 7,
+        "sweep": 1.1,
+        "phase": 0.44999999999999996,
+        "intensity": 0.3,
+        "radius": 0.3
       }
     ]
   },
@@ -5262,6 +6003,33 @@
     ]
   },
   {
+    "id": "card-15-glint",
+    "name": "Glint",
+    "visible": false,
+    "parentId": "card-15-front",
+    "rect": {
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "x": 266,
+        "y": 181
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": [
+      {
+        "type": "glint",
+        "duration": 0.7,
+        "intensity": 0.6
+      }
+    ]
+  },
+  {
     "id": "card-16",
     "name": "Card 17",
     "visible": true,
@@ -5293,7 +6061,20 @@
         "duration": 0.4
       },
       {
+        "type": "shake",
+        "amplitude": 3,
+        "shakes": 3,
+        "duration": 0.3
+      },
+      {
         "type": "click"
+      },
+      {
+        "type": "sparkles",
+        "enabled": false,
+        "rate": 14,
+        "size": 7,
+        "duration": 0.8
       }
     ]
   },
@@ -5321,6 +6102,14 @@
         "type": "image",
         "fit": "fill",
         "src": "/programs/que-gane-el-mejor/games/de-par-en-par/card-back.png"
+      },
+      {
+        "type": "shimmer",
+        "period": 7,
+        "sweep": 1.1,
+        "phase": 0.6,
+        "intensity": 0.3,
+        "radius": 0.3
       }
     ]
   },
@@ -5588,6 +6377,33 @@
     ]
   },
   {
+    "id": "card-16-glint",
+    "name": "Glint",
+    "visible": false,
+    "parentId": "card-16-front",
+    "rect": {
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "x": 266,
+        "y": 181
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": [
+      {
+        "type": "glint",
+        "duration": 0.7,
+        "intensity": 0.6
+      }
+    ]
+  },
+  {
     "id": "card-17",
     "name": "Card 18",
     "visible": true,
@@ -5619,7 +6435,20 @@
         "duration": 0.4
       },
       {
+        "type": "shake",
+        "amplitude": 3,
+        "shakes": 3,
+        "duration": 0.3
+      },
+      {
         "type": "click"
+      },
+      {
+        "type": "sparkles",
+        "enabled": false,
+        "rate": 14,
+        "size": 7,
+        "duration": 0.8
       }
     ]
   },
@@ -5647,6 +6476,14 @@
         "type": "image",
         "fit": "fill",
         "src": "/programs/que-gane-el-mejor/games/de-par-en-par/card-back.png"
+      },
+      {
+        "type": "shimmer",
+        "period": 7,
+        "sweep": 1.1,
+        "phase": 0.75,
+        "intensity": 0.3,
+        "radius": 0.3
       }
     ]
   },
@@ -5914,6 +6751,33 @@
     ]
   },
   {
+    "id": "card-17-glint",
+    "name": "Glint",
+    "visible": false,
+    "parentId": "card-17-front",
+    "rect": {
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "x": 266,
+        "y": 181
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": [
+      {
+        "type": "glint",
+        "duration": 0.7,
+        "intensity": 0.6
+      }
+    ]
+  },
+  {
     "id": "card-18",
     "name": "Card 19",
     "visible": true,
@@ -5945,7 +6809,20 @@
         "duration": 0.4
       },
       {
+        "type": "shake",
+        "amplitude": 3,
+        "shakes": 3,
+        "duration": 0.3
+      },
+      {
         "type": "click"
+      },
+      {
+        "type": "sparkles",
+        "enabled": false,
+        "rate": 14,
+        "size": 7,
+        "duration": 0.8
       }
     ]
   },
@@ -5973,6 +6850,14 @@
         "type": "image",
         "fit": "fill",
         "src": "/programs/que-gane-el-mejor/games/de-par-en-par/card-back.png"
+      },
+      {
+        "type": "shimmer",
+        "period": 7,
+        "sweep": 1.1,
+        "phase": 0.8999999999999999,
+        "intensity": 0.3,
+        "radius": 0.3
       }
     ]
   },
@@ -6240,6 +7125,33 @@
     ]
   },
   {
+    "id": "card-18-glint",
+    "name": "Glint",
+    "visible": false,
+    "parentId": "card-18-front",
+    "rect": {
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "x": 266,
+        "y": 181
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": [
+      {
+        "type": "glint",
+        "duration": 0.7,
+        "intensity": 0.6
+      }
+    ]
+  },
+  {
     "id": "card-19",
     "name": "Card 20",
     "visible": true,
@@ -6271,7 +7183,20 @@
         "duration": 0.4
       },
       {
+        "type": "shake",
+        "amplitude": 3,
+        "shakes": 3,
+        "duration": 0.3
+      },
+      {
         "type": "click"
+      },
+      {
+        "type": "sparkles",
+        "enabled": false,
+        "rate": 14,
+        "size": 7,
+        "duration": 0.8
       }
     ]
   },
@@ -6299,6 +7224,14 @@
         "type": "image",
         "fit": "fill",
         "src": "/programs/que-gane-el-mejor/games/de-par-en-par/card-back.png"
+      },
+      {
+        "type": "shimmer",
+        "period": 7,
+        "sweep": 1.1,
+        "phase": 1.05,
+        "intensity": 0.3,
+        "radius": 0.3
       }
     ]
   },
@@ -6562,6 +7495,61 @@
         "type": "image",
         "fit": "fill",
         "src": "/programs/que-gane-el-mejor/games/de-par-en-par/error.png"
+      }
+    ]
+  },
+  {
+    "id": "card-19-glint",
+    "name": "Glint",
+    "visible": false,
+    "parentId": "card-19-front",
+    "rect": {
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "x": 266,
+        "y": 181
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": [
+      {
+        "type": "glint",
+        "duration": 0.7,
+        "intensity": 0.6
+      }
+    ]
+  },
+  {
+    "id": "celebration",
+    "name": "Celebration",
+    "visible": true,
+    "rect": {
+      "position": {
+        "x": 0,
+        "y": -3.07
+      },
+      "size": {
+        "x": 1350,
+        "y": 739
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": [
+      {
+        "type": "sparkles",
+        "enabled": false,
+        "rate": 30,
+        "size": 2,
+        "duration": 1
       }
     ]
   }

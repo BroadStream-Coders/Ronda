@@ -1,4 +1,4 @@
-import type { LayerPart } from "@/game/kit";
+import type { LayerPart } from "../layer";
 
 export interface GlintPart extends LayerPart {
   type: "glint";
@@ -12,7 +12,7 @@ export function GlintView({ part }: { part: GlintPart }) {
 
   return (
     <div className="pointer-events-none absolute inset-0 overflow-hidden">
-      <style>{`@keyframes cubipiezas-glint {
+      <style>{`@keyframes ronda-glint {
   from { transform: translateX(0) rotate(8deg); }
   to { transform: translateX(400%) rotate(8deg); }
 }`}</style>
@@ -24,7 +24,7 @@ export function GlintView({ part }: { part: GlintPart }) {
           width: "70%",
           height: "220%",
           background: `linear-gradient(100deg, transparent 35%, rgba(255, 255, 255, ${intensity}) 50%, transparent 65%)`,
-          animation: `cubipiezas-glint ${duration}s ease-in-out both`,
+          animation: `ronda-glint ${duration}s ease-in-out both`,
         }}
       />
     </div>
