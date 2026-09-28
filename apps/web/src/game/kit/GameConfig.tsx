@@ -16,6 +16,8 @@ const HEX = /^#[0-9a-fA-F]{6}$/;
 const PANEL_KEY = "ronda_game:config-open";
 const MIN_SECONDS = 1;
 const MAX_SECONDS = 999;
+const MIN_BLUR = 0;
+const MAX_BLUR = 200;
 
 interface ControlProps {
   game: GameType;
@@ -166,6 +168,70 @@ function TimerControl({
   );
 }
 
+function BlurControl({
+  game,
+  programId,
+  expanded,
+  onExpand,
+}: Omit<ControlProps, "layerId">) {
+  const fallback = String(game.blurMax ?? 0);
+  const [blur, setBlur] = useGameSetting(
+    settingKey(programId, game.meta.id, "blur"),
+    fallback,
+  );
+
+  const commit = (input: HTMLInputElement) => {
+    const parsed = Math.round(Number(input.value));
+    const valid =
+      Number.isFinite(parsed) && parsed >= MIN_BLUR && parsed <= MAX_BLUR;
+    const next = valid ? String(parsed) : blur;
+    input.value = next;
+    setBlur(next === fallback ? null : next);
+  };
+
+  if (!expanded) {
+    return (
+      <button
+        onClick={onExpand}
+        title={`Blur máximo · ${blur} px`}
+        aria-label="Expandir configuración"
+        className="flex h-6 w-8 items-center justify-center rounded-md border border-border font-mono text-[10px] text-muted-foreground outline-none transition-colors hover:bg-muted hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50"
+      >
+        {blur}
+      </button>
+    );
+  }
+
+  return (
+    <div className="flex flex-col gap-2">
+      <label htmlFor="blur" className="text-xs font-medium">
+        Blur máximo
+      </label>
+      <div className="flex items-center gap-2">
+        <Input
+          id="blur"
+          key={blur}
+          type="number"
+          inputMode="numeric"
+          min={MIN_BLUR}
+          max={MAX_BLUR}
+          defaultValue={blur}
+          onBlur={(event) => commit(event.currentTarget)}
+          onKeyDown={(event) => {
+            if (event.key === "Enter") event.currentTarget.blur();
+          }}
+          className="h-9 font-mono text-xs"
+        />
+        <span className="shrink-0 text-xs text-muted-foreground">px</span>
+      </div>
+      <p className="text-xs text-muted-foreground">
+        Con todas las piezas puestas. Baja en proporción a las que quedan.
+      </p>
+      {blur !== fallback && <RestoreButton onClick={() => setBlur(null)} />}
+    </div>
+  );
+}
+
 interface GameConfigProps {
   game: GameType;
   programId: string;
@@ -222,6 +288,7 @@ export function GameConfig({ game, programId }: GameConfigProps) {
         {game.timerLayerId && (
           <TimerControl {...controls} layerId={game.timerLayerId} />
         )}
+        {game.blurMax !== undefined && <BlurControl {...controls} />}
       </div>
     </aside>
   );

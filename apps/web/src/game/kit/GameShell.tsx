@@ -161,7 +161,7 @@ export function GameShell({
                 </div>
               )}
             </Stage>
-            {(game.chromaLayerId || game.timerLayerId) && (
+            {(game.chromaLayerId || game.timerLayerId || game.blurMax !== undefined) && (
               <GameConfig game={game} programId={programId} />
             )}
           </div>

@@ -8,12 +8,18 @@ import {
 import { poppins } from "@/programs/que-gane-el-mejor/fonts/poppins";
 import layout from "./layout.json";
 import { meta } from "./meta";
+import { PRELOAD } from "./assets";
+import { BLUR_MAX } from "./cards";
+import { CubipiezasLogic } from "./Logic";
 
 export const cubipiezas: GameType = {
   meta,
   layout: layout as Layer[],
   images: true,
+  preload: PRELOAD,
+  blurMax: BLUR_MAX,
   fonts: { poppins },
+  logic: CubipiezasLogic,
   load: async (file) => {
     const { data, images } = await readZipSession(file);
     if (!isData(data)) {

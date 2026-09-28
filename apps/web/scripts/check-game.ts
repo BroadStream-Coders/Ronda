@@ -18,6 +18,14 @@ import { coursePosition } from "../src/game/catalog/reto-cruzado/courses.ts";
 import { PRELOAD as VUELO_PRELOAD } from "../src/game/catalog/al-vuelo/assets.ts";
 import { correctOption } from "../src/game/catalog/al-vuelo/session.ts";
 import { isBuscaLogoSession } from "../src/game/catalog/busca-logo/session.ts";
+import { PRELOAD as CUBI_PRELOAD } from "../src/game/catalog/cubipiezas/assets.ts";
+import {
+  BLUR_MAX,
+  CARD_COUNT,
+  blurFor,
+  nextStatus,
+  type CardStatus,
+} from "../src/game/catalog/cubipiezas/cards.ts";
 import { PRELOAD as DEPAR_PRELOAD } from "../src/game/catalog/de-par-en-par/assets.ts";
 import {
   isDeParEnParSession,
@@ -2261,5 +2269,36 @@ for (const layer of cubi) {
     if (fontKey) assert.equal(fontKey, "poppins", `'${layer.id}' usa una fuente que la ficha no declara`);
   }
 }
+
+for (const src of CUBI_PRELOAD) {
+  assert.ok(existsSync(`public${src}`), `asset declarado que no existe: ${src}`);
+}
+
+assert.equal(
+  (cubiPhoto as { filterTransition?: number }).filterTransition !== undefined,
+  true,
+  "'photo' declara filterTransition: el blur baja suave al destapar una carta",
+);
+
+// Teclas de Unity: E pregunta, M respuesta, F vuelve a la letra, L esconde.
+assert.equal(nextStatus("letter", "interact"), "question", "E muestra la pregunta");
+assert.equal(nextStatus("question", "showAnswer"), "answer", "M cambia a la respuesta");
+assert.equal(nextStatus("letter", "showAnswer"), "letter", "M sin pregunta a la vista no la salta");
+assert.equal(nextStatus("answer", "interact"), "answer", "E no vuelve de la respuesta a la pregunta");
+assert.equal(nextStatus("answer", "reset"), "letter", "F vuelve a la letra");
+assert.equal(nextStatus("hidden", "reset"), "letter", "F devuelve una carta escondida, como ResetState");
+assert.equal(nextStatus("question", "hide"), "hidden", "L esconde desde cualquier estado");
+assert.equal(nextStatus("hidden", "interact"), "hidden", "E no destapa una carta escondida");
+
+// El blur sale de cuantas cartas tapan la imagen, no de un contador de L:
+// F devuelve cartas, y un contador quedaria desincronizado.
+const cubiAll = (status: CardStatus) => Array<CardStatus>(CARD_COUNT).fill(status);
+assert.equal(blurFor(cubiAll("letter"), BLUR_MAX), BLUR_MAX, "con todas las cartas, blur maximo");
+assert.equal(blurFor(cubiAll("hidden"), BLUR_MAX), 0, "sin cartas, imagen nitida");
+assert.equal(
+  blurFor(["hidden", ...cubiAll("answer").slice(1)], BLUR_MAX),
+  (BLUR_MAX * 7) / 8,
+  "una carta menos, un octavo menos de blur (pregunta o respuesta tambien tapan)",
+);
 
 console.log("cubipiezas: checks ok");

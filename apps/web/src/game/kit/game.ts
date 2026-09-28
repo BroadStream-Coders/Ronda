@@ -18,6 +18,7 @@ export interface GameType {
   pointer?: boolean;
   chromaLayerId?: string;
   timerLayerId?: string;
+  blurMax?: number;
   preload?: string[];
   parts?: PartRegistry;
   fonts?: FontRegistry;

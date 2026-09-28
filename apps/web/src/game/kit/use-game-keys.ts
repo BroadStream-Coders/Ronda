@@ -37,6 +37,10 @@ export interface GameKeyHandlers {
   onInteractAll?: () => void;
   /** Shift + I: la versión en masa de onShowAnswer. */
   onShowAnswerAll?: () => void;
+  /** Shift + M: revela todo de golpe, sin pasar pieza por pieza. */
+  onRevealAll?: () => void;
+  /** Shift + K: depuración, deja ver lo que hay debajo sin tocar el estado. */
+  onPeek?: () => void;
   onInsert?: () => void;
   onHome?: () => void;
   onPageUp?: () => void;
@@ -71,6 +75,8 @@ const SHIFT_KEY_MAP: Record<string, keyof GameKeyHandlers> = {
   KeyL: "onUnlockAll",
   KeyU: "onInteractAll",
   KeyI: "onShowAnswerAll",
+  KeyM: "onRevealAll",
+  KeyK: "onPeek",
 };
 
 const KEY_MAP: Record<string, keyof GameKeyHandlers> = {

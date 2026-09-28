@@ -9,6 +9,7 @@ export interface ImagePart extends LayerPart {
   fit?: ImageFit;
   flipX?: boolean;
   filter?: string;
+  filterTransition?: number;
 }
 
 export function ImageView({ part }: { part: ImagePart }) {
@@ -22,6 +23,9 @@ export function ImageView({ part }: { part: ImagePart }) {
         backgroundSize: fit === "fill" ? "100% 100%" : fit,
         transform: part.flipX ? "scaleX(-1)" : undefined,
         filter: part.filter,
+        transition: part.filterTransition
+          ? `filter ${part.filterTransition}s ease-out`
+          : undefined,
       }}
     />
   );
