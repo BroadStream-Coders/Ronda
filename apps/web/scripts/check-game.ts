@@ -2198,3 +2198,68 @@ assert.ok(
 );
 
 console.log("de par en par: checks ok");
+
+// --- el layout de cubipiezas contra lo que la logica espera ---
+
+const cubi = JSON.parse(
+  readFileSync("src/game/catalog/cubipiezas/layout.json", "utf8"),
+) as Layer[];
+
+for (const layer of cubi) {
+  for (const part of layer.parts) {
+    const src = (part as { src?: string }).src;
+    if (src) assert.ok(existsSync(`public${src}`), `asset declarado que no existe: ${src}`);
+  }
+}
+
+assert.deepEqual(
+  cubi.filter((layer) => !layer.parentId).map((layer) => layer.id),
+  ["background", "board"],
+  "'background' va antes que 'board': GameShell pinta en orden y el ultimo queda arriba",
+);
+
+assert.ok(findPart(cubi, "board", "mask"), "'board' recorta con la silueta de mask.png");
+
+const cubiBoard = cubi.filter((layer) => layer.parentId === "board").map((layer) => layer.id);
+assert.deepEqual(
+  cubiBoard,
+  ["photo", ...Array.from({ length: 8 }, (_, i) => `card-${i}`)],
+  "'photo' va antes que las cartas: las cartas la tapan",
+);
+
+const cubiPhoto = findPart<{ type: "image"; src: string; fit?: string }>(cubi, "photo", "image");
+assert.ok(cubiPhoto, "'photo' debe llevar una part 'image' (la pisa Logic)");
+assert.equal(cubiPhoto.src, "", "'photo' arranca sin src: la imagen la pone Logic desde la sesion");
+assert.equal(cubiPhoto.fit, "contain", "'photo' va en 'contain', como el PreserveAspect de Unity");
+
+// Las 8 cartas cubren el tablero exacto: si una se corre, asoma la imagen sin destapar.
+const cubiBoardSize = cubi.find((layer) => layer.id === "board")!.rect.size;
+const covered = new Set<string>();
+for (let i = 0; i < 8; i++) {
+  const card = cubi.find((layer) => layer.id === `card-${i}`)!;
+  const { position, size } = card.rect;
+  assert.equal(size.x * 4, cubiBoardSize.x, `card-${i}: 4 columnas cubren el ancho`);
+  assert.equal(size.y * 2, cubiBoardSize.y, `card-${i}: 2 filas cubren el alto`);
+  covered.add(`${position.x},${position.y}`);
+  for (const child of ["background", "letter", "question"]) {
+    assert.ok(
+      cubi.some((layer) => layer.id === `card-${i}-${child}` && layer.parentId === `card-${i}`),
+      `falta 'card-${i}-${child}'`,
+    );
+  }
+  assert.equal(
+    cubi.find((layer) => layer.id === `card-${i}-question`)!.visible,
+    false,
+    `card-${i}: la pregunta arranca oculta, se ve la letra`,
+  );
+}
+assert.equal(covered.size, 8, "no hay dos cartas en la misma celda");
+
+for (const layer of cubi) {
+  for (const part of layer.parts) {
+    const fontKey = (part as { fontKey?: string }).fontKey;
+    if (fontKey) assert.equal(fontKey, "poppins", `'${layer.id}' usa una fuente que la ficha no declara`);
+  }
+}
+
+console.log("cubipiezas: checks ok");

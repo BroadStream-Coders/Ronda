@@ -10,6 +10,17 @@ Al terminar una tarea se mueve al changelog y se borra de aquí.
 
 ---
 
+## [RM-128] Migrar Cubipiezas desde Unity
+- **Objetivo:** el juego Cubipiezas en Que Gane el Mejor, fiel al prefab de Unity:
+  8 cartas (A–H) en grilla 4×2 que tapan la imagen de la ronda; cada carta muestra
+  su pregunta, su respuesta, o desaparece para destapar ese pedazo.
+- **Pasos:** (1) layout, gráficas y registro; (2) la lógica, con un blur sobre la
+  imagen que baja según cuántas cartas quedan en pantalla; (3) actualizar las guías
+  de migración.
+- **Hecho cuando:** el juego corre con una sesión real del colector `cubipiezas` y
+  Esteban lo aprueba contra Unity.
+- **Fecha:** 2026-09-28 · **Estado:** En progreso (2026-09-28)
+
 ## [RM-123] Errores con botón "Copiar detalle"
 - **Objetivo:** que todo error visible muestre su título y un botón **"Copiar
   detalle"** que copia al portapapeles un texto con el error y su stack, la página,

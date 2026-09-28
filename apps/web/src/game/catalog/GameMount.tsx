@@ -29,6 +29,7 @@ const loaders: Record<string, () => Promise<GameType>> = {
   "busca-logo": () => import("./busca-logo").then((m) => m.buscaLogo),
   "de-par-en-par": () =>
     import("./de-par-en-par").then((m) => m.deParEnPar),
+  cubipiezas: () => import("./cubipiezas").then((m) => m.cubipiezas),
 };
 
 interface Mounted {

@@ -1,0 +1,1013 @@
+[
+  {
+    "id": "background",
+    "name": "Background",
+    "visible": true,
+    "rect": {
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "x": 1920,
+        "y": 1080
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": [
+      {
+        "type": "image",
+        "fit": "fill",
+        "src": "/programs/que-gane-el-mejor/games/cubipiezas/background.png"
+      }
+    ]
+  },
+  {
+    "id": "board",
+    "name": "Board",
+    "visible": true,
+    "rect": {
+      "position": {
+        "x": 0,
+        "y": 9.5
+      },
+      "size": {
+        "x": 1376,
+        "y": 692
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": [
+      {
+        "type": "image",
+        "fit": "fill",
+        "src": "/programs/que-gane-el-mejor/games/cubipiezas/mask.png"
+      },
+      {
+        "type": "mask",
+        "showImage": false
+      }
+    ]
+  },
+  {
+    "id": "photo",
+    "name": "Photo",
+    "visible": true,
+    "parentId": "board",
+    "rect": {
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "x": 1376,
+        "y": 692
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": [
+      {
+        "type": "image",
+        "fit": "contain",
+        "src": ""
+      }
+    ]
+  },
+  {
+    "id": "card-0",
+    "name": "Card A",
+    "visible": true,
+    "parentId": "board",
+    "rect": {
+      "position": {
+        "x": -516,
+        "y": 173
+      },
+      "size": {
+        "x": 344,
+        "y": 346
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": []
+  },
+  {
+    "id": "card-0-background",
+    "name": "Background",
+    "visible": true,
+    "parentId": "card-0",
+    "rect": {
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "x": 344,
+        "y": 346
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": [
+      {
+        "type": "image",
+        "fit": "fill",
+        "src": "/programs/que-gane-el-mejor/games/cubipiezas/card-pink.png"
+      }
+    ]
+  },
+  {
+    "id": "card-0-letter",
+    "name": "Letter",
+    "visible": true,
+    "parentId": "card-0",
+    "rect": {
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "x": 344,
+        "y": 346
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": [
+      {
+        "type": "text",
+        "text": "A",
+        "fontSize": 9.259,
+        "color": "#ffffff",
+        "fontKey": "poppins",
+        "alignH": "center",
+        "alignV": "middle",
+        "overflow": "wrap"
+      }
+    ]
+  },
+  {
+    "id": "card-0-question",
+    "name": "Question",
+    "visible": false,
+    "parentId": "card-0",
+    "rect": {
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "x": 304,
+        "y": 226
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": [
+      {
+        "type": "text",
+        "text": "",
+        "fontSize": 2.593,
+        "autoSize": true,
+        "fontSizeMin": 1.389,
+        "fontSizeMax": 6.667,
+        "lineSpacing": -20,
+        "color": "#ffffff",
+        "fontKey": "poppins",
+        "alignH": "center",
+        "alignV": "middle",
+        "overflow": "wrap"
+      }
+    ]
+  },
+  {
+    "id": "card-1",
+    "name": "Card B",
+    "visible": true,
+    "parentId": "board",
+    "rect": {
+      "position": {
+        "x": -172,
+        "y": 173
+      },
+      "size": {
+        "x": 344,
+        "y": 346
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": []
+  },
+  {
+    "id": "card-1-background",
+    "name": "Background",
+    "visible": true,
+    "parentId": "card-1",
+    "rect": {
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "x": 344,
+        "y": 346
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": [
+      {
+        "type": "image",
+        "fit": "fill",
+        "src": "/programs/que-gane-el-mejor/games/cubipiezas/card-blue.png"
+      }
+    ]
+  },
+  {
+    "id": "card-1-letter",
+    "name": "Letter",
+    "visible": true,
+    "parentId": "card-1",
+    "rect": {
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "x": 344,
+        "y": 346
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": [
+      {
+        "type": "text",
+        "text": "B",
+        "fontSize": 9.259,
+        "color": "#ffffff",
+        "fontKey": "poppins",
+        "alignH": "center",
+        "alignV": "middle",
+        "overflow": "wrap"
+      }
+    ]
+  },
+  {
+    "id": "card-1-question",
+    "name": "Question",
+    "visible": false,
+    "parentId": "card-1",
+    "rect": {
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "x": 304,
+        "y": 226
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": [
+      {
+        "type": "text",
+        "text": "",
+        "fontSize": 2.593,
+        "autoSize": true,
+        "fontSizeMin": 1.389,
+        "fontSizeMax": 6.667,
+        "lineSpacing": -20,
+        "color": "#ffffff",
+        "fontKey": "poppins",
+        "alignH": "center",
+        "alignV": "middle",
+        "overflow": "wrap"
+      }
+    ]
+  },
+  {
+    "id": "card-2",
+    "name": "Card C",
+    "visible": true,
+    "parentId": "board",
+    "rect": {
+      "position": {
+        "x": 172,
+        "y": 173
+      },
+      "size": {
+        "x": 344,
+        "y": 346
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": []
+  },
+  {
+    "id": "card-2-background",
+    "name": "Background",
+    "visible": true,
+    "parentId": "card-2",
+    "rect": {
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "x": 344,
+        "y": 346
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": [
+      {
+        "type": "image",
+        "fit": "fill",
+        "src": "/programs/que-gane-el-mejor/games/cubipiezas/card-pink.png"
+      }
+    ]
+  },
+  {
+    "id": "card-2-letter",
+    "name": "Letter",
+    "visible": true,
+    "parentId": "card-2",
+    "rect": {
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "x": 344,
+        "y": 346
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": [
+      {
+        "type": "text",
+        "text": "C",
+        "fontSize": 9.259,
+        "color": "#ffffff",
+        "fontKey": "poppins",
+        "alignH": "center",
+        "alignV": "middle",
+        "overflow": "wrap"
+      }
+    ]
+  },
+  {
+    "id": "card-2-question",
+    "name": "Question",
+    "visible": false,
+    "parentId": "card-2",
+    "rect": {
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "x": 304,
+        "y": 226
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": [
+      {
+        "type": "text",
+        "text": "",
+        "fontSize": 2.593,
+        "autoSize": true,
+        "fontSizeMin": 1.389,
+        "fontSizeMax": 6.667,
+        "lineSpacing": -20,
+        "color": "#ffffff",
+        "fontKey": "poppins",
+        "alignH": "center",
+        "alignV": "middle",
+        "overflow": "wrap"
+      }
+    ]
+  },
+  {
+    "id": "card-3",
+    "name": "Card D",
+    "visible": true,
+    "parentId": "board",
+    "rect": {
+      "position": {
+        "x": 516,
+        "y": 173
+      },
+      "size": {
+        "x": 344,
+        "y": 346
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": []
+  },
+  {
+    "id": "card-3-background",
+    "name": "Background",
+    "visible": true,
+    "parentId": "card-3",
+    "rect": {
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "x": 344,
+        "y": 346
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": [
+      {
+        "type": "image",
+        "fit": "fill",
+        "src": "/programs/que-gane-el-mejor/games/cubipiezas/card-blue.png"
+      }
+    ]
+  },
+  {
+    "id": "card-3-letter",
+    "name": "Letter",
+    "visible": true,
+    "parentId": "card-3",
+    "rect": {
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "x": 344,
+        "y": 346
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": [
+      {
+        "type": "text",
+        "text": "D",
+        "fontSize": 9.259,
+        "color": "#ffffff",
+        "fontKey": "poppins",
+        "alignH": "center",
+        "alignV": "middle",
+        "overflow": "wrap"
+      }
+    ]
+  },
+  {
+    "id": "card-3-question",
+    "name": "Question",
+    "visible": false,
+    "parentId": "card-3",
+    "rect": {
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "x": 304,
+        "y": 226
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": [
+      {
+        "type": "text",
+        "text": "",
+        "fontSize": 2.593,
+        "autoSize": true,
+        "fontSizeMin": 1.389,
+        "fontSizeMax": 6.667,
+        "lineSpacing": -20,
+        "color": "#ffffff",
+        "fontKey": "poppins",
+        "alignH": "center",
+        "alignV": "middle",
+        "overflow": "wrap"
+      }
+    ]
+  },
+  {
+    "id": "card-4",
+    "name": "Card E",
+    "visible": true,
+    "parentId": "board",
+    "rect": {
+      "position": {
+        "x": -516,
+        "y": -173
+      },
+      "size": {
+        "x": 344,
+        "y": 346
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": []
+  },
+  {
+    "id": "card-4-background",
+    "name": "Background",
+    "visible": true,
+    "parentId": "card-4",
+    "rect": {
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "x": 344,
+        "y": 346
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": [
+      {
+        "type": "image",
+        "fit": "fill",
+        "src": "/programs/que-gane-el-mejor/games/cubipiezas/card-blue.png"
+      }
+    ]
+  },
+  {
+    "id": "card-4-letter",
+    "name": "Letter",
+    "visible": true,
+    "parentId": "card-4",
+    "rect": {
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "x": 344,
+        "y": 346
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": [
+      {
+        "type": "text",
+        "text": "E",
+        "fontSize": 9.259,
+        "color": "#ffffff",
+        "fontKey": "poppins",
+        "alignH": "center",
+        "alignV": "middle",
+        "overflow": "wrap"
+      }
+    ]
+  },
+  {
+    "id": "card-4-question",
+    "name": "Question",
+    "visible": false,
+    "parentId": "card-4",
+    "rect": {
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "x": 304,
+        "y": 226
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": [
+      {
+        "type": "text",
+        "text": "",
+        "fontSize": 2.593,
+        "autoSize": true,
+        "fontSizeMin": 1.389,
+        "fontSizeMax": 6.667,
+        "lineSpacing": -20,
+        "color": "#ffffff",
+        "fontKey": "poppins",
+        "alignH": "center",
+        "alignV": "middle",
+        "overflow": "wrap"
+      }
+    ]
+  },
+  {
+    "id": "card-5",
+    "name": "Card F",
+    "visible": true,
+    "parentId": "board",
+    "rect": {
+      "position": {
+        "x": -172,
+        "y": -173
+      },
+      "size": {
+        "x": 344,
+        "y": 346
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": []
+  },
+  {
+    "id": "card-5-background",
+    "name": "Background",
+    "visible": true,
+    "parentId": "card-5",
+    "rect": {
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "x": 344,
+        "y": 346
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": [
+      {
+        "type": "image",
+        "fit": "fill",
+        "src": "/programs/que-gane-el-mejor/games/cubipiezas/card-pink.png"
+      }
+    ]
+  },
+  {
+    "id": "card-5-letter",
+    "name": "Letter",
+    "visible": true,
+    "parentId": "card-5",
+    "rect": {
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "x": 344,
+        "y": 346
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": [
+      {
+        "type": "text",
+        "text": "F",
+        "fontSize": 9.259,
+        "color": "#ffffff",
+        "fontKey": "poppins",
+        "alignH": "center",
+        "alignV": "middle",
+        "overflow": "wrap"
+      }
+    ]
+  },
+  {
+    "id": "card-5-question",
+    "name": "Question",
+    "visible": false,
+    "parentId": "card-5",
+    "rect": {
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "x": 304,
+        "y": 226
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": [
+      {
+        "type": "text",
+        "text": "",
+        "fontSize": 2.593,
+        "autoSize": true,
+        "fontSizeMin": 1.389,
+        "fontSizeMax": 6.667,
+        "lineSpacing": -20,
+        "color": "#ffffff",
+        "fontKey": "poppins",
+        "alignH": "center",
+        "alignV": "middle",
+        "overflow": "wrap"
+      }
+    ]
+  },
+  {
+    "id": "card-6",
+    "name": "Card G",
+    "visible": true,
+    "parentId": "board",
+    "rect": {
+      "position": {
+        "x": 172,
+        "y": -173
+      },
+      "size": {
+        "x": 344,
+        "y": 346
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": []
+  },
+  {
+    "id": "card-6-background",
+    "name": "Background",
+    "visible": true,
+    "parentId": "card-6",
+    "rect": {
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "x": 344,
+        "y": 346
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": [
+      {
+        "type": "image",
+        "fit": "fill",
+        "src": "/programs/que-gane-el-mejor/games/cubipiezas/card-blue.png"
+      }
+    ]
+  },
+  {
+    "id": "card-6-letter",
+    "name": "Letter",
+    "visible": true,
+    "parentId": "card-6",
+    "rect": {
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "x": 344,
+        "y": 346
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": [
+      {
+        "type": "text",
+        "text": "G",
+        "fontSize": 9.259,
+        "color": "#ffffff",
+        "fontKey": "poppins",
+        "alignH": "center",
+        "alignV": "middle",
+        "overflow": "wrap"
+      }
+    ]
+  },
+  {
+    "id": "card-6-question",
+    "name": "Question",
+    "visible": false,
+    "parentId": "card-6",
+    "rect": {
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "x": 304,
+        "y": 226
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": [
+      {
+        "type": "text",
+        "text": "",
+        "fontSize": 2.593,
+        "autoSize": true,
+        "fontSizeMin": 1.389,
+        "fontSizeMax": 6.667,
+        "lineSpacing": -20,
+        "color": "#ffffff",
+        "fontKey": "poppins",
+        "alignH": "center",
+        "alignV": "middle",
+        "overflow": "wrap"
+      }
+    ]
+  },
+  {
+    "id": "card-7",
+    "name": "Card H",
+    "visible": true,
+    "parentId": "board",
+    "rect": {
+      "position": {
+        "x": 516,
+        "y": -173
+      },
+      "size": {
+        "x": 344,
+        "y": 346
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": []
+  },
+  {
+    "id": "card-7-background",
+    "name": "Background",
+    "visible": true,
+    "parentId": "card-7",
+    "rect": {
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "x": 344,
+        "y": 346
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": [
+      {
+        "type": "image",
+        "fit": "fill",
+        "src": "/programs/que-gane-el-mejor/games/cubipiezas/card-pink.png"
+      }
+    ]
+  },
+  {
+    "id": "card-7-letter",
+    "name": "Letter",
+    "visible": true,
+    "parentId": "card-7",
+    "rect": {
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "x": 344,
+        "y": 346
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": [
+      {
+        "type": "text",
+        "text": "H",
+        "fontSize": 9.259,
+        "color": "#ffffff",
+        "fontKey": "poppins",
+        "alignH": "center",
+        "alignV": "middle",
+        "overflow": "wrap"
+      }
+    ]
+  },
+  {
+    "id": "card-7-question",
+    "name": "Question",
+    "visible": false,
+    "parentId": "card-7",
+    "rect": {
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "x": 304,
+        "y": 226
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": [
+      {
+        "type": "text",
+        "text": "",
+        "fontSize": 2.593,
+        "autoSize": true,
+        "fontSizeMin": 1.389,
+        "fontSizeMax": 6.667,
+        "lineSpacing": -20,
+        "color": "#ffffff",
+        "fontKey": "poppins",
+        "alignH": "center",
+        "alignV": "middle",
+        "overflow": "wrap"
+      }
+    ]
+  }
+]

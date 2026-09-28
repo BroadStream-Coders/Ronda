@@ -15,6 +15,7 @@ import { meta as galeriaFotos } from "./galeria-fotos/meta";
 import { meta as retoCruzado } from "./reto-cruzado/meta";
 import { meta as buscaLogo } from "./busca-logo/meta";
 import { meta as deParEnPar } from "./de-par-en-par/meta";
+import { meta as cubipiezas } from "./cubipiezas/meta";
 
 export const metas: Record<string, GameMeta> = {
   [deletreo.id]: deletreo,
@@ -32,4 +33,5 @@ export const metas: Record<string, GameMeta> = {
   [retoCruzado.id]: retoCruzado,
   [buscaLogo.id]: buscaLogo,
   [deParEnPar.id]: deParEnPar,
+  [cubipiezas.id]: cubipiezas,
 };
