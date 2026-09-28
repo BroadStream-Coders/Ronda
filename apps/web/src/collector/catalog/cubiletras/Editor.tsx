@@ -103,6 +103,18 @@ export function Editor() {
     setSelectedWordId(null);
   };
 
+  const handleRemoveRound = (id: string) => {
+    if (rounds.length <= 1) return;
+    const index = rounds.findIndex((r) => r.id === id);
+    const remaining = rounds.filter((r) => r.id !== id);
+    setRounds(remaining);
+    if (id === currentRound.id) {
+      setSelectedRoundId(remaining[Math.min(index, remaining.length - 1)].id);
+      setSelectedWordId(null);
+      setHoverCell(null);
+    }
+  };
+
   const handleSelectRound = (id: string) => {
     setSelectedRoundId(id);
     setSelectedWordId(null);
@@ -286,6 +298,7 @@ export function Editor() {
           selectedId={currentRound.id}
           onSelect={handleSelectRound}
           onAdd={handleAddRound}
+          onRemove={handleRemoveRound}
           addLabel="Ronda"
         />
       </Panel>

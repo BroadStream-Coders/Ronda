@@ -164,7 +164,7 @@ export function validate(rounds: RoundData[]): ValidationIssue[] {
     if (!round.filler) {
       issues.push({
         path: formatPath(roundLabel),
-        message: "Falta generar el relleno de letras.",
+        message: "Falta generar el relleno de letras: usa «Generar relleno» sobre el tablero.",
       });
     }
 

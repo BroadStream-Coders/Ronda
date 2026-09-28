@@ -1,7 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { Plus } from "lucide-react";
+import { Plus, Trash2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -57,6 +57,7 @@ export function PanelList({
   selectedId,
   onSelect,
   onAdd,
+  onRemove,
   addLabel = "Agregar",
   className,
 }: {
@@ -67,6 +68,7 @@ export function PanelList({
   selectedId: string;
   onSelect: (id: string) => void;
   onAdd: () => void;
+  onRemove?: (id: string) => void;
   addLabel?: string;
   className?: string;
 }) {
@@ -83,18 +85,36 @@ export function PanelList({
         {items.map((item) => {
           const selected = item.id === selectedId;
           return (
-            <button
-              key={item.id}
-              onClick={() => onSelect(item.id)}
-              aria-current={selected}
-              className={`w-full rounded-lg px-2.5 py-2 text-left text-sm transition-colors outline-none focus-visible:ring-3 focus-visible:ring-ring/50 ${
-                selected
-                  ? "bg-primary font-medium text-primary-foreground"
-                  : "text-muted-foreground hover:bg-muted hover:text-foreground"
-              }`}
-            >
-              {item.label}
-            </button>
+            <div key={item.id} className="group/item relative">
+              <button
+                onClick={() => onSelect(item.id)}
+                aria-current={selected}
+                className={`w-full rounded-lg px-2.5 py-2 text-left text-sm transition-colors outline-none focus-visible:ring-3 focus-visible:ring-ring/50 ${
+                  selected
+                    ? "bg-primary font-medium text-primary-foreground"
+                    : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                }`}
+              >
+                {item.label}
+              </button>
+              {onRemove && items.length > 1 && (
+                <div className="absolute inset-y-0 right-1.5 flex items-center">
+                  <Button
+                    variant="ghost"
+                    size="icon-xs"
+                    onClick={() => onRemove(item.id)}
+                    aria-label={`Eliminar ${item.label}`}
+                    className={`opacity-0 transition-opacity group-hover/item:opacity-100 focus-visible:opacity-100 ${
+                      selected
+                        ? "text-primary-foreground hover:bg-primary-foreground/15 hover:text-primary-foreground"
+                        : "text-muted-foreground hover:text-destructive"
+                    }`}
+                  >
+                    <Trash2 />
+                  </Button>
+                </div>
+              )}
+            </div>
           );
         })}
       </div>
