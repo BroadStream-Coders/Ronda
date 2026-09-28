@@ -4,8 +4,7 @@ import {
   type GameType,
   type Layer,
 } from "@/game/kit";
-import { geniusTechno } from "@/programs/que-gane-el-mejor/fonts/genius-techno";
-import { poppins } from "@/programs/que-gane-el-mejor/fonts/poppins";
+import { retroGaming } from "@/programs/que-gane-el-mejor/fonts/retro-gaming";
 import layout from "./layout.json";
 import { meta } from "./meta";
 import { PRELOAD } from "./assets";
@@ -18,7 +17,7 @@ export const deParEnPar: GameType = {
   images: true,
   pointer: true,
   preload: PRELOAD,
-  fonts: { geniusTechno, poppins },
+  fonts: { retroGaming },
   logic: DeParEnParLogic,
   load: async (file) => {
     const { data, images } = await readZipSession(file);

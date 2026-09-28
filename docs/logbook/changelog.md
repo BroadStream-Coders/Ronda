@@ -12,6 +12,9 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [TD-122] De Par en Par es de QGEM pero carga la gráfica de Más Conectados (2026-09-28 08:32)
+Se pagó con el paso 1 de [[RM-129]]: la gráfica nueva vive en `public/programs/que-gane-el-mejor/games/de-par-en-par/` y la copia de `programs/mas-conectados/` se borró.
+
 ## [RM-128] Migrar Cubipiezas desde Unity (2026-09-28 08:06)
 Nuevo juego `cubipiezas` en Que Gane el Mejor, fiel al prefab de Unity: 8 cartas A–H que tapan la imagen de la ronda, con un blur que baja según las cartas que quedan, volteos, gran revelación (Shift+M), vista de depuración (Shift+K), y el blur y el color de las ranuras ajustables en la configuración. Guías de migración actualizadas.
 

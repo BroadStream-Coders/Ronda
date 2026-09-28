@@ -1927,11 +1927,12 @@ assert.ok(
 
 // La grilla va escrita a mano por la misma razon que la de busca el logo: el
 // generador la calcula con el algoritmo del GridLayoutGroup de Unity, asi que
-// recalcularla aca no probaria nada. Celda 360x250, spacing 15, middle-center.
-const DEPAR_COLS = [-750, -375, 0, 375, 750];
-const DEPAR_ROWS = [397.5, 132.5, -132.5, -397.5];
-const DEPAR_CARD: Vec2 = { x: 360, y: 250 };
-const DEPAR_PLATE: Vec2 = { x: 315, y: 196 };
+// recalcularla aca no probaria nada. Celda 266x181, spacing 5, middle-center,
+// y el contenedor del prefab corrido -3.07 en y.
+const DEPAR_COLS = [-542, -271, 0, 271, 542];
+const DEPAR_ROWS = [275.93, 89.93, -96.07, -282.07];
+const DEPAR_CARD: Vec2 = { x: 266, y: 181 };
+const DEPAR_PLATE: Vec2 = { x: 251, y: 165 };
 const DEPAR_SLOTS = DEPAR_COLS.length * DEPAR_ROWS.length;
 
 assert.equal(DEPAR_SLOTS, 20, "el tablero portado es el de 20 cartas (10 pares)");
@@ -1989,7 +1990,12 @@ for (let i = 0; i < DEPAR_SLOTS; i++) {
 
   // El tablero arranca boca abajo y sin ningun setter encendido: si el anverso o
   // dos setters arrancan visibles, el primer frame muestra la respuesta.
-  for (const suffix of ["front", "text", "image", "both"]) {
+  assert.equal(
+    deparLayer(`${id}-error`)?.parentId,
+    `${id}-front`,
+    `'${id}-error' cuelga del anverso: la X solo se ve con la carta boca arriba`,
+  );
+  for (const suffix of ["front", "text", "image", "both", "error"]) {
     assert.equal(
       deparLayer(`${id}-${suffix}`)?.visible,
       false,
@@ -2005,7 +2011,7 @@ for (let i = 0; i < DEPAR_SLOTS; i++) {
   }
 
   // La mascara recorta el layer con la silueta de su propia part 'image'. En
-  // Unity el Mask va con m_ShowMaskGraphic: 1, o sea que el plato SE DIBUJA.
+  // Unity el Mask va con m_ShowMaskGraphic: 0: recorta pero NO se dibuja.
   const plate = deparLayer(`${id}-plate`);
   assert.ok(plate, `falta el layer '${id}-plate'`);
   assert.deepEqual(
@@ -2013,10 +2019,10 @@ for (let i = 0; i < DEPAR_SLOTS; i++) {
     DEPAR_PLATE,
     `'${id}-plate' mide lo que la mascara del prefab`,
   );
-  assert.notEqual(
+  assert.equal(
     partOf<{ type: "mask"; showImage?: boolean }>(plate, "mask")?.showImage,
     false,
-    `'${id}-plate' dibuja su mascara, como el m_ShowMaskGraphic del prefab`,
+    `'${id}-plate' no dibuja su mascara, como el m_ShowMaskGraphic del prefab`,
   );
   const plateImage = partOf<{ type: "image"; src: string }>(plate, "image");
   assert.ok(
@@ -2028,9 +2034,7 @@ for (let i = 0; i < DEPAR_SLOTS; i++) {
     `la mascara no existe: ${plateImage.src}`,
   );
 
-  // Los dorsos y anversos alternan diseno por paridad de slot, como los dejo la
-  // herramienta del editor de Unity.
-  const variant = i % 2 === 0 ? 2 : 1;
+  // Todas las cartas comparten un solo dorso y un solo anverso (grafica de QGEM).
   for (const face of ["back", "front"]) {
     const image = findPart<{ type: "image"; src: string }>(
       depar,
@@ -2039,18 +2043,22 @@ for (let i = 0; i < DEPAR_SLOTS; i++) {
     );
     assert.ok(image, `'${id}-${face}' debe llevar una part 'image'`);
     assert.ok(
-      image.src.endsWith(`/${face}-${variant}.png`),
-      `'${id}-${face}' usa la variante ${variant}, no ${image.src}`,
+      image.src.endsWith(`/card-${face}.png`),
+      `'${id}-${face}' usa card-${face}.png, no ${image.src}`,
     );
     assert.ok(existsSync(`public${image.src}`), `asset que no existe: ${image.src}`);
   }
 
-  // El numero del dorso es como el operador nombra la carta al aire.
-  assert.equal(
-    findPart<{ type: "text"; text: string }>(depar, `${id}-number`, "text")?.text,
-    String(i + 1),
+  // El numero del dorso es como el operador nombra la carta al aire. Es una
+  // imagen por carta, no texto.
+  const number = findPart<{ type: "image"; src: string }>(depar, `${id}-number`, "image");
+  assert.ok(
+    number?.src.endsWith(`/numbers/${i + 1}.png`),
     `'${id}-number' rotula la carta ${i + 1}`,
   );
+  assert.ok(existsSync(`public${number.src}`), `asset que no existe: ${number.src}`);
+  const error = findPart<{ type: "image"; src: string }>(depar, `${id}-error`, "image");
+  assert.ok(error && existsSync(`public${error.src}`), `'${id}-error' debe llevar la X`);
 
   // Logic pisa estos con el contenido de la sesion: si el layout no trae la
   // part, el patch no tiene donde caer y la carta sale en blanco.
@@ -2093,7 +2101,7 @@ const deparFonts = new Set(
 );
 assert.deepEqual(
   [...deparFonts].sort(),
-  ["geniusTechno", "poppins"],
+  ["retroGaming"],
   "las claves de fuente son las que declara la ficha",
 );
 

@@ -23,13 +23,6 @@ reutiliza). Al resolverse se mueve al `changelog.md` conservando su código.
 - **Impacto futuro:** quien llena los datos cree que tiene el ZIP en su máquina y no lo tiene. Si además la nube falla o no se usa, el trabajo se pierde sin que nada lo contradiga en pantalla.
 - **Fecha:** 2026-09-24 · **Estado:** Abierto
 
-## [TD-122] De Par en Par es de QGEM pero carga la gráfica de Más Conectados
-- **Ubicación:** `apps/web/src/game/catalog/de-par-en-par/layout.json` (todas las rutas `image`), `apps/web/public/programs/mas-conectados/games/de-par-en-par/`
-- **Riesgo:** 3/10
-- **Problema:** [[RM-121]] pasó el juego a Que Gane el Mejor. Sonidos y fuentes ya son de QGEM (Candara se reemplazó por Genius Techno), pero los marcos front/back, la máscara y el fondo siguen bajo `programs/mas-conectados/`. Rompe la regla de que nada cruza programas.
-- **Impacto futuro:** borrar lo de Más Conectados deja a De Par en Par sin marcos ni fondo al aire. Se paga cuando entre la gráfica de QGEM, que va a `public/programs/que-gane-el-mejor/games/de-par-en-par/`.
-- **Fecha:** 2026-09-24 · **Estado:** Abierto
-
 ## [TD-117] Tres pantallas quedaron fuera de la normalización de filas
 - **Ubicación:** `apps/web/src/collector/catalog/de-par-en-par/Tab1.tsx:76`, `apps/web/src/collector/catalog/mi-libro-favorito/Players.tsx:19`, `apps/web/src/collector/catalog/intruso/Level1.tsx` (las filas de opción).
 - **Riesgo:** 2/10

@@ -10,6 +10,16 @@ Al terminar una tarea se mueve al changelog y se borra de aquí.
 
 ---
 
+## [RM-129] De Par en Par con la gráfica de Que Gane el Mejor
+- **Objetivo:** replicar el prefab nuevo de Unity (`20 cartas (10 pares).prefab`, gráfica
+  del 2026-09-24) sobre el juego que ya corre en Ronda desde [[RM-073]].
+- **Pasos:** (1) gráfica: fondo, cartas de 266×181, números como imagen, máscara y
+  texto en Retro Gaming, la X de error; (2) lógica fiel a Unity: la X parpadea en el
+  error y la carta se balancea en el acierto; (3) animaciones extra, a definir.
+- **Hecho cuando:** el juego corre con la gráfica nueva y Esteban lo aprueba contra
+  Unity.
+- **Fecha:** 2026-09-28 · **Estado:** En progreso (2026-09-28)
+
 ## [RM-123] Errores con botón "Copiar detalle"
 - **Objetivo:** que todo error visible muestre su título y un botón **"Copiar
   detalle"** que copia al portapapeles un texto con el error y su stack, la página,
