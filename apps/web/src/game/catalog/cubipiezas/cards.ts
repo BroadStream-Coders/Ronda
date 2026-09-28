@@ -4,7 +4,10 @@ export const BLUR_MAX = 32;
 export type CardStatus = "letter" | "question" | "answer" | "hidden";
 export type CardAction = "interact" | "showAnswer" | "reset" | "hide";
 
+export const CASCADE = [0, 1, 4, 2, 5, 3, 6, 7];
+
 export const cardId = (index: number) => `card-${index}`;
+export const slotId = (index: number) => `card-${index}-slot`;
 
 export function nextStatus(status: CardStatus, action: CardAction): CardStatus {
   if (action === "reset") return "letter";

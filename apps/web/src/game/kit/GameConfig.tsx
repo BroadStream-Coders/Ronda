@@ -6,7 +6,7 @@ import { ChevronsLeft, ChevronsRight, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import type { GameType } from "./game";
+import type { ColorSetting, GameType } from "./game";
 import { findPart } from "./layer";
 import type { ColorPart, TimerPart } from "./parts";
 import { useGameState } from "./state";
@@ -36,63 +36,66 @@ function RestoreButton({ onClick }: { onClick: () => void }) {
   );
 }
 
-function ChromaControl({
+function ColorControl({
   game,
   programId,
-  layerId,
   expanded,
   onExpand,
-}: ControlProps) {
+  setting,
+}: Omit<ControlProps, "layerId"> & { setting: ColorSetting }) {
+  const { key, label, layerIds } = setting;
   const fallback =
-    findPart<ColorPart>(game.layout, layerId, "color")?.value ?? "#00FF00";
-  const [chroma, setChroma] = useGameSetting(
-    settingKey(programId, game.meta.id, "chroma"),
+    findPart<ColorPart>(game.layout, layerIds[0], "color")?.value ?? "#00FF00";
+  const [color, setColor] = useGameSetting(
+    settingKey(programId, game.meta.id, key),
     fallback,
   );
   const patch = useGameState((s) => s.patch);
 
+  const ids = layerIds.join(",");
+
   useEffect(() => {
-    patch(layerId, "color", { value: chroma });
-  }, [layerId, chroma, patch]);
+    for (const layerId of ids.split(",")) patch(layerId, "color", { value: color });
+  }, [ids, color, patch]);
 
   if (!expanded) {
     return (
       <button
         onClick={onExpand}
-        title={`Color del croma · ${chroma}`}
+        title={`${label} · ${color}`}
         aria-label="Expandir configuración"
         className="size-6 rounded-md border border-border outline-none transition-transform hover:scale-110 focus-visible:ring-3 focus-visible:ring-ring/50"
-        style={{ backgroundColor: chroma }}
+        style={{ backgroundColor: color }}
       />
     );
   }
 
   return (
     <div className="flex flex-col gap-2">
-      <label htmlFor="chroma" className="text-xs font-medium">
-        Color del croma
+      <label htmlFor={`color-${key}`} className="text-xs font-medium">
+        {label}
       </label>
       <div className="flex items-center gap-2">
         <input
-          id="chroma"
+          id={`color-${key}`}
           type="color"
-          value={chroma}
-          onChange={(event) => setChroma(event.target.value.toUpperCase())}
+          value={color}
+          onChange={(event) => setColor(event.target.value.toUpperCase())}
           className="size-9 shrink-0 cursor-pointer rounded-lg border border-border bg-transparent p-1"
         />
         <Input
-          key={chroma}
-          aria-label="Código hexadecimal del croma"
-          defaultValue={chroma}
+          key={color}
+          aria-label={`Código hexadecimal · ${label}`}
+          defaultValue={color}
           spellCheck={false}
           onChange={(event) => {
             const next = event.target.value.toUpperCase();
-            if (HEX.test(next)) setChroma(next);
+            if (HEX.test(next)) setColor(next);
           }}
           className="h-9 font-mono text-xs uppercase"
         />
       </div>
-      {chroma !== fallback && <RestoreButton onClick={() => setChroma(null)} />}
+      {color !== fallback && <RestoreButton onClick={() => setColor(null)} />}
     </div>
   );
 }
@@ -283,8 +286,18 @@ export function GameConfig({ game, programId }: GameConfigProps) {
         )}
 
         {game.chromaLayerId && (
-          <ChromaControl {...controls} layerId={game.chromaLayerId} />
+          <ColorControl
+            {...controls}
+            setting={{
+              key: "chroma",
+              label: "Color del croma",
+              layerIds: [game.chromaLayerId],
+            }}
+          />
         )}
+        {game.colors?.map((setting) => (
+          <ColorControl key={setting.key} {...controls} setting={setting} />
+        ))}
         {game.timerLayerId && (
           <TimerControl {...controls} layerId={game.timerLayerId} />
         )}

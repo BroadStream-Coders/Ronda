@@ -1,5 +1,6 @@
 import { isData } from "@/collector/catalog/cubipiezas/schema";
 import {
+  partView,
   readZipSession,
   useGameSession,
   type GameType,
@@ -9,8 +10,9 @@ import { poppins } from "@/programs/que-gane-el-mejor/fonts/poppins";
 import layout from "./layout.json";
 import { meta } from "./meta";
 import { PRELOAD } from "./assets";
-import { BLUR_MAX } from "./cards";
+import { BLUR_MAX, CARD_COUNT, slotId } from "./cards";
 import { CubipiezasLogic } from "./Logic";
+import { GlintView, type GlintPart } from "./parts/glint";
 
 export const cubipiezas: GameType = {
   meta,
@@ -19,6 +21,14 @@ export const cubipiezas: GameType = {
   preload: PRELOAD,
   blurMax: BLUR_MAX,
   fonts: { poppins },
+  parts: { glint: partView<GlintPart>(GlintView) },
+  colors: [
+    {
+      key: "slot",
+      label: "Color de las ranuras",
+      layerIds: Array.from({ length: CARD_COUNT }, (_, i) => slotId(i)),
+    },
+  ],
   logic: CubipiezasLogic,
   load: async (file) => {
     const { data, images } = await readZipSession(file);

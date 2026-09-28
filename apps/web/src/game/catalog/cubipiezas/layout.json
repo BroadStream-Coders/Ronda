@@ -80,6 +80,219 @@
         "fit": "contain",
         "src": "",
         "filterTransition": 0.4
+      },
+      {
+        "type": "pop",
+        "scale": 1.04,
+        "duration": 0.6
+      }
+    ]
+  },
+  {
+    "id": "card-0-slot",
+    "name": "Slot",
+    "visible": true,
+    "parentId": "board",
+    "rect": {
+      "position": {
+        "x": -516,
+        "y": 173
+      },
+      "size": {
+        "x": 344,
+        "y": 346
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": [
+      {
+        "type": "color",
+        "value": "#0F2350"
+      }
+    ]
+  },
+  {
+    "id": "card-1-slot",
+    "name": "Slot",
+    "visible": true,
+    "parentId": "board",
+    "rect": {
+      "position": {
+        "x": -172,
+        "y": 173
+      },
+      "size": {
+        "x": 344,
+        "y": 346
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": [
+      {
+        "type": "color",
+        "value": "#0F2350"
+      }
+    ]
+  },
+  {
+    "id": "card-2-slot",
+    "name": "Slot",
+    "visible": true,
+    "parentId": "board",
+    "rect": {
+      "position": {
+        "x": 172,
+        "y": 173
+      },
+      "size": {
+        "x": 344,
+        "y": 346
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": [
+      {
+        "type": "color",
+        "value": "#0F2350"
+      }
+    ]
+  },
+  {
+    "id": "card-3-slot",
+    "name": "Slot",
+    "visible": true,
+    "parentId": "board",
+    "rect": {
+      "position": {
+        "x": 516,
+        "y": 173
+      },
+      "size": {
+        "x": 344,
+        "y": 346
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": [
+      {
+        "type": "color",
+        "value": "#0F2350"
+      }
+    ]
+  },
+  {
+    "id": "card-4-slot",
+    "name": "Slot",
+    "visible": true,
+    "parentId": "board",
+    "rect": {
+      "position": {
+        "x": -516,
+        "y": -173
+      },
+      "size": {
+        "x": 344,
+        "y": 346
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": [
+      {
+        "type": "color",
+        "value": "#0F2350"
+      }
+    ]
+  },
+  {
+    "id": "card-5-slot",
+    "name": "Slot",
+    "visible": true,
+    "parentId": "board",
+    "rect": {
+      "position": {
+        "x": -172,
+        "y": -173
+      },
+      "size": {
+        "x": 344,
+        "y": 346
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": [
+      {
+        "type": "color",
+        "value": "#0F2350"
+      }
+    ]
+  },
+  {
+    "id": "card-6-slot",
+    "name": "Slot",
+    "visible": true,
+    "parentId": "board",
+    "rect": {
+      "position": {
+        "x": 172,
+        "y": -173
+      },
+      "size": {
+        "x": 344,
+        "y": 346
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": [
+      {
+        "type": "color",
+        "value": "#0F2350"
+      }
+    ]
+  },
+  {
+    "id": "card-7-slot",
+    "name": "Slot",
+    "visible": true,
+    "parentId": "board",
+    "rect": {
+      "position": {
+        "x": 516,
+        "y": -173
+      },
+      "size": {
+        "x": 344,
+        "y": 346
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": [
+      {
+        "type": "color",
+        "value": "#0F2350"
       }
     ]
   },
@@ -102,7 +315,25 @@
         "y": 0.5
       }
     },
-    "parts": []
+    "parts": [
+      {
+        "type": "flip",
+        "hideDuration": 0.2,
+        "showDuration": 0.4,
+        "perspective": 6
+      },
+      {
+        "type": "pop",
+        "scale": 1.06,
+        "duration": 0.3
+      },
+      {
+        "type": "shake",
+        "amplitude": 4,
+        "shakes": 4,
+        "duration": 0.4
+      }
+    ]
   },
   {
     "id": "card-0-background",
@@ -128,6 +359,14 @@
         "type": "image",
         "fit": "fill",
         "src": "/programs/que-gane-el-mejor/games/cubipiezas/card-pink.png"
+      },
+      {
+        "type": "shimmer",
+        "period": 7,
+        "sweep": 1.1,
+        "phase": 0,
+        "intensity": 0.35,
+        "radius": 0.3
       }
     ]
   },
@@ -200,6 +439,33 @@
     ]
   },
   {
+    "id": "card-0-glint",
+    "name": "Glint",
+    "visible": false,
+    "parentId": "card-0",
+    "rect": {
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "x": 344,
+        "y": 346
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": [
+      {
+        "type": "glint",
+        "duration": 0.7,
+        "intensity": 0.6
+      }
+    ]
+  },
+  {
     "id": "card-1",
     "name": "Card B",
     "visible": true,
@@ -218,7 +484,25 @@
         "y": 0.5
       }
     },
-    "parts": []
+    "parts": [
+      {
+        "type": "flip",
+        "hideDuration": 0.2,
+        "showDuration": 0.4,
+        "perspective": 6
+      },
+      {
+        "type": "pop",
+        "scale": 1.06,
+        "duration": 0.3
+      },
+      {
+        "type": "shake",
+        "amplitude": 4,
+        "shakes": 4,
+        "duration": 0.4
+      }
+    ]
   },
   {
     "id": "card-1-background",
@@ -244,6 +528,14 @@
         "type": "image",
         "fit": "fill",
         "src": "/programs/que-gane-el-mejor/games/cubipiezas/card-blue.png"
+      },
+      {
+        "type": "shimmer",
+        "period": 7,
+        "sweep": 1.1,
+        "phase": 0.18,
+        "intensity": 0.35,
+        "radius": 0.3
       }
     ]
   },
@@ -316,6 +608,33 @@
     ]
   },
   {
+    "id": "card-1-glint",
+    "name": "Glint",
+    "visible": false,
+    "parentId": "card-1",
+    "rect": {
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "x": 344,
+        "y": 346
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": [
+      {
+        "type": "glint",
+        "duration": 0.7,
+        "intensity": 0.6
+      }
+    ]
+  },
+  {
     "id": "card-2",
     "name": "Card C",
     "visible": true,
@@ -334,7 +653,25 @@
         "y": 0.5
       }
     },
-    "parts": []
+    "parts": [
+      {
+        "type": "flip",
+        "hideDuration": 0.2,
+        "showDuration": 0.4,
+        "perspective": 6
+      },
+      {
+        "type": "pop",
+        "scale": 1.06,
+        "duration": 0.3
+      },
+      {
+        "type": "shake",
+        "amplitude": 4,
+        "shakes": 4,
+        "duration": 0.4
+      }
+    ]
   },
   {
     "id": "card-2-background",
@@ -360,6 +697,14 @@
         "type": "image",
         "fit": "fill",
         "src": "/programs/que-gane-el-mejor/games/cubipiezas/card-pink.png"
+      },
+      {
+        "type": "shimmer",
+        "period": 7,
+        "sweep": 1.1,
+        "phase": 0.36,
+        "intensity": 0.35,
+        "radius": 0.3
       }
     ]
   },
@@ -432,6 +777,33 @@
     ]
   },
   {
+    "id": "card-2-glint",
+    "name": "Glint",
+    "visible": false,
+    "parentId": "card-2",
+    "rect": {
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "x": 344,
+        "y": 346
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": [
+      {
+        "type": "glint",
+        "duration": 0.7,
+        "intensity": 0.6
+      }
+    ]
+  },
+  {
     "id": "card-3",
     "name": "Card D",
     "visible": true,
@@ -450,7 +822,25 @@
         "y": 0.5
       }
     },
-    "parts": []
+    "parts": [
+      {
+        "type": "flip",
+        "hideDuration": 0.2,
+        "showDuration": 0.4,
+        "perspective": 6
+      },
+      {
+        "type": "pop",
+        "scale": 1.06,
+        "duration": 0.3
+      },
+      {
+        "type": "shake",
+        "amplitude": 4,
+        "shakes": 4,
+        "duration": 0.4
+      }
+    ]
   },
   {
     "id": "card-3-background",
@@ -476,6 +866,14 @@
         "type": "image",
         "fit": "fill",
         "src": "/programs/que-gane-el-mejor/games/cubipiezas/card-blue.png"
+      },
+      {
+        "type": "shimmer",
+        "period": 7,
+        "sweep": 1.1,
+        "phase": 0.54,
+        "intensity": 0.35,
+        "radius": 0.3
       }
     ]
   },
@@ -548,6 +946,33 @@
     ]
   },
   {
+    "id": "card-3-glint",
+    "name": "Glint",
+    "visible": false,
+    "parentId": "card-3",
+    "rect": {
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "x": 344,
+        "y": 346
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": [
+      {
+        "type": "glint",
+        "duration": 0.7,
+        "intensity": 0.6
+      }
+    ]
+  },
+  {
     "id": "card-4",
     "name": "Card E",
     "visible": true,
@@ -566,7 +991,25 @@
         "y": 0.5
       }
     },
-    "parts": []
+    "parts": [
+      {
+        "type": "flip",
+        "hideDuration": 0.2,
+        "showDuration": 0.4,
+        "perspective": 6
+      },
+      {
+        "type": "pop",
+        "scale": 1.06,
+        "duration": 0.3
+      },
+      {
+        "type": "shake",
+        "amplitude": 4,
+        "shakes": 4,
+        "duration": 0.4
+      }
+    ]
   },
   {
     "id": "card-4-background",
@@ -592,6 +1035,14 @@
         "type": "image",
         "fit": "fill",
         "src": "/programs/que-gane-el-mejor/games/cubipiezas/card-blue.png"
+      },
+      {
+        "type": "shimmer",
+        "period": 7,
+        "sweep": 1.1,
+        "phase": 0.18,
+        "intensity": 0.35,
+        "radius": 0.3
       }
     ]
   },
@@ -664,6 +1115,33 @@
     ]
   },
   {
+    "id": "card-4-glint",
+    "name": "Glint",
+    "visible": false,
+    "parentId": "card-4",
+    "rect": {
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "x": 344,
+        "y": 346
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": [
+      {
+        "type": "glint",
+        "duration": 0.7,
+        "intensity": 0.6
+      }
+    ]
+  },
+  {
     "id": "card-5",
     "name": "Card F",
     "visible": true,
@@ -682,7 +1160,25 @@
         "y": 0.5
       }
     },
-    "parts": []
+    "parts": [
+      {
+        "type": "flip",
+        "hideDuration": 0.2,
+        "showDuration": 0.4,
+        "perspective": 6
+      },
+      {
+        "type": "pop",
+        "scale": 1.06,
+        "duration": 0.3
+      },
+      {
+        "type": "shake",
+        "amplitude": 4,
+        "shakes": 4,
+        "duration": 0.4
+      }
+    ]
   },
   {
     "id": "card-5-background",
@@ -708,6 +1204,14 @@
         "type": "image",
         "fit": "fill",
         "src": "/programs/que-gane-el-mejor/games/cubipiezas/card-pink.png"
+      },
+      {
+        "type": "shimmer",
+        "period": 7,
+        "sweep": 1.1,
+        "phase": 0.36,
+        "intensity": 0.35,
+        "radius": 0.3
       }
     ]
   },
@@ -780,6 +1284,33 @@
     ]
   },
   {
+    "id": "card-5-glint",
+    "name": "Glint",
+    "visible": false,
+    "parentId": "card-5",
+    "rect": {
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "x": 344,
+        "y": 346
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": [
+      {
+        "type": "glint",
+        "duration": 0.7,
+        "intensity": 0.6
+      }
+    ]
+  },
+  {
     "id": "card-6",
     "name": "Card G",
     "visible": true,
@@ -798,7 +1329,25 @@
         "y": 0.5
       }
     },
-    "parts": []
+    "parts": [
+      {
+        "type": "flip",
+        "hideDuration": 0.2,
+        "showDuration": 0.4,
+        "perspective": 6
+      },
+      {
+        "type": "pop",
+        "scale": 1.06,
+        "duration": 0.3
+      },
+      {
+        "type": "shake",
+        "amplitude": 4,
+        "shakes": 4,
+        "duration": 0.4
+      }
+    ]
   },
   {
     "id": "card-6-background",
@@ -824,6 +1373,14 @@
         "type": "image",
         "fit": "fill",
         "src": "/programs/que-gane-el-mejor/games/cubipiezas/card-blue.png"
+      },
+      {
+        "type": "shimmer",
+        "period": 7,
+        "sweep": 1.1,
+        "phase": 0.54,
+        "intensity": 0.35,
+        "radius": 0.3
       }
     ]
   },
@@ -896,6 +1453,33 @@
     ]
   },
   {
+    "id": "card-6-glint",
+    "name": "Glint",
+    "visible": false,
+    "parentId": "card-6",
+    "rect": {
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "x": 344,
+        "y": 346
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": [
+      {
+        "type": "glint",
+        "duration": 0.7,
+        "intensity": 0.6
+      }
+    ]
+  },
+  {
     "id": "card-7",
     "name": "Card H",
     "visible": true,
@@ -914,7 +1498,25 @@
         "y": 0.5
       }
     },
-    "parts": []
+    "parts": [
+      {
+        "type": "flip",
+        "hideDuration": 0.2,
+        "showDuration": 0.4,
+        "perspective": 6
+      },
+      {
+        "type": "pop",
+        "scale": 1.06,
+        "duration": 0.3
+      },
+      {
+        "type": "shake",
+        "amplitude": 4,
+        "shakes": 4,
+        "duration": 0.4
+      }
+    ]
   },
   {
     "id": "card-7-background",
@@ -940,6 +1542,14 @@
         "type": "image",
         "fit": "fill",
         "src": "/programs/que-gane-el-mejor/games/cubipiezas/card-pink.png"
+      },
+      {
+        "type": "shimmer",
+        "period": 7,
+        "sweep": 1.1,
+        "phase": 0.72,
+        "intensity": 0.35,
+        "radius": 0.3
       }
     ]
   },
@@ -1008,6 +1618,62 @@
         "alignH": "center",
         "alignV": "middle",
         "overflow": "wrap"
+      }
+    ]
+  },
+  {
+    "id": "card-7-glint",
+    "name": "Glint",
+    "visible": false,
+    "parentId": "card-7",
+    "rect": {
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "x": 344,
+        "y": 346
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": [
+      {
+        "type": "glint",
+        "duration": 0.7,
+        "intensity": 0.6
+      }
+    ]
+  },
+  {
+    "id": "sparkles",
+    "name": "Sparkles",
+    "visible": true,
+    "parentId": "board",
+    "rect": {
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "x": 1376,
+        "y": 692
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "parts": [
+      {
+        "type": "sparkles",
+        "enabled": false,
+        "rate": 14,
+        "size": 3,
+        "duration": 0.9
       }
     ]
   }

@@ -11,6 +11,12 @@ export interface GameMeta {
   icon: ElementType;
 }
 
+export interface ColorSetting {
+  key: string;
+  label: string;
+  layerIds: string[];
+}
+
 export interface GameType {
   meta: GameMeta;
   layout: Layer[];
@@ -19,6 +25,7 @@ export interface GameType {
   chromaLayerId?: string;
   timerLayerId?: string;
   blurMax?: number;
+  colors?: ColorSetting[];
   preload?: string[];
   parts?: PartRegistry;
   fonts?: FontRegistry;

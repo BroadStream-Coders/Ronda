@@ -22,6 +22,7 @@ import { PRELOAD as CUBI_PRELOAD } from "../src/game/catalog/cubipiezas/assets.t
 import {
   BLUR_MAX,
   CARD_COUNT,
+  CASCADE,
   blurFor,
   nextStatus,
   type CardStatus,
@@ -2231,9 +2232,39 @@ assert.ok(findPart(cubi, "board", "mask"), "'board' recorta con la silueta de ma
 const cubiBoard = cubi.filter((layer) => layer.parentId === "board").map((layer) => layer.id);
 assert.deepEqual(
   cubiBoard,
-  ["photo", ...Array.from({ length: 8 }, (_, i) => `card-${i}`)],
-  "'photo' va antes que las cartas: las cartas la tapan",
+  [
+    "photo",
+    ...Array.from({ length: 8 }, (_, i) => `card-${i}-slot`),
+    ...Array.from({ length: 8 }, (_, i) => `card-${i}`),
+    "sparkles",
+  ],
+  "orden de pintado: foto, ranuras, cartas y destellos encima",
 );
+
+// Regla del juego: la imagen solo se ve por las piezas ya sacadas. Cada carta
+// tiene detras una ranura opaca de su mismo rect, asi un flip, un shake o un
+// blink dejan ver la ranura y nunca la foto.
+for (let i = 0; i < 8; i++) {
+  const slot = cubi.find((layer) => layer.id === `card-${i}-slot`)!;
+  const card = cubi.find((layer) => layer.id === `card-${i}`)!;
+  assert.deepEqual(slot.rect, card.rect, `card-${i}-slot cubre exactamente su celda`);
+  const fill = partOf<{ type: "color"; value: string }>(slot, "color");
+  assert.ok(fill && /^#[0-9a-fA-F]{6}$/.test(fill.value), `card-${i}-slot es un color opaco`);
+  for (const type of ["flip", "pop", "shake"]) {
+    assert.ok(partOf(card, type), `card-${i} declara la animacion '${type}'`);
+  }
+}
+for (let i = 0; i < 8; i++) {
+  const glint = cubi.find((layer) => layer.id === `card-${i}-glint`);
+  assert.ok(glint && glint.parentId === `card-${i}` && !glint.visible, `card-${i}-glint cuelga de la carta y arranca oculto: su brillo corre al montarse`);
+}
+assert.ok(findPart(cubi, "photo", "pop"), "'photo' declara 'pop' para la gran revelacion");
+assert.equal(
+  findPart<{ type: "sparkles"; enabled?: boolean }>(cubi, "sparkles", "sparkles")?.enabled,
+  false,
+  "los destellos arrancan apagados: solo se prenden con Shift+M",
+);
+assert.deepEqual([...CASCADE].sort(), [0, 1, 2, 3, 4, 5, 6, 7], "la cascada pasa por las 8 cartas una vez");
 
 const cubiPhoto = findPart<{ type: "image"; src: string; fit?: string }>(cubi, "photo", "image");
 assert.ok(cubiPhoto, "'photo' debe llevar una part 'image' (la pisa Logic)");
