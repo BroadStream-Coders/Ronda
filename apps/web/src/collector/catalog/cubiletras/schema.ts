@@ -20,14 +20,24 @@ export interface Word {
   sequence?: SequenceData;
 }
 
+export interface Clue {
+  id: string;
+  text: string;
+}
+
 export interface RoundData {
   id: string;
   words: Word[];
+  clues: Clue[];
   filler: string[][] | null;
 }
 
 export interface ExportedData {
-  rounds: { words: { sequence: SequenceData }[]; grid: string[][] }[];
+  rounds: {
+    words: { sequence: SequenceData }[];
+    clues: string[];
+    grid: string[][];
+  }[];
 }
 
 export const COLS = 9;
@@ -110,13 +120,14 @@ export function composeGrid(round: RoundData): string[][] {
 }
 
 export function spawnRound(): RoundData {
-  return { id: uid(), words: [], filler: null };
+  return { id: uid(), words: [], clues: [], filler: null };
 }
 
 export function buildData(rounds: RoundData[]): ExportedData {
   return {
     rounds: rounds.map((r) => ({
       words: r.words.flatMap((w) => (w.sequence ? [{ sequence: w.sequence }] : [])),
+      clues: r.clues.map((c) => c.text.trim()),
       grid: composeGrid(r),
     })),
   };
@@ -139,6 +150,7 @@ export function fromData(data: ExportedData): RoundData[] {
   return data.rounds.map((r) => ({
     id: uid(),
     filler: isFullGrid(r.grid) ? r.grid : null,
+    clues: (r.clues || []).map((text) => ({ id: uid(), text })),
     words: (r.words || []).map((w) => ({
       id: uid(),
       text: w.sequence.values.join(""),
@@ -167,6 +179,22 @@ export function validate(rounds: RoundData[]): ValidationIssue[] {
         message: "Falta generar el relleno de letras: usa «Generar relleno» sobre el tablero.",
       });
     }
+
+    if (round.clues.length !== round.words.length) {
+      issues.push({
+        path: formatPath(roundLabel),
+        message: `Hay ${round.words.length} palabras y ${round.clues.length} enunciados; deben ser la misma cantidad.`,
+      });
+    }
+
+    round.clues.forEach((clue, clueIndex) => {
+      if (isBlank(clue.text)) {
+        issues.push({
+          path: formatPath(roundLabel, `Enunciado ${clueIndex + 1}`),
+          message: "El enunciado está vacío.",
+        });
+      }
+    });
 
     round.words.forEach((word, wordIndex) => {
       const wordLabel = `Palabra ${wordIndex + 1}`;

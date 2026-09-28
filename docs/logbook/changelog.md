@@ -12,6 +12,9 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [RM-131] Enunciados en Cubiletras (2026-09-28 13:27)
+Panel "Enunciados" junto a las palabras, con pegado rápido de uno por línea; se exportan como `clues: string[]` por ronda y la validación exige tantos enunciados como palabras.
+
 ## [RM-130] Colector Cubiletras (2026-09-28 13:13)
 Sopa de letras de 9 × 8 en `catalog/cubiletras/` con la forma de Operaciones Combinadas sin tableros: rondas → palabras (H/V, con cruces), pegado del tablero desde planilla y relleno generado por el colector que viaja en el JSON (`grid`). Asignado a QGEM.
 

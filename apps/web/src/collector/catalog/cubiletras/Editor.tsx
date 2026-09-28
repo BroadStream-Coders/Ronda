@@ -12,6 +12,7 @@ import {
 } from "@/collector/kit";
 import { Grid, type PreviewCell } from "./Grid";
 import { List } from "./List";
+import { Clues } from "./Clues";
 import {
   COLS,
   MAX_ROUNDS,
@@ -197,6 +198,20 @@ export function Editor() {
     setSelectedWordId(id);
   };
 
+  const handleAddClue = () =>
+    updateCurrentRound({ clues: [...currentRound.clues, { id: uid(), text: "" }] });
+
+  const handleRemoveClue = (id: string) =>
+    updateCurrentRound({ clues: currentRound.clues.filter((c) => c.id !== id) });
+
+  const handleUpdateClue = (id: string, text: string) =>
+    updateCurrentRound({
+      clues: currentRound.clues.map((c) => (c.id === id ? { ...c, text } : c)),
+    });
+
+  const handleQuickLoadClues = (lines: string[]) =>
+    updateCurrentRound({ clues: lines.map((text) => ({ id: uid(), text })) });
+
   const handleGenerateFiller = () => updateCurrentRound({ filler: generateFiller() });
 
   const handleQuickLoad = (matrix: string[][]) => {
@@ -323,6 +338,15 @@ export function Editor() {
         onRemoveWord={handleRemoveWord}
         onUpdateWord={handleUpdateWord}
         onQuickLoad={handleQuickLoad}
+      />
+
+      <Clues
+        clues={currentRound.clues}
+        wordCount={currentRound.words.length}
+        onAddClue={handleAddClue}
+        onRemoveClue={handleRemoveClue}
+        onUpdateClue={handleUpdateClue}
+        onQuickLoad={handleQuickLoadClues}
       />
     </div>
   );
