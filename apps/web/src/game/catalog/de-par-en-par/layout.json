@@ -72,14 +72,8 @@
         "perspective": 6
       },
       {
-        "type": "pop",
-        "scale": 1.08,
-        "duration": 0.3
-      },
-      {
-        "type": "shake",
-        "amplitude": 4,
-        "shakes": 4,
+        "type": "wiggle",
+        "angle": 5,
         "duration": 0.4
       },
       {
@@ -404,14 +398,8 @@
         "perspective": 6
       },
       {
-        "type": "pop",
-        "scale": 1.08,
-        "duration": 0.3
-      },
-      {
-        "type": "shake",
-        "amplitude": 4,
-        "shakes": 4,
+        "type": "wiggle",
+        "angle": 5,
         "duration": 0.4
       },
       {
@@ -736,14 +724,8 @@
         "perspective": 6
       },
       {
-        "type": "pop",
-        "scale": 1.08,
-        "duration": 0.3
-      },
-      {
-        "type": "shake",
-        "amplitude": 4,
-        "shakes": 4,
+        "type": "wiggle",
+        "angle": 5,
         "duration": 0.4
       },
       {
@@ -1068,14 +1050,8 @@
         "perspective": 6
       },
       {
-        "type": "pop",
-        "scale": 1.08,
-        "duration": 0.3
-      },
-      {
-        "type": "shake",
-        "amplitude": 4,
-        "shakes": 4,
+        "type": "wiggle",
+        "angle": 5,
         "duration": 0.4
       },
       {
@@ -1400,14 +1376,8 @@
         "perspective": 6
       },
       {
-        "type": "pop",
-        "scale": 1.08,
-        "duration": 0.3
-      },
-      {
-        "type": "shake",
-        "amplitude": 4,
-        "shakes": 4,
+        "type": "wiggle",
+        "angle": 5,
         "duration": 0.4
       },
       {
@@ -1732,14 +1702,8 @@
         "perspective": 6
       },
       {
-        "type": "pop",
-        "scale": 1.08,
-        "duration": 0.3
-      },
-      {
-        "type": "shake",
-        "amplitude": 4,
-        "shakes": 4,
+        "type": "wiggle",
+        "angle": 5,
         "duration": 0.4
       },
       {
@@ -2064,14 +2028,8 @@
         "perspective": 6
       },
       {
-        "type": "pop",
-        "scale": 1.08,
-        "duration": 0.3
-      },
-      {
-        "type": "shake",
-        "amplitude": 4,
-        "shakes": 4,
+        "type": "wiggle",
+        "angle": 5,
         "duration": 0.4
       },
       {
@@ -2396,14 +2354,8 @@
         "perspective": 6
       },
       {
-        "type": "pop",
-        "scale": 1.08,
-        "duration": 0.3
-      },
-      {
-        "type": "shake",
-        "amplitude": 4,
-        "shakes": 4,
+        "type": "wiggle",
+        "angle": 5,
         "duration": 0.4
       },
       {
@@ -2728,14 +2680,8 @@
         "perspective": 6
       },
       {
-        "type": "pop",
-        "scale": 1.08,
-        "duration": 0.3
-      },
-      {
-        "type": "shake",
-        "amplitude": 4,
-        "shakes": 4,
+        "type": "wiggle",
+        "angle": 5,
         "duration": 0.4
       },
       {
@@ -3060,14 +3006,8 @@
         "perspective": 6
       },
       {
-        "type": "pop",
-        "scale": 1.08,
-        "duration": 0.3
-      },
-      {
-        "type": "shake",
-        "amplitude": 4,
-        "shakes": 4,
+        "type": "wiggle",
+        "angle": 5,
         "duration": 0.4
       },
       {
@@ -3392,14 +3332,8 @@
         "perspective": 6
       },
       {
-        "type": "pop",
-        "scale": 1.08,
-        "duration": 0.3
-      },
-      {
-        "type": "shake",
-        "amplitude": 4,
-        "shakes": 4,
+        "type": "wiggle",
+        "angle": 5,
         "duration": 0.4
       },
       {
@@ -3724,14 +3658,8 @@
         "perspective": 6
       },
       {
-        "type": "pop",
-        "scale": 1.08,
-        "duration": 0.3
-      },
-      {
-        "type": "shake",
-        "amplitude": 4,
-        "shakes": 4,
+        "type": "wiggle",
+        "angle": 5,
         "duration": 0.4
       },
       {
@@ -4056,14 +3984,8 @@
         "perspective": 6
       },
       {
-        "type": "pop",
-        "scale": 1.08,
-        "duration": 0.3
-      },
-      {
-        "type": "shake",
-        "amplitude": 4,
-        "shakes": 4,
+        "type": "wiggle",
+        "angle": 5,
         "duration": 0.4
       },
       {
@@ -4388,14 +4310,8 @@
         "perspective": 6
       },
       {
-        "type": "pop",
-        "scale": 1.08,
-        "duration": 0.3
-      },
-      {
-        "type": "shake",
-        "amplitude": 4,
-        "shakes": 4,
+        "type": "wiggle",
+        "angle": 5,
         "duration": 0.4
       },
       {
@@ -4720,14 +4636,8 @@
         "perspective": 6
       },
       {
-        "type": "pop",
-        "scale": 1.08,
-        "duration": 0.3
-      },
-      {
-        "type": "shake",
-        "amplitude": 4,
-        "shakes": 4,
+        "type": "wiggle",
+        "angle": 5,
         "duration": 0.4
       },
       {
@@ -5052,14 +4962,8 @@
         "perspective": 6
       },
       {
-        "type": "pop",
-        "scale": 1.08,
-        "duration": 0.3
-      },
-      {
-        "type": "shake",
-        "amplitude": 4,
-        "shakes": 4,
+        "type": "wiggle",
+        "angle": 5,
         "duration": 0.4
       },
       {
@@ -5384,14 +5288,8 @@
         "perspective": 6
       },
       {
-        "type": "pop",
-        "scale": 1.08,
-        "duration": 0.3
-      },
-      {
-        "type": "shake",
-        "amplitude": 4,
-        "shakes": 4,
+        "type": "wiggle",
+        "angle": 5,
         "duration": 0.4
       },
       {
@@ -5716,14 +5614,8 @@
         "perspective": 6
       },
       {
-        "type": "pop",
-        "scale": 1.08,
-        "duration": 0.3
-      },
-      {
-        "type": "shake",
-        "amplitude": 4,
-        "shakes": 4,
+        "type": "wiggle",
+        "angle": 5,
         "duration": 0.4
       },
       {
@@ -6048,14 +5940,8 @@
         "perspective": 6
       },
       {
-        "type": "pop",
-        "scale": 1.08,
-        "duration": 0.3
-      },
-      {
-        "type": "shake",
-        "amplitude": 4,
-        "shakes": 4,
+        "type": "wiggle",
+        "angle": 5,
         "duration": 0.4
       },
       {
@@ -6380,14 +6266,8 @@
         "perspective": 6
       },
       {
-        "type": "pop",
-        "scale": 1.08,
-        "duration": 0.3
-      },
-      {
-        "type": "shake",
-        "amplitude": 4,
-        "shakes": 4,
+        "type": "wiggle",
+        "angle": 5,
         "duration": 0.4
       },
       {

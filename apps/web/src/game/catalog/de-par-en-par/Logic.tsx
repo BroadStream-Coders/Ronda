@@ -31,6 +31,10 @@ const imageId = (i: number) => `card-${i}-image`;
 const bothId = (i: number) => `card-${i}-both`;
 const bothTextId = (i: number) => `card-${i}-both-text`;
 const bothImageId = (i: number) => `card-${i}-both-image`;
+const errorId = (i: number) => `card-${i}-error`;
+
+const ERROR_BLINK_MS = 100;
+const delay = (ms: number) => new Promise<void>((r) => setTimeout(r, ms));
 
 const slotOfLayer = (layerId: string) => Number(layerId.slice("card-".length));
 
@@ -86,6 +90,7 @@ export function DeParEnParLogic() {
 
       setVisible(backId(i), true);
       setVisible(frontId(i), false);
+      setVisible(errorId(i), false);
     }
   }, [session, order, images, patch, setVisible]);
 
@@ -98,9 +103,28 @@ export function DeParEnParLogic() {
       try {
         await play(cardId(i), "flipHide");
         faceUpRef.current[i] = up;
+        setVisible(errorId(i), false);
         setVisible(backId(i), !up);
         setVisible(frontId(i), up);
         await play(cardId(i), "flipShow");
+      } finally {
+        flightRef.current.delete(i);
+      }
+    })();
+
+    flightRef.current.set(i, run);
+    return run;
+  };
+
+  const blinkError = (i: number) => {
+    const run = (async () => {
+      try {
+        setVisible(errorId(i), true);
+        await delay(ERROR_BLINK_MS);
+        setVisible(errorId(i), false);
+        await delay(ERROR_BLINK_MS);
+        setVisible(errorId(i), true);
+        await delay(ERROR_BLINK_MS);
       } finally {
         flightRef.current.delete(i);
       }
@@ -147,17 +171,14 @@ export function DeParEnParLogic() {
     if (pair !== undefined && pair === pairOf(second)) {
       playSound(SOUNDS.correct);
       await Promise.all([
-        play(cardId(first), "pop"),
-        play(cardId(second), "pop"),
+        play(cardId(first), "wiggle"),
+        play(cardId(second), "wiggle"),
       ]);
       return;
     }
 
     playSound(SOUNDS.incorrect);
-    await Promise.all([
-      play(cardId(first), "shake"),
-      play(cardId(second), "shake"),
-    ]);
+    await Promise.all([blinkError(first), blinkError(second)]);
     await Promise.all([flipCard(first, false), flipCard(second, false)]);
   };
 

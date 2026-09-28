@@ -40,6 +40,7 @@ export type {
   ShakePart,
   SparklesPart,
   SlidePart,
+  WigglePart,
 } from "./animations/parts";
 export { applyState, useGameState } from "./state";
 export type { GameState, LayerOverride, PartPatch } from "./state";

@@ -13,6 +13,12 @@ export interface ShakePart extends LayerPart {
   duration?: number;
 }
 
+export interface WigglePart extends LayerPart {
+  type: "wiggle";
+  angle?: number;
+  duration?: number;
+}
+
 export interface BouncePart extends LayerPart {
   type: "bounce";
   travelSpeed?: number;

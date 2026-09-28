@@ -1953,8 +1953,9 @@ for (let i = 0; i < DEPAR_SLOTS; i++) {
   );
 
   // Sin 'flip' la carta cambia de cara de golpe, sin 'click' no responde al
-  // dedo, y sin 'pop'/'shake' la validacion no tiene con que contestar.
-  for (const type of ["flip", "click", "pop", "shake"]) {
+  // dedo, y sin 'wiggle' el acierto no tiene con que contestar (el error
+  // contesta con la X de '-error', como en Unity).
+  for (const type of ["flip", "click", "wiggle"]) {
     assert.ok(partOf(card, type), `'${id}' debe llevar la part '${type}'`);
   }
 

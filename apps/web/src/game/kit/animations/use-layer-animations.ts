@@ -14,6 +14,7 @@ import type {
   ShakePart,
   SparklesPart,
   SlidePart,
+  WigglePart,
 } from "./parts";
 
 const lerp = (from: Vec2, to: Vec2, t: number): Vec2 => ({
@@ -36,6 +37,7 @@ export function useLayerAnimations(
 ): (node: HTMLDivElement | null) => void {
   const pop = partOf<PopPart>(layer, "pop");
   const shake = partOf<ShakePart>(layer, "shake");
+  const wiggle = partOf<WigglePart>(layer, "wiggle");
   const bounce = partOf<BouncePart>(layer, "bounce");
   const slide = partOf<SlidePart>(layer, "slide");
   const blink = partOf<BlinkPart>(layer, "blink");
@@ -54,6 +56,10 @@ export function useLayerAnimations(
   const shakeAmplitude = shake?.amplitude ?? 2;
   const shakeCount = shake?.shakes ?? 3;
   const shakeDuration = shake?.duration ?? 0.4;
+
+  const hasWiggle = !!wiggle;
+  const wiggleAngle = wiggle?.angle ?? 5;
+  const wiggleDuration = wiggle?.duration ?? 0.4;
 
   const hasBounce = !!bounce;
   const travelSpeed = bounce?.travelSpeed ?? 1800;
@@ -92,6 +98,7 @@ export function useLayerAnimations(
   const elRef = useRef<HTMLDivElement | null>(null);
   const popRef = useRef<AnimationPlaybackControls | null>(null);
   const shakeRef = useRef<AnimationPlaybackControls | null>(null);
+  const wiggleRef = useRef<AnimationPlaybackControls | null>(null);
   const blinkRef = useRef<AnimationPlaybackControls | null>(null);
   const blinkSeqRef = useRef(0);
   const flipRef = useRef<AnimationPlaybackControls | null>(null);
@@ -133,6 +140,29 @@ export function useLayerAnimations(
     register(id, "pop", run);
     return () => unregister(id, "pop");
   }, [id, hasPop, popScale, popDuration, register, unregister]);
+
+  useEffect(() => {
+    if (!hasWiggle) return;
+    const run = async () => {
+      const element = elRef.current;
+      if (!element || wiggleDuration <= 0) return;
+      wiggleRef.current?.cancel();
+      const controls = animate(
+        element,
+        { rotate: [0, -wiggleAngle, wiggleAngle, 0] },
+        { duration: wiggleDuration, times: [0, 0.25, 0.75, 1], ease: "easeOut" },
+      );
+      wiggleRef.current = controls;
+      try {
+        await controls;
+      } catch {
+        return;
+      }
+      if (wiggleRef.current === controls) element.style.transform = "";
+    };
+    register(id, "wiggle", run);
+    return () => unregister(id, "wiggle");
+  }, [id, hasWiggle, wiggleAngle, wiggleDuration, register, unregister]);
 
   useEffect(() => {
     if (!hasShake) return;
@@ -471,6 +501,7 @@ export function useLayerAnimations(
     () => () => {
       popRef.current?.cancel();
       shakeRef.current?.cancel();
+      wiggleRef.current?.cancel();
       blinkSeqRef.current++;
       blinkRef.current?.cancel();
       flipRef.current?.stop();
