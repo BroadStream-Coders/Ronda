@@ -10,17 +10,6 @@ Al terminar una tarea se mueve al changelog y se borra de aquí.
 
 ---
 
-## [RM-128] Migrar Cubipiezas desde Unity
-- **Objetivo:** el juego Cubipiezas en Que Gane el Mejor, fiel al prefab de Unity:
-  8 cartas (A–H) en grilla 4×2 que tapan la imagen de la ronda; cada carta muestra
-  su pregunta, su respuesta, o desaparece para destapar ese pedazo.
-- **Pasos:** (1) layout, gráficas y registro; (2) la lógica, con un blur sobre la
-  imagen que baja según cuántas cartas quedan en pantalla; (3) actualizar las guías
-  de migración.
-- **Hecho cuando:** el juego corre con una sesión real del colector `cubipiezas` y
-  Esteban lo aprueba contra Unity.
-- **Fecha:** 2026-09-28 · **Estado:** En progreso (2026-09-28)
-
 ## [RM-123] Errores con botón "Copiar detalle"
 - **Objetivo:** que todo error visible muestre su título y un botón **"Copiar
   detalle"** que copia al portapapeles un texto con el error y su stack, la página,
@@ -136,8 +125,8 @@ cualquiera de estas tareas, no se repite acá.
      tiene, parts sin vista registrada.
   4. **Fuera del inventario de Games quedan los que solo existen en Unity**, que se
      migran con [`docs/migracion-unity.md`](../migracion-unity.md): De Par en Par
-     ([[RM-073]]), Tres en Raya ([[RM-106]]) y Galería de Fotos ([[RM-108]]), **las
-     tres ya cerradas**. Unity tiene más juegos sin migrar que ni Games ni este
+     ([[RM-073]]), Tres en Raya ([[RM-106]]), Galería de Fotos ([[RM-108]]) y
+     Cubipiezas ([[RM-128]]), **las cuatro ya cerradas**. Unity tiene más juegos sin migrar que ni Games ni este
      roadmap contemplan todavía.
 - **Hecho cuando:** cierran las tareas por juego y las tres piezas de arriba están
   hechas; los 10 juegos de Games más De Par en Par corren dentro de un programa y

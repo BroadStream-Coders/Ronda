@@ -1,7 +1,7 @@
 # Migración QGEM Games → Ronda
 
 Guía operativa para traer a Ronda un juego que ya corre en el proyecto
-**TvPeru-QGEM-Games** (repo hermano, `../TvPeru-QGEM-Games`).
+**TvPeru-QGEM-Games** (repo hermano, clonado en `../games-viewer`).
 
 Para juegos que **solo existen en Unity** y nunca pasaron por Games, la guía es
 [`migracion-unity.md`](migracion-unity.md). Las dos comparten el destino: un
@@ -80,7 +80,6 @@ src/game/
 │   └── animations/                      #   context + parts + use-layer-animations
 └── catalog/
     ├── metas.ts                         #   id → GameMeta (plano, sin la ficha)
-    ├── assignments.ts                   #   qué juegos ve cada programa
     ├── GameMount.tsx                    #   puente servidor → cliente + import() por juego
     └── <juego>/
         ├── meta.ts                      #   nombre, descripción, ícono
@@ -100,8 +99,13 @@ interface GameType {
   layout: Layer[]                          // el layout.json importado
   parts?: PartRegistry                     // las parts propias del juego
   fonts?: FontRegistry                     // clave → fuente, para la part `text`
-  logic?: ComponentType                    // la lógica (devuelve null)
+  logic?: ComponentType<{ programId }>     // la lógica (devuelve null)
+  images?: boolean                         // la sesión trae imágenes (ZIP)
+  pointer?: boolean                        // se opera con mouse: cursor visible
   chromaLayerId?: string                   // qué layer lleva el croma
+  timerLayerId?: string                    // control de duración en GameConfig
+  blurMax?: number                         // control de blur en GameConfig
+  colors?: ColorSetting[]                  // controles de color en GameConfig
   preload?: string[]                       // assets a calentar al montar
   load: (file: File) => Promise<void>      // parsea, valida y hace setSession
 }
@@ -125,7 +129,8 @@ interface GameType {
    Si la part sirve a más de un juego, va al `kit/` y no a la carpeta del juego.
 5. **Portar el behavior → `Logic.tsx`** (§6).
 6. **Registrar y asignar**: el `meta` en `catalog/metas.ts`, el `import()` del juego
-   en `catalog/GameMount.tsx`, y el programa en `catalog/assignments.ts`.
+   en `catalog/GameMount.tsx`, y el programa en su lista `games` de
+   `src/data/program-services.ts`.
    **El meta va en su propio módulo** (`<juego>/meta.ts`), separado de la ficha: la
    barra lateral y la lista solo importan metas, y meterlo en `index.ts` arrastraría
    el `layout.json` y las fuentes de todos los juegos a todas las rutas del
@@ -179,7 +184,8 @@ que permite borrar todo lo de un programa sin tocar a los demás.
 
   Los **sonidos y las tipografías** están en el mismo bucket (`shared/audio/`,
   `shared/fonts/`); los originales de las fuentes también en
-  `../TvPeru-QGEM-ManagedGames/Assets/_Project/MediaLibrary/Fonts/Originals/`.
+  `../managed-games/Assets/_Project/MediaLibrary/Fonts/Originals/` (repo
+  `TvPeru-QGEM-ManagedGames`).
 - **Antes de convertir un TTF, mirar si la tipografía es de Google.** Si lo es, va
   con `next/font/google` y no hay nada que convertir ni ningún binario que entre al
   repo: Next la descarga en el build, la autohospeda en woff2, la subseteliza y
@@ -280,7 +286,7 @@ estado.
 
 | Pieza | Qué cubre |
 |---|---|
-| Parts `color`, `image`, `text`, `backdrop`, `video` | `image` soporta `flipX` (espeja con `scaleX(-1)`, para el asset que se reusa dado vuelta) y `filter` (cualquier filtro CSS: `grayscale(1)`, `brightness(48%)`, para el mismo asset en otro estado); `text` trae auto-size; `backdrop` es un fondo propio (degradado + halos) para juegos que no salen sobre croma; `video` se reproduce solo, en bucle y mudo |
+| Parts `color`, `image`, `text`, `backdrop`, `video` | `image` soporta `flipX` (espeja con `scaleX(-1)`, para el asset que se reusa dado vuelta) y `filter` (cualquier filtro CSS: `grayscale(1)`, `brightness(48%)`, `blur(...)`, para el mismo asset en otro estado), con `filterTransition` (segundos) si el cambio de filtro tiene que ser suave; `text` trae auto-size; `backdrop` es un fondo propio (degradado + halos) para juegos que no salen sobre croma; `video` se reproduce solo, en bucle y mudo |
 | Part `mask` | modificador a nivel de layer: recorta el layer entero (parts y descendientes) con la silueta del `src` de su part `image` hermana — y **sin** esa image recorta al rect, que es como se tapa lo que entra deslizándose desde fuera de una caja |
 | Animaciones por trigger: `pop`, `shake`, `bounce`, `slide`, `blink`, `flip` | más `play` y `playStagger` para dispararlas. `blink` registra dos triggers: `blink` (pulso + parpadeos) y `blinkSettle` (el golpecito de después del cambio); `flip` registra `flipHide` (0→90°) y `flipShow` (90°→0), y la lógica cambia de cara entre los dos |
 | Animaciones **ambiente**: `float`, `sparkles` | no se disparan: arrancan al montar y se limpian al desmontar, así que **no llaman a `register`**. `float` va en bucle infinito y desincroniza con `phase`; `sparkles` se prende y apaga por `enabled`, que la lógica escribe con `patch` — el efecto se reinicia solo porque `applyState` devuelve una part nueva |
@@ -294,8 +300,8 @@ estado.
 | `useLayerClick` | toque y clic por layer. El layer declara una part **`click` sin vista** (data, como las animaciones) y el hook devuelve el `layerId` tocado, subiendo por el árbol desde el elemento real hasta el primer ancestro que la declare — que es lo que hace que tocar la imagen de una carta seleccione la carta. Un solo `pointerdown` en `window`, no un div por layer |
 | Carga desde la nube | el `GameTopbar` la trae: `downloadCollectorData` devuelve un `File`, igual que el input de archivo, y el menú dice de dónde salieron los datos |
 | Puntero por layer | un layer **sin parts** es solo agrupación y lleva `pointer-events: none`; los que tienen parts van en `auto`. En Unity un `RectTransform` sin `Image` no es raycast target, pero en el navegador un div con tamaño sí recibe puntero: un contenedor vacío del tamaño del tablero se come los clics de todo lo que hay debajo, sin ninguna señal |
-| `GameConfig` | panel plegable; hoy solo el color del croma |
-| `useGameKeys` / `useGameSetting` | teclas de show; preferencias en localStorage. El mapa distingue Shift para las acciones en masa (`Shift+U` → `onInteractAll`, `Shift+I` → `onShowAnswerAll`), que es el seguro contra el dedo gordo en vivo |
+| `GameConfig` | panel plegable. La ficha declara qué controles aparecen: croma (`chromaLayerId`), duración del cronómetro (`timerLayerId`), blur máximo (`blurMax`) y colores de layers (`colors`: clave, etiqueta y los layers cuya part `color` pinta). La lógica lee el mismo valor con `useGameSetting` |
+| `useGameKeys` / `useGameSetting` | teclas de show; preferencias en localStorage. El mapa distingue Shift para las acciones en masa (`Shift+U` → `onInteractAll`, `Shift+I` → `onShowAnswerAll`, `Shift+M` → `onRevealAll`, `Shift+L` → `onUnlockAll`), que es el seguro contra el dedo gordo en vivo. `Shift+K` → `onPeek` es de depuración: ver lo de abajo sin tocar el estado. Un Shift que el juego no maneja no cae a la tecla sin Shift: no hace nada |
 | Puntero | la ficha declara `pointer: true` si el juego se opera con mouse; `Stage` lo respeta en pantalla completa y la tecla **P** lo alterna en cualquier juego, sin que la ficha ni la lógica participen. **No se puede centrar el cursor**: la web no tiene API para posicionarlo |
 | `data-layer-id` en el DOM | cada layer expone su id, que es lo que permite hit-test con `elementsFromPoint` (lo usa el drag de Cronos) |
 | `playSound` / `stopSound` | `playSound(src, offset)` entra por el medio de un clip — lo pide un conteo que se pausa y reanuda; `stopSound` lo corta |

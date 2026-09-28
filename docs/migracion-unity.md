@@ -1,7 +1,7 @@
 # Migración Unity → Ronda
 
 Guía operativa para replicar en Ronda un juego que existe en **Unity**
-(`../TvPeru-QGEM-ManagedGames`).
+(repo `TvPeru-QGEM-ManagedGames`, clonado en `../managed-games`).
 
 > **Antes de empezar: ¿el juego ya existe en Games?** Si sí, **no uses esta guía** —
 > el trabajo pesado (conversión de prefab, horneado de layouts, conversión de texto)
@@ -10,9 +10,8 @@ Guía operativa para replicar en Ronda un juego que existe en **Unity**
 
 > **Contexto clave:** Ronda *reemplaza* a Unity. Los prefabs son insumo de una sola
 > dirección — después de la migración, cualquier ajuste (posición, cronómetro,
-> color) se hace acá, nunca en Unity. Por eso los prefabs **no se commitean**:
-> Esteban los sube a `docs/referencia/unity/<juego>/`, se hace la conversión, y él
-> los borra cuando termina.
+> color) se hace acá, nunca en Unity. Por eso los prefabs **no se commitean**: se
+> leen directo de la carpeta del juego en el repo de Unity y no se copian a Ronda.
 
 Leé también §2 de [`migracion-games.md`](migracion-games.md): el vocabulario de Ronda
 no es el de Unity y no se vuelve atrás. Acá **no hay editor, ni inspector, ni
@@ -22,22 +21,34 @@ jerarquía, ni modo play**. Son juegos en navegador.
 
 ## Flujo por juego
 
-1. Esteban sube a `docs/referencia/unity/<juego>/` el `.prefab` + los `.meta` de las
-   imágenes (solo el `.meta` hace falta: da el GUID para mapear sprites; los PNG
-   salen de `Assets/_Project/Games/<Juego>/Graphics/`).
+Cada paso es un commit que Esteban revisa antes de seguir.
+
+1. Esteban pasa la ruta de la carpeta del juego:
+   `../managed-games/Assets/_Project/Games/<Juego>/`. Ahí está todo: el `.prefab`
+   de la escena, los prefabs anidados en `Prefabs/` (p. ej. `Card.prefab`), los
+   scripts en `Scripts/` (la lógica, las teclas y el `SessionData`) y las gráficas
+   en `Graphics/` con sus `.meta` (el `.meta` da el GUID para mapear sprites).
+   **Leer los scripts antes de convertir**: dicen qué layers pisa la lógica y qué
+   hace cada tecla.
 2. Convertir el prefab a `layout.json` (secciones siguientes). Generarlo con un
    script Node desechable en el scratchpad (`JSON.stringify(layout, null, 2)`), no a
    mano: los juegos tienen ~30 layers repetitivos.
 3. Traer los assets según §5 de [`migracion-games.md`](migracion-games.md).
    **Preguntar siempre de dónde salen**: si el juego también pasó por Games, los
-   originales están en el bucket de Games y los de Unity pueden estar viejos.
-4. **Preguntar siempre por el fondo.** El prefab casi nunca lo trae: en Unity el
-   fondo lo ponía el switcher, no el juego. Hay dos caminos y **no se adivina** —
-   croma (la ficha declara `chromaLayerId` y aparece el panel de color) o video
-   propio (`shared/video/`, y entonces la ficha **no** declara croma).
-5. Validar con `pnpm build` (**nunca** `pnpm dev`) y esperar el visto bueno visual de
-   Esteban comparando contra Unity.
+   originales están en el bucket de Games y los de Unity pueden estar viejos. Los
+   PNG se copian **tal cual**, sin recomprimir (ver §Assets).
+4. **Preguntar siempre por el fondo.** Casi nunca lo trae el prefab: en Unity el
+   fondo lo ponía el switcher, no el juego. Hay tres caminos y **no se adivina** —
+   croma (la ficha declara `chromaLayerId` y aparece el panel de color), video
+   propio (`shared/video/`, y entonces la ficha **no** declara croma), o una imagen
+   de fondo que sí viene en el prefab (Cubipiezas trae su `bg.png` de 1920×1080: va
+   como part `image` en el primer layer, sin croma).
+5. Validar con `pnpm build` (**nunca** `pnpm dev`) y `pnpm check`, y esperar el visto
+   bueno visual de Esteban comparando contra Unity.
 6. Cablear la funcionalidad: `Logic.tsx` + carga de sesión.
+7. Animaciones, si el juego las pide (§Animaciones). Unity suele no tener ninguna;
+   se agregan en su propio paso, después de que la lógica fiel esté aprobada.
+8. Documentación: lo que el juego enseñó va a esta guía, y la tarea al changelog.
 
 ---
 
@@ -51,6 +62,14 @@ jerarquía, ni modo play**. Son juegos en navegador.
   `fe87c0e1…` = **UI Image** (`m_Sprite` → GUID) y `f4688fdb…` = **TextMeshPro**.
 - Prefabs grandes (~3.000 líneas) exceden el límite de una lectura: leer por chunks
   (`limit`/`offset`); la estructura es muy regular entre opciones y slots.
+- **Los prefabs tienen fin de línea CRLF.** Un script que parsee el YAML con
+  regex de línea (`^\s*m_Name: (.*)$`) falla en silencio: el `\r` se cuela en el
+  valor o rompe el `$`. Quitar los `\r` antes de parsear.
+- **Prefabs anidados.** Un bloque `--- !u!1001` (`PrefabInstance`) instancia otro
+  prefab: `m_SourcePrefab` da su GUID (búscalo en los `.meta` de `Prefabs/`) y
+  `m_Modifications` trae solo lo que esa instancia pisa — nombre, `m_text`,
+  `m_Sprite`, anclas. El resto sale del prefab fuente. En Cubipiezas, las 8 cartas
+  son instancias de `Card.prefab` que cambian solo la letra y el sprite.
 - Sprites: el GUID de `m_Sprite` se busca en los `.meta` subidos → nombre del PNG →
   ruta en `public/programs/<programa>/games/<juego>/`.
 
@@ -94,6 +113,25 @@ centro_i (rel. al centro del padre) = izquierda_i + anchoHijo/2 − anchoContene
 
 Ej.: contenedor 1617, 4 hijos de 392, spacing 10 → centros en x = ±610.125 y
 ±203.375.
+
+## GridLayoutGroup
+
+También se hornea. El tamaño de cada hijo lo **fija la grilla** (`m_CellSize`), no
+su propio `sizeDelta`: en Cubipiezas `Card.prefab` mide 352×348 y los sprites
+343×349, pero en pantalla cada carta es una celda de 344×346. Caso probado
+(`m_StartCorner: 0` arriba-izquierda, `m_StartAxis: 0` horizontal,
+`m_Constraint: 0` flexible, spacing 0):
+
+```
+columnas = floor((anchoContenedor + spacing.x) / (celda.x + spacing.x))
+col_i = i % columnas     fila_i = floor(i / columnas)
+centro_i.x = −anchoContenedor/2 + celda.x/2 + col_i·(celda.x + spacing.x)
+centro_i.y =  altoContenedor/2 − celda.y/2 − fila_i·(celda.y + spacing.y)
+```
+
+Con `m_ChildAlignment: 4` (middle-center) y una grilla que no llena el contenedor,
+sumar el sobrante/2 a cada eje. Ej.: contenedor 1376×692, celda 344×346 → 4×2
+exactas, centros en x = ±172, ±516 e y = ±173.
 
 ---
 
@@ -154,7 +192,19 @@ de TMP y el del catálogo, no un error de conversión.
   "Level 1") se convierte en un layer contenedor sin parts. No hace falta una part
   que guarde el estado del nivel: lo que no se dibuja vive en la lógica (`useState`),
   no en el layout.
-- Objetos vacíos e inactivos sin hijos (p. ej. "Void") se omiten.
+- Objetos vacíos e inactivos sin hijos (p. ej. "Void") se omiten. También los que
+  quedaron a medio hacer en Unity: el layer "Blur" de Cubipiezas era un
+  `RectTransform` sin componentes (el shader nunca se integró); el efecto se hizo en
+  Ronda con el `filter` de la part `image`, no con un layer.
+- **Un bug de Unity no se replica a ciegas: se pregunta.** Replicar "tal cual" es
+  la regla, pero un script puede tener un descuido que nadie usa a propósito. En
+  Cubipiezas, `Card.ResetState()` no restauraba el texto: tras M → F → E la carta
+  mostraba la respuesta en vez de la pregunta. Se corrigió después de preguntarle a
+  Esteban.
+- **Las teclas de Unity que caen en el mapa de Ronda** (`E`, `M`, `F`, `L`, dígitos,
+  F1-F9 → numpad) se mapean 1 a 1 a los handlers de `useGameKeys`. Revisar
+  `MyInputs.cs` para saber si los dígitos empiezan en 0 o en 1: en
+  `GetNumberAlphanumericKey` el 0 es el índice 0, igual que `onNumber`.
 
 ---
 
@@ -162,20 +212,58 @@ de TMP y el del catálogo, no un error de conversión.
 
 Los scripts de Unity mapean así:
 
-| Unity | Ronda | ¿Está en el kit? |
-|---|---|---|
-| `UIBounceMove` | part `bounce` | sí |
-| `UISlide` | part `slide` | sí |
-| pop / escala al revelar | part `pop` | sí |
-| shake al error | part `shake` | sí |
-| `UIBlinkPulse` | part `blink` (triggers `blink` + `blinkSettle`) | no |
-| flip de cartas | part `flip` (triggers `flipHide` + `flipShow`) | no |
-| float / shimmer / holo / sparkles | parts homónimas | no |
+| Unity | Ronda |
+|---|---|
+| `UIBounceMove` | part `bounce` |
+| `UISlide` | part `slide` |
+| pop / escala al revelar | part `pop` |
+| shake al error | part `shake` |
+| `UIBlinkPulse` | part `blink` (triggers `blink` + `blinkSettle`) |
+| flip de cartas | part `flip` (triggers `flipHide` + `flipShow`) |
+| float / sparkles | parts homónimas, ambiente (no se disparan) |
+| shimmer / holo | parts con vista, overlay en CSS |
 
-Las que faltan se portan desde
-`../TvPeru-QGEM-Games/src/components/shared/engine/animations/useGameObjectAnimations.ts`
-**quitando la compuerta `useSceneViewMode() === "game"`** — sin ella, los triggers no
-se registran nunca y el juego se ve perfecto sin animar, sin error en consola.
+**Todas ya están en el kit** (§9 de [`migracion-games.md`](migracion-games.md)). Si
+alguna vez hay que traer otra desde Games
+(`../games-viewer/src/components/shared/engine/animations/useGameObjectAnimations.ts`),
+**quitar la compuerta `useSceneViewMode() === "game"`** — sin eso, los triggers no se
+registran nunca y el juego se ve perfecto sin animar, sin error en consola.
+
+**Un efecto de una sola vez que no existe en el kit va como part propia del juego.**
+`shimmer` corre en bucle; para el brillo que cruza la carta una vez al mostrar la
+respuesta, Cubipiezas tiene `parts/glint.tsx`: una animación CSS sin `infinite` en un
+layer que la lógica monta con `setVisible`. Montar el layer **es** dispararla, sin
+triggers ni temporizadores.
+
+### Un layer oculto se desmonta
+
+`LayerView` no renderiza los hijos con `visible: false`: los desmonta. Eso tiene dos
+consecuencias al animar:
+
+- **El layer pierde su transform.** Una carta que se fue con `flipHide` (queda a 90°)
+  y se oculta, vuelve a montarse a 0°, no a 90°.
+- **Sus triggers se registran recién después de montarse.** Un `play()` justo
+  después del `setVisible(id, true)` no encuentra nada y resuelve sin animar. Esperar
+  dos `requestAnimationFrame` antes de disparar (`nextFrame` en la lógica de
+  Cubipiezas).
+
+### Lo secreto no se ve mientras se anima
+
+Si el juego esconde algo que da puntos (la imagen de Cubipiezas, la cara de una
+carta), **ninguna animación puede dejarlo ver**: un `flip` deja la carta de canto,
+un `shake` la corre de su celda y un `blink` la vuelve transparente. La salida es
+estructural, no cuidar cada animación: detrás de cada pieza que tapa va un **layer
+opaco con su mismo rect** (en Cubipiezas, `card-<n>-slot`, una part `color`) que se
+oculta **solo** junto con la pieza, cuando ya se destapó. Así lo que asoma al animar
+es la ranura. De paso tapa las esquinas transparentes de los PNG. `pnpm check`
+verifica que cada ranura cubra exactamente su carta y sea un color opaco.
+
+Lo mismo al cambiar de ronda: las ranuras suben **antes** de cambiar la imagen, y el
+cambio (y cualquier transición del blur) pasa detrás.
+
+**Nada flota sobre lo secreto.** Un `float` en piezas que tapan al milímetro abre
+rendijas. Para que un tablero así se vea vivo en reposo, un `shimmer` que pasa por
+encima, sin mover nada.
 
 **El ancla importa.** `bounce` y `slide` mueven la posición **local**. El layer
 animado tiene que colgar de un padre que le fije el origen; si se aplana esa
@@ -194,9 +282,14 @@ Misma forma que cualquier juego del catálogo (§3 y §4 de
   ficha. `index.ts` — la ficha `GameType`. `layout.json` — los layers. `assets.ts` —
   las rutas. `session.ts` — el tipo del archivo + su type-guard. `Logic.tsx` — la
   lógica. `parts/` — las parts propias.
+- **Si el colector del juego ya existe en Ronda, no hay `session.ts`**: la ficha
+  valida con el `isData` de `collector/catalog/<juego>/schema.ts` y la lógica usa su
+  tipo `Data`. El contrato del archivo es del colector y no se duplica (como hace el
+  host). Cubipiezas es el ejemplo.
 - **No hay `page.tsx` por juego**: la ruta es genérica
-  (`programs/[slug]/games/[gameId]`). El `meta` se registra en `catalog/metas.ts` y
-  el juego se carga con un `import()` dinámico desde `catalog/GameMount.tsx`.
+  (`programs/[slug]/games/[gameId]`). El `meta` se registra en `catalog/metas.ts`, el
+  juego se carga con un `import()` dinámico desde `catalog/GameMount.tsx`, y el
+  programa lo recibe en su lista `games` de `src/data/program-services.ts`.
 - Las reglas de la lógica (estado local vs compartido, nada de `setState` en efectos,
   depender de `loadedAt`, sembrar lo aleatorio) están en §6 de
   [`migracion-games.md`](migracion-games.md). **Leerlas antes de escribir el
@@ -204,13 +297,17 @@ Misma forma que cualquier juego del catálogo (§3 y §4 de
 
 ### Clic y arrastre
 
-Un juego de Unity que se opera con mouse necesita, además del cursor, una part que
-capture el puntero. Ya hay dos escritas de las que copiar:
-`catalog/tres-en-raya/parts/click.tsx` (avisa qué layer se clicó) y
-`catalog/cronos/parts/drag.tsx` (arrastre con snap a zona). Las dos se localizan con
-`closest("[data-layer-id]")` sobre el atributo que emite `LayerView`, y **le hablan a
-la lógica por callback, no por store**: un store obligaría a reaccionar con un
-`setState` dentro de un efecto, que es justo lo que el linter rechaza.
+Un juego de Unity que se opera con mouse necesita, además del cursor, algo que
+capture el puntero:
+
+- **Clic o toque** → ya está en el kit: el layer declara una part `click` sin vista y
+  `useLayerClick` devuelve el `layerId` tocado (§9 de
+  [`migracion-games.md`](migracion-games.md)). Lo usan Tres en Raya y De Par en Par.
+- **Arrastre** → `catalog/cronos/parts/drag.tsx` (arrastre con snap a zona). Se
+  localiza con `closest("[data-layer-id]")` sobre el atributo que emite `LayerView`
+  y **le habla a la lógica por callback, no por store**: un store obligaría a
+  reaccionar con un `setState` dentro de un efecto, que es justo lo que el linter
+  rechaza.
 
 ### El cursor en pantalla completa
 
@@ -241,10 +338,43 @@ hace lo que hace:
 Las imágenes de sesión son **estado**, nunca layout: llegan a pantalla por el campo
 `src` de la part `image`, pisado con `patch`.
 
-**Atajo que conviene evaluar antes:** en Ronda el colector y el juego comparten app y
-bucket, así que `downloadCollectorData(programId, collectorId, "zip")`
-(`src/data/collector-storage.ts`) devuelve un `File` ya armado — el mismo tipo que da
-el input de archivo. La carga desde la nube engancha sin rediseñar nada.
+**La carga desde la nube ya está:** el `GameTopbar` baja el paquete del colector con
+`downloadCollectorData` (`src/data/collector-storage.ts`), que devuelve un `File` —
+el mismo tipo que da el input de archivo —, así que el `load` de la ficha no cambia.
+
+---
+
+### Configuración y teclas de depuración
+
+- **Un valor que hay que calibrar a ojo va al panel de configuración**, no a una
+  constante que obligue a un deploy por cada prueba. La ficha lo declara y
+  `GameConfig` pinta el control; la lógica lee el mismo `useGameSetting`. Hoy hay:
+  croma (`chromaLayerId`), cronómetro (`timerLayerId`), blur máximo (`blurMax`) y
+  colores de layers (`colors`: clave, etiqueta y los layers cuya part `color` pinta).
+  Cubipiezas usa los dos últimos para el blur y el color de las ranuras.
+- **`Shift+M` (`onRevealAll`) revela todo de golpe** — es de show: el concursante
+  adivinó y se destapa el resto.
+- **`Shift+K` (`onPeek`) es de depuración**: deja ver lo de abajo sin tocar el
+  estado, y al apagarlo todo vuelve como estaba. En Cubipiezas sirve para calibrar
+  el blur con el director de cámaras.
+
+---
+
+## Assets: se copian tal cual
+
+Las gráficas de Unity se copian **sin recomprimir** a
+`public/programs/<programa>/games/<juego>/`, con nombres en inglés
+(`card-1.png` → `card-pink.png`). Aunque un fondo pese 1,6 MB:
+
+- Antes de salir al aire el juego decodifica todo a píxeles en RAM, y ahí un
+  1920×1080 ocupa ~8 MB sea PNG, WebP o AVIF. El formato solo cambia la descarga,
+  que el CDN de Vercel sirve una vez y cachea.
+- La compresión con pérdida mete banding en los degradados, que solo se ve en el
+  monitor de emisión — el mismo motivo por el que el video va en CRF 18.
+- Las piezas con transparencia (cartas, máscaras) tienen que seguir en PNG.
+
+Una pasada sin pérdida, si algún día hace falta, se hace para todo el repo y no por
+juego.
 
 ---
 

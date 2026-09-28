@@ -12,6 +12,9 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [RM-128] Migrar Cubipiezas desde Unity (2026-09-28 08:06)
+Nuevo juego `cubipiezas` en Que Gane el Mejor, fiel al prefab de Unity: 8 cartas A–H que tapan la imagen de la ronda, con un blur que baja según las cartas que quedan, volteos, gran revelación (Shift+M), vista de depuración (Shift+K), y el blur y el color de las ranuras ajustables en la configuración. Guías de migración actualizadas.
+
 ## [RM-127] Colector Cubigrama (2026-09-25 08:29)
 Nuevo colector `cubigrama` en Que Gane el Mejor: por ronda, las letras (3 a 7, detectadas desde una palabra) y hasta 5 palabras ocultas de 3 a 7 letras. Valida que cada palabra se arme con las letras disponibles y exporta `Cubigrama.json` con el formato de Unity (`rounds[].boards[0]`).
 

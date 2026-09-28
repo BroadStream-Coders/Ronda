@@ -93,8 +93,8 @@ Ver [README.md](README.md) para el panorama y `docs/logbook/` para el estado.
   - **Pasó por Games** → el **bucket de Games**
     (`https://spvkliavubwmkvjtpvod.supabase.co/storage/v1/object/public/assets/`).
     Unity puede tener una versión vieja de la misma gráfica.
-  - **Solo existe en Unity**, aún sin migrar a Games (p. ej. Tres en Raya) →
-    `TvPeru-QGEM-ManagedGames/Assets/_Project/`.
+  - **Solo existe en Unity**, aún sin migrar a Games (p. ej. Tres en Raya,
+    Cubipiezas) → `../managed-games/Assets/_Project/` (repo `TvPeru-QGEM-ManagedGames`).
   - **Nació en Games** y nunca pasó por Unity → solo el bucket.
 
   Si no está dicho en la tarea cuál es el caso, **se pregunta**; adivinar por el
