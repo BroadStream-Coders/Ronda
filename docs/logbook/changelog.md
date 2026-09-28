@@ -12,6 +12,9 @@ Resumen en ≤2 líneas de lo que se hizo.
 
 ---
 
+## [RM-130] Colector Cubiletras (2026-09-28 13:13)
+Sopa de letras de 9 × 8 en `catalog/cubiletras/` con la forma de Operaciones Combinadas sin tableros: rondas → palabras (H/V, con cruces), pegado del tablero desde planilla y relleno generado por el colector que viaja en el JSON (`grid`). Asignado a QGEM.
+
 ## [TD-122] De Par en Par es de QGEM pero carga la gráfica de Más Conectados (2026-09-28 08:32)
 Se pagó con el paso 1 de [[RM-129]]: la gráfica nueva vive en `public/programs/que-gane-el-mejor/games/de-par-en-par/` y la copia de `programs/mas-conectados/` se borró.
 

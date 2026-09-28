@@ -158,3 +158,8 @@ se retira de aquí.
   todas de a un clic. Es el mismo ahorro que dio el llenado rápido para texto.
 - **Fecha:** 2026-08-13
 
+
+## [WL-015] Relleno de Cubiletras sin palabras accidentales
+- **Idea:** al generar el relleno, reintentar si las letras al azar forman otra de las respuestas de la ronda en horizontal o vertical.
+- **Por qué / valor:** evita que una palabra aparezca dos veces en la sopa. No es urgente: los enunciados ya acotan qué se busca.
+- **Fecha:** 2026-09-28

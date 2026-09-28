@@ -372,3 +372,8 @@ que se decida cómo se sirven las fotos; la decisión es transversal y vive en
 - **Hecho cuando:** existe un único mecanismo compartido, lo usan todos los
   colectores incluido el llenado rápido, y se retiró el trim manual duplicado.
 - **Fecha:** 2026-08-13 · **Estado:** Abierto
+
+## [RM-131] Enunciados en Cubiletras
+- **Objetivo:** cada palabra de la ronda lleva su enunciado (la pista que se ve junto a la sopa), una vez validada la estructura del tablero de [[RM-130]].
+- **Hecho cuando:** el colector carga y exporta el enunciado de cada palabra.
+- **Fecha:** 2026-09-28 · **Estado:** Abierto

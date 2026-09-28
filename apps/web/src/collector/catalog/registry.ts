@@ -18,6 +18,7 @@ import { armaLaPalabra } from "./arma-la-palabra";
 import { armaLaOracion } from "./arma-la-oracion";
 import { cubipiezas } from "./cubipiezas";
 import { cubigrama } from "./cubigrama";
+import { cubiletras } from "./cubiletras";
 
 export interface CollectorMeta {
   id: string;
@@ -50,4 +51,5 @@ export const registry: Record<string, CollectorType> = {
   [armaLaOracion.meta.id]: armaLaOracion,
   [cubipiezas.meta.id]: cubipiezas,
   [cubigrama.meta.id]: cubigrama,
+  [cubiletras.meta.id]: cubiletras,
 };

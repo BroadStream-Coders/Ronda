@@ -172,3 +172,17 @@ reutiliza). Al resolverse se mueve al `changelog.md` conservando su código.
 - **Impacto futuro:** Solo molesta en una base recién instalada y el admin siempre tiene `/admin` a mano. Si el caso llega a estorbar, la salida es chequear `is_platform_admin()` en el guard, a costa de un RPC por request.
 - **Fecha:** 2026-08-10 · **Estado:** Abierto
 
+
+## [TD-126] `BoardData.grid` muerto en Operaciones Combinadas
+- **Ubicación:** `apps/web/src/collector/catalog/operaciones-combinadas/schema.ts` (`BoardData.grid`, `spawnBoard`, `fromData`)
+- **Riesgo:** 2/10
+- **Problema:** Cada tablero guarda un `grid` que se crea vacío y nadie lee ni exporta: el Editor pinta desde `visualGrid`, derivado de las `sequence`, y `buildData` no lo incluye.
+- **Impacto futuro:** Confunde a quien lea el schema (parece que el grid viaja a Unity y no viaja) y tienta a copiarlo en colectores nuevos.
+- **Fecha:** 2026-09-28 · **Estado:** Abierto
+
+## [TD-127] El pegado de Operaciones Combinadas recorta el tablero en silencio
+- **Ubicación:** `apps/web/src/collector/catalog/operaciones-combinadas/Editor.tsx` (`handleQuickLoad`, `rowsLength` y los bucles hasta `GRID_SIZE`)
+- **Riesgo:** 6/10
+- **Problema:** Si la matriz pegada pasa de 11 filas o 11 columnas, todo lo que queda fuera se descarta sin ningún aviso. Lo mismo con las operaciones que pasan de `MAX_OPERATIONS` (`slice(0, MAX_OPERATIONS)`).
+- **Impacto futuro:** Quien llena los datos cree que cargó el tablero completo y le faltan operaciones; se descubre al aire o en Unity, no en el colector.
+- **Fecha:** 2026-09-28 · **Estado:** Abierto
