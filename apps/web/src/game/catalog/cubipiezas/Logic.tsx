@@ -11,6 +11,8 @@ import {
   useGameSession,
   useGameSetting,
   useGameState,
+  useLayerClick,
+  type Layer,
 } from "@/game/kit";
 import { SOUNDS } from "./assets";
 import {
@@ -24,11 +26,13 @@ import {
   slotId,
   type CardStatus,
 } from "./cards";
+import layout from "./layout.json";
 import { meta } from "./meta";
 
 const PHOTO_ID = "photo";
 const SPARKLES_ID = "sparkles";
 const FRESH: CardStatus[] = Array(CARD_COUNT).fill("letter");
+const UNASSIGNED: (number | null)[] = Array(CARD_COUNT).fill(null);
 const CASCADE_STEP_MS = 70;
 const REVEAL_STEP_MS = 90;
 const SPARKLES_MS = 2500;
@@ -42,16 +46,20 @@ const nextFrame = () =>
 interface Cursor {
   loadedAt: number;
   round: number;
-  card: number;
+  question: number;
+  current: number;
   cards: CardStatus[];
+  assigned: (number | null)[];
   peek: boolean;
 }
 
 const START: Cursor = {
   loadedAt: 0,
   round: 0,
-  card: 0,
+  question: 0,
+  current: -1,
   cards: FRESH,
+  assigned: UNASSIGNED,
   peek: false,
 };
 
@@ -90,7 +98,8 @@ export function CubipiezasLogic({ programId }: { programId: string }) {
   useEffect(() => {
     cursor.cards.forEach((status, index) => {
       const id = cardId(index);
-      const question = round?.questions[index];
+      const assigned = cursor.assigned[index];
+      const question = assigned === null ? undefined : round?.questions[assigned];
       const covering = status !== "hidden" && !cursor.peek;
       setVisible(slotId(index), covering);
       setVisible(id, covering);
@@ -101,27 +110,47 @@ export function CubipiezasLogic({ programId }: { programId: string }) {
         text: (status === "answer" ? question?.answer : question?.question) ?? "",
       });
     });
-  }, [round, cursor.cards, cursor.peek, patch, setVisible]);
+  }, [round, cursor.cards, cursor.assigned, cursor.peek, patch, setVisible]);
 
-  const setStatus = (gen: number, index: number, status: CardStatus) => {
+  const setStatus = (
+    gen: number,
+    index: number,
+    status: CardStatus,
+    question?: number,
+  ) => {
     if (generation.current !== gen) return false;
     setCursor((c) => ({
       ...c,
       cards: c.cards.map((current, i) => (i === index ? status : current)),
+      assigned:
+        question === undefined
+          ? c.assigned
+          : c.assigned.map((current, i) => (i === index ? question : current)),
     }));
     return true;
   };
 
-  const onCard = (job: (index: number, gen: number) => Promise<void>) => {
-    const index = cursor.card;
-    if (!round || locked.current || inFlight.current.has(index)) return;
+  const runOn = (index: number, job: (gen: number) => Promise<void>) => {
+    if (!round || locked.current || index < 0 || inFlight.current.has(index)) {
+      return;
+    }
     inFlight.current.add(index);
-    job(index, generation.current).finally(() => inFlight.current.delete(index));
+    job(generation.current).finally(() => inFlight.current.delete(index));
   };
 
-  const turn = async (index: number, gen: number, status: CardStatus) => {
+  const onCard = (job: (index: number, gen: number) => Promise<void>) => {
+    const index = cursor.current;
+    runOn(index, (gen) => job(index, gen));
+  };
+
+  const turn = async (
+    index: number,
+    gen: number,
+    status: CardStatus,
+    question?: number,
+  ) => {
     await play(cardId(index), "flipHide");
-    if (!setStatus(gen, index, status)) return;
+    if (!setStatus(gen, index, status, question)) return;
     await nextFrame();
     await play(cardId(index), "flipShow");
   };
@@ -146,7 +175,15 @@ export function CubipiezasLogic({ programId }: { programId: string }) {
       await nextFrame();
       await Promise.all(CASCADE.map((i) => play(cardId(i), "flipHide")));
       if (generation.current !== gen) return;
-      setCursor((c) => ({ ...c, round: index, card: 0, cards: FRESH, peek: false }));
+      setCursor((c) => ({
+        ...c,
+        round: index,
+        question: 0,
+        current: -1,
+        cards: FRESH,
+        assigned: UNASSIGNED,
+        peek: false,
+      }));
       await nextFrame();
       await playStagger(CASCADE.map(cardId), "flipShow", CASCADE_STEP_MS);
     });
@@ -176,6 +213,22 @@ export function CubipiezasLogic({ programId }: { programId: string }) {
     });
   };
 
+  const onCardClick = (layerId: string) => {
+    const match = /^card-(\d+)$/.exec(layerId);
+    if (!match) return;
+    const index = Number(match[1]);
+    const status = cursor.cards[index];
+    if (status === undefined || status === "hidden") return;
+    const question = cursor.question;
+    runOn(index, async (gen) => {
+      setCursor((c) => ({ ...c, current: index }));
+      if (status === "letter") await turn(index, gen, "question", question);
+      else await turn(index, gen, "letter");
+    });
+  };
+
+  useLayerClick(layout as Layer[], onCardClick);
+
   useGameKeys({
     onNavigate: (value) => {
       const index = value - 1;
@@ -183,15 +236,9 @@ export function CubipiezasLogic({ programId }: { programId: string }) {
       enterRound(index);
     },
     onNumber: (value) => {
-      if (value >= CARD_COUNT) return;
-      setCursor((c) => ({ ...c, card: value }));
+      if (!round || value >= round.questions.length) return;
+      setCursor((c) => ({ ...c, question: value }));
     },
-    onInteract: () =>
-      onCard(async (index, gen) => {
-        const status = cursor.cards[index];
-        const next = nextStatus(status, "interact");
-        if (next !== status) await turn(index, gen, next);
-      }),
     onShowAnswer: () => {
       if (!round || locked.current) return;
       playSound(SOUNDS.correct);

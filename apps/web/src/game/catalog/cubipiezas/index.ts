@@ -16,6 +16,7 @@ export const cubipiezas: GameType = {
   meta,
   layout: layout as Layer[],
   images: true,
+  pointer: true,
   preload: PRELOAD,
   blurMax: BLUR_MAX,
   fonts: { poppins },

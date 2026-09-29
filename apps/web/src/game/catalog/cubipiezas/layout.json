@@ -332,6 +332,9 @@
         "amplitude": 4,
         "shakes": 4,
         "duration": 0.4
+      },
+      {
+        "type": "click"
       }
     ]
   },
@@ -501,6 +504,9 @@
         "amplitude": 4,
         "shakes": 4,
         "duration": 0.4
+      },
+      {
+        "type": "click"
       }
     ]
   },
@@ -670,6 +676,9 @@
         "amplitude": 4,
         "shakes": 4,
         "duration": 0.4
+      },
+      {
+        "type": "click"
       }
     ]
   },
@@ -839,6 +848,9 @@
         "amplitude": 4,
         "shakes": 4,
         "duration": 0.4
+      },
+      {
+        "type": "click"
       }
     ]
   },
@@ -1008,6 +1020,9 @@
         "amplitude": 4,
         "shakes": 4,
         "duration": 0.4
+      },
+      {
+        "type": "click"
       }
     ]
   },
@@ -1177,6 +1192,9 @@
         "amplitude": 4,
         "shakes": 4,
         "duration": 0.4
+      },
+      {
+        "type": "click"
       }
     ]
   },
@@ -1346,6 +1364,9 @@
         "amplitude": 4,
         "shakes": 4,
         "duration": 0.4
+      },
+      {
+        "type": "click"
       }
     ]
   },
@@ -1515,6 +1536,9 @@
         "amplitude": 4,
         "shakes": 4,
         "duration": 0.4
+      },
+      {
+        "type": "click"
       }
     ]
   },

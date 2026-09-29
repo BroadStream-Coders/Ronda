@@ -2285,6 +2285,7 @@ for (let i = 0; i < 8; i++) {
   for (const type of ["flip", "pop", "shake"]) {
     assert.ok(partOf(card, type), `card-${i} declara la animacion '${type}'`);
   }
+  assert.ok(partOf(card, "click"), `card-${i} declara 'click': el operador la elige con el mouse`);
 }
 for (let i = 0; i < 8; i++) {
   const glint = cubi.find((layer) => layer.id === `card-${i}-glint`);

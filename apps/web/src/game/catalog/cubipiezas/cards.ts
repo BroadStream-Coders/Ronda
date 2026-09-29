@@ -1,5 +1,5 @@
 export const CARD_COUNT = 8;
-export const BLUR_MAX = 32;
+export const BLUR_MAX = 16;
 
 export type CardStatus = "letter" | "question" | "answer" | "hidden";
 export type CardAction = "interact" | "showAnswer" | "reset" | "hide";
